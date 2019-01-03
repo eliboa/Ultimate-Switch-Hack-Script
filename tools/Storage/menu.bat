@@ -1,0 +1,111 @@
+::Script by Shadow256
+chcp 65001 > nul
+IF EXIST log.txt del /q log.txt
+set ushs_launch=Y
+cls
+::Header
+title Shadow256 Ultimate Switch Hack Script %ushs_version%
+echo :::::::::::::::::::::::::::::::::::::
+echo ::Shadow256 Ultimate Switch Hack Script %ushs_version%::
+echo :::::::::::::::::::::::::::::::::::::
+:define_action_choice
+echo.
+echo Que souhaitez-vous faire?
+echo.
+echo 1: Lancer un payload?
+echo.
+echo 2: Lancer Linux?
+echo.
+echo 3: Monter la nand, la partition boot0, la partition boot1 ou la carte SD comme un disque dur sur votre système d'exploitation?
+echo.
+echo 4: Préparer une carte SD pour le hack Switch?
+echo.
+echo 5: Lancer NSC_Builder qui permet de convertir et nettoyer des NSPs et XCIs, voir la documentation pour plus d'infos?
+echo.
+echo 6: Autres fonctions?
+echo.
+echo 7: Fonctions à utiliser occasionnellement?
+echo.
+echo 8: Sauvegarder, restaurer ou remettre les fichiers du script à zéro?
+echo.
+echo 9: Lancer le client pour pouvoir jouer en réseau?
+echo.
+echo 0: Lancer la documentation (recommandé)?
+echo.
+echo N'importe quelle autre choix: Quitter sans rien faire?
+echo.
+echo.
+set /p action_choice=Entrez le numéro correspondant à l'action à faire: 
+IF "%action_choice%"=="0" goto:launch_doc
+IF "%action_choice%"=="1" goto:launch_payload
+IF "%action_choice%"=="2" goto:launch_linux
+IF "%action_choice%"=="3" goto:mount_discs
+IF "%action_choice%"=="4" goto:prepare_sd
+IF "%action_choice%"=="5" goto:launch_NSC_Builder
+IF "%action_choice%"=="6" goto:others_functions
+IF "%action_choice%"=="7" goto:ocasional_functions
+IF "%action_choice%"=="8" goto:save_and_restaure
+IF "%action_choice%"=="9" goto:netplay
+goto:end_script
+:launch_payload
+set action_choice=
+echo.
+call TOOLS\Storage\launch_payload.bat > log.txt 2>&1
+@echo off
+goto:define_action_choice
+:launch_linux
+set action_choice=
+echo.
+call TOOLS\Storage\launch_linux.bat
+@echo off
+goto:define_action_choice
+:mount_discs
+set action_choice=
+echo.
+call TOOLS\Storage\mount_discs.bat
+@echo off
+goto:define_action_choice
+:prepare_sd
+set action_choice=
+echo.
+call TOOLS\Storage\prepare_sd_switch.bat > log.txt 2>&1
+@echo off
+goto:define_action_choice
+:launch_NSC_Builder
+set action_choice=
+echo.
+call TOOLS\Storage\preload_NSC_Builder.bat
+endlocal
+@echo off
+goto:define_action_choice
+:others_functions
+set action_choice=
+echo.
+call TOOLS\Storage\others_functions_menu.bat
+@echo off
+goto:define_action_choice
+:ocasional_functions
+set action_choice=
+echo.
+call TOOLS\Storage\ocasional_functions_menu.bat
+@echo off
+goto:define_action_choice
+:save_and_restaure
+set action_choice=
+echo.
+call TOOLS\Storage\save_and_restaure_menu.bat
+@echo off
+goto:define_action_choice
+:netplay
+set action_choice=
+echo.
+call TOOLS\Storage\netplay.bat
+@echo off
+goto:define_action_choice
+:launch_doc
+set action_choice=
+echo.
+start DOC\index.html
+goto:define_action_choice
+:end_script
+exit

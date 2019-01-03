@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html lang="fr-FR">
+<head>
+<title>Contenu des packs</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<body>
+<h1>Contenu des différents packs</h1>
+&nbsp;
+<a href="../index.html">Revenir à la documentation du script</a>
+<br/>
+<h2>Comment utiliser Kezplez-nx (devenu Lockpick mais le fonctionnement est quasiment le même)</h2>
+&nbsp;
+<p>
+Ce homebrew permet de dumper les différentes clés utilisés par Hactool et autres dérivés. Attention, ne pas partager le fichier "prod.keys" obtenu grâce à ce homebrew car il contient des clés spécifiques à la console comme la tsec_key par exemple. Kezplez-nx est un peu particulier car il nécessite de dumper certains fichiers spécifique à la console avant de pouvoir être utilisé.
+<br/><br/>
+Voici comment l'utiliser:
+</p>
+<ul>
+<li>Dumper les fichiers "fuses.bin" et "tsec_keys.bin" avec la version d'Hekate incluse dans ce script. Ces options de dump se trouveront dans le menu "console info" ("Print fuse info" et "Print TSEC keys") et il faudra appuyer sur le bouton "Power" une fois l'info affichée pour la dumper sur la SD dans le dossier "/Backup/<un_nombre_hexadécimal>/Dumps" ou sinon dans le dossier "/Backup/Dumps".</li>
+<li>Pour les firmwares 1.X à 2.3.0 inclues (Kezplez-NX): Essayer d'utiliser l'option "debug" dans le fichier de configuration de Hekate (non testé) ou alors utiliser la dernière version d'Atmosphere.
+
+Sinon, si ça ne fonctionne pas, dans Hekate, aller dans "Tools" puis "Backup" puis "Backup eMMC BOOT0/1" et dans "Tools" puis "Dump package1/2". Une fois ces dumps effectuées, copier les fichiers obtenus dans le dossier "/switch/kezplez-nx" de la SD.
+Note: Avec Lockpick, l'option de debug est à activer sur tous les firmwares pour faire les dumps complet des clés.</li>
+<li>En cas de bug avec Lockpick, il est aussi possible de dumper les Bis keys sur la SD avec le payload Biskeydump V7 (version présente dans mon script) et le laisser à la racine de la SD pour que Lockpick puisse l'utiliser.</li>
+<li>Lancer le homebrew, appuyer sur "A" et voilà, les clés se trouveront dans le fichier "prod.keys", à la racine de la SD pour Kezplez-NX et dans le dossier "switch" pour Lockpick.</li>
+</ul>
+<h2>Contenu du pack "Kosmos" (anciennement "SDFilesSwitch")</h2>
+&nbsp;
+<h3>Contenu des fichiers et dossiers à la racine de la SD:</h3>
+&nbsp;
+<ul>
+<li>atmosphere: Le dossier contenant les patches (ES patches) et titres (LayeredFS par exemple) pour Atmosphere.</li>
+<li>Backup: Le dossier contenant un dossier "Restore", dans lequel on peut placer des éléments de la nand à restorer avec Hekate. Le dossier "Partitions" à l'intérieur du dossier "Restore" sert quand à lui à restaurer des parties encore plus spécifiques de la nand.</li>
+<li>bootloader: Ce dossier contient les différents dossiers/fichiers de configuration pour Hekate.
+<ul>
+<li>ini: Ce dossier contient des fichiers de configuration supplémentaire pour lancer tel ou tel modules. Ces configurations peuvent être lancées en allant dans le menu "Other configs" dans la liste des configurations principales de Hekate.</li>
+<li>libtools: Pour l'instant ce dossier ne contient rien et on ne connaît pas encore vraiment son utilité.</li>
+<li>payloads: Le dossier contenant les différents payloads qui peuvent être lancés via le menu "Payloads" du menu principale des configurations.</li>
+<li>sys: Un dossier contenant certains modules utiles.</li>
+<li>bootlogo.bmp: Un logo de boot au lancement d'un firmware via Hekate.</li>
+<li>hekate_ipl.ini: Le fichier de configuration principal du bootloader.</li>
+</ul></li>
+<li>config: Le dossier de configuration du HBL.</li>
+<li>EdiZon: Un dossier de configuration pour le homebrew du même nom.</li>
+<li>ftpd: Un dossier contenant des sons pour les différentes actions du serveur FTP du même nom (connection, déconnection, pause ou reprise de celui-ci).</li>
+<li>modules: Ce dossier contient les fichiers nécessaire au lancement d'Atmosphère ou des différents modules (comme le FTP par exemple) via Hekate.</li>
+<li>tinfoil: Un dossier de configuration pour le homebrew du même nom (maintenant utilisé pour ZeroToXCI).</li>
+<li>hbmenu.nro: Le fichier du Homebrew Loader, lance l'album en allant dans l'album tout en maintenant le bouton "R" et le homebrew menu autrement (peut être configuré).</li>
+<li>xor.play.json: Le fichier de configuration pour inclure les différents fichiers musicaux qui seront lu via ce module.</li>
+</ul>
+&nbsp;
+<h3>Les homebrews présents dans le dossier "switch":</h3>
+&nbsp;
+<ul>
+<li>appstore: Installer, mettre à jour ou supprimer les homebrews de la Switch simplement.</li>
+<li>BiggestDump: Permet de dumper le firmware actuel de la console ou celui se trouvant en attente d'installation. Ceci peut être utile utilisé conjointement avec ChoiDuJour-NX pour installer le driver EXFAT assez simplement.</li>
+<li>Checkpoint: Permet de sauvegarder/restaurer les sauvegardes des jeux.</li>
+<li>ChoiDuJourNX: Mettre à jour la console sans griller d'Efuses (ne jamais lancer une mise à jour avec le bootloader officiel une fois installée car les Efuses seront grillés) ou downgrader la console (même remarque que pour la mise à jour sauf que si le firmware est lancé par le bootloader officiel et que le nombre d'Efuse ne correspond pas la console ne lancera pas le firmware, il faut passer par ReiNX ou Hekate ou autres).</li>
+<li>EdiZon: Un éditeur de sauvegarde des jeux.</li>
+<li>FTPD: Le serveur FTP, accessible sur le port 5000.</li>
+<li>GagOrder: Permet de patcher le Super Nag de la Switch.</li>
+<li>gcdumptool et SXDUMPER: Permet de dumper une cartouche Switch.</li>
+<li>JKSV: Un autre gestionnaire de sauvegardes.</li>
+<li>Ldnmitm_config: Permet de configurer le module Ldn_mitm s'il est actif.</li>
+<li>Lockpick: Permet de dumper les différentes clés utilisés par Hactool et autres dérivés. Attention, ne pas partager le fichier "keys.txt" (ou "prod.keys") obtenu grâce à ce homebrew car il contient des clés spécifiques à la console comme la tsec_key par exemple. Ce homebrew permet aussi de dumper les title keys installés sur la console.</li>
+<li>mod_Plague: Configure le fichier "main.npdm" des titres pour les accorder avec un jeu donneur (fonction pour LayeredFS).</li>
+<li>NX-Shell: Un explorateur de fichiers.</li>
+<li>pplay: Le premier lecteur multimédia vraiment fonctionnel de la Switch. Il permet la lecture de vidéo en local ou via le réseau, tout n'est pas encore parfait mais dans l'ensemble cela fonctionne bien.</li>
+<li>SDFilesUpdater: Permet de mettre à jour les fichiers de la SD. Notez que le serveur FTP ne doit pas être actif si ce homebrew est exécuté.</li>
+<li>SDSetup: Permet de préparer du contenu sur la carte SD via la console et une connexion internet (CFW, Homebrews...).</li>
+<li>SwitchIdent: Affiche des informations sur la console.</li>
+<li>Goldleaf: Permet, entre autres,  d'installer des fichiers NSP sur la nand ou la SD. Un fichier contenant les clés de déchiffrements dumpé par Lockpick peut être placé dans le dossier "switch/Goldleaf" de la SD et nommé "keys.dat" pour utiliser toutes les fonctionnalités de ce homebrew.</li>
+<li>ZeroTwoXCI: Un fork de Tinfoil intégrant l'installation de fichier XCI comme s'il s'agissait de NSP (les fichiers sont convertis en NSP puis installés) (nécessite le fichier "prod.keys" contenant les clés de déchiffrements de Hactool (souvent le fichier "keys.txt" ou "keys.dat" à renommer en "prod.keys") à la racine de la SD).</li>
+</ul>
+&nbsp;
+<h2>Contenu du pack "Atmosphere"</h2>
+&nbsp;
+<h3>Contenu des fichiers et dossiers à la racine de la SD:</h3>
+&nbsp;
+<ul>
+<li>atmosphere: Le dossier contenant les patches (ES patches) et titres (LayeredFS par exemple) pour Atmosphere.</li>
+<li>config: Le dossier de configuration du HBL.</li>
+<li>EdiZon: Un dossier de configuration pour le homebrew du même nom.</li>
+<li>tinfoil: Un dossier de configuration pour le homebrew du même nom (maintenant utilisé pour ZeroToXCI).</li>
+<li>fusee-secondary.bin: Un fichier nécessaire pour booter l'implémentation complète d'Atmosphere (lancement par le payload Fusee-primary d'Atmosphere).</li>
+<li>hbmenu.nro: Le fichier du Homebrew Loader, lance l'album en allant dans l'album tout en maintenant le bouton "R" et le homebrew menu autrement.</li>
+</ul>
+&nbsp;
+<h3>Les homebrews présents dans le dossier "switch":</h3>
+&nbsp;
+<ul>
+<li>appstore: Installer, mettre à jour ou supprimer les homebrews de la Switch simplement.</li>
+<li>BiggestDump: Permet de dumper le firmware actuel de la console ou celui se trouvant en attente d'installation. Ceci peut être utile utilisé conjointement avec ChoiDuJour-NX pour installer le driver EXFAT assez simplement.</li>
+<li>Checkpoint: Permet de sauvegarder/restaurer les sauvegardes des jeux.</li>
+<li>ChoiDuJourNX: Mettre à jour la console sans griller d'Efuses (ne jamais lancer une mise à jour avec le bootloader officiel une fois installée car les Efuses seront grillés) ou downgrader la console (même remarque que pour la mise à jour sauf que si le firmware est lancé par le bootloader officiel et que le nombre d'Efuse ne correspond pas la console ne lancera pas le firmware, il faut passer par ReiNX ou Hekate ou autres).</li>
+<li>EdiZon: Un éditeur de sauvegarde des jeux.</li>
+<li>FTPD: Le serveur FTP, accessible sur le port 5000.</li>
+<li>GagOrder: Permet de patcher le Super Nag de la Switch.</li>
+<li>gcdumptool et SXDUMPER: Permet de dumper une cartouche Switch.</li>
+<li>JKSV: Un autre gestionnaire de sauvegardes.</li>
+<li>Lockpick: Permet de dumper les différentes clés utilisés par Hactool et autres dérivés. Attention, ne pas partager le fichier "keys.txt" (ou "prod.keys") obtenu grâce à ce homebrew car il contient des clés spécifiques à la console comme la tsec_key par exemple. Ce homebrew permet aussi de dumper les title keys installés sur la console.</li>
+<li>mod_Plague: Configure le fichier "main.npdm" des titres pour les accorder avec un jeu donneur (fonction pour LayeredFS).</li>
+<li>NX-Shell: Un explorateur de fichiers.</li>
+<li>pplay: Le premier lecteur multimédia vraiment fonctionnel de la Switch. Il permet la lecture de vidéo en local ou via le réseau, tout n'est pas encore parfait mais dans l'ensemble cela fonctionne bien.</li>
+<li>SDSetup: Permet de préparer du contenu sur la carte SD via la console et une connexion internet (CFW, Homebrews...).</li>
+<li>SwitchIdent: Affiche des informations sur la console.</li>
+<li>Goldleaf: Permet, entre autres,  d'installer des fichiers NSP sur la nand ou la SD. Un fichier contenant les clés de déchiffrements dumpé par Lockpick peut être placé dans le dossier "switch/Goldleaf" de la SD et nommé "keys.dat" pour utiliser toutes les fonctionnalités de ce homebrew.</li>
+<li>ZeroTwoXCI: Un fork de Tinfoil intégrant l'installation de fichier XCI comme s'il s'agissait de NSP (les fichiers sont convertis en NSP puis installés) (nécessite le fichier "prod.keys" contenant les clés de déchiffrements de Hactool (souvent le fichier "keys.txt" ou "keys.dat" à renommer en "prod.keys") à la racine de la SD).</li>
+</ul>
+&nbsp;
+<h2>Contenu du pack "ReiNX"</h2>
+&nbsp;
+<h3>Contenu des fichiers et dossiers à la racine de la SD:</h3>
+&nbsp;
+<ul>
+<li>Backup: Le dossier contenant un dossier "Restore", dans lequel on peut placer des éléments de la nand à restorer avec Hekate. Le dossier "Partitions" à l'intérieur du dossier "Restore" sert quand à lui à restaurer des parties encore plus spécifiques de la nand.</li>
+<li>config: Le dossier de configuration du HBL.</li>
+<li>EdiZon: Un dossier de configuration pour le homebrew du même nom.</li>
+<li>ReiNX: Le dossier contenant les modules et titres pour ReiNX, pour LayeredFS ou pour ajouter le support de l'installation/exécution de contenus non signé par exemple.</li>
+<li>tinfoil: Un dossier de configuration pour le homebrew du même nom (maintenant utilisé pour ZeroToXCI).</li>
+<li>hbmenu.nro: Le fichier du Homebrew Loader, lance l'album en allant dans l'album tout en maintenant le bouton "R" et le homebrew menu autrement.</li>
+</ul>
+&nbsp;
+<h3>Les homebrews présents dans le dossier "switch":</h3>
+&nbsp;
+<ul>
+<li>appstore: Installer, mettre à jour ou supprimer les homebrews de la Switch simplement.</li>
+<li>BiggestDump: Permet de dumper le firmware actuel de la console ou celui se trouvant en attente d'installation. Ceci peut être utile utilisé conjointement avec ChoiDuJour-NX pour installer le driver EXFAT assez simplement.</li>
+<li>Checkpoint: Permet de sauvegarder/restaurer les sauvegardes des jeux.</li>
+<li>ChoiDuJourNX: Mettre à jour la console sans griller d'Efuses (ne jamais lancer une mise à jour avec le bootloader officiel une fois installée car les Efuses seront grillés) ou downgrader la console (même remarque que pour la mise à jour sauf que si le firmware est lancé par le bootloader officiel et que le nombre d'Efuse ne correspond pas la console ne lancera pas le firmware, il faut passer par Hekate ou autres).</li>
+<li>EdiZon: Un éditeur de sauvegarde des jeux.</li>
+<li>FTPD: Le serveur FTP, accessible sur le port 5000.</li>
+<li>GagOrder: Permet de patcher le Super Nag de la Switch.</li>
+<li>gcdumptool et SXDUMPER: Permet de dumper une cartouche Switch.</li>
+<li>JKSV: Un autre gestionnaire de sauvegardes.</li>
+<li>Ldnmitm_config: Permet de configurer le module Ldn_mitm s'il est actif.</li>
+<li>Lockpick: Permet de dumper les différentes clés utilisés par Hactool et autres dérivés. Attention, ne pas partager le fichier "keys.txt" (ou "prod.keys") obtenu grâce à ce homebrew car il contient des clés spécifiques à la console comme la tsec_key par exemple. Ce homebrew permet aussi de dumper les title keys installés sur la console.</li>
+<li>mod_Plague: Configure le fichier "main.npdm" des titres pour les accorder avec un jeu donneur (fonction pour LayeredFS).</li>
+<li>NX-Shell: Un explorateur de fichiers.</li>
+<li>pplay: Le premier lecteur multimédia vraiment fonctionnel de la Switch. Il permet la lecture de vidéo en local ou via le réseau, tout n'est pas encore parfait mais dans l'ensemble cela fonctionne bien.</li>
+<li>ReiNX_toolkit: Permet de dumper certaines parties de la nand, de changer le logo de démarrage du CFW et peut se mettre à jour automatiquement. D'autres fonctionnalités feront probablement leur apparition par la suite.</li>
+<li>ROMMENU: C'est le menu de SX OS dont certaines fonctionnalités sont utilisables avec ReiNX.</li>
+<li>SDSetup: Permet de préparer du contenu sur la carte SD via la console et une connexion internet (CFW, Homebrews...).</li>
+<li>SwitchIdent: Affiche des informations sur la console.</li>
+<li>Goldleaf: Permet, entre autres,  d'installer des fichiers NSP sur la nand ou la SD. Un fichier contenant les clés de déchiffrements dumpé par Lockpick peut être placé dans le dossier "switch/Goldleaf" de la SD et nommé "keys.dat" pour utiliser toutes les fonctionnalités de ce homebrew.</li>
+<li>ZeroTwoXCI: Un fork de Tinfoil intégrant l'installation de fichier XCI comme s'il s'agissait de NSP (les fichiers sont convertis en NSP puis installés) (nécessite le fichier "prod.keys" contenant les clés de déchiffrements de Hactool (souvent le fichier "keys.txt" ou "keys.dat" à renommer en "prod.keys") à la racine de la SD).</li>
+</ul>
+&nbsp;
+<h2>Contenu du pack "SX OS"</h2>
+&nbsp;
+<h3>Contenu des fichiers et dossiers à la racine de la SD:</h3>
+<ul>
+<li>Backup: Le dossier contenant un dossier "Restore", dans lequel on peut placer des éléments de la nand à restorer avec Hekate. Le dossier "Partitions" à l'intérieur du dossier "Restore" sert quand à lui à restaurer des parties encore plus spécifiques de la nand.</li>
+<li>EdiZon: Un dossier de configuration pour le homebrew du même nom.</li>
+<li>sxos: Le dossier contenant les titres pour sxos, pour LayeredFS par exemple.</li>
+<li>tinfoil: Un dossier de configuration pour le homebrew du même nom (maintenant utilisé pour ZeroToXCI).</li>
+<li>boot.dat: Le fichier permettant de booter le CFW.</li>
+<li>hbmenu.nro: Le fichier du Homebrew Loader, à lancer en allant dans l'album et en maintenant le bouton "R", maintenir le bouton "L" en lançant l'album lance l'album et lancer simplement l'album lance le menu de SX OS (recommandé).</li>
+</ul>
+&nbsp;
+<h3>Les homebrews présents dans le dossier "switch":</h3>
+&nbsp;
+<ul>
+<li>appstore: Installer, mettre à jour ou supprimer les homebrews de la Switch simplement.</li>
+<li>BiggestDump: Permet de dumper le firmware actuel de la console ou celui se trouvant en attente d'installation. Ceci peut être utile utilisé conjointement avec ChoiDuJour-NX pour installer le driver EXFAT assez simplement.</li>
+<li>Checkpoint: Permet de sauvegarder/restaurer les sauvegardes des jeux.</li>
+<li>ChoiDuJourNX: Mettre à jour la console sans griller d'Efuses (ne jamais lancer une mise à jour avec le bootloader officiel une fois installée car les Efuses seront grillés) ou downgrader la console (même remarque que pour la mise à jour sauf que si le firmware est lancé par le bootloader officiel et que le nombre d'Efuse ne correspond pas la console ne lancera pas le firmware, il faut passer par Hekate ou autres).</li>
+<li>EdiZon: Un éditeur de sauvegarde des jeux.</li>
+<li>FTPD: Le serveur FTP, accessible sur le port 5000.</li>
+<li>GagOrder: Permet de patcher le Super Nag de la Switch.</li>
+<li>gcdumptool et SXDUMPER: Permet de dumper une cartouche Switch.</li>
+<li>JKSV: Un autre gestionnaire de sauvegardes.</li>
+<li>Lockpick: Permet de dumper les différentes clés utilisés par Hactool et autres dérivés. Attention, ne pas partager le fichier "keys.txt" (ou "prod.keys") obtenu grâce à ce homebrew car il contient des clés spécifiques à la console comme la tsec_key par exemple. Ce homebrew permet aussi de dumper les title keys installés sur la console.</li>
+<li>mod_Plague: Configure le fichier "main.npdm" des titres pour les accorder avec un jeu donneur (fonction pour LayeredFS).</li>
+<li>NX-Shell: Un explorateur de fichiers.</li>
+<li>pplay: Le premier lecteur multimédia vraiment fonctionnel de la Switch. Il permet la lecture de vidéo en local ou via le réseau, tout n'est pas encore parfait mais dans l'ensemble cela fonctionne bien.</li>
+<li>SDSetup: Permet de préparer du contenu sur la carte SD via la console et une connexion internet (CFW, Homebrews...).</li>
+<li>SwitchIdent: Affiche des informations sur la console.</li>
+<li>Goldleaf: Permet, entre autres,  d'installer des fichiers NSP sur la nand ou la SD. Un fichier contenant les clés de déchiffrements dumpé par Lockpick peut être placé dans le dossier "switch/Goldleaf" de la SD et nommé "keys.dat" pour utiliser toutes les fonctionnalités de ce homebrew.</li>
+<li>ZeroTwoXCI: Un fork de Tinfoil intégrant l'installation de fichier XCI comme s'il s'agissait de NSP (les fichiers sont convertis en NSP puis installés) (nécessite le fichier "prod.keys" contenant les clés de déchiffrements de Hactool (souvent le fichier "keys.txt" ou "keys.dat" à renommer en "prod.keys") à la racine de la SD).</li>
+</ul>
+&nbsp;
+<h2>Contenu du pack "Emulateurs"</h2>
+&nbsp;
+<p>
+Il est à noter que ce pack ne contient ni jeux (roms) ni bios des consoles.
+</p>
+<ul>
+<li>LaiNes: C'est un émulateur NES.</li>
+<li>PSNES: C'est un émulateur SNES.</li>
+<li>VBA-Next: C'est un émulateur Gameboy Advance.</li>
+<li>PFBA: C'est un émulateur arcade mais également de quelques autres consoles. Cette version utilise le romset 0.2.97.43 de FBA.</li>
+<li>Khedgb: C'est un émulateur Gameboy/Gameboy Color.</li>
+</ul>
+<br/><br/>
+<a href="../index.html">Revenir à la documentation du script</a>
+</body>
+</html>

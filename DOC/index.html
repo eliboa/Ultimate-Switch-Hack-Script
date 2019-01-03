@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html lang="fr-FR">
+<head>
+<title>Documentation Shadow256 Ultimate Switch Hack Script</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+<body>
+<h1>Documentation Shadow256 Ultimate Switch Hack Script</h1>
+&nbsp;
+<h2>Introduction</h2>
+&nbsp;
+<p>
+Ceci est un ensemble de script permettant, à l'origine,  de lancer un payload ou Linux sur la Switch via le mode RCM (mode recovery) de celle-ci. D'autres fonctionnalités ont été développées ensuite.
+<br/><br/>
+Cette documentation a pour but d'orienter l'utilisateur pour faire fonctionner au mieux ces outils. Le sujet concernant cette application se trouve sur <a target="_new" href="http://www.logic-sunrise.com/forums/topic/81314-shadow256-switch-payload-injector-script/">cette page</a>.
+<br/><br/>
+Ce script est utilisable sur Windows 7 32 et 64 bits ainsi que sur les versions supérieurs (Windows Vista non testé mais devrait fonctionné).
+<br/><br/>
+Notez que je ne pourrai être tenu responsable en cas de domages résultant de l'utilisation de ce logiciel et de tout se qu'il contient.
+</p>
+&nbsp;
+<h2>Fonctionnalités</h2>
+&nbsp;
+<ul>
+<li>Installation des drivers du mode RCM (driver "APX") et du mode libnx_USB_comms utilisé par Tinfoil (driver "libnx_USB_comms") de la Switch, voir <a href="files/install_drivers.html">cette page de la documentation pour plus d'infos</a>.</li>
+<li>Lancement d'un payload via le mode RCM de la Switch. Vous pouvez placer les payloads dans un dossier "Payloads" situé à la racine de ce script ou choisir un fichier de payload via un explorateur. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.</li>
+<li>Lancement de Linux via le mode RCM de la Switch (soit avec le kernel officiel, soit via un <a href="_new" href="https://gbatemp.net/attachments/image-gz-zip.121538/">kernel patché</a> (merci Krazer89 de GBATemp et à Killua de Logic-sunrise pour l'info) pour les SD non compatibles avec le kernel officiel), soit avec un fichier de kernel sélectionnalbe via un explorateur de fichiers. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.</li>
+<li>Récupération des biskey grace au payload Biskeydump dans le fichier "biskey.txt" qui sera situé à la racine du script (les biskey commencent à la ligne 7 du fichier). Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.</li>
+<li>Téléchargement/mise à jour des binaires de Shofel2.</li>
+<li>Vérification si une console est patchée, peut-être patchée ou non patchée.</li>
+<li>Montage de la partition Boot0, Boot1, EMMC ou de la carte SD comme périphérique de stockage USB sur le PC.</li>
+<li>Création de packages de mise à jour via ChoiDuJour avec tous les paramètres.</li>
+<li>Téléchargement d'un firmware et préparation de la SD avec celui-ci pour ChoiDuJourNX, le homebrew est également copié durant ce script. Ce script permet également d'éventuellement  créé le package de mise à jour via ChoiDuJour dans la foulée. Pour savoir comment utiliser ChoiDuJourNX, vous pouvez vous référer à <a href="files/choidujournx.html">cette page de la documentation</a>.</li>
+<li>Préparation d'une SD, du formatage (FAT32 ou EXFAT) à la mise en place de différentes solutions, voir <a href="files/sd_prepare.html">cette page</a> pour plus d'informations sur le contenu des packs.</li>
+<li>Lancement NSC_Builder. Ce script est utile pour convertir des XCIs ou NSPs en XCIs ou NSPs. Les fichiers convertis via ce script sont nettoyé et rendus, en théorie, indétectable par Nintendo, surtout pour les NSPs. Enfin, ce script permet aussi de créé des NSPs ou XCIs contenant le jeu, ses mises à jour et DLCs dans un seul fichier. Pour plus d'infos, voir <a target="_new" href="https://github.com/julesontheroad/NSC_BUILDER">cette page</a>.</li>
+<li>Réunification des fichiers d'un dump de la nand effectué par Hekate ou SX OS sur une SD formatée en FAT32 ou sur une SD trop petite pour accueillir le dump en une seule fois dans un fichier "rawnand.bin" qui pourra ensuite être réutilisé pour restaurer la nand.</li>
+<li>Conversion de fichiers XCI en NSP.</li>
+<li>Installation de NSP via Goldleaf et le réseau.</li>
+<li>Sauvegarde et restauration des fichiers importants utilisés par le script.</li>
+<li>Vérification des NSPs.</li>
+<li>Conversion d'une sauvegarde de Zelda Breath Of The Wild du format Wii U vers Switch ou inversement.</li>
+<li>Extraction du certificat d'une console via le fichier "PRODINFO.bin" décrypté.</li>
+<li>Installation de NSP via Goldleaf en USB.</li>
+<li>Découpage de NSP ou de XCI pour pouvoir les mettre sur une SD formatée en FAT32.</li>
+<li>Lancement du nécessaire pour jouer en ligne sur le réseau alternatif, voir <a href="files/netplay.html">cette page</a>. Une liste de serveurs peut aussi être créée.</li>
+</ul>
+&nbsp;
+<h2>Bugs connus</h2>
+&nbsp;
+<ul>
+<li>L'utilisation de guillemets et de quelques autres signes dans les entrées utilisateurs fait planter le script.</li>
+<li>Lorsqu'une sortie console faite par un "echo" est effectuée, cela produit une erreur dans le fichier log. L'encodage en UTF-8 semble être à l'origine de ce problème mais je n'ai pas trouvé comment le résoudre pour l'instant.</li>
+<li>Le dump des biskey récupère également le résultat du programme TegraRcmSmash, les biskey commencent à partir de la ligne 7 du fichier.</li>
+</ul>
+&nbsp;
+<h2>Fonctions à venir</h2>
+&nbsp;
+<ul>
+<li>Traduction de certains éléments de l'extraction d'un certificat, ceci est à faire dans le code source des scripts python de cette partie.</li>
+<li>Récupération des Biskeys directement dans un fichier texte grâce au payload Biskeydump (fonction présente mais pas parfaite pour l'instant).</li>
+<li>D'autres choses que vous pourriez me suggérer.</li>
+</ul>
+&nbsp;
+<h2>Liens utiles</h2>
+&nbsp;
+<p>
+Cette documentation ne couvrira pas les différents tutoriels d'utilisations des logiciels ou encore la façon de passer sa console en mode RCM mais voici quelques liens utiles:
+<br/>
+<a target="_new" href="http://www.logic-sunrise.com/forums/topic/82021-faqinfos-importantes-a-lire-avant-de-poster/">La FAQ, contient beaucoup d'informations</a>.
+<br/>
+<a target="_new" href="http://www.logic-sunrise.com/forums/topic/81201-tuto-tester-fusee-gelee-sur-windows/">Tutoriel de lancement d'un payload sous Windows (indispensable pour installer les drivers de la Switch)</a>.
+<br/>
+<a target="_new" href="http://www.logic-sunrise.com/forums/topic/81197-tuto-switch-lancer-linux-sauvegarder-et-decrypter-sa-nand/">Préparation d'une SD contenant Linux pour la Switch et utilisation de celui-ci</a>
+<br/><br/>
+<a target="_new" href="https://sdsetup.com/">créé un package personnalisé pour la Switch</a>
+</p>
+&nbsp;
+<h2>Changelog</h2>
+&nbsp;
+<p>
+Voir <a href="files/changelog.html">cette page de la documentation</a>.
+</p>
+&nbsp;
+<h2>Crédits</h2>
+&nbsp;
+<ul>
+<li>All developers of Switch's CFWs and homebrews that are used in these scripts, can't name all of them but without them my script would have no reason to exist.</li>
+<li>TumGER for the <a target="_blank" href="https://github.com/tumGER/SDFilesSwitch/">SDFilesSwitch pack</a>.</li>
+<li>4NXCI: The-4n</li>
+<li>7zip 16.04: http://www.7-zip.org/</li>
+<li>Biskeydump v6: rajkosto</li>
+<li>BOTW_saveconv v1.1: https://github.com/WemI0/BOTW_SaveConv/releases</li>
+<li>CertNXtractionPack: <a target="_blank" href="https://gist.github.com/SocraticBliss/4410790b6e5a27161f521c45d1eb2684">cette page</a> mais il y a d'autres éléments dont je ne me souviens plus d'où ils proviennent.</li>
+<li>ChoiDuJour 1.0.2: rajkosto</li>
+<li>fat32format 1.08 (compiled and modified by myself): http://www.ridgecrop.demon.co.uk/index.htm?fat32format.htm</li>
+<li>GNU Win32 tools (Md5sum, Cut, DiffUtils, FindUtils, Grep, Head, Sed, Tail): http://gnuwin32.sourceforge.net/</li>
+<li>HacDiskMount 1.0.5-5: rajkosto</li>
+<li>Imx_load Windows binary: rajkosto</li>
+<li>Megatools 1.10.2: https://megatools.megous.com</li>
+<li>Memloader 2.0, U-Boot for Switch and samples: rajkosto</li>
+<li>NSC_Builder: https://github.com/julesontheroad/NSC_BUILDER</li>
+<li>NSPVerify: https://gbatemp.net/download/nspverify.35153/</li>
+<li>Shofel2: <a target="_new" href="https://fail0verflow.com/blog/2018/shofel2/"fail0verfl0w team</a>.</li>
+<li>SplitNSP 1.0.1: https://github.com/AnalogMan151/splitNSP</li>
+<li>SSNCpy: https://github.com/AkdM/ssncpy</li>
+<li>switch-lan-play 0.0.4: https://github.com/spacemeowx2/switch-lan-play</li>
+<li>TegraRcmSmash 1.2.1.3: rajkosto</li>
+<li>Wget 19.4: https://eternallybored.org/misc/wget/</li>
+<li>Winpcap 4.1.3: http://www.winpcap.org/install/</li>
+<li>XCI-Cutter 2.4.2: https://github.com/Destiny1984/XCI-Cutter/releases</li>
+<li>XCI Explorer 1.4.3: https://github.com/StudentBlake/XCI-Explorer/</li>
+<li>Zadig 1.4: https://zadig.akeo.ie/</li>
+<li>Kate Temkin and (re)switched team for all their  unvaluable contributions and work for the Switch.</li>
+<li>eliboa of Logic-sunrise forum for his script to load Linux on Windows, his work and his tuto for the Switch and also for the personal help he had provided to me.</li>
+<li>And everybody else I might have forgotten.</li>
+</ul>
+</body>
+</html>
