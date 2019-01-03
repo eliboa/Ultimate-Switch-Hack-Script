@@ -13,7 +13,7 @@ IF EXIST templogs (
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\version.txt" https://github.com/shadow2560/Ultimate-Switch-Hack-Script/blob/master/tools/version.txt
+tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\version.txt" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/tools/version.txt
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p ushs_version_verif=<templogs\version.txt
 IF "%ushs_version_verif%"=="" goto:end_script
@@ -61,9 +61,9 @@ start explorer.exe "http://www.logic-sunrise.com/forums/topic/81314-shadow256-ul
 goto:define_action_choice
 :open_documentation_page
 set action_choice=
-tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\changelog.html" https://github.com/shadow2560/Ultimate-Switch-Hack-Script/blob/master/DOC/files/changelog.html
+tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\changelog.html" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/DOC/files/changelog.html
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
-start templogs\changelog.html"
+start explorer.exe templogs\changelog.html
 goto:define_action_choice
 :end_script
 rmdir /s /q templogs 2>nul
