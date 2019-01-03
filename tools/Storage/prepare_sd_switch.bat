@@ -38,6 +38,7 @@ goto:list_volumes
 :set_volume_letter
 echo.>con
 echo.>con
+set volume_letter=
 set /p volume_letter=Entrez la lettre du volume de la SD que vous souhaitez utiliser: >con
 call TOOLS\Storage\functions\strlen.bat nb "%volume_letter%"
 IF %nb% EQU 0 (

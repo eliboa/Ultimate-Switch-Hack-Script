@@ -1,6 +1,6 @@
 ::Script by Shadow256
-Setlocal
 @echo off
+Setlocal
 chcp 65001 > nul
 
 
@@ -238,7 +238,7 @@ IF NOT EXIST "downloads\firmwares\%firmware_file_name%" (
 	IF NOT "%md5_verif%"=="%expected_md5%" (
 		IF %md5_try% EQU 3 (
 			echo Le md5 du firmware ne semble pas être correct. Veuillez vérifier votre connexion internet ainsi que l'espace disponible sur votre disque dur puis relancer le script. 
-			goto:endscript
+			goto:end_script
 		) else (
 			echo Le md5 du firmware ne semble pas être correct, le téléchargement va être réessayé.
 			set /a md5_try+=1
@@ -287,6 +287,7 @@ goto:list_volumes
 :set_volume_letter
 echo.
 echo.
+set volume_letter=
 set /p volume_letter=Entrez la lettre du volume de la carte SD que vous souhaitez utiliser: 
 call TOOLS\Storage\functions\strlen.bat nb "%volume_letter%"
 IF %nb% EQU 0 (
@@ -368,5 +369,5 @@ IF /I "%launch_choidujournx_doc%"=="o" start DOC\files\choidujournx.html
 pause 
 echo Nettoyage des fichiers temporaires...
 rmdir /s /q templogs 2>nul
-rmdir /S /Q "firmware_temp" 2>nul
+rmdir /s /q "firmware_temp" 2>nul
 endlocal
