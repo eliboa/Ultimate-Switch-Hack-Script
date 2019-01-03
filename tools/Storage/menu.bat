@@ -28,7 +28,9 @@ echo 7: Fonctions à utiliser occasionnellement?
 echo.
 echo 8: Sauvegarder, restaurer ou remettre les fichiers du script à zéro?
 echo.
-echo 9: Lancer le client pour pouvoir jouer en réseau?
+echo 9: Lancer ou configurer le client pour pouvoir jouer en réseau (serveur Switch-Lan-Play)?
+echo.
+echo 10: Lancer un serveur pour le jeu en réseau (serveur Switch-Lan-Play)?
 echo.
 echo 0: Lancer la documentation (recommandé)?
 echo.
@@ -45,7 +47,8 @@ IF "%action_choice%"=="5" goto:launch_NSC_Builder
 IF "%action_choice%"=="6" goto:others_functions
 IF "%action_choice%"=="7" goto:ocasional_functions
 IF "%action_choice%"=="8" goto:save_and_restaure
-IF "%action_choice%"=="9" goto:netplay
+IF "%action_choice%"=="9" goto:client_netplay
+IF "%action_choice%"=="10" goto:server_netplay
 goto:end_script
 :launch_payload
 set action_choice=
@@ -96,10 +99,16 @@ echo.
 call TOOLS\Storage\save_and_restaure_menu.bat
 @echo off
 goto:define_action_choice
-:netplay
+:client_netplay
 set action_choice=
 echo.
 call TOOLS\Storage\netplay.bat
+@echo off
+goto:define_action_choice
+:server_netplay
+set action_choice=
+echo.
+call TOOLS\Storage\launch_switch_lan_play_server.bat
 @echo off
 goto:define_action_choice
 :launch_doc

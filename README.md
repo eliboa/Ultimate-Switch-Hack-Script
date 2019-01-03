@@ -16,7 +16,7 @@ La licence GPL V3 s'applique sur les scripts batch se trouvant à la racine de c
 * Création de packages de mise à jour via ChoiDuJour avec tous les paramètres.
 * Téléchargement d'un firmware et préparation de la SD avec celui-ci pour ChoiDuJourNX, le homebrew est également copié durant ce script. Ce script permet également d'éventuellement  créé le package de mise à jour via ChoiDuJour dans la foulée.
 * Préparation d'une SD, du formatage (FAT32 ou EXFAT) à la mise en place de différentes solutions, voir la documentation pour plus d'informations sur le contenu des packs.
-* Lancement NSC_Builder. Ce script est utile pour convertir des XCIs ou NSPs en XCIs ou NSPs. Les fichiers convertis via ce script sont nettoyé et rendus, en théorie, indétectable par Nintendo, surtout pour les NSPs. Enfin, ce script permet aussi de créé des NSPs ou XCIs contenant le jeu, ses mises à jour et DLCs dans un seul fichier. Pour plus d'infos, voir [cette page](https://github.com/julesontheroad/NSC_BUILDER).
+* Lancement de NSC_Builder traduit en français par mes soins. Ce script est utile pour convertir des XCIs ou NSPs en XCIs ou NSPs. Les fichiers convertis via ce script sont nettoyé et rendus, en théorie, indétectable par Nintendo, surtout pour les NSPs. Enfin, ce script permet aussi de créé des NSPs ou XCIs contenant le jeu, ses mises à jour et DLCs dans un seul fichier. Pour plus d'infos, voir [cette page](https://github.com/julesontheroad/NSC_BUILDER).
 * Réunification des fichiers d'un dump de la nand effectué par Hekate ou SX OS sur une SD formatée en FAT32 ou sur une SD trop petite pour accueillir le dump en une seule fois dans un fichier "rawnand.bin" qui pourra ensuite être réutilisé pour restaurer la nand.
 * Conversion de fichiers XCI en NSP.
 * Installation de NSP via Goldleaf et le réseau.
@@ -27,6 +27,7 @@ La licence GPL V3 s'applique sur les scripts batch se trouvant à la racine de c
 * Installation de NSP via Goldleaf en USB.
 * Découpage de NSP ou de XCI pour pouvoir les mettre sur une SD formatée en FAT32.
 * Lancement du nécessaire pour jouer en ligne sur le réseau alternatif Switch-Lan-Play. Une liste de serveurs peut aussi être créée.
+* Création et lancement d'un serveur personnel pour Switch-Lan-Play.
 
 ## Bugs connus:
 
