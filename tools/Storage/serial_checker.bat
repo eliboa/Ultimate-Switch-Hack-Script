@@ -44,7 +44,7 @@ IF "%console_serial%"=="" (
 )
 IF "%console_serial%"=="0" goto:end_script
 IF "%console_serial%"=="1" (
-start explorer.exe "http://www.logic-sunrise.com/forums/topic/81314-shadow256-ultimate-switch-hack-script/"
+start explorer.exe "http://www.logic-sunrise.com/forums/topic/84485-base-de-donees-des-numeros-de-serie-de-consoles-patchees-ou-non/"
 set console_serial=
 goto:enter_serial
 )
