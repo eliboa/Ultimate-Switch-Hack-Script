@@ -8,6 +8,19 @@
 <body>
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V1.99.80 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Encodage changé pour le script de lancement du client de Switch-Lan-Play car "Sed" pose problème avec le "chcp 65001" et les lettres accentués. De fait, l'encodage de ce script est passé en "chcp 1252" (encodage "windows-1252") donc il est possible que les anciennes listes de serveurs ne fonctionnent plus avec cette nouvelle version, veuillez donc les recréer. Un bug important a normalement été corrigé dans cette fonction, maintenant les serveurs contenant le caractère "/" devrait pouvoir être renommé correctement.</li>
+<li>Ajout de la possibilité d'activer ou de désactiver la fonction de vérification des mises à jour automatique. Le paramètre peut aussi être réinitialisé si nécessaire via le menu de sauvegarde/restauration/réinitialisation, d'ailleurs le paramètre est sauvegardé par la fonction de sauvegarde.</li>
+<li>Ajout de la boîte à outils (toolbox) permettant de lancer des logiciels possédant une interface graphique ou étant des scripts fonctionnant sans paramètres particuliers (tous programmes stand alone en gros). La toolbox permet également de configurer une liste personnelle de programmes de ce type. Elle sera sauvegardée par la fonction de sauvegarde (l'intégralité du dossier sera sauvegardé) et elle peut aussi être restaurée par défaut (l'intégralité du dossier est restauré par défaut) (la réinitialisation complète du script la réinitialise également).</li>
+<li>La liste de serveurs pour Switch-Lan-Play peut maintenant être réinitialisée via le menu de sauvegarde/restauration/réinitialisation.</li>
+<li>Les différents fichiers de clés peuvent maintenant être supprimer via le menu de sauvegarde/restauration/réinitialisation.</li>
+<li>Nombreuses corrections de bugs dans la fonction de mise à jour automatique.</li>
+<li>Correction d'un bug dans la fonction de sauvegarde qui ne sauvegardait pas correctement le fichier de clés de NSC_Builder.</li>
+<li>Ajout de GuiFormat spécialement pour les outils par défaut de la toolbox.</li>
+<li>Déplacement de certains fichiers de configuration par défaut histoire de mieux organiser les choses.</li>
+<li>Mise à jour de la documentation et du readme.</li>
+</ul>
 <h2>V1.99.03</h2>
 <ul>
 <li>Ajout d'une fonctionnalité permettant de lancer facilement son propre serveur pour Switch-Lan-Play.</li>

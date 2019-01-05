@@ -25,6 +25,7 @@ Notez que je ne pourrai être tenu responsable en cas de domages résultant de l
 <ul>
 <li>Installation des drivers du mode RCM (driver "APX") et du mode libnx_USB_comms utilisé par Tinfoil (driver "libnx_USB_comms") de la Switch, voir <a href="files/install_drivers.html">cette page de la documentation pour plus d'infos</a>.</li>
 <li>Lancement d'un payload via le mode RCM de la Switch. Vous pouvez placer les payloads dans un dossier "Payloads" situé à la racine de ce script ou choisir un fichier de payload via un explorateur. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.</li>
+<li>Gestion d'une boîte à outils (toolbox) permettant de lancer des logiciels en mode autonome avec la possibilité de gérer une liste de logiciel personnel. Il est à noter que les programmes peuvent être intégré au dossier "tools\toolbox" du script se qui permet d'avoir un possibilité de portabilité si cela est souhaité. Enfin, évitez de modifier les fichiers de configuration de la toolbox à la main, préférez le script.</li>
 <li>Lancement de Linux via le mode RCM de la Switch (soit avec le kernel officiel, soit via un <a href="_new" href="https://gbatemp.net/attachments/image-gz-zip.121538/">kernel patché</a> (merci Krazer89 de GBATemp et à Killua de Logic-sunrise pour l'info) pour les SD non compatibles avec le kernel officiel), soit avec un fichier de kernel sélectionnalbe via un explorateur de fichiers. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.</li>
 <li>Récupération des biskey grace au payload Biskeydump dans le fichier "biskey.txt" qui sera situé à la racine du script (les biskey commencent à la ligne 7 du fichier). Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.</li>
 <li>Téléchargement/mise à jour des binaires de Shofel2.</li>
@@ -37,7 +38,7 @@ Notez que je ne pourrai être tenu responsable en cas de domages résultant de l
 <li>Réunification des fichiers d'un dump de la nand effectué par Hekate ou SX OS sur une SD formatée en FAT32 ou sur une SD trop petite pour accueillir le dump en une seule fois dans un fichier "rawnand.bin" qui pourra ensuite être réutilisé pour restaurer la nand.</li>
 <li>Conversion de fichiers XCI en NSP.</li>
 <li>Installation de NSP via Goldleaf et le réseau.</li>
-<li>Sauvegarde et restauration des fichiers importants utilisés par le script.</li>
+<li>Sauvegarde, restauration er réinitialisation des fichiers importants utilisés par le script.</li>
 <li>Vérification des NSPs.</li>
 <li>Conversion d'une sauvegarde de Zelda Breath Of The Wild du format Wii U vers Switch ou inversement.</li>
 <li>Extraction du certificat d'une console via le fichier "PRODINFO.bin" décrypté.</li>
@@ -95,7 +96,7 @@ Voir <a target="_new" href="files/changelog.html">cette page de la documentation
 <li>CertNXtractionPack: <a target="_blank" href="https://gist.github.com/SocraticBliss/4410790b6e5a27161f521c45d1eb2684">cette page</a> mais il y a d'autres éléments dont je ne me souviens plus d'où ils proviennent.</li>
 <li>ChoiDuJour 1.0.2: rajkosto</li>
 <li>fat32format 1.08 (compiled and modified by myself): http://www.ridgecrop.demon.co.uk/index.htm?fat32format.htm</li>
-<li>GNU Win32 tools (Md5sum, Cut, DiffUtils, FindUtils, Grep, Head, Sed, Tail): http://gnuwin32.sourceforge.net/</li>
+<li>GNU Win32 tools (Md5sum, Cut, DiffUtils, FindUtils, Grep, Head, Sed, Tail): http://gnuwin32.sourceforge.net/ (pour Sed, la version provient de l'adresse https://github.com/mbuilov/sed-windows/)</li>
 <li>HacDiskMount 1.0.5-5: rajkosto</li>
 <li>Imx_load Windows binary: rajkosto</li>
 <li>Megatools 1.10.2: https://megatools.megous.com</li>

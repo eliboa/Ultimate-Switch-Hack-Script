@@ -14,23 +14,25 @@ echo Que souhaitez-vous faire?
 echo.
 echo 1: Lancer un payload?
 echo.
-echo 2: Lancer Linux?
+echo 2: Lancer ou configurer la boîte à outils?
 echo.
 echo 3: Monter la nand, la partition boot0, la partition boot1 ou la carte SD comme un disque dur sur votre système d'exploitation?
 echo.
 echo 4: Préparer une carte SD pour le hack Switch?
 echo.
-echo 5: Lancer NSC_Builder qui permet de convertir et nettoyer des NSPs et XCIs, voir la documentation pour plus d'infos?
+echo 5: Lancer NSC_Builder qui permet d'avoir des infos, de convertir et de nettoyer des NSPs et XCIs, voir la documentation pour plus d'infos?
 echo.
 echo 6: Autres fonctions?
 echo.
 echo 7: Fonctions à utiliser occasionnellement?
 echo.
-echo 8: Sauvegarder, restaurer ou remettre les fichiers du script à zéro?
+echo 8: Sauvegarder, restaurer ou réinitialiser les fichiers ou paramètres du script?
 echo.
 echo 9: Lancer ou configurer le client pour pouvoir jouer en réseau (serveur Switch-Lan-Play)?
 echo.
 echo 10: Lancer un serveur pour le jeu en réseau (serveur Switch-Lan-Play)?
+echo.
+echo 11: Lancer Linux?
 echo.
 echo 0: Lancer la documentation (recommandé)?
 echo.
@@ -40,7 +42,7 @@ echo.
 set /p action_choice=Entrez le numéro correspondant à l'action à faire: 
 IF "%action_choice%"=="0" goto:launch_doc
 IF "%action_choice%"=="1" goto:launch_payload
-IF "%action_choice%"=="2" goto:launch_linux
+IF "%action_choice%"=="2" goto:launch_toolbox
 IF "%action_choice%"=="3" goto:mount_discs
 IF "%action_choice%"=="4" goto:prepare_sd
 IF "%action_choice%"=="5" goto:launch_NSC_Builder
@@ -49,6 +51,7 @@ IF "%action_choice%"=="7" goto:ocasional_functions
 IF "%action_choice%"=="8" goto:save_and_restaure
 IF "%action_choice%"=="9" goto:client_netplay
 IF "%action_choice%"=="10" goto:server_netplay
+IF "%action_choice%"=="11" goto:launch_linux
 goto:end_script
 :launch_payload
 set action_choice=
@@ -56,10 +59,10 @@ echo.
 call TOOLS\Storage\launch_payload.bat > log.txt 2>&1
 @echo off
 goto:define_action_choice
-:launch_linux
+:launch_toolbox
 set action_choice=
 echo.
-call TOOLS\Storage\launch_linux.bat
+call TOOLS\Storage\toolbox.bat
 @echo off
 goto:define_action_choice
 :mount_discs
@@ -109,6 +112,12 @@ goto:define_action_choice
 set action_choice=
 echo.
 call TOOLS\Storage\launch_switch_lan_play_server.bat
+@echo off
+goto:define_action_choice
+:launch_linux
+set action_choice=
+echo.
+call TOOLS\Storage\launch_linux.bat
 @echo off
 goto:define_action_choice
 :launch_doc

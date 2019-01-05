@@ -1,0 +1,5 @@
+GuiFormat; tools\GuiFormat\guiformat.exe
+XCI-Explorer; tools\Hactool_based_programs\XCI-Explorer.exe
+HacDiskMount; tools\HacDiskMount\HacDiskMount.exe
+XCI-Cutter; tools\XCI-Cutter\XCI-Cutter.exe
+Goldtree; tools\Goldtree\Goldtree.exe

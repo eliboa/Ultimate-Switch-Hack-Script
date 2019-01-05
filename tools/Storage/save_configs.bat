@@ -34,16 +34,20 @@ IF NOT "%filepath%"=="" set filepath=%filepath%\
 IF NOT "%filepath%"=="" set filepath=%filepath:\\=\%
 echo Sauvegarde en cours... 
 IF NOT EXIST KEY_SAVES mkdir KEY_SAVES
-IF NOT EXIST KEY_SAVES\TOOLS mkdir KEY_SAVES\TOOLS
-IF NOT EXIST "KEY_SAVES\TOOLS\Hactool_based_programs" mkdir "KEY_SAVES\TOOLS\Hactool_based_programs"
+IF NOT EXIST KEY_SAVES\tools mkdir KEY_SAVES\tools
+IF NOT EXIST "KEY_SAVES\tools\Hactool_based_programs" mkdir "KEY_SAVES\tools\Hactool_based_programs"
 copy /V TOOLS\Hactool_based_programs\keys.txt KEY_SAVES\TOOLS\Hactool_based_programs\keys.txt
 copy /V TOOLS\Hactool_based_programs\keys.dat KEY_SAVES\TOOLS\Hactool_based_programs\keys.dat
-IF NOT EXIST "KEY_SAVES\TOOLS\megatools" mkdir "KEY_SAVES\TOOLS\megatools"
+IF NOT EXIST "KEY_SAVES\tools\megatools" mkdir "KEY_SAVES\tools\megatools"
 copy /V "tools\megatools\mega.ini" "KEY_SAVES\tools\megatools\mega.ini"
-IF NOT EXIST "KEY_SAVES\TOOLS\netplay" mkdir "KEY_SAVES\TOOLS\netplay"
+IF NOT EXIST "KEY_SAVES\tools\netplay" mkdir "KEY_SAVES\tools\netplay"
 copy /v TOOLS\netplay\servers_list.txt KEY_SAVES\TOOLS\netplay\servers_list.txt
-IF NOT EXIST "KEY_SAVES\TOOLS\NSC_Builder" mkdir "KEY_SAVES\TOOLS\Hactool_based_programs"
+IF NOT EXIST "KEY_SAVES\tools\NSC_Builder" mkdir "KEY_SAVES\tools\NSC_Builder"
 copy /V TOOLS\NSC_Builder\keys.txt KEY_SAVES\TOOLS\NSC_Builder\keys.txt
+IF NOT EXIST KEY_SAVES\tools\Storage mkdir KEY_SAVES\tools\Storage
+copy /v tools\Storage\verif_update.ini KEY_SAVES\tools\Storage\verif_update.ini
+IF NOT EXIST KEY_SAVES\tools\toolbox mkdir KEY_SAVES\tools\toolbox
+%windir%\System32\Robocopy.exe tools\toolbox KEY_SAVES\tools\toolbox\ /e
 cd KEY_SAVES
 IF NOT "%filepath%"=="" (
 	..\TOOLS\7zip\7za.exe a -y -tzip -sdel -sccUTF-8 "%filepath%%filename%".ushs  -r
