@@ -16,14 +16,9 @@ objStream.Type = 2
 objStream.Position = 0
 objStream.Charset = "windows-1252"
 objStream.WriteText rep
-objStream.Position = 3
-Set objStream2 = CreateObject("ADODB.Stream" )
-objStream2.Open
-objStream2.Type = 1
-objStream.CopyTo objStream2
-objStream2.SaveToFile Wscript.Arguments.Item(3), 2
+'objStream2.Open
+objStream.SaveToFile Wscript.Arguments.Item(3), 2
 objStream.Close
-objStream2.Close
 
 'Const ForReading = 1, ForWriting = 2
 'Set fso = CreateObject("Scripting.FileSystemObject")
