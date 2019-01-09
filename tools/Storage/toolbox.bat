@@ -78,7 +78,7 @@ echo.
 echo N'importe quel autre chiffres: Revenir au menu de sélection du mode de la toolbox.
 echo.
 set launch_software_choice=
-set /p launch_software_choice=Faites votre choix: 
+set /p launch_software_choice=Choisissez un logiciel à lancer ou une action à faire: 
 IF "%launch_software_choice%"=="" set launch_software_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%launch_software_choice%"
 set i=0
@@ -116,7 +116,7 @@ IF NOT "%software_path%"=="" (
 )
 call :extract_base_folder "%software_path%"
 start "" /d "%software_folder_path%" "%software_path%"
-goto:define_action_choice
+goto:launch_software
 :launch_working_folder
 TOOLS\gnuwin32\bin\grep.exe -c "" <tools\toolbox\user_tools.txt > templogs\tempvar.txt
 set /p count_software_user=<templogs\tempvar.txt
@@ -144,7 +144,7 @@ echo.
 echo N'importe quel autre chiffres: Revenir au menu de sélection du mode de la toolbox.
 echo.
 set launch_software_choice=
-set /p launch_software_choice=Faites votre choix: 
+set /p launch_software_choice=Choisissez un logiciel pour lequel son dossier de travail sera ouvert ou une action à faire: 
 IF "%launch_software_choice%"=="" set launch_software_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%launch_software_choice%"
 set i=0
@@ -172,7 +172,7 @@ IF NOT "%software_path%"=="" (
 )
 call :extract_base_folder "%software_path%"
 start explorer.exe "%software_folder_path%"
-goto:define_action_choice
+goto:launch_working_folder
 :config_softwares_list
 echo.
 echo Que souhaitez-vous faire?
