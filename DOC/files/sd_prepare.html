@@ -10,7 +10,21 @@
 &nbsp;
 <a href="../index.html">Revenir à la documentation du script</a>
 <br/>
-<h2>Comment utiliser Kezplez-nx (devenu Lockpick mais le fonctionnement est quasiment le même)</h2>
+<h2>Lancer les homebrews en profitant des 3 GO de RAM</h2>
+&nbsp;
+<p>
+Pour utiliser certains homebrews comme Pplay il est recomandé de lancer le menu de homebrews en utilisant les 3 Go de ram de la switch. De manière générale, il vaut mieux utiliser cette méthode pour lancer les homebrews. Pour ce faire la méthode de lancement du menu de homebrews avec ram varie suivant le payload utilisé:
+</p>
+<ul>
+<li>Sous SX OS il faut maintenir "R" en lançant un jeu  Sous SX OS. Si c'est via un XCI pour que cette méthode fonctionne, il faut d'abord le monter.</li>
+<li>SousAtmosphere il faut configurer le fichier de la carte sd "atmosphere/loader.ini", il faut changer la valeur de "hbl_tid" par le title_id d'un jeu installé sur la console et éventuellement passer la valeur de "override_key" à "R" au lieu de "!R" pour que le comportement soit le même que pour SX OS sur le jeu configuré (si cette valeur n'est pas changé, le jeu se lancera normalement uniquement en maintenant R au lancement de celui-ci)
+<br/>
+Info : Le maintien du bouton "R" doit se faire après la sélection du compte que le jeu lancera (si le jeu fonctionne ainsi car certains jeux procèdent autrement au quel cas le bouton "R" devra être maintenu au moment de cliquer sur l'icône du jeu). 
+Du coup le mieux à faire est de maintenir le bouton "R" juste avant de cliquer sur l'icône du jeu et de le relâcher une fois le Homebrew Menu lancé.</li>
+<li>Pour ReiNX, il faut télécharger <a target="_new" href="https://gbatemp.net/threads/homebrew-menu-loader-legal-nsp.518433/">le HBMenu à installer en NSP</a> puis l'installer avec Goldleaf ou tout autre homebrew permettant d'installer des NSP. Une fois cela fait, vous aurez accès au Homebrew Menu directement via les icônes de jeux de la Switch et les 3 GO de RAM seront utilisés.</li>
+</ul>
+&nbsp;
+<h2>Utiliser Kezplez-nx (devenu Lockpick mais le fonctionnement est quasiment le même)</h2>
 &nbsp;
 <p>
 Ce homebrew permet de dumper les différentes clés utilisés par Hactool et autres dérivés. Attention, ne pas partager le fichier "prod.keys" obtenu grâce à ce homebrew car il contient des clés spécifiques à la console comme la tsec_key par exemple. Kezplez-nx est un peu particulier car il nécessite de dumper certains fichiers spécifique à la console avant de pouvoir être utilisé.
