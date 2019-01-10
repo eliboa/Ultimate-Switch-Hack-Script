@@ -12,7 +12,6 @@ echo Pendant le script, les droits administrateur seront peut-être demandé.
 echo.>con
 echo ATTENTION: Si vous décidez de formater votre carte SD, toutes les données de celle-ci seront perdues. Sauvegardez les données importante avant de formater.>con
 echo ATTENTION: Choisissez bien la lettre du volume qui correspond à votre carte SD car aucune vérification ne pourra être faites à ce niveau là. >con
-echo Note: Chaque pack contient son lanceur de Homebrew propre mais seul un sera utilisé si vous choisissez de copier plusieurs pack, normalement celui étant sensé être le plus compatible avec l'ensemble des packs installés sera copié. >con
 echo.>con
 echo Je ne pourrais être tenu pour responsable de quelque domage que se soit lié à l'utilisation de ce script ou des outils qu'il contient. >con
 echo.>con
