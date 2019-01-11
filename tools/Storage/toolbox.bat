@@ -17,7 +17,6 @@ echo Vous trouverez une liste d'outils par défaut qui interviennent parfois dans
 echo Par contre, vous pouvez également gérer votre liste de programmes personnel et donc en ajouter ou en supprimer un.
 echo.
 echo Attention, du fait du fonctionnement qui peut différer pour chaque programme, vous vous devez de gérer vous-même les dépendances de ceux-ci, cette boîte à outils ne sert qu'à lancer ou organiser vos outils.
-pause
 :define_action_choice
 echo.
 echo Que souhaitez-vous faire?
