@@ -1,12 +1,12 @@
 ::Script by Shadow256
 chcp 65001 > nul
 Setlocal
-cls
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
+IF "%force_update%"=="1" goto:start_verif_update
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 echo :::::::::::::::::::::::::::::::::::::
 echo ::Shadow256 Ultimate Switch Hack Script %ushs_version%::
@@ -70,33 +70,45 @@ IF %ushs_version_verif:~0,1% GTR %ushs_version:~0,1% (
 	set update_finded=O
 	goto:skip_verif_update
 ) else IF %ushs_version_verif:~0,1% LSS %ushs_version:~0,1% (
+	echo Aucune mise à jour trouvée.
+	pause
 	goto:end_script
 )
 IF %ushs_version_verif:~2,1% GTR %ushs_version:~2,1% (
 	set update_finded=O
 	goto:skip_verif_update
 ) else IF %ushs_version_verif:~2,1% LSS %ushs_version:~2,1% (
+	echo Aucune mise à jour trouvée.
+	pause
 	goto:end_script
 )
 IF %ushs_version_verif:~3,1% GTR %ushs_version:~3,1% (
 	set update_finded=O
 	goto:skip_verif_update
 ) else IF %ushs_version_verif:~3,1% LSS %ushs_version:~3,1% (
+	echo Aucune mise à jour trouvée.
+	pause
 	goto:end_script
 )
 IF %ushs_version_verif:~5,1% GTR %ushs_version:~5,1% (
 	set update_finded=O
 	goto:skip_verif_update
 ) else IF %ushs_version_verif:~5,1% LSS %ushs_version:~5,1% (
+	echo Aucune mise à jour trouvée.
+	pause
 	goto:end_script
 )
 IF %ushs_version_verif:~6,1% GTR %ushs_version:~6,1% (
 	set update_finded=O
 	goto:skip_verif_update
 ) else IF %ushs_version_verif:~6,1% LSS %ushs_version:~6,1% (
+	echo Aucune mise à jour trouvée.
+	pause
 	goto:end_script
 )
 IF "%update_finded%"=="" (
+	echo Aucune mise à jour trouvée.
+	pause
 	goto:end_script
 )
 :skip_verif_update
@@ -127,4 +139,4 @@ goto:define_action_choice
 :end_script
 rmdir /s /q templogs 2>nul
 endlocal
-call TOOLS\Storage\menu.bat
+IF NOT "%force_update%"=="1" call TOOLS\Storage\menu.bat
