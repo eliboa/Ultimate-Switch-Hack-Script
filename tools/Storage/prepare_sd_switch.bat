@@ -294,7 +294,7 @@ IF /i "%copy_memloader%"=="o" (
 )
 IF /i "%copy_emu%"=="o" (
 	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\emulators %volume_letter%:\ /mir
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\emulators %volume_letter%:\ /mir /e
 		set del_files_dest_copy=n
 	) else (
 		IF EXIST "%volume_letter%:\switch.settings" move "%volume_letter%:\switch.settings" "%volume_letter%:\switch.settings.bak"

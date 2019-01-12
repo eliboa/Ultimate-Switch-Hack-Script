@@ -157,7 +157,7 @@ set copy_mixed_pack=O
 
 IF /i "%copy_sdfilesswitch_pack%"=="o" (
 	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch_1.0.0 %volume_letter%:\ /mir >nul
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch_1.0.0 %volume_letter%:\ /mir /e >nul
 		set del_files_dest_copy=n
 	) else (
 		IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches"
@@ -181,7 +181,7 @@ IF /i "%copy_memloader%"=="o" (
 )
 IF /i "%copy_emu%"=="o" (
 	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\emulators %volume_letter%:\ /mir
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\emulators %volume_letter%:\ /mir /e
 		set del_files_dest_copy=n
 	) else (
 		IF EXIST "%volume_letter%:\switch.settings" move "%volume_letter%:\switch.settings" "%volume_letter%:\switch.settings.bak"
