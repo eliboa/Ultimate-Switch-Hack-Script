@@ -214,7 +214,7 @@ set copy_mixed_pack=O
 
 IF /i "%copy_sdfilesswitch_pack%"=="o" (
 	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch %volume_letter%:\ /mir
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch %volume_letter%:\ /mir /e
 		set del_files_dest_copy=n
 	) else (
 		IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches"
@@ -235,7 +235,7 @@ IF /i "%copy_sdfilesswitch_pack%"=="o" (
 
 IF /i "%copy_atmosphere_pack%"=="o" (
 	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere %volume_letter%:\ /mir
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere %volume_letter%:\ /mir /e
 		set del_files_dest_copy=n
 	) else (
 		IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches"
@@ -258,7 +258,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 
 IF /i "%copy_reinx_pack%"=="o" (
 	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\reinx %volume_letter%:\ /mir
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\reinx %volume_letter%:\ /mir /e
 		set del_files_dest_copy=n
 	) else (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\reinx %volume_letter%:\ /e
@@ -274,7 +274,7 @@ IF /i "%copy_reinx_pack%"=="o" (
 
 IF /i "%copy_sxos_pack%"=="o" (
 	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sxos %volume_letter%:\ /mir
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sxos %volume_letter%:\ /mir /e
 		set del_files_dest_copy=n
 	) else (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sxos %volume_letter%:\ /e
