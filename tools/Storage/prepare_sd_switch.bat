@@ -231,6 +231,7 @@ IF /i "%copy_sdfilesswitch_pack%"=="o" (
 	IF EXIST "%volume_letter%:\atmosphere\exefs_patches\Signature_Patches_by_br4z0rf_and_Jakibaki" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches\Signature_Patches_by_br4z0rf_and_Jakibaki"
 	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res"
 	IF EXIST "%volume_letter%:\switch\CFWSettings" rmdir /s /q "%volume_letter%:\switch\CFWSettings"
+	del /Q /S "%volume_letter%:\bootloader\.emptydir
 )
 
 IF /i "%copy_atmosphere_pack%"=="o" (
@@ -254,6 +255,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 	IF /i "%atmosphere_enable_nogc_patch%"=="O" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere_patches_nogc %volume_letter%:\ /e
 	)
+	del /Q /S "%volume_letter%:\atmosphere\.emptydir
 )
 
 IF /i "%copy_reinx_pack%"=="o" (
@@ -285,6 +287,7 @@ IF /i "%copy_sxos_pack%"=="o" (
 	IF /i "%copy_sdfilesswitch_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\bootloader\payloads\SXOS.bin
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro"
 	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res"
+	del /Q /S "%volume_letter%:\sxos\.emptydir
 )
 
 IF /i "%copy_memloader%"=="o" (
@@ -307,6 +310,9 @@ IF /i "%copy_emu%"=="o" (
 		)
 	)
 )
+del /Q /S "%volume_letter%:\switch\.emptydir
+del /Q /S "%volume_letter%:\Backup\.emptydir
+del /Q /S "%volume_letter%:\tinfoil\.emptydir
 echo Copie terminée. >con
 :endscript
 pause >con
