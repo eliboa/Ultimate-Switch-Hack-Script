@@ -198,6 +198,7 @@ del /Q /S "%volume_letter%:\switch\.emptydir
 del /Q /S "%volume_letter%:\bootloader\.emptydir
 del /Q /S "%volume_letter%:\Backup\.emptydir
 del /Q /S "%volume_letter%:\tinfoil\.emptydir
+del /Q /S "%volume_letter%:\pk1decryptor\.emptydir
 echo Copie terminée.
 echo.
 echo Vous pouvez maintenant utiliser Hekate pour lancer le CFW en 1.0.0.
