@@ -21,7 +21,7 @@ IF NOT EXIST "..\NSC_Builder\keys.txt" (
 	) else IF EXIST keys.txt (
 		copy keys.txt ..\NSC_Builder\keys.txt
 		goto:skip_keys_file_creation
-		) else (
+	) else (
 		echo Fichiers clés non trouvé, veuillez suivre les instructions.
 		goto:keys_file_creation
 	)
@@ -33,21 +33,18 @@ echo.
 echo Veuillez renseigner le fichier de clés dans la fenêtre suivante.
 pause
 %windir%\system32\wscript.exe //Nologo "%calling_script_dir%\TOOLS\Storage\functions\open_file.vbs" "" "Fichier de liste de clés Switch(*.*)|*.*|" "Sélection du fichier de clés pour Hactool" "%calling_script_dir%\templogs\tempvar.txt"
-	set /p keys_file_path=<"%calling_script_dir%\templogs\tempvar.txt"
-	IF "%keys_file_path%"=="" (
+set /p keys_file_path=<"%calling_script_dir%\templogs\tempvar.txt"
+IF "%keys_file_path%"=="" (
 	echo Aucun fichier clés renseigné, le script va s'arrêter.
 	goto:endscript
-	)
-	
-	copy "%keys_file_path%" ..\NSC_Builder\keys.txt
-	
+)
+copy "%keys_file_path%" ..\NSC_Builder\keys.txt
 :skip_keys_file_creation
 %calling_script_dir:~0,1%:
 cd "%calling_script_dir%"
-call TOOLS\NSC_Builder\NSCB.bat
-color
+start tools\NSC_Builder\NSCB.bat
+::color
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
-cd ..\..
 echo.
 set /p open_output_dir=Souhaitez-vous ouvrir le répertoire contenant les fichiers convertis? (O/n): 
 IF NOT "%open_output_dir%"=="" set open_output_dir=%open_output_dir:~0,1%
@@ -56,16 +53,29 @@ IF /I "%open_output_dir%"=="o" (
 	set /p NSCB_output_dir=<templogs\tempvar.txt
 )
 set NSCB_output_dir=%NSCB_output_dir:"=%
+echo %NSCB_output_dir%
+pause
 IF /I "%open_output_dir%"=="o" (
+	IF "%NSCB_output_dir:~1,1%"==":" (
+		IF NOT EXIST "%NSCB_output_dir%" (
+			echo Le répertoire n'existe pas, peut-être que NSC_Builder n'a pas été exécuté totalement, par exemple vous pourriez avoir quitté le script avant la fin de la configuration de celui-ci.
+			goto:endscript
+		) else IF NOT EXIST "%~dp0..\NSC_Builder\%NSCB_output_dir%" (
+			echo Le répertoire n'existe pas, peut-être que NSC_Builder n'a pas été exécuté totalement, par exemple vous pourriez avoir quitté le script avant la fin de la configuration de celui-ci.
+			goto:endscript
+		)
+	)
+)
+	IF /I "%open_output_dir%"=="o" (
 	IF "%NSCB_output_dir:~1,1%"==":" (
 		start explorer.exe "%NSCB_output_dir%"
 	) else (
 		start explorer.exe "%~dp0..\NSC_Builder\%NSCB_output_dir%"
 	)
 )
+:endscript
 set open_output_dir=
 set NSCB_output_dir=
-:endscript
 pause
 %calling_script_dir:~0,1%:
 cd "%calling_script_dir%"
