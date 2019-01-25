@@ -212,28 +212,6 @@ IF /i "%copy_emu%"=="o" (
 echo Copie en cours... >con
 set copy_mixed_pack=O
 
-IF /i "%copy_sdfilesswitch_pack%"=="o" (
-	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch %volume_letter%:\ /mir /e
-		set del_files_dest_copy=n
-	) else (
-		IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches"
-		IF EXIST "%volume_letter%:\atmosphere\exefs_patches" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches"
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch %volume_letter%:\ /e
-	)
-	IF /i "%copy_mixed_pack%"=="O" %windir%\System32\Robocopy.exe TOOLS\sd_switch\mixed %volume_letter%:\ /e
-	set copy_mixed_pack=N
-	IF /i "%copy_payloads%"=="o" copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\Hekate.bin
-	IF /i "%copy_memloader%"=="o" copy /V /B TOOLS\sd_switch\payloads\memloader.bin %volume_letter%:\bootloader\payloads\memloader.bin
-	IF EXIST "%volume_letter%:\bootlogo.bmp" del /q "%volume_letter%:\bootlogo.bmp"
-	IF EXIST "%volume_letter%:\hekate_ipl.ini" del /q "%volume_letter%:\hekate_ipl.ini"
-	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro"
-	IF EXIST "%volume_letter%:\atmosphere\exefs_patches\Signature_Patches_by_br4z0rf_and_Jakibaki" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches\Signature_Patches_by_br4z0rf_and_Jakibaki"
-	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res"
-	IF EXIST "%volume_letter%:\switch\CFWSettings" rmdir /s /q "%volume_letter%:\switch\CFWSettings"
-	del /Q /S "%volume_letter%:\bootloader\.emptydir
-)
-
 IF /i "%copy_atmosphere_pack%"=="o" (
 	IF /i "%del_files_dest_copy%"=="o" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere %volume_letter%:\ /mir /e
@@ -256,6 +234,28 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere_patches_nogc %volume_letter%:\ /e
 	)
 	del /Q /S "%volume_letter%:\atmosphere\.emptydir
+)
+
+IF /i "%copy_sdfilesswitch_pack%"=="o" (
+	IF /i "%del_files_dest_copy%"=="o" (
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch %volume_letter%:\ /mir /e
+		set del_files_dest_copy=n
+	) else (
+		IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches"
+		IF EXIST "%volume_letter%:\atmosphere\exefs_patches" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches"
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch %volume_letter%:\ /e
+	)
+	IF /i "%copy_mixed_pack%"=="O" %windir%\System32\Robocopy.exe TOOLS\sd_switch\mixed %volume_letter%:\ /e
+	set copy_mixed_pack=N
+	IF /i "%copy_payloads%"=="o" copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\Hekate.bin
+	IF /i "%copy_memloader%"=="o" copy /V /B TOOLS\sd_switch\payloads\memloader.bin %volume_letter%:\bootloader\payloads\memloader.bin
+	IF EXIST "%volume_letter%:\bootlogo.bmp" del /q "%volume_letter%:\bootlogo.bmp"
+	IF EXIST "%volume_letter%:\hekate_ipl.ini" del /q "%volume_letter%:\hekate_ipl.ini"
+	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro"
+	IF EXIST "%volume_letter%:\atmosphere\exefs_patches\Signature_Patches_by_br4z0rf_and_Jakibaki" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches\Signature_Patches_by_br4z0rf_and_Jakibaki"
+	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res"
+	IF EXIST "%volume_letter%:\switch\CFWSettings" rmdir /s /q "%volume_letter%:\switch\CFWSettings"
+	del /Q /S "%volume_letter%:\bootloader\.emptydir
 )
 
 IF /i "%copy_reinx_pack%"=="o" (
