@@ -2145,3 +2145,4 @@ IF "%ushs_launch%"=="Y" (
 )
 
 :end_script
+exit
