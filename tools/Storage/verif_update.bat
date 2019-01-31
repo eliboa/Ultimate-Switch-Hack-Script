@@ -144,12 +144,15 @@ goto:end_script
 :update_packs
 set packs_action_choice=
 rmdir /s /q tools\sd_switch
+tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\changelog.html" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/DOC/files/packs_changelog.html
+title Shadow256 Ultimate Switch Hack Script %ushs_version%
 tools\gitget\SVN\svn.exe export https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk/tools/sd_switch tools\sd_switch --force
 IF %errorlevel% NEQ 0 (
 	echo Un problème est survenu durant la mise à jour des packs, veuillez vérifier votre connexion internet et réessayer. Si cela ne vient pas de la connexion internet, vérifiez également l'espace disque pour la partition sur laquelle se trouve le script et libérez au moins 500 MO sur celui-ci avant de réessayer.
 	echo Notez que vous devez réussir la mise à jour pour que le script de préparation d'une SD ou d'une SD pour la version 1.0.0 du firmware fonctionne correctement. Si la mise à jour ne fonctionne vraiment pas, veuillez retélécharger le script au complet et le réinstaller.
 	goto:define_packs_action_choice
 ) else (
+	copy templogs\changelog.html DOC\files\packs_changelog.html
 	echo Mise à jour des packs effectuée avec succès.
 	pause
 	goto:end_script
