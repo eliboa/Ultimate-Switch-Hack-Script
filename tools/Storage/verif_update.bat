@@ -66,54 +66,39 @@ tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p ushs_version_verif=<templogs\version.txt
 IF "%ushs_version_verif%"=="" goto:end_script
+set /p ushs_packs_version=wtools\sd_switch\version.txt
+tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\version.txt" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/tools/sd_switch/version.txt
+title Shadow256 Ultimate Switch Hack Script %ushs_version%
+set /p ushs_packs_version_verif=<templogs\version.txt
+IF "%ushs_packs_version_verif%"=="" goto:end_script
+IF %ushs_packs_version_verif% GTR %ushs_packs_version% set update_packs_finded=O
 IF %ushs_version_verif:~0,1% GTR %ushs_version:~0,1% (
 	set update_finded=O
 	goto:skip_verif_update
-) else IF %ushs_version_verif:~0,1% LSS %ushs_version:~0,1% (
-	echo Aucune mise à jour trouvée.
-	pause
-	goto:end_script
 )
 IF %ushs_version_verif:~2,1% GTR %ushs_version:~2,1% (
 	set update_finded=O
 	goto:skip_verif_update
-) else IF %ushs_version_verif:~2,1% LSS %ushs_version:~2,1% (
-	echo Aucune mise à jour trouvée.
-	pause
-	goto:end_script
 )
 IF %ushs_version_verif:~3,1% GTR %ushs_version:~3,1% (
 	set update_finded=O
 	goto:skip_verif_update
-) else IF %ushs_version_verif:~3,1% LSS %ushs_version:~3,1% (
-	echo Aucune mise à jour trouvée.
-	pause
-	goto:end_script
 )
 IF %ushs_version_verif:~5,1% GTR %ushs_version:~5,1% (
 	set update_finded=O
 	goto:skip_verif_update
-) else IF %ushs_version_verif:~5,1% LSS %ushs_version:~5,1% (
-	echo Aucune mise à jour trouvée.
-	pause
-	goto:end_script
 )
 IF %ushs_version_verif:~6,1% GTR %ushs_version:~6,1% (
 	set update_finded=O
 	goto:skip_verif_update
-) else IF %ushs_version_verif:~6,1% LSS %ushs_version:~6,1% (
-	echo Aucune mise à jour trouvée.
-	pause
-	goto:end_script
-)
-IF "%update_finded%"=="" (
-	echo Aucune mise à jour trouvée.
-	pause
-	goto:end_script
 )
 :skip_verif_update
-echo Mise à jour du script en version %ushs_version_verif% trouvée.
+IF "%update_finded%"=="" (
+	echo Aucune mise à jour générale du script trouvée.
+	goto:check_packs_update
+)
 :define_action_choice
+echo Mise à jour du script en version %ushs_version_verif% trouvée.
 echo.
 echo Que souhaitez-vous faire?
 echo.
@@ -124,7 +109,7 @@ echo.
 set /p action_choice=Faites votre choix: 
 IF "%action_choice%"=="1" goto:open_project_page
 IF "%action_choice%"=="2" goto:open_documentation_page
-goto:end_script
+goto:check_packs_update
 
 :open_project_page
 set action_choice=
@@ -136,6 +121,37 @@ tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 start explorer.exe templogs\changelog.html
 goto:define_action_choice
+:check_packs_update
+IF "%update_packs_finded%"=="" (
+	echo Aucune mise à jour des packs trouvée.
+	pause
+	goto:end_script
+)
+:define_packs_action_choice
+echo Mise à jour des packs en version %packs_version_verif% trouvée.
+echo.
+echo Que souhaitez-vous faire?
+echo.
+echo 1: Mettre à jour les packs?
+echo 2: Ouvrir la page de la documentation contenant le Changelog des packs?
+echo N'importe quel autre choix: Continuer sans rien faire?
+echo.
+set /p packs_action_choice=Faites votre choix: 
+IF "%packs_action_choice%"=="1" goto:update_packs
+IF "%packs_action_choice%"=="2" goto:open_packs_changelog_page
+goto:end_script
+
+:update_packs
+set packs_action_choice=
+rmdir /s /q tools\sd_switch
+tools\gitget\vnc\vnc.exe export https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk/tools/sd_switch tools\sd_switch
+goto:define_packs_action_choice
+:open_packs_changelog_page
+set pack_action_choice=
+tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\changelog.html" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/DOC/files/packs_changelog.html
+title Shadow256 Ultimate Switch Hack Script %ushs_version%
+start explorer.exe templogs\changelog.html
+goto:define_packs_action_choice
 :end_script
 rmdir /s /q templogs 2>nul
 endlocal
