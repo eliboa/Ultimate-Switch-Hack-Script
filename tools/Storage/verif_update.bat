@@ -66,7 +66,7 @@ tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p ushs_version_verif=<templogs\version.txt
 IF "%ushs_version_verif%"=="" goto:end_script
-set /p ushs_packs_version=wtools\sd_switch\version.txt
+set /p ushs_packs_version=<tools\sd_switch\version.txt
 tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\version.txt" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/tools/sd_switch/version.txt
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p ushs_packs_version_verif=<templogs\version.txt
