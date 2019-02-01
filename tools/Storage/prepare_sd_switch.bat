@@ -7,6 +7,11 @@ IF EXIST templogs (
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
+IF EXIST "tools\packs_version.txt" (
+	echo Il semble qu'une mise à jour des packs via le script ait échouée précédemment et n'ai pas été réussie depuis, par sécurité ce script va donc s'arrêter.>con
+	echo Si vous êtes certains d'avoir mis à jour correctement le dossier des packs (par exemple en retéléchargeant le script et en extrayant le dossier "tools\sd_switch" de l'archive dans le dossier "tools" du script, vous pouvez supprimer manuellement le fichier "tools\packs_version.txt" et relancer ce script et cette erreur n'apparaîtra plus. Notez que si ceci n'a pas été fait correctement, ce script pourrait avoir des comportements anormaux.>con
+	goto:endscript
+)
 echo Ce script va vous permettre de préparer une carte SD pour le hack Switch en y installant les outils importants. >con
 echo Pendant le script, les droits administrateur seront peut-être demandé.
 echo.>con
