@@ -66,7 +66,11 @@ tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p ushs_version_verif=<templogs\version.txt
 IF "%ushs_version_verif%"=="" goto:end_script
-set /p ushs_packs_version=<tools\sd_switch\version.txt
+IF EXIST tools\sd_switch\version.txt (
+	set /p ushs_packs_version=<tools\sd_switch\version.txt
+) else (
+	set /p ushs_packs_version=<tools\packs_version.txt
+)
 tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\version.txt" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/tools/sd_switch/version.txt
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p ushs_packs_version_verif=<templogs\version.txt
@@ -143,6 +147,7 @@ goto:end_script
 
 :update_packs
 set packs_action_choice=
+copy tools\sd_switch\version.txt tools\packs_version.txt
 rmdir /s /q tools\sd_switch
 tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\changelog.html" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/DOC/files/packs_changelog.html
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
@@ -152,6 +157,7 @@ IF %errorlevel% NEQ 0 (
 	echo Notez que vous devez réussir la mise à jour pour que le script de préparation d'une SD ou d'une SD pour la version 1.0.0 du firmware fonctionne correctement. Si la mise à jour ne fonctionne vraiment pas, veuillez retélécharger le script au complet et le réinstaller.
 	goto:define_packs_action_choice
 ) else (
+	del /q tools\packs_version.txt
 	copy templogs\changelog.html DOC\files\packs_changelog.html
 	echo Mise à jour des packs effectuée avec succès.
 	pause
