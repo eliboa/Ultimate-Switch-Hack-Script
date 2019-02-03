@@ -17,6 +17,8 @@ echo 5: Vérifier si des numéros de série de consoles sont patchées ou non?
 echo.
 echo 6: Préparer une SD avec un pack Kosmos allégé et configuré pour fonctionner avec le firmware 1.0.0?
 echo.
+echo 7: Vérifier un fichier de clés?
+echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
 echo.
@@ -27,6 +29,7 @@ IF "%action_choice%"=="3" goto:install_drivers
 IF "%action_choice%"=="4" goto:create_update
 IF "%action_choice%"=="5" goto:verif_serials
 IF "%action_choice%"=="6" goto:prepare_sd_1.0.0
+IF "%action_choice%"=="7" goto:test_keys
 goto:end_script
 :biskey_dump
 set action_choice=
@@ -62,6 +65,12 @@ goto:define_action_choice
 set action_choice=
 echo.
 call TOOLS\Storage\prepare_sd_switch_1.0.0.bat
+@echo off
+goto:define_action_choice
+:test_keys
+set action_choice=
+echo.
+call TOOLS\Storage\test_keys.bat
 @echo off
 goto:define_action_choice
 :end_script

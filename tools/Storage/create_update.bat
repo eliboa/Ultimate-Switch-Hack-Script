@@ -47,6 +47,13 @@ pause
 	copy "%keys_file_path%" keys.txt
 	
 :skip_keys_file_creation
+IF EXIST ChoiDuJour_keys.txt del /q ChoiDuJour_keys.txt
+..\python3_scripts\Keys_management\keys_management.exe create_choidujour_keys_file keys.txt
+IF NOT EXIST ChoiDuJour_keys.txt (
+	echo Il semble que le fichier de clés nécessaire à ChoiDuJour n'ait pu être créé, veuillez vérifier votre fichier de clés et relancer le script.
+	echo Pour vous aider, regarder les clés incorrectes qui se sont affichées juste avant.
+	goto:endscript
+)
 IF NOT "%update_file_path%"=="" goto:skip_hfs0_select
 echo Il est possible de lancer XCI Explorer pour extraire la partition "update" d'un fichier XCI. Notez que si vous choisissez de le lancer, le script ne pourra continuer qu'après la fermeture de XCI Explorer.
 set /p launch_xci_explorer=Souhaitez-vous lancer XCI Explorer? (O/n): 
@@ -105,7 +112,7 @@ IF NOT EXIST "%calling_script_dir%\update_packages\*.*" (
 cd "%calling_script_dir%\update_packages"
 del /q list_of_dirs.ini 2>nul
 dir /A:D >list_of_dirs.ini
-"%this_script_dir%\..\Hactool_based_programs\tools\ChoiDujour.exe" --keyset="%this_script_dir%\..\Hactool_based_programs\keys.txt" %no_exfat_param% %fspatches% "%update_file_path%"
+"%this_script_dir%\..\Hactool_based_programs\tools\ChoiDujour.exe" --keyset="%this_script_dir%\..\Hactool_based_programs\ChoiDuJour_keys.txt" %no_exfat_param% %fspatches% "%update_file_path%"
 IF %errorlevel% EQU 0 (
 	echo Firmware créé avec succès dans le répertoire "update_packages" du script.
 	goto:skip_verif_fw_dir

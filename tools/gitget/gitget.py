@@ -5,7 +5,7 @@ Download a specific folder from a github repo:
 """
 __author__ = 'Divyansh Prakash'
 
-import inspect, os
+import os
 import sys
 import subprocess
 
@@ -24,6 +24,6 @@ if __name__ == '__main__':
       # print inspect.getfile(inspect.currentframe())
       # print os.path.dirname(os.path.realpath(__file__))
       # print os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) # script directory
-      subprocess.call([os.path.join(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))), 'svn\svn.exe'), 'checkout', '/'.join([head, 'trunk', folder_url])])
+      subprocess.call([os.path.join(os.path.dirname(os.path.abspath(os.path.realpath(sys.argv[0]))), 'svn\svn.exe'), 'checkout', '/'.join([head, 'trunk', folder_url])])
   else:
     print 'use:\tgitget.py https://github.com/user/project/tree/branch-name/folder\n'

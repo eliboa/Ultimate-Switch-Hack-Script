@@ -8,6 +8,14 @@
 <body>
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.00.07</h2>
+<ul>
+<li>Ajout d'un script Python permettant de tester les clés du fichier "prod.keys" (connu aussi sous le nom "keys.txt" ou "keys.dat"...) pour savoir si des clés sont inconnues/uniques ou incorrectes. Ce script permet aussi de créer un fichier de clés pour ChoiDuJour ne contenant que les clés nécessaires à ce processus; le fichier sera basé sur un fichier de clés complet qui devra être fourni par l'utilisateur. Enfin, le script permet aussi de créer le fichier permettant de vérifier les clés dans les autres fonctionnalités mais attention, aucune vérification n'est faite durant ce processus et le fichier précédent sera supprimé donc n'utilisez cette fonctionnalité que si vous savez se que vous faites. Le script se trouve dans le dossier "tools\python3_scripts\Keys_management" et nécessite Python 3 pour être exécuté via le fichier "keys_management.py"; exécuter le script sans paramètre affichera son aide. Il y a beaucoup de choses à améliorer pour ce script (optimisation du code notemment) mais pour l'instant il fonctionne ainsi, c'est mon premier vrai script Python donc soyez indulgent.</li>
+<li>Lorsqu'une création de package de mise à jour via ChoiDuJour est tentée, le fichier de clé utilisé est maintenant créé à la volé via le fichier de clés fourni au script, ceci permet d'éviter les erreurs liées aux clés inconnues de Hactool pendant le processus. Ceci est rendu possible grâce au script Python décrit précédemment.</li>
+<li>Ajout d'une fonction permettant de tester les clés qui ne sont pas uniques à la console et de savoir si certaines sont fausses. Par exemple, il est possible de tester un fichier de clé "prod.keys" créé par le homebrew Lockpick. Ceci est rendu possible grâce au script Python décrit précédemment. Cette fonctionnalité se trouve dans le menu des fonctions occasionnelles.</li>
+<li>Mise à jour du script Python de Gitget pour que le chemin de "SVN.exe" soit correctement détecté quelque soit l'endroit d'où le script est exécuté.</li>
+<li>Mise à jour du readme pour inclure la licence GPL V3 au nouveau script Python créé.</li>
+</ul>
 <h2>V2.00.06</h2>
 <ul>
 <li>Ajout d'une vérification dans les scripts de préparation d'une SD au cas où la mise à jour des packs via le script ait échoué. Si le fichier "tools\packs_version.txt" est trouvé, ces scripts ne fonctionneront pas car ce fichier indique qu'une mise à jour des packs via le script a ratée alors que la non présence de ce fichier indique que la mise à jour des packs via le script a réussie.</li>
