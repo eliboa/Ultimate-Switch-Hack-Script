@@ -61,9 +61,14 @@ def test_keys_file(keys_file):
 	for item in keys_source_list:
 		md5_list[i][1] = hashlib.md5(item[1].upper().encode('utf-8')).hexdigest()
 		i += 1
-	md5_source_file = open(os.path.join(os.path.dirname(os.path.abspath(os.path.realpath(sys.argv[0]))), 'md5_sources.txt'), 'r', encoding='utf-8')
-	md5_source_list = md5_source_file.readlines()
-	md5_source_file.close()
+	try:
+		md5_source_file = open(os.path.join(os.path.dirname(os.path.abspath(os.path.realpath(sys.argv[0]))), 'md5_sources.txt'), 'r', encoding='utf-8')
+		md5_source_list = md5_source_file.readlines()
+		md5_source_file.close()
+	except:
+		print ('Le fichier "md5_sources.txt" devant se trouver à côté de ce script est manquant, cette fonction ne peut pas continuer.')
+		print ('Pour corriger ce problème, veuillez créer un fichier avec le paramètre "create_md5_file" ou télécharger le fichier "md5_sources.txt" sur le Github du projet et le mettre à côté de ce script.')
+		return 1
 	i = 0
 	for item in md5_source_list:
 		if (item == ''):
@@ -122,6 +127,8 @@ def test_keys_file(keys_file):
 
 def create_choidujour_keys_file(keys_file):
 	keys_source_list = test_keys_file(keys_file)
+	if (keys_source_list == 1):
+		return 0
 	choidujour_keys_needed = ['master_key_source', 'master_key_00', 'master_key_01', 'header_key', 'aes_kek_generation_source', 'aes_key_generation_source', 'key_area_key_application_source', 'key_area_key_ocean_source', 'key_area_key_system_source', 'package2_key_source']
 	choidujour_keys_prefered = ['master_key_02', 'master_key_03', 'master_key_04', 'master_key_05', 'master_key_06', 'master_key_07']
 	choidujour_list_prefered_usable = []
