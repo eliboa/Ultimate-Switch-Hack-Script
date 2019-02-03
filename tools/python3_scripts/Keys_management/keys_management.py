@@ -142,7 +142,6 @@ def create_choidujour_keys_file(keys_file):
 	keys_source_list = test_keys_file(keys_file)
 	choidujour_keys_needed = ['master_key_source', 'master_key_00', 'master_key_01', 'header_key', 'aes_kek_generation_source', 'aes_key_generation_source', 'key_area_key_application_source', 'key_area_key_ocean_source', 'key_area_key_system_source', 'package2_key_source']
 	choidujour_keys_prefered = ['master_key_02', 'master_key_03', 'master_key_04', 'master_key_05', 'master_key_06', 'master_key_07']
-	i = 0
 	choidujour_list_prefered_usable = []
 	stop_keys_prefered_insertion = 0
 	for keys_prefered in choidujour_keys_prefered:
@@ -157,8 +156,6 @@ def create_choidujour_keys_file(keys_file):
 			j +=1
 		if (stop_keys_prefered_insertion == 1):
 			break
-		i +=1
-	i = 0
 	choidujour_list_needed_usable = []
 	stop_keys_needed_insertion = 0
 	for keys_needed in choidujour_keys_needed:
@@ -174,7 +171,6 @@ def create_choidujour_keys_file(keys_file):
 		if (stop_keys_needed_insertion == 1):
 			print ('La clé "' + keys_needed + '" obligatoire ne se trouve pas dans le fichier de clé, le script ne peux pas continuer.')
 			return 0
-		i +=1
 	print('La dernière clé facultative trouvée est la clé "' + choidujour_list_prefered_usable[-1][0] + '", vous ne pourrez générer que des packages de mise à jour jusqu\'au firmware n\'utilisant que les clés jusqu\'à celle-ci.')
 	choidujour_keys_file = open('ChoiDuJour_keys.txt', 'w', encoding='utf-8')
 	choidujour_keys_file.write(choidujour_list_needed_usable[0][0] + ' = ' + choidujour_list_needed_usable[0][1] + '\n')
