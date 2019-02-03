@@ -10,6 +10,9 @@ from copy import deepcopy
 import sys
 import hashlib
 import os
+# import time
+
+# start_time = time.time()
 
 def file_exist(fname):
 	try:
@@ -69,22 +72,18 @@ def test_keys_file(keys_file):
 		md5_source_list[i][0] = md5_source_list[i][0].strip()
 		md5_source_list[i][1] = md5_source_list[i][1][0:-1].strip()
 		i +=1
-	i = 0
-	keys_not_verified = [0] * len(md5_list)
+	keys_not_verified = []
+	keys_incorrect =[]
 	for keys_source in md5_list:
+		i = 0
 		for keys_verified in md5_source_list:
 			if (keys_source[0] == keys_verified[0]):
-				keys_not_verified[i] = 0
+				if (keys_source[1] != keys_verified[1]):
+					keys_incorrect.append(keys_source[0])
 				break
 			else:
-				keys_not_verified[i] = keys_source[0]
-		i += 1
-	i = 0
-	while (i < len(keys_not_verified)):
-		item = keys_not_verified[i]
-		if (item == 0):
-			del(keys_not_verified[i])
-		else:
+				if (i+1 == len(md5_source_list)):
+					keys_not_verified.append(keys_source[0])
 			i += 1
 	i = 0
 	for key_name in keys_not_verified:
@@ -96,23 +95,6 @@ def test_keys_file(keys_file):
 				break
 			j += 1
 		i += 1
-	keys_incorrect =[0] * len(md5_list)
-	i = 0
-	for keys_source in md5_list:
-		for keys_verified in md5_source_list:
-			if (keys_source[0] == keys_verified[0]):
-				if (keys_source[1] != keys_verified[1]):
-					keys_incorrect[i] = keys_source[0]
-				else:
-					keys_incorrect[i] = 0
-		i += 1
-	i = 0
-	while (i < len(keys_incorrect)):
-		item = keys_incorrect[i]
-		if (item == 0):
-			del(keys_incorrect[i])
-		else:
-			i += 1
 	i = 0
 	for key_name in keys_incorrect:
 		j = 0
@@ -210,6 +192,7 @@ if (sys.argv[1] == 'create_md5_file'):
 	sys.exit(0)
 elif (sys.argv[1] == 'test_keys_file'):
 	test_keys_file(sys.argv[2])
+	# print("Temps d execution : %s secondes ---" % (time.time() - start_time))
 	sys.exit(0)
 elif (sys.argv[1] == 'create_choidujour_keys_file'):
 	create_choidujour_keys_file(sys.argv[2])
