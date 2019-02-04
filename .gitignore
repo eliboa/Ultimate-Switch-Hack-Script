@@ -1,9 +1,12 @@
 /templogs
+/downloads
+/update_packages
 /log.txt
 /tools/Storage/verif_update.ini
 /tools/toolbox/user_tools.txt
 /tools/Hactool_based_programs/keys.txt
 /tools/Hactool_based_programs/keys.dat
+/tools/Hactool_based_programs/ChoiDuJour_keys.txt
 /tools/NSC_Builder/keys.txt
 /tools/HacDiskMount/HacDiskMount.log
 /HacDiskMount.log
