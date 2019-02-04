@@ -14,6 +14,12 @@ import os
 
 # start_time = time.time()
 
+if (sys.version_info[0] == 3):
+	pass
+else:
+	print ('Python 3 est requis pour lancer ce script, pas Python ' + str(sys.version_info[0]) + '.')
+	sys.exit(103)
+
 def file_exist(fname):
 	try:
 		f = open(fname,'r')
@@ -191,11 +197,11 @@ def create_choidujour_keys_file(keys_file):
 
 def help():
 	print ('Utilisation:')
-	print()
-	print('keys_management.py Action Fichier_de_clés')
-	print()
-	print('Le paramètre "Action" peut avoir les valeurs suivantes:')
-	print('create_md5_file : Cré le fichier MD5 servant ensuite à la vérification des clés. La fonction analyse le fichier de clés et cré un fichier contenant le nom de chaque clé associé au MD5 de celle-ci. Attention car aucune vérification n\'est faite sur les clés uniques pour chaque console ou pour des erreurs éventuelles donc soyez certain de se que vous faites si vous utilisez cette fonction car l\'ancien fichier de vérification sera supprimé.')
+	print ()
+	print ('keys_management.py Action Fichier_de_clés')
+	print ()
+	print ('Le paramètre "Action" peut avoir les valeurs suivantes:')
+	print ('create_md5_file : Cré le fichier MD5 servant ensuite à la vérification des clés. La fonction analyse le fichier de clés et cré un fichier contenant le nom de chaque clé associé au MD5 de celle-ci. Attention car aucune vérification n\'est faite sur les clés uniques pour chaque console ou pour des erreurs éventuelles donc soyez certain de se que vous faites si vous utilisez cette fonction car l\'ancien fichier de vérification sera supprimé.')
 	print ('test_keys_file : Test un fichier de clés en le comparant au fichier contenant les MD5 des clés connues et affiche le nombre de clés analysées, les clés inconnues ou uniques à la console trouvées ainsi que les clés incorrectes trouvées.')
 	print ('create_choidujour_keys_file : Permet de créé un fichier de clés ne contenant que les clés nécessaire à ChoiDuJour pour créer un package de mise à jour. Le fichier sera nommé "ChoiDuJour_keys.txt" et se trouvera dans le dossier à partir duquel le script a été exécuté.')
 	return 1
