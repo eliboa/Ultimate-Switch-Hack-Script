@@ -68,7 +68,7 @@ def test_keys_file(keys_file):
 	except:
 		print ('Le fichier "md5_sources.txt" devant se trouver à côté de ce script est manquant, cette fonction ne peut pas continuer.')
 		print ('Pour corriger ce problème, veuillez créer un fichier avec le paramètre "create_md5_file" ou télécharger le fichier "md5_sources.txt" sur le Github du projet et le mettre à côté de ce script.')
-		return 1
+		return 0
 	i = 0
 	for item in md5_source_list:
 		if (item == ''):
@@ -136,11 +136,11 @@ def test_keys_file(keys_file):
 		print ('Clé incorrecte trouvée: ' + keys_incorrect[0])
 	else:
 		print (str(len(keys_incorrect)) + 'Clés incorrectes trouvées: ' + ', '.join(keys_incorrect))
-	return(keys_source_list)
+	return(keys_source_list, keys_not_verified, keys_not_present, keys_incorrect)
 
 def create_choidujour_keys_file(keys_file):
 	keys_source_list = test_keys_file(keys_file)
-	if (keys_source_list == 1):
+	if (keys_source_list == 0):
 		return 0
 	choidujour_keys_needed = ['master_key_source', 'master_key_00', 'master_key_01', 'header_key', 'aes_kek_generation_source', 'aes_key_generation_source', 'key_area_key_application_source', 'key_area_key_ocean_source', 'key_area_key_system_source', 'package2_key_source']
 	choidujour_keys_prefered = ['master_key_02', 'master_key_03', 'master_key_04', 'master_key_05', 'master_key_06', 'master_key_07']
@@ -148,12 +148,12 @@ def create_choidujour_keys_file(keys_file):
 	stop_keys_prefered_insertion = 0
 	for keys_prefered in choidujour_keys_prefered:
 		j = 0
-		for keys_source in keys_source_list:
+		for keys_source in keys_source_list[0]:
 			if (keys_source[0] == keys_prefered):
 				choidujour_list_prefered_usable.append(keys_source)
 				break
 			else:
-				if (j+1 == len(keys_source_list)):
+				if (j+1 == len(keys_source_list[0])):
 					stop_keys_prefered_insertion = 1
 			j +=1
 		if (stop_keys_prefered_insertion == 1):
@@ -162,12 +162,12 @@ def create_choidujour_keys_file(keys_file):
 	stop_keys_needed_insertion = 0
 	for keys_needed in choidujour_keys_needed:
 		j = 0
-		for keys_source in keys_source_list:
+		for keys_source in keys_source_list[0]:
 			if (keys_source[0] == keys_needed):
 				choidujour_list_needed_usable.append(keys_source)
 				break
 			else:
-				if (j+1 == len(keys_source_list)):
+				if (j+1 == len(keys_source_list[0])):
 					stop_keys_needed_insertion = 1
 			j +=1
 		if (stop_keys_needed_insertion == 1):
