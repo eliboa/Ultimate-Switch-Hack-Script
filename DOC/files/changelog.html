@@ -8,6 +8,12 @@
 <body>
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.00.08</h2>
+<ul>
+<li>Correction d'un bug dans NSC_Builder qui empêchait d'utiliser correctement le mode mise à jour.</li>
+<li>Modification du script de lancement de NSC_builder pour supprimer des choses qui m'avaient servi à faire du debug et donc inutile maintenant.</li>
+<li>Diverses optimisations et modifications du script Python de gestion des clés d'un fichier de clés.</li>
+</ul>
 <h2>V2.00.07</h2>
 <ul>
 <li>Ajout d'un script Python permettant de tester les clés du fichier "prod.keys" (connu aussi sous le nom "keys.txt" ou "keys.dat"...) pour savoir si des clés sont inconnues/uniques ou incorrectes. Ce script permet aussi de créer un fichier de clés pour ChoiDuJour ne contenant que les clés nécessaires à ce processus; le fichier sera basé sur un fichier de clés complet qui devra être fourni par l'utilisateur. Enfin, le script permet aussi de créer le fichier permettant de vérifier les clés dans les autres fonctionnalités mais attention, aucune vérification n'est faite durant ce processus et le fichier précédent sera supprimé donc n'utilisez cette fonctionnalité que si vous savez se que vous faites. Le script se trouve dans le dossier "tools\python3_scripts\Keys_management" et nécessite Python 3 pour être exécuté via le fichier "keys_management.py"; exécuter le script sans paramètre affichera son aide. Il y a beaucoup de choses à améliorer pour ce script (optimisation du code notemment) mais pour l'instant il fonctionne ainsi, c'est mon premier vrai script Python donc soyez indulgent.</li>
