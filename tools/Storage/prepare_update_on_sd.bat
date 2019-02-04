@@ -42,7 +42,8 @@ set /p action_type=Faites votre choix:
 IF NOT "%action_type%"=="" set action_type=%action_type:~0,1%
 IF "%action_type%"=="4" (
 	set action_type=
-	call tools\storage\prepare_sd_switch.bat
+	call tools\storage\prepare_sd_switch.bat > log.txt 2>&1
+	@echo off
 	goto:define_action_type
 )
 IF "%action_type%"=="1" goto:define_firmware_choice
@@ -76,6 +77,7 @@ echo.
 echo F: Ouvrir le dossier contenant les firmwares déjà téléchargé?
 echo N'importe quel autre choix terminera ce script et reviendra au menu précédent.
 echo.
+set firmware_choice =
 set /p firmware_choice=Entrez le firmware souhaité ou une action à faire: 
 IF NOT EXIST "downloads" mkdir "downloads"
 IF NOT EXIST "downloads\firmwares" mkdir "downloads\firmwares"
@@ -264,6 +266,7 @@ IF "%action_type%"=="1" goto:define_volume_letter
 IF "%action_type%"=="2" (
 	set action_type=
 	call tools\storage\create_update.bat "%~dp0..\..\firmware_temp"
+	mkdir templogs
 	goto:define_action_type
 )
 IF "%action_type%"=="3" goto:define_volume_letter
@@ -359,7 +362,9 @@ IF "%action_type%"=="3" (
 	echo.
 	echo Maintenant, la préparation du package de mise à jour avec ChoiDuJour va être lancée et vous allez devoir régler ces options.
 	echo.
+	pause
 	call tools\storage\create_update.bat "%~dp0..\..\firmware_temp"
+	mkdir templogs
 )
 echo.
 set /p launch_choidujournx_doc=Souhaitez-vous consulter la documentation pour savoir comment utiliser ChoiDuJourNX (recommandé)? (O/n): 
