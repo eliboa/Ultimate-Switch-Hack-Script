@@ -1533,8 +1533,8 @@ ECHO                         Indiquez le contenu de base.
 ECHO *******************************************************************
 ECHO.
 set bs=
-set /p bs="Glissez le fichier que vous souhaitez mettre à jour ou choisissez une option et appuyez sur "Entrer"
-IF NOT "%bs%"=="" set basefile=%bs:"=%
+set /p bs="Glissez le fichier que vous souhaitez mettre à jour ou choisissez une option et appuyez sur "Entrer": "
+set basefile=%bs:"=%
 if /i "%basefile%"=="0" goto manual_Reentry
 
 set "test=%basefile%"
