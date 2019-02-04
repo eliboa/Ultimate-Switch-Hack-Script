@@ -89,8 +89,8 @@ def test_keys_file(keys_file):
 			else:
 				if (i+1 == len(md5_source_list)):
 					keys_not_verified.append(keys_source[0])
+					
 			i += 1
-	i = 0
 	for key_name in keys_not_verified:
 		j = 0
 		for keys in keys_source_list:
@@ -99,8 +99,16 @@ def test_keys_file(keys_file):
 				del(md5_list[j])
 				break
 			j += 1
-		i += 1
-	i = 0
+	keys_not_present =[]
+	for md5_source in md5_source_list:
+		j = 0
+		for keys in keys_source_list:
+			if (keys[0] == md5_source[0]):
+				break
+			else:
+				if (j+1 == len(keys_source_list)):
+					keys_not_present.append(md5_source[0])
+			j +=1
 	for key_name in keys_incorrect:
 		j = 0
 		for keys in keys_source_list:
@@ -109,20 +117,25 @@ def test_keys_file(keys_file):
 				del(md5_list[j])
 				break
 			j += 1
-		i += 1
 	print ('nombre de clés possibles à analyser: ' + str(len(md5_source_list)))
 	if (len(keys_not_verified) == 0):
 		print ('Aucune clé inconnue ou unique à la console trouvée')
 	elif (len(keys_not_verified) == 1):
-		print ('Clé inconnue ou unique à la console trouvée: ' + keys_not_verified[0])
+		print ('clé inconnue ou unique à la console trouvée: ' + keys_not_verified[0])
 	else:
-		print ('Clés inconnues ou uniques à la console trouvées: ' + ', '.join(keys_not_verified))
+		print (str(len(keys_not_verified)) + 'Clés inconnues ou uniques à la console trouvées: ' + ', '.join(keys_not_verified))
+	if (len(keys_not_present) == 0):
+		print ('Aucune clé manquante vérifiable trouvée.')
+	elif (len(keys_not_present) == 1):
+		print ('Clés manquante vérifiable trouvée: ' + keys_not_present[0])
+	else:
+		print (str(len(keys_not_present)) + 'Clés manquantes vérifiables trouvées: ' + ', '.join(keys_not_present))
 	if (len(keys_incorrect) == 0):
 		print ('Aucune clé incorrecte trouvée.')
 	elif (len(keys_incorrect) == 1):
 		print ('Clé incorrecte trouvée: ' + keys_incorrect[0])
 	else:
-		print ('Clés incorrectes trouvées: ' + ', '.join(keys_incorrect))
+		print (str(len(keys_incorrect)) + 'Clés incorrectes trouvées: ' + ', '.join(keys_incorrect))
 	return(keys_source_list)
 
 def create_choidujour_keys_file(keys_file):
