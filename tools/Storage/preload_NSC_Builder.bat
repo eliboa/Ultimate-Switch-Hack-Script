@@ -53,8 +53,6 @@ IF /I "%open_output_dir%"=="o" (
 	set /p NSCB_output_dir=<templogs\tempvar.txt
 )
 set NSCB_output_dir=%NSCB_output_dir:"=%
-echo %NSCB_output_dir%
-pause
 IF /I "%open_output_dir%"=="o" (
 	IF "%NSCB_output_dir:~1,1%"==":" (
 		IF NOT EXIST "%NSCB_output_dir%" (
