@@ -15,9 +15,7 @@ echo 4: Créer un package de mise à jour de la Switch via ChoiDuJour via un fic
 echo.
 echo 5: Vérifier si des numéros de série de consoles sont patchées ou non?
 echo.
-echo 6: Préparer une SD avec un pack Kosmos allégé et configuré pour fonctionner avec le firmware 1.0.0?
-echo.
-echo 7: Vérifier un fichier de clés?
+echo 6: Vérifier un fichier de clés?
 echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
@@ -28,8 +26,7 @@ IF "%action_choice%"=="2" goto:update_shofel2
 IF "%action_choice%"=="3" goto:install_drivers
 IF "%action_choice%"=="4" goto:create_update
 IF "%action_choice%"=="5" goto:verif_serials
-IF "%action_choice%"=="6" goto:prepare_sd_1.0.0
-IF "%action_choice%"=="7" goto:test_keys
+IF "%action_choice%"=="6" goto:test_keys
 goto:end_script
 :biskey_dump
 set action_choice=
@@ -59,12 +56,6 @@ goto:define_action_choice
 set action_choice=
 echo.
 call TOOLS\Storage\serial_checker.bat
-@echo off
-goto:define_action_choice
-:prepare_sd_1.0.0
-set action_choice=
-echo.
-call TOOLS\Storage\prepare_sd_switch_1.0.0.bat
 @echo off
 goto:define_action_choice
 :test_keys
