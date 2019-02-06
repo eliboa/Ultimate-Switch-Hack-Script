@@ -214,7 +214,7 @@ def help():
 	print ('create_md5_file : Cré le fichier MD5 servant ensuite à la vérification des clés. La fonction analyse le fichier de clés et cré un fichier contenant le nom de chaque clé associé au MD5 de celle-ci. Attention car aucune vérification n\'est faite sur les clés uniques pour chaque console ou pour des erreurs éventuelles donc soyez certain de se que vous faites si vous utilisez cette fonction car l\'ancien fichier de vérification sera supprimé.')
 	print ('test_keys_file : Test un fichier de clés en le comparant au fichier contenant les MD5 des clés connues et affiche le nombre de clés analysées, les clés inconnues ou uniques à la console trouvées ainsi que les clés incorrectes trouvées.')
 	print ('create_choidujour_keys_file : Permet de créé un fichier de clés ne contenant que les clés nécessaire à ChoiDuJour pour créer un package de mise à jour. Le fichier sera nommé "ChoiDuJour_keys.txt" et se trouvera dans le dossier à partir duquel le script a été exécuté.')
-	print ('test_file : Test si le fichier passé en paramètre est un fichier texte.')
+	print ('test_file : Test seulement si le fichier passé en argument est un fichier texte. Si c\'est le cas, le script se terminera sans rien afficher.')
 	return 1
 
 if (len(sys.argv) != 3):
@@ -236,6 +236,8 @@ elif (sys.argv[1] == 'test_keys_file'):
 elif (sys.argv[1] == 'create_choidujour_keys_file'):
 	create_choidujour_keys_file(sys.argv[2])
 	sys.exit(0)
+elif (sys.argv[1] == 'test_file'):
+	pass
 else:
 	print ('Premier argument incorrect')
 	help()
