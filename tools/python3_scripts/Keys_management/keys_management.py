@@ -10,6 +10,7 @@ from copy import deepcopy
 import sys
 import hashlib
 import os
+import fleep
 # import time
 
 # start_time = time.time()
@@ -20,12 +21,21 @@ else:
 	print ('Python 3 est requis pour lancer ce script, pas Python ' + str(sys.version_info[0]) + '.')
 	sys.exit(103)
 
-def file_exist(fname):
+def file_is_text(fname):
 	try:
-		f = open(fname,'r')
-		f.close()
-		return 1
+		with open(fname, "rb") as file:
+			info = fleep.get(file.read(128))
+			file.close()
 	except:
+		print ('Le fichier "' + fname + '" n\'existe pas.')
+		return 0
+	# print(info.type)
+	# print(info.extension)
+	# print(info.mime)
+	if (len(info.type) == 0):
+		return 1
+	else:
+		print ('Erreur: Le fichier ne semble pas être un fichier texte.')
 		return 0
 
 def create_md5_file(keys_file):
@@ -204,14 +214,17 @@ def help():
 	print ('create_md5_file : Cré le fichier MD5 servant ensuite à la vérification des clés. La fonction analyse le fichier de clés et cré un fichier contenant le nom de chaque clé associé au MD5 de celle-ci. Attention car aucune vérification n\'est faite sur les clés uniques pour chaque console ou pour des erreurs éventuelles donc soyez certain de se que vous faites si vous utilisez cette fonction car l\'ancien fichier de vérification sera supprimé.')
 	print ('test_keys_file : Test un fichier de clés en le comparant au fichier contenant les MD5 des clés connues et affiche le nombre de clés analysées, les clés inconnues ou uniques à la console trouvées ainsi que les clés incorrectes trouvées.')
 	print ('create_choidujour_keys_file : Permet de créé un fichier de clés ne contenant que les clés nécessaire à ChoiDuJour pour créer un package de mise à jour. Le fichier sera nommé "ChoiDuJour_keys.txt" et se trouvera dans le dossier à partir duquel le script a été exécuté.')
+	print ('test_file : Test si le fichier passé en paramètre est un fichier texte.')
 	return 1
 
 if (len(sys.argv) != 3):
 	print ('Nombre d\'arguments incorrect.')
 	help()
 	sys.exit(102)
-if not (file_exist(sys.argv[2])):
-	print ('Le fichier indiqué dans le second argument n\'existe pas.')
+if (sys.argv[1] == 'test_file'):
+	if not (file_is_text(sys.argv[2])):
+		sys.exit(101)
+if not (file_is_text(sys.argv[2])):
 	sys.exit(101)
 if (sys.argv[1] == 'create_md5_file'):
 	create_md5_file(sys.argv[2])
