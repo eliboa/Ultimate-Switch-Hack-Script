@@ -238,6 +238,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 	IF /i "%atmosphere_enable_nogc_patch%"=="O" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere_patches_nogc %volume_letter%:\ /e
 	)
+	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin
 	del /Q /S "%volume_letter%:\atmosphere\.emptydir
 )
 
@@ -262,6 +263,7 @@ IF /i "%copy_sdfilesswitch_pack%"=="o" (
 	IF EXIST "%volume_letter%:\switch\CFWSettings" rmdir /s /q "%volume_letter%:\switch\CFWSettings"
 	IF EXIST "%volume_letter%:\switch\CFW-Settings" rmdir /s /q "%volume_letter%:\switch\CFW-Settings"
 	IF EXIST "%volume_letter%:\modules\atmosphere\fs_mitm.kip" del /q "%volume_letter%:\modules\atmosphere\fs_mitm.kip"
+	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin
 	del /Q /S "%volume_letter%:\bootloader\.emptydir
 )
 
