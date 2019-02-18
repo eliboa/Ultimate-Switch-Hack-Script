@@ -34,7 +34,7 @@ echo 1) Connecter la Switch en USB et l'éteindre
 echo 2) Appliquer le JoyCon Haxx : PIN1 + PIN10 ou PIN9 + PIN10
 echo 3) Faire un appui long sur VOLUME UP + appui court sur POWER (l'écran restera noir)
 echo En attente d'une Switch en mode RCM...
-tools\TegraRcmSmash\TegraRcmSmash.exe -w tools\memloader\memloader.bin --dataini="%ini_path%"
+tools\TegraRcmSmash\TegraRcmSmash.exe -w tools\memloader\memloader_usb.bin --dataini="%ini_path%"
 echo.
 echo Le disque devrait être monté sur votre système. Pour le démonter, éjecter le périphérique à l'aide du bouton "retirer le périphérique en toute sécurité" situé sur la barre des tâches en bas à droite puis forcer l'extinction de la Switch en maintenant le bouton POWER pendant 10 secondes (Attention à ne pas écrire/lire de données pendant cette opération sous peine d'endommager gravement les données de votre nand/sd).
 IF "%disc_mounted%"=="1" echo Pour explorer la mémoire interne de la Switch vous devez utiliser l'outil HacDiskMount lancé en tant qu'administrateur (nécessite d'avoir les biskey pour décrypter les données mais non nécessaire pour faire un dump de la nand). Si vous souhaitez faire un dump de la nand via cette méthode, le dump peut prendre du temps (environ trois heures).
