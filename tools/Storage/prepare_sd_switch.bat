@@ -171,6 +171,16 @@ IF NOT "%del_files_dest_copy%"=="" set del_files_dest_copy=%del_files_dest_copy:
 
 set /p copy_sdfilesswitch_pack=Souhaitez-vous copier le pack pour, entre autres, lancer Atmosphere via Hekate (pack Kosmos, anciennement nommé SDFilesSwitch)? (O/n): >con
 IF NOT "%copy_sdfilesswitch_pack%"=="" set copy_sdfilesswitch_pack=%copy_sdfilesswitch_pack:~0,1%
+IF /i "%copy_sdfilesswitch_pack%"=="o" goto:ask_nogc_sdfilesswitch
+goto:skip_ask_nogc_sdfilesswitch
+:ask_nogc_sdfilesswitch
+	echo.>con
+	echo Souhaitez-vous activer le patch NOGC pour Kosmos  (firmware 4.0.0 et supérieur^)? >con
+	echo Ce patch est utile pour ceux ayant mis à jour avec la méthode ChoiDuJour à partir du firmware 3.0.2 et inférieur et ne voulant pas que le firmware du port cartouche soit mis à jour, permettant ainsi le downgrade en-dessous de la version 4.0.0 sans perdre l'usage du port cartouche. >con
+	echo Attention,, si un firmware supérieur au 4.0.0 est chargé une seule fois par le bootloader de Nintendo (démarrage classique^) ou sans ce patche, le firmware du port cartouche sera mis à jour et donc l'activation de ce patch sera inutile. >con
+	set /p sdfilesswitch_enable_nogc_patch=Souhaitez-vous activer le patch nogc? (O/n^): >con
+	IF NOT "%sdfilesswitch_enable_nogc_patch%"=="" set sdfilesswitch_enable_nogc_patch=%sdfilesswitch_enable_nogc_patch:~0,1%
+:skip_ask_nogc_sdfilesswitch
 
 set /p copy_atmosphere_pack=Souhaitez-vous copier le pack pour lancer Atmosphere via le payload Fusee-primary d'Atmosphere (CFW Atmosphere complet)? (O/n): >con
 IF NOT "%copy_atmosphere_pack%"=="" set copy_atmosphere_pack=%copy_atmosphere_pack:~0,1%
@@ -263,6 +273,9 @@ IF /i "%copy_sdfilesswitch_pack%"=="o" (
 	IF EXIST "%volume_letter%:\switch\CFWSettings" rmdir /s /q "%volume_letter%:\switch\CFWSettings"
 	IF EXIST "%volume_letter%:\switch\CFW-Settings" rmdir /s /q "%volume_letter%:\switch\CFW-Settings"
 	IF EXIST "%volume_letter%:\modules\atmosphere\fs_mitm.kip" del /q "%volume_letter%:\modules\atmosphere\fs_mitm.kip"
+	IF /i "%sdfilesswitch_enable_nogc_patch%"=="O" (
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch_patches_nogc %volume_letter%:\ /e
+	)
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin
 	del /Q /S "%volume_letter%:\bootloader\.emptydir
 )
