@@ -281,6 +281,7 @@ IF /i "%copy_reinx_pack%"=="o" (
 	IF /i "%copy_sdfilesswitch_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\bootloader\payloads\ReiNX.bin
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro"
 	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res"
+	IF EXIST "%volume_letter%:\ReiNX\titles\010000000000000D" rmdir /s /q "%volume_letter%:\ReiNX\titles\010000000000000D"
 )
 
 IF /i "%copy_sxos_pack%"=="o" (
