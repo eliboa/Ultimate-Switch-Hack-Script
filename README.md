@@ -14,6 +14,7 @@ La licence GPL V3 s'applique sur les scripts batch se trouvant à la racine de c
 * Téléchargement/mise à jour des binaires de Shofel2.
 * Vérification si une console est patchée, peut-être patchée ou non patchée (fonctionnalité imparfaite, peut donner des résultats erronés, la base de donnée nécessite encore des ajustements).
 * Montage de la partition Boot0, Boot1, EMMC ou de la carte SD comme périphérique de stockage USB sur le PC.
+* Dump/restauration de nand ou de partitions de la Rawnand, extraction de partition d'un fichier de dump de la Rawnand, obtention d'infos sur la nand ou sur un fichier de dump...
 * Création de packages de mise à jour via ChoiDuJour avec tous les paramètres.
 * Téléchargement d'un firmware et préparation de la SD avec celui-ci pour ChoiDuJourNX, le homebrew est également copié durant ce script. Ce script permet également d'éventuellement  créé le package de mise à jour via ChoiDuJour dans la foulée.
 * Préparation d'une SD, du formatage (FAT32 ou EXFAT) à la mise en place de différentes solutions, voir la documentation pour plus d'informations sur le contenu des packs.
