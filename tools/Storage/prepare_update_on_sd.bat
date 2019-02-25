@@ -74,6 +74,7 @@ echo 6.0.1?
 echo 6.1.0?
 echo 6.2.0?
 echo 7.0.0?
+echo 7.0.1?
 echo.
 echo F: Ouvrir le dossier contenant les firmwares déjà téléchargé?
 echo N'importe quel autre choix terminera ce script et reviendra au menu précédent.
@@ -230,6 +231,13 @@ IF "%firmware_choice%"=="7.0.0" (
 	set expected_md5=550b0091304d54b67e3e977900c83dcc
 	set firmware_link=https://mega.nz/#!kdJWQKBT!G15TiWusLkrS7JT2KHNYXOfNAUOb2PWdhXsfe-kRtxg
 	set firmware_file_name=Firmware 7.0.0.zip
+	set firmware_folder=firmware_temp\
+	goto:download_firmware
+)
+IF "%firmware_choice%"=="7.0.1" (
+	set expected_md5=c5440e557b8b62eabedf754e508ded2f
+	set firmware_link=https://mega.nz/#!EERwCayT!KPGACrRhEVQdhsaqbfqpNTwzAyRIoZRLvfqqmxhNT80
+	set firmware_file_name=Firmware 7.0.1.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
