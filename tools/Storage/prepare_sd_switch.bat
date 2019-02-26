@@ -293,7 +293,69 @@ set /p profile_path=<templogs\tempvar.txt
 set profile_path=tools\sd_switch\mixed\profiles\%profile_path%
 :skip_verif_mixed_profile
 del /q templogs\profiles_list.txt >nul
+:confirm_settings
+echo.
+echo Résumé de se qui sera copié sur la SD, lecteur "%volume_letter%:":
+echo.
+echo CFWs et packs:
+IF /i "%copy_sdfilesswitch_pack%"=="o" (
+	IF /i "%sdfilesswitch_enable_nogc_patch%"=="o" (
+		echo Pack Kosmos avec le patche NOGC
+	) else (
+	echo Pack Kosmos
+	)
+)
+IF /i "%copy_atmosphere_pack%"=="o" (
+	IF /i "%atmosphere_enable_nogc_patch%"=="o" (
+		echo Pack Atmosphere avec le patche NOGC
+	) else (
+	echo Pack Atmosphere
+	)
+)
+IF /i "%copy_reinx_pack%"=="o" (
+	IF /i "%reinx_enable_nogc_patch%"=="o" (
+		echo Pack ReiNX avec le patche NOGC
+	) else (
+	echo Pack ReiNX
+	)
+)
+IF /i "%copy_sxos_pack%"=="o" (
+	IF /i "%copy_payloads%"=="o" (
+		echo Pack SX OS avec copie de payloads des autres CFWs sélectionnés à la racine de la SD pour être lancés via le SX Loader
+	) else (
+		echo Pack SX OS
+	)
+)
+IF /i "%copy_memloader%"=="o" echo Pack Memloader
+IF /i "%copy_emu%"=="o" (
+	IF /i "%keep_emu_configs%"=="o" (
+		echo Pack d'émulateurs avec concervation des fichiers de configurations de ceux-ci sur la SD
+	) else (
+		echo Pack d'émulateurs avec suppression des fichiers de configurations de ceux-ci sur la SD
+	)
+)
+echo.
+echo Homebrews optionnels:
+IF "%pass_copy_mixed_pack%"=="Y" (
+	echo Aucun homebrew optionnel ne sera copié.
+) else (
+	tools\gnuwin32\bin\sort.exe -n "%profile_path%"
+)
+echo.
+IF /i "%del_files_dest_copy%"=="o" echo Les fichiers de la SD seront intégralement supprimés avant la copie.
+set confirm_copy=
+set /p confirm_copy=Souhaitez-vous confirmer ceci? (O/n): 
+IF /i "%confirm_copy%"=="o" (
+	goto:begin_copy
+) else IF /i "%confirm_copy%"=="n" (
+	echo Opération annulée.
+	goto:endscript
+) else (
+	echo Choix inexistant.
+	goto:confirm_settings
+)
 
+:begin_copy
 echo Copie en cours...
 
 IF /i "%copy_atmosphere_pack%"=="o" (
