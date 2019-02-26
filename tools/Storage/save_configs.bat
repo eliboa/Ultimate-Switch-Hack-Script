@@ -44,6 +44,10 @@ IF NOT EXIST "KEY_SAVES\tools\netplay" mkdir "KEY_SAVES\tools\netplay"
 copy /v TOOLS\netplay\servers_list.txt KEY_SAVES\TOOLS\netplay\servers_list.txt
 IF NOT EXIST "KEY_SAVES\tools\NSC_Builder" mkdir "KEY_SAVES\tools\NSC_Builder"
 copy /V TOOLS\NSC_Builder\keys.txt KEY_SAVES\TOOLS\NSC_Builder\keys.txt
+IF NOT EXIST "KEY_SAVES\tools\sd_switch" mkdir "KEY_SAVES\tools\sd_switch"
+IF NOT EXIST "KEY_SAVES\tools\sd_switch\mixed" mkdir "KEY_SAVES\tools\sd_switch\mixed"
+IF NOT EXIST "KEY_SAVES\tools\sd_switch\mixed\profiles" mkdir "KEY_SAVES\tools\sd_switch\mixed\profiles"
+copy /V "tools\sd_switch\mixed\profiles\*.ini" "KEY_SAVES\tools\sd_switch\mixed\profiles\
 IF NOT EXIST KEY_SAVES\tools\Storage mkdir KEY_SAVES\tools\Storage
 copy /v tools\Storage\verif_update.ini KEY_SAVES\tools\Storage\verif_update.ini
 IF NOT EXIST KEY_SAVES\tools\toolbox mkdir KEY_SAVES\tools\toolbox

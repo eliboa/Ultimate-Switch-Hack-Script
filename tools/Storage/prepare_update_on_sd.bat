@@ -373,7 +373,7 @@ IF "%action_type%"=="3" (
 	IF EXIST "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro" (
 		del /q "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
 	)
-	copy /V /B "tools\sd_switch\mixed\switch\ChoiDuJourNX\ChoiDuJourNX.nro" "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
+	copy /V /B "tools\sd_switch\mixed\modular\ChoiDuJourNX\switch\ChoiDuJourNX\ChoiDuJourNX.nro" "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
 	echo Les fichiers ont été copiés.
 	echo.
 	echo Maintenant, la préparation du package de mise à jour avec ChoiDuJour va être lancée et vous allez devoir régler ces options.

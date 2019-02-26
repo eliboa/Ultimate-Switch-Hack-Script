@@ -77,7 +77,7 @@ goto:define_action_choice
 :prepare_sd
 set action_choice=
 echo.
-call TOOLS\Storage\prepare_sd_switch.bat > log.txt 2>&1
+call TOOLS\Storage\prepare_sd_switch.bat
 @echo off
 goto:define_action_choice
 :launch_NSC_Builder
