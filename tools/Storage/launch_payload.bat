@@ -71,7 +71,11 @@ echo 1) Connecter la Switch en USB et l'éteindre >con
 echo 2) Appliquer le JoyCon Haxx : PIN1 + PIN10 ou PIN9 + PIN10 >con
 echo 3) Faire un appui long sur VOLUME UP + appui court sur POWER >con
 echo En attente d'une Switch en mode RCM... >con
-tools\TegraRcmSmash\TegraRcmSmash.exe -w "payloads\%payload_path%"
+IF "%payload_number%"=="0" (
+	tools\TegraRcmSmash\TegraRcmSmash.exe -w "%payload_path%"
+) else (
+	tools\TegraRcmSmash\TegraRcmSmash.exe -w "payloads\%payload_path%"
+)
 IF %errorlevel% GTR 0 (
 	echo Une erreur s'est produite pendant l'injection du payload. Vérifiez que le mode RCM de la Switch est lancé, que votre cable USB est bien relié à l'ordinateur et que les drivers ont été installés puis recommencez. >con
 ) else (
