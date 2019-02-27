@@ -378,7 +378,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere_patches_nogc %volume_letter%:\ /e >nul
 	)
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin >nul
-	del /Q /S "%volume_letter%:\atmosphere\.emptydir >nul
+	del /Q /S "%volume_letter%:\atmosphere\.emptydir" >nul
 )
 
 IF /i "%copy_sdfilesswitch_pack%"=="o" (
@@ -404,7 +404,7 @@ IF /i "%copy_sdfilesswitch_pack%"=="o" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch_patches_nogc %volume_letter%:\ /e >nul
 	)
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin >nul
-	del /Q /S "%volume_letter%:\bootloader\.emptydir >nul
+	del /Q /S "%volume_letter%:\bootloader\.emptydir" >nul
 )
 
 IF /i "%copy_reinx_pack%"=="o" (
@@ -433,7 +433,7 @@ IF /i "%copy_sxos_pack%"=="o" (
 	IF /i "%copy_sdfilesswitch_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\bootloader\payloads\SXOS.bin >nul
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro" >nul
 	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res" >nul
-	del /Q /S "%volume_letter%:\sxos\.emptydir >nul
+	del /Q /S "%volume_letter%:\sxos\.emptydir" >nul
 )
 
 IF /i "%copy_memloader%"=="o" (
