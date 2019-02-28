@@ -20,7 +20,7 @@ set bs=
 set /p bs="Faites votre choix: "
 if /i "%bs%"=="1" goto sc2
 if /i "%bs%"=="2" goto sc3
-::if /i "%bs%"=="3" goto idepend
+if /i "%bs%"=="3" goto idepend
 
 if /i "%bs%"=="c" call :curr_set1
 if /i "%bs%"=="c" call :curr_set2
@@ -265,6 +265,9 @@ echo Tapez "4" Pour changer le traitement des fichiers DELTA
 echo Tapez "5" pour changer la configuration zip (cré ou non un fichier zip contenant les NCA)
 echo Tapez "6" pour changer l'option de sortie automatique du script
 echo Tapez "7" pour configurer l'affichage du message concernant le réglage de la KEY-GENERATION
+echo Tapez "8" pour régler le buffer
+echo Tapez "9" pour régler les options EXFAT/FAT32
+echo Tapez "10" pour régler comment organiser les fichiers en sortie
 echo.
 echo Tapez "c" pour voir les paramètres globaux courant
 echo Tapez "d" pour remettre les paramètres globaux par défaut
@@ -281,6 +284,9 @@ if /i "%bs%"=="4" goto op_delta
 if /i "%bs%"=="5" goto op_zip
 if /i "%bs%"=="6" goto op_aexit
 if /i "%bs%"=="7" goto op_kgprompt
+if /i "%bs%"=="8" goto op_buffer
+if /i "%bs%"=="9" goto op_fat
+if /i "%bs%"=="10" goto op_oforg
 
 if /i "%bs%"=="c" call :curr_set2
 if /i "%bs%"=="c" echo.
@@ -302,7 +308,7 @@ goto sc3
 cls
 call :logo
 echo ********************************************************
-echo configuration de la couleur
+echo configuration des couleurs
 echo ********************************************************
 echo --------------------------------------------------------
 echo Couleur du texte
@@ -640,15 +646,161 @@ if "%skipRSVprompt%"=="none" goto op_kgprompt
 
 set skipRSVprompt="skipRSVprompt=%skipRSVprompt%"
 set skipRSVprompt="%skipRSVprompt%"
-%pycommand% "%listmanager%" -cl "%op_file%" -ln "108" -nl "set %skipRSVprompt%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "108" -nl "set %skipRSVprompt%" 
 echo.
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "108" -nl "Line in config was changed to: "
 echo.
 pause
 goto sc3
 
+:op_buffer
+cls
+call :logo
+echo ***************************************************************************
+echo Régler le buffer pour la copie et l'ajout de fichier récupéré ou copier de/vers un NSP\XCI
+echo ***************************************************************************
+echo Cette option affecte la vitesse de ces processus et dépend de votre système. Le buffer par défaut est réglé à 64kB.
+echo.
+echo Tapez "1" pour régler le buffer à 80kB
+echo Tapez "2" pour régler le buffer à 72kB
+echo Tapez "3" pour régler le buffer à 64kB (Default)
+echo Tapez "4" pour régler le buffer à 56kB
+echo Tapez "5" pour régler le buffer à 48kB
+echo Tapez "6" pour régler le buffer à 40kB
+echo Tapez "7" pour régler le buffer à 32kB
+echo Tapez "8" pour régler le buffer à 24kB
+echo Tapez "9" pour régler le buffer à 16kB
+echo Tapez "10" pour régler le buffer à 8kB
 
+REM echo.
+echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
+echo Tapez "0" pour revenir au menu de configuration
+echo Tapez "e" pour revenir au menu principal du script
+echo ...........................................................................
+echo.
+set bs=
+set /p bs="Faites votre choix: "
+set "v_buffer=none"
+if /i "%bs%"=="1" set "v_buffer=-b 81920"
+if /i "%bs%"=="2" set "v_buffer=-b 73728"
+if /i "%bs%"=="3" set "v_buffer=-b 65536"
+if /i "%bs%"=="4" set "v_buffer=-b 57344"
+if /i "%bs%"=="5" set "v_buffer=-b 49152"
+if /i "%bs%"=="6" set "v_buffer=-b 40960"
+if /i "%bs%"=="7" set "v_buffer=-b 32768"
+if /i "%bs%"=="8" set "v_buffer=-b 24576"
+if /i "%bs%"=="9" set "v_buffer=-b 16384"
+if /i "%bs%"=="10" set "v_buffer=-b 8192"
 
+if /i "%bs%"=="b" goto sc3
+if /i "%bs%"=="0" goto sc1
+if /i "%bs%"=="e" goto salida
+
+if "%v_buffer%"=="none" echo Choix inexistant.
+if "%v_buffer%"=="none" echo.
+if "%v_buffer%"=="none" goto op_buffer
+
+set v_buffer="buffer=%v_buffer%"
+set v_buffer="%v_buffer%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "32" -nl "set %v_buffer%" 
+echo.
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "32" -nl "Line in config was changed to: "
+echo.
+pause
+goto sc3
+
+:op_fat
+cls
+call :logo
+echo ***************************************************************************
+echo Régler l'option permettant de générer des fichiers utilisables sur des cartes SD formatées en FAT32
+echo ***************************************************************************
+echo Le Rommenu de SX OS  supporte les fichiers ns0, ns1,.. pour les fichiers nsp splittés et également les fichiers 00, 01 dans un répertoire noté comme archivé, c'est pour cela que les deux options sont proposées. Les autres installeurs ne supporte quand à eux que l'option des répertoires archivées.
+echo.
+echo Tapez "1" pour utiliser le format exfat (option par défaut)
+echo Tapez "2" pour utiliser le format FAT32 spécifique à SX OS (fichiers xc0 et ns0)
+echo Tapez "3" pour utiliser le format FAT32 fat32 pour tous les CFWs (répertoire archivé)
+
+echo.
+echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
+echo Tapez "0" pour revenir au menu de configuration
+echo Tapez "e" pour revenir au menu principal du script
+echo ...........................................................................
+echo.
+set bs=
+set /p bs="Faites votre choix: "
+set "v_fat1=none"
+set "v_fat2=none"
+if /i "%bs%"=="1" set "v_fat1=-fat exfat"
+if /i "%bs%"=="1" set "v_fat2=-fx files"
+if /i "%bs%"=="2" set "v_fat1=-fat fat32"
+if /i "%bs%"=="2" set "v_fat2=-fx files"
+if /i "%bs%"=="3" set "v_fat1=-fat fat32"
+if /i "%bs%"=="3" set "v_fat2=-fx folder"
+
+if /i "%bs%"=="b" goto sc3
+if /i "%bs%"=="0" goto sc1
+if /i "%bs%"=="e" goto salida
+
+if "%v_fat1%"=="none" echo Choix inexistant.
+if "%v_fat1%"=="none" echo.
+if "%v_fat1%"=="none" goto op_fat
+if "%v_fat2%"=="none" echo WRONG CHOICE
+if "%v_fat2%"=="none" echo.
+if "%v_fat2%"=="none" goto op_fat
+
+set v_fat1="fatype=%v_fat1%"
+set v_fat1="%v_fat1%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "116" -nl "set %v_fat1%" 
+echo.
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "116" -nl "Line in config was changed to: "
+echo.
+set v_fat2="fexport=%v_fat2%"
+set v_fat2="%v_fat2%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "117" -nl "set %v_fat2%" 
+echo.
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "117" -nl "Line in config was changed to: "
+echo.
+pause
+goto sc3
+
+:op_oforg
+cls
+call :logo
+echo ***************************************************************************
+echo Organisation des fichiers du répertoire de sortie
+echo ***************************************************************************
+echo.
+echo Tapez "1" pour organiser les fichiers séparément (default)
+echo Tapez "2" pour organiser les fichiers dans des répertoires selon le contenu
+echo.
+echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
+echo Tapez "0" pour revenir au menu de configuration
+echo Tapez "e" pour revenir au menu principal du script
+echo ...........................................................................
+echo.
+set bs=
+set /p bs="Faites votre choix: "
+set "v_oforg=none"
+if /i "%bs%"=="1" set "v_oforg=inline"
+if /i "%bs%"=="2" set "v_oforg=subfolder"
+
+if /i "%bs%"=="b" goto sc3
+if /i "%bs%"=="0" goto sc1
+if /i "%bs%"=="e" goto salida
+
+if "%v_oforg%"=="none" echo Choix inexistant.
+if "%v_oforg%"=="none" echo.
+if "%v_oforg%"=="none" goto op_oforg
+
+set v_oforg="oforg=%v_oforg%"
+set v_oforg="%v_oforg%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "125" -nl "set %v_oforg%" 
+echo.
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "125" -nl "Line in config was changed to: "
+echo.
+pause
+goto sc3
 
 :def_set1
 echo.
@@ -718,7 +870,7 @@ set v_delta="%v_delta%"
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "36" -nl "Line in config was changed to: "
 
 REM zip_restore
-set "v_gzip=true"
+set "v_gzip=false"
 set v_gzip="zip_restore=%v_gzip%"
 set v_gzip="%v_gzip%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "78" -nl "set %v_gzip%" 
@@ -735,11 +887,38 @@ REM skipRSVprompt
 set "skipRSVprompt=false"
 set skipRSVprompt="skipRSVprompt=%skipRSVprompt%"
 set skipRSVprompt="%skipRSVprompt%"
-%pycommand% "%listmanager%" -cl "%op_file%" -ln "108" -nl "set %skipRSVprompt%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "108" -nl "set %skipRSVprompt%" 
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "108" -nl "Line in config was changed to: "
-echo.
-exit /B
 
+REM buffer
+set "v_buffer=buffer=-b 65536"
+set v_buffer="buffer=%v_buffer%"
+set v_buffer="%v_buffer%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "32" -nl "set %v_buffer%" 
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "32" -nl "Line in config was changed to: "
+
+
+REM FAT format
+set "v_fat1=-fat exfat"
+set v_fat1="fatype=%v_fat1%"
+set v_fat1="%v_fat1%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "116" -nl "set %v_fat1%" 
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "116" -nl "Line in config was changed to: "
+
+set "v_fat2=-fx files"
+set v_fat2="fexport=%v_fat2%"
+set v_fat2="%v_fat2%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "117" -nl "set %v_fat2%" 
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "117" -nl "Line in config was changed to: "
+
+REM OUTPUT ORGANIZING format
+set "v_oforg=inline"
+set v_oforg="oforg=%v_oforg%"
+set v_oforg="%v_oforg%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "125" -nl "set %v_oforg%" 
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "125" -nl "Line in config was changed to: "
+
+exit /B
 
 :curr_set1
 echo.
@@ -781,7 +960,16 @@ REM AUTO-EXIT
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "101" -nl "Auto-exit is set to: "
 
 REM skipRSVprompt
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "108" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "108" -nl "Skip RSV selection is set to: "
+
+REM buffer
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "32" -nl "Buffer is set to: "
+
+REM FAT format
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "116" -nl "SD File Format is set to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "117" -nl "Split nsp format is set to: "
+REM OUTPUT ORGANIZING format
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "125" -nl "Output organization is set to: "
 
 exit /B
 :salida
@@ -796,17 +984,18 @@ ECHO               /_/ /_/____/\___/____/_.___/\__,_/_/_/\__,_/\___/_/
 ECHO                              /_____/                                  
 ECHO -------------------------------------------------------------------------------------
 ECHO                         NINTENDO SWITCH CLEANER AND BUILDER
+ECHO                      (THE XCI MULTI CONTENT BUILDER AND MORE)
 ECHO -------------------------------------------------------------------------------------
 ECHO =============================     BY JULESONTHEROAD     =============================
 ECHO -------------------------------------------------------------------------------------
-ECHO "                             POWERED WITH NUT BY BLAWAR                            "
-ECHO "                             AND LUCA FRAGA'S HACBUILD                             "
-ECHO                                     VERSION %program_version%
+ECHO "                                POWERED BY SQUIRREL                                "
+ECHO "                    BASED IN THE WORK OF BLAWAR AND LUCA FRAGA                     "
+ECHO                                  VERSION %program_version%
 ECHO -------------------------------------------------------------------------------------                   
 ECHO Program's github: https://github.com/julesontheroad/NSC_BUILDER
-ECHO Revised hacbuild: https://github.com/julesontheroad/hacbuild
-ECHO Blawar's NUT    : https://github.com/blawar/nut 
-ECHO SciresM hactool : https://github.com/SciresM/hactool
+ECHO Blawar's github:  https://github.com/blawar
+ECHO Blawar's tinfoil: https://github.com/digableinc/tinfoil
+ECHO Luca Fraga's github: https://github.com/LucaFraga
 ECHO -------------------------------------------------------------------------------------
 exit /B
 
