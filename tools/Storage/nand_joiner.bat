@@ -286,6 +286,17 @@ IF %nb% EQU 11 (
 echo.
 echo Il n'y a pas assez d'espace libre à l'emplacement sur lequel vous souhaitez copier votre dump, le script va s'arrêter.
 goto:end_script
+IF EXIST "%dump_output%\rawnand.bin" (
+	set /p erase_existing_dump=Un fichier "rawnand.bin" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent? ^(O/n^): 
+)
+IF NOT "%erase_existing_dump%"=="" set erase_existing_dump=%erase_existing_dump:~0,1%
+IF /i "%erase_existing_dump%"=="o" (
+goto:copy_nand
+) else (
+	echo Opération annulée.
+	goto:end_script
+)
+
 :copy_nand
 echo.
 echo Copie en cours...
@@ -317,6 +328,7 @@ IF NOT "%launch_hacdiskmount%"=="" set launch_hacdiskmount=%launch_hacdiskmount:
 IF /i "%launch_hacdiskmount%"=="o" (
 	start tools\HacDiskMount\HacDiskMount.exe
 )
+goto:end_script
 
 :test_rawnand_size
 IF NOT "%~z1"=="31268536320" (
