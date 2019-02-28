@@ -468,7 +468,7 @@ for /l %%i in (1,1,%temp_count%) do (
 del /Q /S "%volume_letter%:\switch\.emptydir" >nul
 del /Q /S "%volume_letter%:\Backup\.emptydir" >nul
 del /Q /S "%volume_letter%:\pk1decryptor\.emptydir" >nul
-IF EXIST ""%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul
+IF EXIST "%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul
 echo Copie terminée.
 :endscript
 pause
