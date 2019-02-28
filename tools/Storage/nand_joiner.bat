@@ -292,13 +292,13 @@ echo Copie en cours...
 cd /d "%dump_input%"
 IF "%cfw_used%"=="1" (
 	IF "%dump_parts%"=="15" (
-		%windir%\system32\copy /b rawnand.bin.00 + rawnand.bin.01 + rawnand.bin.02 + rawnand.bin.03 + rawnand.bin.04 + rawnand.bin.05 + rawnand.bin.06 + rawnand.bin.07 + rawnand.bin.08 + rawnand.bin.09 + rawnand.bin.10 + rawnand.bin.11 + rawnand.bin.12 + rawnand.bin.13 + rawnand.bin.14 "%dump_output%\rawnand.bin"
+		copy /b rawnand.bin.00 + rawnand.bin.01 + rawnand.bin.02 + rawnand.bin.03 + rawnand.bin.04 + rawnand.bin.05 + rawnand.bin.06 + rawnand.bin.07 + rawnand.bin.08 + rawnand.bin.09 + rawnand.bin.10 + rawnand.bin.11 + rawnand.bin.12 + rawnand.bin.13 + rawnand.bin.14 "%dump_output%\rawnand.bin"
 	) else (
-		%windir%\system32\copy /b rawnand.bin.00 + rawnand.bin.01 + rawnand.bin.02 + rawnand.bin.03 + rawnand.bin.04 + rawnand.bin.05 + rawnand.bin.06 + rawnand.bin.07 + rawnand.bin.08 + rawnand.bin.09 + rawnand.bin.10 + rawnand.bin.11 + rawnand.bin.12 + rawnand.bin.13 + rawnand.bin.14 + rawnand.bin.15 + rawnand.bin.16 + rawnand.bin.17 + rawnand.bin.18 + rawnand.bin.19 + rawnand.bin.20 + rawnand.bin.21 + rawnand.bin.22 + rawnand.bin.23 + rawnand.bin.24 + rawnand.bin.25 + rawnand.bin.26 + rawnand.bin.27 + rawnand.bin.28 + rawnand.bin.29 "%dump_output%\rawnand.bin"
+		copy /b rawnand.bin.00 + rawnand.bin.01 + rawnand.bin.02 + rawnand.bin.03 + rawnand.bin.04 + rawnand.bin.05 + rawnand.bin.06 + rawnand.bin.07 + rawnand.bin.08 + rawnand.bin.09 + rawnand.bin.10 + rawnand.bin.11 + rawnand.bin.12 + rawnand.bin.13 + rawnand.bin.14 + rawnand.bin.15 + rawnand.bin.16 + rawnand.bin.17 + rawnand.bin.18 + rawnand.bin.19 + rawnand.bin.20 + rawnand.bin.21 + rawnand.bin.22 + rawnand.bin.23 + rawnand.bin.24 + rawnand.bin.25 + rawnand.bin.26 + rawnand.bin.27 + rawnand.bin.28 + rawnand.bin.29 "%dump_output%\rawnand.bin"
 	)
 )
 IF "%cfw_used%"=="2" (
-%windir%\system32\copy /b full.00.bin + full.01.bin + full.02.bin + full.03.bin + full.04.bin + full.05.bin + full.06.bin + full.07.bin "%dump_output%\rawnand.bin"
+copy /b full.00.bin + full.01.bin + full.02.bin + full.03.bin + full.04.bin + full.05.bin + full.06.bin + full.07.bin "%dump_output%\rawnand.bin"
 )
 IF %errorlevel% NEQ 0 (
 	echo Il semble qu'une erreur se soit produite pendant la copie, le fichier créé va être supprimé s'il existe.
