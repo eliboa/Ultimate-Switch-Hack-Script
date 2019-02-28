@@ -45,9 +45,9 @@ IF "%dump_parts%"=="30" (
 	IF NOT EXIST "%dump_input%\rawnand.bin.29" (
 		set error_input=Y
 		goto:skip_verif_input
-	) else (
-		set dump_parts=15
-	)
+	) 
+) else (
+	set dump_parts=15
 )
 IF NOT EXIST "%dump_input%\rawnand.bin.00" (
 	set error_input=Y
