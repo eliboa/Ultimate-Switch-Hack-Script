@@ -218,6 +218,19 @@ IF "%dump_output%"=="" (
 	goto:end_script
 )
 set dump_output=%dump_output:\\=\%
+:verif_existing_file
+IF EXIST "%dump_output%\rawnand.bin" (
+	set /p erase_existing_dump=Un fichier "rawnand.bin" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(O/n^): 
+)
+IF NOT "%erase_existing_dump%"=="" set erase_existing_dump=%erase_existing_dump:~0,1%
+IF /i "%erase_existing_dump%"=="o" (
+	del /q "%dump_output%\rawnand.bin"
+	goto:verif_disk_free_space
+) else (
+	echo Opération annulée.
+	goto:end_script
+)
+:verif_disk_free_space
 %windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\get_free_space_for_path.vbs" "%dump_output%"
 set /p free_space=<templogs\volume_free_space.txt
 call TOOLS\Storage\functions\strlen.bat nb "%free_space%"
@@ -286,16 +299,7 @@ IF %nb% EQU 11 (
 echo.
 echo Il n'y a pas assez d'espace libre à l'emplacement sur lequel vous souhaitez copier votre dump, le script va s'arrêter.
 goto:end_script
-IF EXIST "%dump_output%\rawnand.bin" (
-	set /p erase_existing_dump=Un fichier "rawnand.bin" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent? ^(O/n^): 
-)
-IF NOT "%erase_existing_dump%"=="" set erase_existing_dump=%erase_existing_dump:~0,1%
-IF /i "%erase_existing_dump%"=="o" (
-goto:copy_nand
-) else (
-	echo Opération annulée.
-	goto:end_script
-)
+
 
 :copy_nand
 echo.
