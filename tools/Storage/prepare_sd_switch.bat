@@ -159,15 +159,6 @@ IF NOT "%launch_manual%"=="" set launch_manual=%launch_manual:~0,1%
 IF /i "%launch_manual%"=="o" (
 	start DOC\files\sd_prepare.html
 )
-IF /i NOT "%format_choice%"=="o" (
-	set /p del_files_dest_copy=Souhaitez-vous supprimer tous les répertoires et fichiers de la SD pendant la copie? (O/n^):
-)
-IF NOT "%del_files_dest_copy%"=="" set del_files_dest_copy=%del_files_dest_copy:~0,1%
-IF /i "%del_files_dest_copy%"=="o" (
-set del_files_dest_copy=
-	set /p del_files_dest_copy=Souhaitez-vous réellement supprimer tous les fichiers de la SD? (O/n^):
-)
-IF NOT "%del_files_dest_copy%"=="" set del_files_dest_copy=%del_files_dest_copy:~0,1%
 
 set /p copy_sdfilesswitch_pack=Souhaitez-vous copier le pack pour, entre autres, lancer Atmosphere via Hekate (pack Kosmos, anciennement nommé SDFilesSwitch)? (O/n):
 IF NOT "%copy_sdfilesswitch_pack%"=="" set copy_sdfilesswitch_pack=%copy_sdfilesswitch_pack:~0,1%
@@ -293,6 +284,24 @@ set /p profile_path=<templogs\tempvar.txt
 set profile_path=tools\sd_switch\mixed\profiles\%profile_path%
 :skip_verif_mixed_profile
 del /q templogs\profiles_list.txt >nul
+:define_del_files_dest_copy
+set del_files_dest_copy=
+IF /i NOT "%format_choice%"=="o" (
+	echo Suppression de données de la SD:
+	echo 1: Remettre les données de tous les CFWs à zéro sur la SD ^(supprimera les thèmes, configurations personnels, mods de jeux car les dossiers "titles" seront remis à zéro... donc bien sauvegarder vos données personnelles si vous souhaitez les concerver^)?
+	echo 2: Supprimer toutes les données de la SD?
+	echo 0: Copier normalement les fichiers sans supprimer de données de la SD?
+	echo.
+	set /p del_files_dest_copy=Faites votre choix: 
+) else (
+	set del_files_dest_copy=0
+)
+IF "%del_files_dest_copy%"=="1" goto:confirm_settings
+IF "%del_files_dest_copy%"=="2" goto:confirm_settings
+IF "%del_files_dest_copy%"=="0" goto:confirm_settings
+echo Choix inexistant.
+goto:define_del_files_dest_copy
+
 :confirm_settings
 echo.
 echo Résumé de se qui sera copié sur la SD, lecteur "%volume_letter%:":
@@ -342,7 +351,9 @@ IF "%pass_copy_mixed_pack%"=="Y" (
 	tools\gnuwin32\bin\sort.exe -n "%profile_path%"
 )
 echo.
-IF /i "%del_files_dest_copy%"=="o" echo Les fichiers de la SD seront intégralement supprimés avant la copie.
+IF /i "%del_files_dest_copy%"=="1" echo Attention: Les fichiers de tous les CFWs seront réinitialisé avant la copie, dossier "titles" de ceux-ci inclus.
+IF /i "%del_files_dest_copy%"=="2" echo Attention: Les fichiers de la SD seront intégralement supprimés avant la copie.
+IF /i "%del_files_dest_copy%"=="0" echo Les fichiers de la SD seront concervés et seul les fichiers mis à jour seront remplacés.
 set confirm_copy=
 set /p confirm_copy=Souhaitez-vous confirmer ceci? (O/n): 
 IF /i "%confirm_copy%"=="o" (
@@ -358,15 +369,17 @@ IF /i "%confirm_copy%"=="o" (
 :begin_copy
 echo Copie en cours...
 
+IF /i "%del_files_dest_copy%"=="1" (
+	call :delete_cfw_files
+	set del_files_dest_copy=0
+) else IF /i "%del_files_dest_copy%"=="2" (
+	rmdir /s /q "%volume_letter%:\" >nul 2>&1
+	set del_files_dest_copy=0
+)
 IF /i "%copy_atmosphere_pack%"=="o" (
-	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere %volume_letter%:\ /mir /e >nul
-		set del_files_dest_copy=n
-	) else (
-		IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches" >nul
-		IF EXIST "%volume_letter%:\atmosphere\exefs_patches" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches" >nul
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere %volume_letter%:\ /e >nul
-	)
+	IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches" >nul
+	IF EXIST "%volume_letter%:\atmosphere\exefs_patches" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches" >nul
+	%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere %volume_letter%:\ /e >nul
 	IF /i "%copy_payloads%"=="o" copy /V /B TOOLS\sd_switch\payloads\Atmosphere_fusee-primary.bin %volume_letter%:\Atmosphere_fusee-primary.bin >nul
 	IF /i "%copy_sdfilesswitch_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\Atmosphere_fusee-primary.bin %volume_letter%:\bootloader\payloads\Atmosphere_fusee-primary.bin >nul
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro" >nul
@@ -382,14 +395,9 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 )
 
 IF /i "%copy_sdfilesswitch_pack%"=="o" (
-	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch %volume_letter%:\ /mir /e >nul
-		set del_files_dest_copy=n
-	) else (
-		IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches" >nul
-		IF EXIST "%volume_letter%:\atmosphere\exefs_patches" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches" >nul
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch %volume_letter%:\ /e >nul
-	)
+	IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches" >nul
+	IF EXIST "%volume_letter%:\atmosphere\exefs_patches" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches" >nul
+	%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch %volume_letter%:\ /e >nul
 	IF /i "%copy_payloads%"=="o" copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\Hekate.bin >nul
 	IF /i "%copy_memloader%"=="o" copy /V /B TOOLS\sd_switch\payloads\memloader.bin %volume_letter%:\bootloader\payloads\memloader.bin >nul
 	IF EXIST "%volume_letter%:\bootlogo.bmp" del /q "%volume_letter%:\bootlogo.bmp" >nul
@@ -408,12 +416,7 @@ IF /i "%copy_sdfilesswitch_pack%"=="o" (
 )
 
 IF /i "%copy_reinx_pack%"=="o" (
-	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\reinx %volume_letter%:\ /mir /e >nul
-		set del_files_dest_copy=n
-	) else (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\reinx %volume_letter%:\ /e >nul
-	)
+	%windir%\System32\Robocopy.exe TOOLS\sd_switch\reinx %volume_letter%:\ /e >nul
 	IF /i "%reinx_enable_nogc_patch%"=="n" del /q %volume_letter%:\ReiNX\nogc >nul
 	IF /i "%copy_payloads%"=="o" copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\ReiNX.bin >nul
 	IF /i "%copy_sdfilesswitch_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\bootloader\payloads\ReiNX.bin >nul
@@ -423,12 +426,7 @@ IF /i "%copy_reinx_pack%"=="o" (
 )
 
 IF /i "%copy_sxos_pack%"=="o" (
-	IF /i "%del_files_dest_copy%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sxos %volume_letter%:\ /mir /e >nul
-		set del_files_dest_copy=n
-	) else (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sxos %volume_letter%:\ /e >nul
-	)
+	%windir%\System32\Robocopy.exe TOOLS\sd_switch\sxos %volume_letter%:\ /e >nul
 	IF /i "%copy_payloads%"=="o" copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\SXOS.bin >nul
 	IF /i "%copy_sdfilesswitch_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\bootloader\payloads\SXOS.bin >nul
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro" >nul
@@ -468,8 +466,34 @@ for /l %%i in (1,1,%temp_count%) do (
 del /Q /S "%volume_letter%:\switch\.emptydir" >nul
 del /Q /S "%volume_letter%:\Backup\.emptydir" >nul
 del /Q /S "%volume_letter%:\pk1decryptor\.emptydir" >nul
-IF EXIST "%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul
+IF EXIST "%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul 2>&1
 echo Copie terminée.
+goto:endscript
+
+:delete_cfw_files
+IF EXIST "%volume_letter%:\atmosphere" rmdir /s /q "%volume_letter%:\atmosphere"
+IF EXIST "%volume_letter%:\bootloader" rmdir /s /q "%volume_letter%:\bootloader"
+IF EXIST "%volume_letter%:\config" rmdir /s /q "%volume_letter%:\config"
+IF EXIST "%volume_letter%:\ftpd" rmdir /s /q "%volume_letter%:\ftpd"
+IF EXIST "%volume_letter%:\modules" rmdir /s /q "%volume_letter%:\modules"
+IF EXIST "%volume_letter%:\ReiNX" rmdir /s /q "%volume_letter%:\ReiNX"
+IF EXIST "%volume_letter%:\sept" rmdir /s /q "%volume_letter%:\sept"
+IF EXIST "%volume_letter%:\SlideNX" rmdir /s /q "%volume_letter%:\SlideNX"
+IF EXIST "%volume_letter%:\sxos\titles" rmdir /s /q "%volume_letter%:\sxos\titles"
+IF EXIST "%volume_letter%:\boot.dat" del /q "%volume_letter%:\boot.dat"
+IF EXIST "%volume_letter%:\hbmenu.nro" del /q "%volume_letter%:\hbmenu.nro"
+IF EXIST "%volume_letter%:\xor.play.json" del /q "%volume_letter%:\xor.play.json"
+IF EXIST "%volume_letter%:\switch\Kip_Select" rmdir /s /q "%volume_letter%:\switch\Kip_Select"
+IF EXIST "%volume_letter%:\switch\Kosmos-Toolbox" rmdir /s /q "%volume_letter%:\switch\Kosmos-Toolbox"
+IF EXIST "%volume_letter%:\switch\KosmosUpdater" rmdir /s /q "%volume_letter%:\switch\KosmosUpdater"
+IF EXIST "%volume_letter%:\switch\ldnmitm_config" rmdir /s /q "%volume_letter%:\switch\ldnmitm_config"
+IF EXIST "%volume_letter%:\switch\ReiNXToolkit" rmdir /s /q "%volume_letter%:\switch\ReiNXToolkit"
+IF EXIST "%volume_letter%:\switch\ROMMENU" rmdir /s /q "%volume_letter%:\switch\ROMMENU"
+IF EXIST "%volume_letter%:\switch\reboot_to_payload" rmdir /s /q "%volume_letter%:\switch\reboot_to_payload"
+IF EXIST "%volume_letter%:\switch\sx_installer" rmdir /s /q "%volume_letter%:\switch\sx_installer"
+IF EXIST "%volume_letter%:\switch\SXDUMPER" rmdir /s /q "%volume_letter%:\switch\SXDUMPER"
+exit /b
+
 :endscript
 pause
 rmdir /s /q templogs
