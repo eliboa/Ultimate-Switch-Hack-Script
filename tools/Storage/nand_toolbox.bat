@@ -22,6 +22,7 @@ echo.
 echo 1: obtenir des infos sur un fichier de dump ou sur une partie de la nand de la console?
 echo 2: Dumper la nand ou une partition de la nand de la console, copier un fichier ou extraire une partition d'un fichier de dump?
 echo 3: Restaurer la nand ou une partition de la nand de la console?
+echo 4: Joindre un dump fait en plusieurs parties, par exemple un dump fait via Hekate sur une SD formatée en FAT32.
 echo 0: Charger une partie de la nand avec Memloader?
 echo N'importe quel autre choix: Revenir au menu précédent?
 echo.
@@ -30,6 +31,10 @@ set /p action_choice=Faites votre choix:
 IF "%action_choice%"=="1" goto:info_nand
 IF "%action_choice%"=="2" goto:dump_nand
 IF "%action_choice%"=="3" goto:restaure_nand
+IF "%action_choice%"=="4" (
+	call tools\storage\nand_joiner.bat
+	goto:define_action_choice
+)
 IF "%action_choice%"=="0" (
 	call tools\storage\mount_discs.bat
 	goto:define_action_choice
