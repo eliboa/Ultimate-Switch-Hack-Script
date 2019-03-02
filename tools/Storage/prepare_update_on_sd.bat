@@ -3,7 +3,6 @@
 Setlocal
 chcp 65001 > nul
 
-
 IF NOT EXIST templogs (
 	mkdir templogs
 ) else (
@@ -16,7 +15,7 @@ IF %errorlevel% NEQ 0 (
 	goto:end_script
 )
 set md5_try=0
-echo Ce script permet de préparer la carte SD pour un firmware spécifique, le firmware sera téléchargé puis copié sur la SD et ChoiDuJour-NX sera également copié sur la SD. Notez que vous aurez besoin de lancer un CFW pour finaliser la mise à jour sur votre console donc si vous ne l'avez pas fait, veuillez préparer une SD pour le hack avant ou après l'exécution de ce script (si après, ne pas formater la carte ou supprimer les données s'y trouvant car sinon vous devrez exécuter de nouveau ce script).
+echo Ce script permet de préparer la carte SD avec un firmware spécifique à installer avec ChoiDuJourNX, le firmware sera téléchargé puis copié sur la SD et ChoiDuJour-NX sera également copié sur la SD. Notez que vous aurez besoin de lancer un CFW pour finaliser la mise à jour sur votre console donc si vous ne l'avez pas fait, veuillez préparer la SD pour le hack avant ou après l'exécution de ce script (si après, ne pas formater la carte ou supprimer les données s'y trouvant car sinon vous devrez exécuter de nouveau ce script).
 echo.
 echo ATTENTION: Choisissez bien la lettre du volume qui correspond à votre SD car aucune vérification ne pourra être faites à ce niveau là. 
 echo.
