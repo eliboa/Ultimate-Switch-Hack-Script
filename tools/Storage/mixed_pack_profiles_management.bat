@@ -203,16 +203,13 @@ IF %temp_count% EQU 0 (
 goto:recall_add_remove_homebrew
 exit /b
 
-:order_homebrew_in_profile
-
-exit /b
-
 :homebrews_list
 copy nul templogs\homebrews_list.txt >nul
 echo Appstore>>templogs\homebrews_list.txt
 echo BiggestDump>>templogs\homebrews_list.txt
 echo Checkpoint>>templogs\homebrews_list.txt
 echo ChoiDuJourNX>>templogs\homebrews_list.txt
+echo DZ>>templogs\homebrews_list.txt
 echo EdiZon>>templogs\homebrews_list.txt
 echo Ftpd>>templogs\homebrews_list.txt
 echo GagOrder>>templogs\homebrews_list.txt
@@ -220,8 +217,10 @@ echo Gcdumptool>>templogs\homebrews_list.txt
 echo Goldleaf>>templogs\homebrews_list.txt
 echo Incognito>>templogs\homebrews_list.txt
 echo JKSV>>templogs\homebrews_list.txt
+echo Lithium>>templogs\homebrews_list.txt
 echo Lockpick>>templogs\homebrews_list.txt
 echo Mod_Plague>>templogs\homebrews_list.txt
+echo N1dusd>>templogs\homebrews_list.txt
 echo NX-Shell>>templogs\homebrews_list.txt
 echo Pplay>>templogs\homebrews_list.txt
 echo Sdsetup-switch>>templogs\homebrews_list.txt

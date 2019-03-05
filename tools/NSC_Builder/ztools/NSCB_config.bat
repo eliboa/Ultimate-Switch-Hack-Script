@@ -9,7 +9,8 @@ echo OPTION - CONFIGURATION
 echo ********************************************************
 echo Tapez "1" pour les options du mode automatique
 echo Tapez "2" pour les OPTIONS globales et manuelles.
-::echo Input "3" to INSTALL DEPENDENCIES
+echo Tapez "3" pour vérifier le fichier de clés.
+::echo Input "4" to INSTALL DEPENDENCIES
 echo.
 echo Tapez "c" pour voir le profile actuel
 echo Tapez "d" pour remettre les paramètres par défaut
@@ -20,7 +21,8 @@ set bs=
 set /p bs="Faites votre choix: "
 if /i "%bs%"=="1" goto sc2
 if /i "%bs%"=="2" goto sc3
-if /i "%bs%"=="3" goto idepend
+if /i "%bs%"=="3" goto verify_keys
+if /i "%bs%"=="4" goto idepend
 
 if /i "%bs%"=="c" call :curr_set1
 if /i "%bs%"=="c" call :curr_set2
@@ -972,6 +974,28 @@ REM OUTPUT ORGANIZING format
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "125" -nl "Output organization is set to: "
 
 exit /B
+
+:verify_keys
+cls
+call :logo
+echo ***************************************************************************
+echo Vérification des clés dans le fichier KEYS.TXT avec les HASHES SHA256 des bonnes clés
+echo ***************************************************************************
+
+%pycommand% "%nut%" -nint_keys "%dec_keys%"
+
+echo ...........................................................................
+echo Tapez "0" pour revenir au menu de configuration.
+echo Tapez "1" pour revenir au menu principal.
+echo ...........................................................................
+echo.
+set bs=
+set /p bs="Enter your choice: "
+set bs=%bs:"=%
+
+if /i "%bs%"=="0" goto sc1
+if /i "%bs%"=="1" goto salida
+
 :salida
 exit /B
 

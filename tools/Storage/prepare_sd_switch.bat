@@ -376,6 +376,7 @@ IF /i "%del_files_dest_copy%"=="1" (
 	rmdir /s /q "%volume_letter%:\" >nul 2>&1
 	set del_files_dest_copy=0
 )
+
 IF /i "%copy_atmosphere_pack%"=="o" (
 	IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches" >nul
 	IF EXIST "%volume_letter%:\atmosphere\exefs_patches" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches" >nul
@@ -391,6 +392,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere_patches_nogc %volume_letter%:\ /e >nul
 	)
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\bootloader\payloads\Lockpick_RCM.bin >nul
 	del /Q /S "%volume_letter%:\atmosphere\.emptydir" >nul
 )
 
@@ -412,6 +414,7 @@ IF /i "%copy_sdfilesswitch_pack%"=="o" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\sdfilesswitch_patches_nogc %volume_letter%:\ /e >nul
 	)
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\bootloader\payloads\Lockpick_RCM.bin >nul
 	del /Q /S "%volume_letter%:\bootloader\.emptydir" >nul
 )
 
@@ -431,6 +434,7 @@ IF /i "%copy_sxos_pack%"=="o" (
 	IF /i "%copy_sdfilesswitch_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\bootloader\payloads\SXOS.bin >nul
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro" >nul
 	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res" >nul
+	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\Lockpick_RCM.bin >nul
 	del /Q /S "%volume_letter%:\sxos\.emptydir" >nul
 )
 

@@ -24,10 +24,11 @@ goto sc1
 cls
 call :logo
 echo .......................................................
-echo Tapez "1" pour voir le contenu du xci/nsp
-echo Tapez "2" pour voir les infos de NUT sur le xci/nsp
-echo Tapez "3" pour voir les informations sur le jeu et le FIRMWARE requis du xci/nsp
-echo Tapez "4" pour lire le CNMT du xci/nsp
+echo Tapez "1" pour voir la liste des fichiers du xci/nsp
+echo Tapez "2" pour voir le contenu du xci/nsp
+echo Tapez "3" pour voir les infos de NUT sur le xci/nsp
+echo Tapez "4" pour voir les informations sur le jeu et le FIRMWARE requis du xci/nsp
+echo Tapez "5" pour lire le CNMT du xci/nsp
 echo.
 echo Tapez "b" pour revenir à la sélection du fichier
 echo -- Tapez "0" pour revenir au menu principal du script --
@@ -43,10 +44,11 @@ if "%Extension%" EQU ".*" ( goto wch )
 if "%Extension%" EQU ".nsp" ( goto snfi )
 if "%Extension%" EQU ".xci" ( goto snfi )
 
-if /i "%bs%"=="1" goto g_content
-if /i "%bs%"=="2" goto n_info
-if /i "%bs%"=="3" goto f_info
-if /i "%bs%"=="4" goto r_cnmt
+if /i "%bs%"=="1" goto g_file_content
+if /i "%bs%"=="2" goto g_content_list
+if /i "%bs%"=="3" goto n_info
+if /i "%bs%"=="4" goto f_info
+if /i "%bs%"=="5" goto r_cnmt
 
 if /i "%bs%"=="b" goto sc1
 if /i "%bs%"=="0" goto salida
@@ -61,32 +63,61 @@ echo Choix inexistant.
 pause
 goto sc2
 
-:g_content
+:g_file_content
 cls
 call :logo
 echo ********************************************************
-echo Voir le contenu du NSP ou de la partition SECURE du XCI
+echo Voir le contenu des fichiers du NSP ou de la partition SECURE du XCI
 echo ********************************************************
 %pycommand% "%nut%" --ADVfilelist "%targt%"
 echo.
 ECHO ********************************************************
 echo Souhaitez-vous copier ces informations dans un fichier texte?
 ECHO ********************************************************
-:g_content_wrong
+:g_file_contentwrong
 echo Tapez "1" pour les copier dans un fichier texte
 echo Tapez "2" pour ne pas les copier dans un fichier texte
 echo.
 set bs=
 set /p bs="Faites votre choix: "
-if /i "%bs%"=="1" goto g_content_print
+if /i "%bs%"=="1" goto g_file_content_print
 if /i "%bs%"=="2" goto sc2
 echo Choix inexistant.
 echo.
-goto g_content_wrong
-:g_content_print
+goto g_file_contentwrong
+:g_file_content_print
 if not exist "%info_dir%" MD "%info_dir%">NUL 2>&1
-set "i_file=%info_dir%\%Name%-content.txt"
+set "i_file=%info_dir%\%Name%-Fcontent.txt"
 %pycommand% "%nut%" --ADVfilelist "%targt%">"%i_file%"
+ECHO Terminé.
+goto sc2
+
+:g_content_list
+cls
+call :logo
+echo ********************************************************
+echo Voir le contenu  du NSP ou du XCI trié par ID
+echo ********************************************************
+%pycommand% "%nut%" --ADVcontentlist "%targt%"
+echo.
+ECHO ********************************************************
+echo Do you want to print the information to a text file?
+ECHO ********************************************************
+:g_content_list_wrong
+echo Tapez "1" pour les copier dans un fichier texte
+echo Tapez "2" pour ne pas les copier dans un fichier texte
+echo.
+set bs=
+set /p bs="Faites votre choix: "
+if /i "%bs%"=="1" goto g_content_list_print
+if /i "%bs%"=="2" goto sc2
+echo Choix inexistant.
+echo.
+goto g_content_list_wrong
+:g_content_list_print
+if not exist "%info_dir%" MD "%info_dir%">NUL 2>&1
+set "i_file=%info_dir%\%Name%_ID_content.txt"
+%pycommand% "%nut%" --ADVcontentlist "%targt%">"%i_file%"
 ECHO Terminé.
 goto sc2
 
