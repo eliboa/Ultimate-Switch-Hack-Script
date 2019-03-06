@@ -13,6 +13,8 @@ echo.
 echo Ici, vous pouvez effectuer un grand nombre d'actions sur la nand de la Switch ou sur un fichier de nand déjà dumpé.
 echo Si vous n'avez pas lancé l'Ultimate Switch Hack Script en tant qu'administrateur (Windows 8 et versions supérieurs), toutes les fonctionnalités permettant d'intervenir sur un disque physique seront inutilisables.
 echo.
+echo Note: Pour sélectionner un dump splittés, il suffit de sélectionner le premier fichier de celui-ci.
+echo.
 echo Attention: Les opérations effectuées par ces fonctions peuvent intervenir sur la nand de votre console, vous êtes seul responsable de se que vous faites.
 pause
 :define_action_choice
