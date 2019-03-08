@@ -47,7 +47,7 @@ set "capRSV=--RSVcap 268435656"
 ::
 set "uinput=ztools\uinput"
 ::Route for keys.txt 
-set "dec_keys=ztools\keys.txt"
+set "dec_keys=keys.txt"
 ::--------------------------------------------------------------
 ::OPTION 5: REPACK OPTIONS
 ::--------------------------------------------------------------
