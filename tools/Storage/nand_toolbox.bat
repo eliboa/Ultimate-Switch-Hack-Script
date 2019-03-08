@@ -13,7 +13,7 @@ echo.
 echo Ici, vous pouvez effectuer un grand nombre d'actions sur la nand de la Switch ou sur un fichier de nand déjà dumpé.
 echo Si vous n'avez pas lancé l'Ultimate Switch Hack Script en tant qu'administrateur (Windows 8 et versions supérieurs), toutes les fonctionnalités permettant d'intervenir sur un disque physique seront inutilisables.
 ::echo.
-::echo Note: Pour sélectionner un dump splittés, il suffit de sélectionner le premier fichier de celui-ci.
+echo Note: Pour sélectionner un dump splittés, il suffit de sélectionner le premier fichier de celui-ci.
 echo.
 echo Attention: Les opérations effectuées par ces fonctions peuvent intervenir sur la nand de votre console, vous êtes seul responsable de se que vous faites.
 pause
@@ -24,7 +24,8 @@ echo.
 echo 1: obtenir des infos sur un fichier de dump ou sur une partie de la nand de la console?
 echo 2: Dumper la nand ou une partition de la nand de la console, copier un fichier ou extraire une partition d'un fichier de dump?
 echo 3: Restaurer la nand ou une partition de la nand de la console?
-echo 4: Joindre un dump fait en plusieurs parties, par exemple un dump fait via Hekate sur une SD formatée en FAT32.
+echo 4: Activer/désactiver l'auto-RCM d'une partition BOOT0 ?
+echo 5: Joindre un dump fait en plusieurs parties, par exemple un dump fait via Hekate sur une SD formatée en FAT32.
 echo 0: Charger une partie de la nand avec Memloader?
 echo N'importe quel autre choix: Revenir au menu précédent?
 echo.
@@ -33,7 +34,8 @@ set /p action_choice=Faites votre choix:
 IF "%action_choice%"=="1" goto:info_nand
 IF "%action_choice%"=="2" goto:dump_nand
 IF "%action_choice%"=="3" goto:restaure_nand
-IF "%action_choice%"=="4" (
+IF "%action_choice%"=="4" goto:autorcm_management
+IF "%action_choice%"=="5" (
 	call tools\storage\nand_joiner.bat
 	goto:define_action_choice
 )
@@ -118,6 +120,8 @@ IF NOT "%partition%"=="" (
 ) else (
 	IF "%nand_type%"=="RAWNAND" (
 		set output_path=%output_path%rawnand.bin
+	) else IF "%nand_type%"=="RAWNAND (splitted dump)" (
+		set output_path=%output_path%rawnand.bin
 	) else (
 		set output_path=%output_path%%nand_type%
 	)
@@ -175,8 +179,15 @@ IF "%output_path%"=="" (
 call :partition_select restaure_nand
 call :get_type_nand "%input_path%"
 set input_nand_type=%nand_type%
+IF "%input_nand_type%"=="RAWNAND (splitted dump)" (
+	set input_nand_type=RAWNAND
+)
 call :get_type_nand "%output_path%"
 set output_nand_type=%nand_type%
+IF "%output_nand_type%"=="RAWNAND (splitted dump)" (
+	set output_nand_type=RAWNAND
+)
+
 IF NOT "%partition%"=="" (
 	IF NOT "%output_nand_type%"=="RAWNAND" (
 		echo Impossible de restaurer une partition spécifique si le type de nand en sortie n'est pas "RAWNAND", l'opération est annulée.
@@ -198,6 +209,66 @@ call :set_NNM_params
 tools\NxNandManager\NxNandManager.exe -i "%input_path%" -o "%output_path%" %params%%lflags%
 echo.
 goto:restaure_nand
+
+:autorcm_management
+set input_path=
+echo Sur quelle partition BOOT0 souhaitez-vous travailler?
+call :list_disk
+echo 0: Fichier de dump?
+echo Aucune valeur: Revenir au choix du mode?
+echo.
+set action_choice=
+set /p action_choice=Faites votre choix: 
+IF "%action_choice%" == "" (
+	goto:define_action_choice
+)
+call :verif_disk_choice %action_choice% autorcm_management
+IF "%action_choice%" == "0" (
+	call :nand_file_input_select
+) else (
+	IF EXIST templogs\disks_list.txt (
+		TOOLS\gnuwin32\bin\sed.exe -n %action_choice%p <templogs\disks_list.txt > templogs\tempvar.txt 2> nul
+		set /p input_path=<templogs\tempvar.txt
+	)
+)
+IF "%input_path%"=="" (
+	echo Le fichier de dump n'a pas été indiqué ou le numéro de disque n'existe pas.
+	echo.
+	goto:autorcm_management
+)
+echo.
+echo Que souhaitez-vous faire:
+echo 1: Activer l'auto-RCM?
+echo 2: Désactiver l'auto-RCM?
+echo Tout autre choix: Annuler le processus.
+echo.
+set action_choice=
+set autorcm_param=
+set /p action_choice=Faites votre choix: 
+IF "%action_choice%" == "1" (
+	set autorcm_param=--enable_autoRCM
+) else IF "%action_choice%" == "2" (
+	set autorcm_param=--disable_autoRCM
+) else (
+	goto:autorcm_management
+)
+call :get_type_nand "%input_path%"
+set input_nand_type=%nand_type%
+IF NOT "%input_nand_type%"=="BOOT0" (
+	echo Le type de la nand doit être BOOT0, le processus ne peut continuer.
+	goto:autorcm_management
+)
+tools\NxNandManager\NxNandManager.exe %autorcm_param% -i "%input_path%" >nul 2>&1
+IF %errorlevel% NEQ 0 (
+	echo Une erreur inconnue semble s'être produite pendant la tentative d'activation/désactivation de l'auto-RCM.
+	echo Vérifiez que le script a bien été exécuté en tant qu'administrateur et que le fichier ou le périphérique est bien accessible. Dans le cas d'un fichier, vérifiez également qu'il n'est pas en lecture seul.
+) else (
+	IF "%action_choice%" == "1" echo Auto-RCM activé.
+IF "%action_choice%" == "2" echo Auto-RCM désactivé.
+)
+pause
+echo.
+goto:autorcm_management
 
 :get_type_nand
 set nand_type=
@@ -329,6 +400,7 @@ IF /i "%debug_option%"=="o" (
 	set lflags=%lflags%DEBUG_MODE 
 )
 exit /b
+
 :end_script
 IF EXIST templogs (
 	rmdir /s /q templogs
