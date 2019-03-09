@@ -23,7 +23,7 @@ echo Que souhaitez-vous faire?
 echo.
 echo 1: obtenir des infos sur un fichier de dump ou sur une partie de la nand de la console?
 echo 2: Dumper la nand ou une partition de la nand de la console, copier un fichier ou extraire une partition d'un fichier de dump?
-echo 3: Restaurer la nand ou une partition de la nand de la console?
+echo 3: Restaurer la nand ou une partition de la nand de la console sur la console ou dans un fichier de dump?
 echo 4: Activer/désactiver l'auto-RCM d'une partition BOOT0 ?
 echo 5: Joindre un dump fait en plusieurs parties, par exemple un dump fait via Hekate sur une SD formatée en FAT32.
 echo 0: Charger une partie de la nand avec Memloader?
@@ -155,10 +155,7 @@ IF "%input_path%"=="" (
 )
 echo Choisissez le support vers lequel restaurer le dump:
 call :list_disk
-IF NOT EXIST templogs\disks_list.txt (
-	echo Aucun disque vers lequel restaurer, retour au choix du mode.
-	goto:define_action_choice
-)
+echo 0: Fichier de dump?
 echo Aucune valeur: Revenir au choix du mode?
 echo.
 set action_choice=
@@ -167,23 +164,35 @@ IF "%action_choice%" == "" (
 	goto:define_action_choice
 )
 call :verif_disk_choice %action_choice% restaure_nand
-IF EXIST templogs\disks_list.txt (
-	TOOLS\gnuwin32\bin\sed.exe -n %action_choice%p <templogs\disks_list.txt > templogs\tempvar.txt 2> nul
-	set /p output_path=<templogs\tempvar.txt
+IF "%action_choice%" == "0" (
+	call :nand_file_output_select
+) else (
+	IF EXIST templogs\disks_list.txt (
+		TOOLS\gnuwin32\bin\sed.exe -n %action_choice%p <templogs\disks_list.txt > templogs\tempvar.txt 2> nul
+		set /p output_path=<templogs\tempvar.txt
+	)
 )
 IF "%output_path%"=="" (
-	echo Le numéro de disque n'existe pas.
+	echo Le fichier de dump n'a pas été indiqué ou le numéro de disque n'existe pas.
 	echo.
-	goto:dump_nand
+	goto:restaure_nand
 )
 call :partition_select restaure_nand
 call :get_type_nand "%input_path%"
 set input_nand_type=%nand_type%
+IF "%input_nand_type%"=="UNKNOWN" (
+	echo Le dump en entrée semble être corrompu ou n'est pas un dump valide, par mesure de sécurité le script va s'arrêter.
+	goto:restaure_nand
+)
 IF "%input_nand_type%"=="RAWNAND (splitted dump)" (
 	set input_nand_type=RAWNAND
 )
 call :get_type_nand "%output_path%"
 set output_nand_type=%nand_type%
+IF "%output_nand_type%"=="UNKNOWN" (
+	echo Le dump en sortie semble être corrompu ou n'est pas un dump valide, par mesure de sécurité le script va s'arrêter.
+	goto:restaure_nand
+)
 IF "%output_nand_type%"=="RAWNAND (splitted dump)" (
 	set output_nand_type=RAWNAND
 )
@@ -317,6 +326,11 @@ exit /b
 :nand_file_input_select
 %windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\open_file.vbs "" "Tout les fichiers (*.*)|*.*|" "Sélection du fichier de dump" "templogs\tempvar.txt"
 set /p input_path=<templogs\tempvar.txt
+exit /b
+
+:nand_file_output_select
+%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\open_file.vbs "" "Tout les fichiers (*.*)|*.*|" "Sélection du fichier de dump" "templogs\tempvar.txt"
+set /p output_path=<templogs\tempvar.txt
 exit /b
 
 :verif_disk_choice
