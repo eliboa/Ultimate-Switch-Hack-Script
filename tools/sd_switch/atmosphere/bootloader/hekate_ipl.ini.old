@@ -1,0 +1,64 @@
+[config]
+autoboot=0
+autoboot_list=0
+bootwait=5
+customlogo=1
+verification=2
+autohosoff=0
+backlight=100
+autonogc=0
+
+{AtlasNX/Kosmos}
+{ }
+{Discord: https://discord.gg/qbRAuy7}
+{ }
+{Modified by Shadow256}
+
+{Atmosphere via Hekate}
+[Atmosphere]
+secmon=modules/atmosphere/exosphere.bin
+warmboot=modules/atmosphere/lp0fw.bin
+kip1=modules/atmosphere/*
+logopath=modules/atmosphere/atmosphere.bmp
+atmosphere=1
+fullsvcperm=1
+debugmode=1
+[Atmosphere + Signature Patches]
+secmon=modules/atmosphere/exosphere.bin
+warmboot=modules/atmosphere/lp0fw.bin
+kip1=modules/atmosphere/*
+logopath=modules/atmosphere/atmosphere.bmp
+kip1patch=nosigchk
+atmosphere=1
+fullsvcperm=1
+debugmode=1
+{ }
+
+{----- FTP-Server -----}
+{Port: 5000}
+{Dont run SDFilesUpdater with this!}
+[FTP + CFW]
+secmon=modules/atmosphere/exosphere.bin
+warmboot=modules/atmosphere/lp0fw.bin
+kip1=modules/atmosphere/*
+kip1=modules/sys-ftpd.kip
+atmosphere=1
+kip1patch=nosigchk
+fullsvcperm=1
+debugmode=1
+{ }
+
+{-------- Stock -------}
+[Stock (1.0-6.2)]
+[Stock (1.0-6.2) + Signature Patches]
+kip1patch=nosigchk
+[Stock (7.0+)]
+secmon=modules/atmosphere/exosphere.bin
+warmboot=modules/atmosphere/lp0fw.bin
+atmosphere=1
+[Stock (7.0+) + Signature Patches]
+secmon=modules/atmosphere/exosphere.bin
+warmboot=modules/atmosphere/lp0fw.bin
+atmosphere=1
+kip1patch=nosigchk
+{ }

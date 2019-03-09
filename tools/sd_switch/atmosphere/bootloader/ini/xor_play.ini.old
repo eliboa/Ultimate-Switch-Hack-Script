@@ -1,0 +1,19 @@
+{------ xor.play ------}
+[CFW + xor.play]
+secmon=modules/atmosphere/exosphere.bin
+warmboot=modules/atmosphere/lp0fw.bin
+kip1=modules/atmosphere/*
+kip1=modules/xor.play.kip
+atmosphere=1
+debugmode=1
+fullsvcperm=1
+kip1patch=nosigchk
+
+[Stock (1.0-6.2) + xor.play]
+kip1=modules/xor.play.kip
+[Stock (7.0+) + xor.play]
+kip1=modules/xor.play.kip
+secmon=modules/atmosphere/exosphere.bin
+warmboot=modules/atmosphere/lp0fw.bin
+atmosphere=1
+{ }
