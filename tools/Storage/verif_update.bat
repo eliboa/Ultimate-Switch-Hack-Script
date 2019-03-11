@@ -76,6 +76,16 @@ title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p ushs_packs_version_verif=<templogs\version.txt
 IF "%ushs_packs_version_verif%"=="" goto:end_script
 IF %ushs_packs_version_verif% GTR %ushs_packs_version% set update_packs_finded=O
+IF EXIST tools\sd_switch\cheats\version.txt (
+	set /p ushs_cheats_version=<tools\sd_switch\cheats\version.txt
+) else (
+	set /p ushs_cheats_version=<tools\cheats_version.txt
+)
+tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\version.txt" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/tools/sd_switch/cheats/version.txt
+title Shadow256 Ultimate Switch Hack Script %ushs_version%
+set /p ushs_cheats_version_verif=<templogs\version.txt
+IF "%ushs_cheats_version_verif%"=="" goto:end_script
+IF %ushs_cheats_version_verif% GTR %ushs_cheats_version% set update_cheats_finded=O
 IF %ushs_version_verif:~0,1% GTR %ushs_version:~0,1% (
 	set update_finded=O
 	goto:skip_verif_update
@@ -125,11 +135,12 @@ tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 start explorer.exe templogs\changelog.html
 goto:define_action_choice
+
 :check_packs_update
 IF "%update_packs_finded%"=="" (
 	echo Aucune mise à jour des packs trouvée.
 	pause
-	goto:end_script
+	goto:check_cheats_update
 )
 :define_packs_action_choice
 echo Mise à jour des packs en version %ushs_packs_version_verif% trouvée.
@@ -143,8 +154,7 @@ echo.
 set /p packs_action_choice=Faites votre choix: 
 IF "%packs_action_choice%"=="1" goto:update_packs
 IF "%packs_action_choice%"=="2" goto:open_packs_changelog_page
-goto:end_script
-
+goto:check_cheats_update
 :update_packs
 set packs_action_choice=
 copy tools\sd_switch\version.txt tools\packs_version.txt
@@ -169,6 +179,40 @@ tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 start explorer.exe templogs\changelog.html
 goto:define_packs_action_choice
+
+:check_cheats_update
+IF "%update_cheats_finded%"=="" (
+	echo Aucune mise à jour des cheats trouvée.
+	pause
+	goto:end_script
+)
+:define_cheats_action_choice
+echo Mise à jour des cheats en version %ushs_cheats_version_verif% trouvée.
+echo.
+echo Que souhaitez-vous faire?
+echo.
+echo 1: Mettre à jour les cheats?
+echo N'importe quel autre choix: Continuer sans rien faire?
+echo.
+set /p cheats_action_choice=Faites votre choix: 
+IF "%cheats_action_choice%"=="1" goto:update_cheats
+goto:end_script
+:update_cheats
+set cheats_action_choice=
+copy tools\sd_switch\cheats\version.txt tools\cheats_version.txt
+rmdir /s /q tools\sd_switch\cheats
+tools\gitget\SVN\svn.exe export https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk/tools/sd_switch/cheats tools\sd_switch\cheats --force
+IF %errorlevel% NEQ 0 (
+	echo Un problème est survenu durant la mise à jour des cheats, veuillez vérifier votre connexion internet et réessayer. Si cela ne vient pas de la connexion internet, vérifiez également l'espace disque pour la partition sur laquelle se trouve le script et libérez au moins 5 MO sur celui-ci avant de réessayer.
+	echo Notez que vous devez réussir la mise à jour pour que le script de préparation d'une SD  fonctionne correctement. Si la mise à jour ne fonctionne vraiment pas, veuillez retélécharger le script au complet et le réinstaller.
+	goto:define_cheats_action_choice
+) else (
+	del /q tools\cheats_version.txt
+	echo Mise à jour des cheats effectuée avec succès.
+	pause
+	goto:end_script
+)
+
 :end_script
 rmdir /s /q templogs 2>nul
 endlocal
