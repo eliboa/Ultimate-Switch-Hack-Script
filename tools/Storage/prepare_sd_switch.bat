@@ -12,6 +12,11 @@ IF EXIST "tools\packs_version.txt" (
 	echo Si vous êtes certains d'avoir mis à jour correctement le dossier des packs (par exemple en retéléchargeant le script et en extrayant le dossier "tools\sd_switch" de l'archive dans le dossier "tools" du script, vous pouvez supprimer manuellement le fichier "tools\packs_version.txt" et relancer ce script et cette erreur n'apparaîtra plus. Notez que si ceci n'a pas été fait correctement, ce script pourrait avoir des comportements anormaux.
 	goto:endscript
 )
+IF EXIST "tools\cheats_version.txt" (
+	echo Il semble qu'une mise à jour des cheats via le script ait échouée précédemment et n'ai pas été réussie depuis, par sécurité ce script va donc s'arrêter.
+	echo Si vous êtes certains d'avoir mis à jour correctement le dossier des cheats (par exemple en retéléchargeant le script et en extrayant le dossier "tools\sd_switch\cheats" de l'archive dans le dossier "tools\sd_switch" du script, vous pouvez supprimer manuellement le fichier "tools\cheats_version.txt" et relancer ce script et cette erreur n'apparaîtra plus. Notez que si ceci n'a pas été fait correctement, ce script ne proposera pas la possibilité de copier les cheats sur la SD.
+	set cheats_update_error=Y
+)
 echo Ce script va vous permettre de préparer une carte SD pour le hack Switch en y installant les outils importants.
 echo Pendant le script, les droits administrateur seront peut-être demandé.
 echo.
@@ -162,8 +167,7 @@ IF /i "%launch_manual%"=="o" (
 
 set /p copy_atmosphere_pack=Souhaitez-vous copier le pack pour lancer Atmosphere via le payload Fusee-primary d'Atmosphere (CFW Atmosphere complet) ou via Hekate (pack Kosmos)? (O/n):
 IF NOT "%copy_atmosphere_pack%"=="" set copy_atmosphere_pack=%copy_atmosphere_pack:~0,1%
-IF /i "%copy_atmosphere_pack%"=="o" goto:ask_nogc_atmosphere
-goto:skip_ask_nogc_atmosphere
+IF /i NOT "%copy_atmosphere_pack%"=="o" goto:skip_ask_cheats_atmosphere
 	:ask_nogc_atmosphere
 	echo.
 	echo Souhaitez-vous activer le patch NOGC pour Atmosphere  (firmware 4.0.0 et supérieur^)?
@@ -172,6 +176,13 @@ goto:skip_ask_nogc_atmosphere
 	set /p atmosphere_enable_nogc_patch=Souhaitez-vous activer le patch nogc? (O/n^):
 	IF NOT "%atmosphere_enable_nogc_patch%"=="" set atmosphere_enable_nogc_patch=%atmosphere_enable_nogc_patch:~0,1%
 :skip_ask_nogc_atmosphere
+IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_atmosphere
+:ask_cheats_atmosphere
+echo.
+	echo Souhaitez-vous copier les cheats pour Atmosphere (utilisable avec le homebrew EdiZon)?
+	set /p atmosphere_enable_cheats=Souhaitez-vous activer le patch nogc? (O/n^):
+	IF NOT "%atmosphere_enable_cheats%"=="" set atmosphere_enable_cheats=%atmosphere_enable_cheats:~0,1%
+:skip_ask_cheats_atmosphere
 
 set /p copy_reinx_pack=Souhaitez-vous copier le pack pour lancer ReiNX? (O/n):
 IF NOT "%copy_reinx_pack%"=="" set copy_reinx_pack=%copy_reinx_pack:~0,1%
@@ -186,14 +197,20 @@ IF /i "%copy_reinx_pack%"=="o" (
 
 set /p copy_sxos_pack=Souhaitez-vous copier le pack pour lancer SXOS? (O/n):
 IF NOT "%copy_sxos_pack%"=="" set copy_sxos_pack=%copy_sxos_pack:~0,1%
+IF /i NOT "%copy_sxos_pack%"=="o" goto:skip_ask_cheats_sxos
+set /p copy_payloads=Souhaitez-vous copier les fichiers de payloads des fonctions choisient précédemment à la racine de la SD pour être compatible avec le lancement de payloads du payload SX_Loader? (O/n):
+IF NOT "!copy_payloads!"=="" set copy_payloads=!copy_payloads:~0,1!
+IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_sxos
+:ask_cheats_sxos
+echo.
+	echo Souhaitez-vous copier les cheats pour SX OS (utilisable avec le ROMMENU de SX OS)?
+	set /p sxos_enable_cheats=Souhaitez-vous activer le patch nogc? (O/n^):
+	IF NOT "%sxos_enable_cheats%"=="" set sxos_enable_cheats=%sxos_enable_cheats:~0,1%
+:skip_ask_cheats_sxos
 
 set /p copy_memloader=Souhaitez-vous copier les fichiers nécessaire à Memloader pour monter la SD, la partition EMMC, la partition Boot0 ou la partition Boot1 sur un PC en lançant simplement le payload de Memloader? (Si la copie de SXOS a été souhaité, le payload sera aussi copié à la racine de la SD pour pouvoir le lancer grâce au payload de SXOS) (O/n):
 IF NOT "%copy_memloader%"=="" set copy_memloader=%copy_memloader:~0,1%
 
-IF /i "%copy_sxos_pack%"=="o" (
-	set /p copy_payloads=Souhaitez-vous copier les fichiers de payloads des fonctions choisient précédemment à la racine de la SD pour être compatible avec le lancement de payloads du payload SX_Loader? (O/n^):
-	IF NOT "!copy_payloads!"=="" set copy_payloads=!copy_payloads:~0,1!
-)
 set /p copy_emu=Souhaitez-vous copier le pack d'émulateurs? (O/n):
 IF NOT "%copy_emu%"=="" set copy_emu=%copy_emu:~0,1%
 IF /i "%copy_emu%"=="o" (
@@ -331,6 +348,19 @@ IF "%pass_copy_mixed_pack%"=="Y" (
 	tools\gnuwin32\bin\sort.exe -n "%profile_path%"
 )
 echo.
+echo Cheats:
+echo.
+IF /i "%atmosphere_enable_cheats%"=="o" (
+	echo Les cheats pour Atmosphere seront copiés.
+) else (
+	echo Les cheats pour Atmosphere ne seront pas copiés.
+)
+IF /i "%sxos_enable_cheats%"=="o" (
+	echo Les cheats pour SX OS seront copiés.
+) else (
+	echo Les cheats pour SX OS ne seront pas copiés.
+)
+echo.
 IF /i "%del_files_dest_copy%"=="1" echo Attention: Les fichiers de tous les CFWs seront réinitialisé avant la copie, dossier "titles" de ceux-ci inclus.
 IF /i "%del_files_dest_copy%"=="2" echo Attention: Les fichiers de la SD seront intégralement supprimés avant la copie.
 IF /i "%del_files_dest_copy%"=="0" echo Les fichiers de la SD seront concervés et seul les fichiers mis à jour seront remplacés.
@@ -379,6 +409,9 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 	IF /i "%atmosphere_enable_nogc_patch%"=="O" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere_patches_nogc %volume_letter%:\ /e >nul
 	)
+	IF /i "%atmosphere_enable_cheats%"=="o" (
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\cheats\titles %volume_letter%:\atmosphere\titles /e >nul
+	)
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\bootloader\payloads\Lockpick_RCM.bin >nul
 	del /Q /S "%volume_letter%:\atmosphere\.emptydir" >nul
@@ -401,6 +434,9 @@ IF /i "%copy_sxos_pack%"=="o" (
 	IF /i "%copy_atmosphere_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\bootloader\payloads\SXOS.bin >nul
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro" >nul
 	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res" >nul
+	IF /i "%sxos_enable_cheats%"=="o" (
+		%windir%\System32\Robocopy.exe TOOLS\sd_switch\cheats\titles %volume_letter%:\sxos\titles /e >nul
+	)
 	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\Lockpick_RCM.bin >nul
 	del /Q /S "%volume_letter%:\sxos\.emptydir" >nul
 )
