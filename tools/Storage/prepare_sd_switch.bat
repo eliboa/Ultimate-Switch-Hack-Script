@@ -179,8 +179,7 @@ IF /i NOT "%copy_atmosphere_pack%"=="o" goto:skip_ask_cheats_atmosphere
 IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_atmosphere
 :ask_cheats_atmosphere
 echo.
-	echo Souhaitez-vous copier les cheats pour Atmosphere (utilisable avec le homebrew EdiZon)?
-	set /p atmosphere_enable_cheats=Souhaitez-vous activer le patch nogc? (O/n^):
+	set /p atmosphere_enable_cheats=Souhaitez-vous copier les cheats pour Atmosphere (utilisable avec le homebrew EdiZon)? (O/n): 
 	IF NOT "%atmosphere_enable_cheats%"=="" set atmosphere_enable_cheats=%atmosphere_enable_cheats:~0,1%
 :skip_ask_cheats_atmosphere
 
@@ -195,6 +194,9 @@ IF /i "%copy_reinx_pack%"=="o" (
 	IF NOT "!reinx_enable_nogc_patch!"=="" set reinx_enable_nogc_patch=!reinx_enable_nogc_patch:~0,1!
 )
 
+set /p copy_memloader=Souhaitez-vous copier les fichiers nécessaire à Memloader pour monter la SD, la partition EMMC, la partition Boot0 ou la partition Boot1 sur un PC en lançant simplement le payload de Memloader? (Si la copie de SXOS a été souhaité, le payload sera aussi copié à la racine de la SD pour pouvoir le lancer grâce au payload de SXOS) (O/n):
+IF NOT "%copy_memloader%"=="" set copy_memloader=%copy_memloader:~0,1%
+
 set /p copy_sxos_pack=Souhaitez-vous copier le pack pour lancer SXOS? (O/n):
 IF NOT "%copy_sxos_pack%"=="" set copy_sxos_pack=%copy_sxos_pack:~0,1%
 IF /i NOT "%copy_sxos_pack%"=="o" goto:skip_ask_cheats_sxos
@@ -203,13 +205,9 @@ IF NOT "!copy_payloads!"=="" set copy_payloads=!copy_payloads:~0,1!
 IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_sxos
 :ask_cheats_sxos
 echo.
-	echo Souhaitez-vous copier les cheats pour SX OS (utilisable avec le ROMMENU de SX OS)?
-	set /p sxos_enable_cheats=Souhaitez-vous activer le patch nogc? (O/n^):
+	set /p sxos_enable_cheats=Souhaitez-vous copier les cheats pour SX OS (utilisable avec le ROMMENU de SX OS)? (O/n): 
 	IF NOT "%sxos_enable_cheats%"=="" set sxos_enable_cheats=%sxos_enable_cheats:~0,1%
 :skip_ask_cheats_sxos
-
-set /p copy_memloader=Souhaitez-vous copier les fichiers nécessaire à Memloader pour monter la SD, la partition EMMC, la partition Boot0 ou la partition Boot1 sur un PC en lançant simplement le payload de Memloader? (Si la copie de SXOS a été souhaité, le payload sera aussi copié à la racine de la SD pour pouvoir le lancer grâce au payload de SXOS) (O/n):
-IF NOT "%copy_memloader%"=="" set copy_memloader=%copy_memloader:~0,1%
 
 set /p copy_emu=Souhaitez-vous copier le pack d'émulateurs? (O/n):
 IF NOT "%copy_emu%"=="" set copy_emu=%copy_emu:~0,1%
