@@ -139,7 +139,6 @@ goto:define_action_choice
 :check_packs_update
 IF "%update_packs_finded%"=="" (
 	echo Aucune mise à jour des packs trouvée.
-	pause
 	goto:check_cheats_update
 )
 :define_packs_action_choice
