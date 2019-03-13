@@ -32,12 +32,12 @@ goto:end_script
 echo Information sur un profile
 call :select_profile
 IF %errorlevel% EQU 404 (
-	echo Aucun profile à modifier, veuillez en créer un.
+	echo Aucun profile existant, veuillez en créer un pour obtenir des infos.
 	goto:define_action_choice
 )
 echo.
 echo Nom du profile: %profile_selected:~0,-4%
-echo Homebrews présent dans le profile:
+echo Homebrews présents dans le profile:
 call :list_homebrews_in_profile "%profile_selected%"
 pause
 goto:define_action_choice

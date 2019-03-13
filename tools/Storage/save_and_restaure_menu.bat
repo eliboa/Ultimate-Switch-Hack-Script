@@ -22,6 +22,9 @@ echo.
 echo 8: Supprimer les fichiers de clés utilisés par Hactool, XCI-Explorer, ChoiDuJour...?
 echo.
 echo 9: Configurer les profiles de copie de homebrews lors de la préparation d'une SD?
+echo.
+echo 10: Configurer les profiles de copie de cheats lors de la préparation d'une SD?
+echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
 echo.
@@ -35,6 +38,7 @@ IF "%action_choice%"=="6" goto:default_switch-lan-play
 IF "%action_choice%"=="7" goto:default_keys_nsc_builder
 IF "%action_choice%"=="8" goto:default_keys_hactool
 IF "%action_choice%"=="9" goto:mixed_packs_profiles_management
+IF "%action_choice%"=="10" goto:cheats_profiles_management
 goto:end_script
 :save_config
 set action_choice=
@@ -93,6 +97,13 @@ goto:define_action_choice
 set action_choice=
 echo.
 call TOOLS\Storage\mixed_pack_profiles_management.bat
+rmdir /s /q templogs
+@echo off
+goto:define_action_choice
+:cheats_profiles_management
+set action_choice=
+echo.
+call TOOLS\Storage\cheats_profiles_management.bat
 rmdir /s /q templogs
 @echo off
 goto:define_action_choice

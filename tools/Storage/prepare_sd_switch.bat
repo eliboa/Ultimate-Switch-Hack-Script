@@ -240,12 +240,12 @@ IF EXIST "tools\default_configs\mixed_profile_all.ini" (
 	set /a temp_count-=1
 	set no_default_config=Y
 )
-echo 0: Accéder à la gestion des profiles.
+echo 0: Accéder à la gestion des profiles de homebrews.
 echo Tout autre choix: Ne copier aucun des homebrews optionnels.
 echo.
 set profile_path=
 set mixed_profile=
-set /p mixed_profile=Choisissez un profile: 
+set /p mixed_profile=Choisissez un profile de homebrews: 
 IF "%mixed_profile%"=="" (
 	set pass_copy_mixed_pack=Y
 	goto:skip_verif_mixed_profile
@@ -285,6 +285,69 @@ TOOLS\gnuwin32\bin\sed.exe -n %mixed_profile%p <templogs\profiles_list.txt > tem
 set /p profile_path=<templogs\tempvar.txt
 set profile_path=tools\sd_switch\mixed\profiles\%profile_path%
 :skip_verif_mixed_profile
+del /q templogs\profiles_list.txt >nul
+:define_select_cheats_profile
+set cheats_profile_path=
+set cheats_profile_name=
+set cheats_profile=
+set copy_cheats=
+IF /i "%atmosphere_enable_cheats%"=="o" set copy_cheats=Y
+IF /i "%sxos_enable_cheats%"=="o" set copy_cheats=Y
+IF NOT "%copy_cheats%"=="Y" goto:skip_verif_cheats_profile
+echo Sélection du profile pour la copie des cheats:
+set /a temp_count=1
+copy nul templogs\profiles_list.txt >nul
+IF NOT EXIST "tools\sd_switch\cheats\profiles\*.ini" (
+	goto:no_cheats_profile_created
+)
+cd tools\sd_switch\cheats\profiles
+for %%p in (*.ini) do (
+	set temp_profilename=%%p
+	set temp_profilename=!temp_profilename:~0,-4!
+	echo !temp_count!: !temp_profilename!
+	echo %%p>> ..\..\..\..\templogs\profiles_list.txt
+	set /a temp_count+=1
+)
+cd ..\..\..\..
+:no_cheats_profile_created
+echo 0: Accéder à la gestion des profiles de cheats.
+echo Tout autre choix: Copier tous les cheats de la base de données.
+echo.
+set /p cheats_profile=Choisissez un profile de cheats: 
+IF "%cheats_profile%"=="" (
+	set copy_all_cheats_pack=Y
+	goto:skip_verif_cheats_profile
+)
+call TOOLS\Storage\functions\strlen.bat nb "%cheats_profile%"
+set i=0
+:check_chars_cheats_profile
+IF %i% NEQ %nb% (
+	set check_chars=0
+	FOR %%z in (0 1 2 3 4 5 6 7 8 9) do (
+		IF "!cheats_profile:~%i%,1!"=="%%z" (
+			set /a i+=1
+			set check_chars=1
+			goto:check_chars_cheats_profile
+		)
+	)
+	IF "!check_chars!"=="0" (
+		set copy_all_cheats_pack=Y
+		goto:skip_verif_cheats_profile
+	)
+)
+IF %cheats_profile% GTR %temp_count% (
+	set copy_all_cheats_pack=Y
+		goto:skip_verif_cheats_profile
+)
+IF "%cheats_profile%"=="0" (
+	call tools\Storage\cheats_profiles_management.bat
+	goto:define_select_cheats_profile
+)
+TOOLS\gnuwin32\bin\sed.exe -n %cheats_profile%p <templogs\profiles_list.txt > templogs\tempvar.txt
+set /p cheats_profile_path=<templogs\tempvar.txt
+set cheats_profile_name=%cheats_profile_path:~0,-4%
+set cheats_profile_path=tools\sd_switch\cheats\profiles\%cheats_profile_path%
+:skip_verif_cheats_profile
 del /q templogs\profiles_list.txt >nul
 :define_del_files_dest_copy
 set del_files_dest_copy=
@@ -348,15 +411,22 @@ IF "%pass_copy_mixed_pack%"=="Y" (
 echo.
 echo Cheats:
 echo.
-IF /i "%atmosphere_enable_cheats%"=="o" (
-	echo Les cheats pour Atmosphere seront copiés.
-) else (
-	echo Les cheats pour Atmosphere ne seront pas copiés.
-)
-IF /i "%sxos_enable_cheats%"=="o" (
-	echo Les cheats pour SX OS seront copiés.
-) else (
-	echo Les cheats pour SX OS ne seront pas copiés.
+IF "%copy_cheats%"=="Y" (
+	IF "%copy_all_cheats_pack%"=="Y" (
+		echo La base de données des cheats sera entièrement copiée.
+	) else (
+		echo Profile de cheats choisi: %cheats_profile_name%
+	)
+	IF /i "%atmosphere_enable_cheats%"=="o" (
+		echo Les cheats pour Atmosphere seront copiés.
+	) else (
+		echo Les cheats pour Atmosphere ne seront pas copiés.
+	)
+	IF /i "%sxos_enable_cheats%"=="o" (
+		echo Les cheats pour SX OS seront copiés.
+	) else (
+		echo Les cheats pour SX OS ne seront pas copiés.
+	)
 )
 echo.
 IF /i "%del_files_dest_copy%"=="1" echo Attention: Les fichiers de tous les CFWs seront réinitialisé avant la copie, dossier "titles" de ceux-ci inclus.
@@ -408,7 +478,11 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere_patches_nogc %volume_letter%:\ /e >nul
 	)
 	IF /i "%atmosphere_enable_cheats%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\cheats\titles %volume_letter%:\atmosphere\titles /e >nul
+		IF "%copy_all_cheats_pack%"=="Y" (
+			%windir%\System32\Robocopy.exe TOOLS\sd_switch\cheats\titles %volume_letter%:\atmosphere\titles /e >nul
+		) else (
+			call :copy_cheats_profile "atmosphere"
+		)
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\mixed\modular\EdiZon %volume_letter%:\ /e >nul
 	)
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin >nul
@@ -434,7 +508,11 @@ IF /i "%copy_sxos_pack%"=="o" (
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro" >nul
 	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res" >nul
 	IF /i "%sxos_enable_cheats%"=="o" (
-		%windir%\System32\Robocopy.exe TOOLS\sd_switch\cheats\titles %volume_letter%:\sxos\titles /e >nul
+		IF "%copy_all_cheats_pack%"=="Y" (
+			%windir%\System32\Robocopy.exe TOOLS\sd_switch\cheats\titles %volume_letter%:\sxos\titles /e >nul
+		) else (
+			call :copy_cheats_profile "sxos"
+		)
 	)
 	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\Lockpick_RCM.bin >nul
 	del /Q /S "%volume_letter%:\sxos\.emptydir" >nul
@@ -475,6 +553,19 @@ del /Q /S "%volume_letter%:\pk1decryptor\.emptydir" >nul
 IF EXIST "%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul 2>&1
 echo Copie terminée.
 goto:endscript
+
+:copy_cheats_profile
+IF "%~1"=="atmosphere" set temp_cheats_copy_path=%volume_letter%:\atmosphere\titles
+IF "%~1"=="sxos" set temp_cheats_copy_path=%volume_letter%:\sxos\titles
+tools\gnuwin32\bin\grep.exe -c "" <"%cheats_profile_path%" > templogs\tempvar.txt
+set /p temp_count=<templogs\tempvar.txt
+for /l %%i in (1,1,%temp_count%) do (
+	TOOLS\gnuwin32\bin\sed.exe -n %%ip <"%cheats_profile_path%" >templogs\tempvar.txt
+	set /p temp_cheat=<templogs\tempvar.txt
+	IF NOT EXIST "%temp_cheats_copy_path%\!temp_cheat!" mkdir "%temp_cheats_copy_path%\!temp_cheat!"
+	%windir%\System32\Robocopy.exe tools\sd_switch\cheats\titles\!temp_cheat! %temp_cheats_copy_path%\!temp_cheat! /e >nul
+)
+exit /b
 
 :delete_cfw_files
 IF EXIST "%volume_letter%:\atmosphere" rmdir /s /q "%volume_letter%:\atmosphere"
