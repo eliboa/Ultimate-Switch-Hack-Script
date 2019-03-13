@@ -145,18 +145,32 @@ set /p profile_selected=<templogs\tempvar.txt
 exit /b
 
 :list_cheats_in_profile
+Setlocal disabledelayedexpansion
 copy nul templogs\cheats_list.txt >nul
 tools\gnuwin32\bin\grep.exe -c "" <"tools\sd_switch\cheats\profiles\%~1" > templogs\tempvar.txt
 set /p count_cheats=<templogs\tempvar.txt
-for /l %%i in (1,1,%count_cheats%) do (
-	TOOLS\gnuwin32\bin\sed.exe -n %%ip <"tools\sd_switch\cheats\profiles\%~1" > templogs\tempvar.txt
-	set /p temp_cheat_id=<templogs\tempvar.txt
-	TOOLS\gnuwin32\bin\grep.exe "!temp_cheat_id!" <tools\sd_switch\cheats\README.md | TOOLS\gnuwin32\bin\cut.exe -d ^| -f 2 > templogs\tempvar.txt
-	set /p temp_cheat_name=<templogs\tempvar.txt
-	echo !temp_cheat_name!: !temp_cheat_id!>>templogs\cheats_list.txt
+set temp_count=1
+:listing_cheats_in_profile
+IF %count_cheats% EQU 0 (
+	echo Aucun cheats configuré pour ce profile.
+	endlocal
+	exit /b
 )
-tools\gnuwin32\bin\sort.exe -n -f <"templogs\cheats_list.txt"
+IF %temp_count% GTR %count_cheats% goto:skip_listing_cheats_in_profile
+TOOLS\gnuwin32\bin\sed.exe -n %temp_count%p <"tools\sd_switch\cheats\profiles\%~1" > templogs\tempvar.txt
+set /p temp_cheat_id=<templogs\tempvar.txt
+TOOLS\gnuwin32\bin\grep.exe "%temp_cheat_id%" <tools\sd_switch\cheats\README.md | TOOLS\gnuwin32\bin\cut.exe -d ^| -f 2 > templogs\tempvar.txt
+set /p temp_cheat_name=<templogs\tempvar.txt
+TOOLS\gnuwin32\bin\grep.exe "%temp_cheat_id%" <tools\sd_switch\cheats\README.md | TOOLS\gnuwin32\bin\cut.exe -d ^| -f 4 | TOOLS\gnuwin32\bin\cut.exe -d ^! -f 2 | TOOLS\gnuwin32\bin\cut.exe -d ^( -f 1 > templogs\tempvar.txt
+set /p temp_cheat_region=<templogs\tempvar.txt
+echo %temp_cheat_name% %temp_cheat_region%: %temp_cheat_id%>>templogs\cheats_list.txt
+set /a temp_count+=1
+goto:listing_cheats_in_profile
+:skip_listing_cheats_in_profile
+%windir%\System32\sort.exe /l C <"templogs\cheats_list.txt" /o ""templogs\cheats_list.txt"
+type "templogs\cheats_list.txt"
 del /q templogs\cheats_list.txt
+endlocal
 exit /b
 
 :add_del_cheat_in_profile
@@ -164,6 +178,10 @@ set temp_profile=%~1
 set temp_path_profile=tools\sd_switch\cheats\profiles\%~1
 set /a selected_page=1
 call :cheats_list
+IF %errorlevel% EQU 404 (
+	del /q templogs\cheats_list.txt
+	exit /b 400
+)
 set /a page_number=%count_cheats%/20
 set mod_a=!count_cheats!
 set mod_b=20
@@ -197,9 +215,9 @@ for /l %%i in (%temp_min_display_cheats%,1,%temp_max_display_cheats%) do (
 	tools\gnuwin32\bin\grep.exe -c "!cheats_list_%%i_0!" <"%temp_path_profile%" > templogs\tempvar.txt
 	set /p temp_count_cheats=<templogs\tempvar.txt
 	IF !temp_count_cheats! EQU 0 (
-		echo %%i: !cheats_list_%%i_0!; !cheats_list_%%i_1!
+		echo %%i: !cheats_list_%%i_0!; !cheats_list_%%i_1! !cheats_list_%%i_2!
 	) else (
-		echo %%i: *!cheats_list_%%i_0!; !cheats_list_%%i_1!
+		echo %%i: *!cheats_list_%%i_0!; !cheats_list_%%i_1! !cheats_list_%%i_2!
 	)
 )
 echo P: Changer de page, faire suivre le P d'un numéro de page valide.
@@ -275,12 +293,27 @@ for /D %%i in (*) do (
 cd ..\..\..\..
 tools\gnuwin32\bin\grep.exe -c "" <templogs\cheats_list.txt > templogs\tempvar.txt
 set /p count_cheats=<templogs\tempvar.txt
-for /l %%i in (1,1,%count_cheats%) do (
-	TOOLS\gnuwin32\bin\sed.exe -n %%ip <templogs\cheats_list.txt > templogs\tempvar.txt
-	set /p cheats_list_%%i_0=<templogs\tempvar.txt
-	TOOLS\gnuwin32\bin\grep.exe "!cheats_list_%%i_0!" <tools\sd_switch\cheats\README.md | TOOLS\gnuwin32\bin\cut.exe -d ^| -f 2 > templogs\tempvar.txt
-	set /p cheats_list_%%i_1=<templogs\tempvar.txt
+set temp_count=1
+:listing_cheats
+IF %count_cheats% EQU 0 (
+	echo Erreur, il ne semble y avoir aucun cheats dans le dossier "tools\sd_switch\cheats\titles" du script, le processus ne peut continuer.
+	exit /b 404
 )
+IF %temp_count% GTR %count_cheats% goto:skip_listing_cheats
+TOOLS\gnuwin32\bin\sed.exe -n %temp_count%p <templogs\cheats_list.txt > templogs\tempvar.txt
+set /p cheats_list_%temp_count%_0=<templogs\tempvar.txt
+set /p temp_cheat=<templogs\tempvar.txt
+Setlocal disabledelayedexpansion
+TOOLS\gnuwin32\bin\grep.exe "%temp_cheat%" <tools\sd_switch\cheats\README.md | TOOLS\gnuwin32\bin\cut.exe -d ^| -f 2 > templogs\tempvar.txt
+endlocal
+set /p cheats_list_%temp_count%_1=<templogs\tempvar.txt
+Setlocal disabledelayedexpansion
+TOOLS\gnuwin32\bin\grep.exe "%temp_cheat%" <tools\sd_switch\cheats\README.md | TOOLS\gnuwin32\bin\cut.exe -d ^| -f 4 | TOOLS\gnuwin32\bin\cut.exe -d ^! -f 2 | TOOLS\gnuwin32\bin\cut.exe -d ^( -f 1 > templogs\tempvar.txt
+endlocal
+set /p cheats_list_%temp_count%_2=<templogs\tempvar.txt
+set /a temp_count+=1
+goto:listing_cheats
+:skip_listing_cheats
 exit /b
 
 :end_script
