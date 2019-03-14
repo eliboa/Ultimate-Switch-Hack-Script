@@ -69,8 +69,8 @@ There might be a cheat in the database but not listed here!
 |ACA NEOGEO ZED BLADE|[01005AF004DBC000](01005AF004DBC000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Arcade Archives DOUBLE DRAGON|[0100F25001DD0000](0100F25001DD0000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Arcade Archives DOUBLE DRAGON II The Revenge|[01009E3001DDE000](01009E3001DDE000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|ARMS|[01009B500007C000](01009B500007C000/cheats)|![UNKNOWN]()
-|Asterix & Obelix XXL 2|[010050400BD38000](010050400BD38000/cheats)|![UNKNOWN]()
+|ARMS (rev002)|[01009B500007C000](01009B500007C000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
+|Asterix & Obelix XXL 2|[010050400BD38000](010050400BD38000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 
 ### B
 |Name|TitleID|Region
@@ -80,14 +80,14 @@ There might be a cheat in the database but not listed here!
 |Bayonetta 2|[01007960049A0000](01007960049A0000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Beyblade Burst Battle Zero|[010068600AD16000](010068600AD16000/cheats)|![JPN](http://nswdb.com/images/JPN.jpg)
 |BLAZBLUE CENTRALFICTION Special Edition|[0100EE900AB58000](0100EE900AB58000/cheats)|![JPN](https://nswdb.com/images/JPG.jpg)
-|BLAZBLUE CROSS TAG BATTLE|[0100B61008208000](0100B61008208000/cheats)|![UNKNOWN]()
+|BLAZBLUE CROSS TAG BATTLE|[0100B61008208000](0100B61008208000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Blossom Tales|[0100C1000706C000](0100C1000706C000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Blue Rider|[01006A600B5E6000](01006A600B5E6000/cheats)|![UNKNOWN]()
 
 ### C
 |Name|TitleID|Region
 |--|--|--
-|Cartoon Network: Battle Crashers|[0100085003A2A000](0100085003A2A000/cheats)|![UNKNOWN]()
+|Cartoon Network: Battle Crashers|[0100085003A2A000](0100085003A2A000/cheats)|![EUR](http://nswdb.com/images/EUR.jpg)
 |Captain Toad Treasure Tracker|[01009BF0072D4000](01009BF0072D4000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Cat Quest|[0100A2F006FBE000](0100A2F006FBE000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Cave Story+|[0100A55003B5C000](0100A55003B5C000/cheats)|![EUR](http://nswdb.com/images/EUR.jpg)
@@ -102,12 +102,12 @@ There might be a cheat in the database but not listed here!
 |Dark Souls Remastered|[01004AB00A260000](01004AB00A260000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Dead Cells|[0100646009FBE000](0100646009FBE000/cheats)|![EUR](http://nswdb.com/images/EUR.jpg)
 |Dead Cells|[0100FC000AEF0000](0100FC000AEF0000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|Diablo III: Eternal Collection|[01001b300b9be000](01001b300b9be000/cheats)|![UNKNOWN]()
+|Diablo III: Eternal Collection|[01001b300b9be000](01001b300b9be000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Dragon Ball FighterZ|[0100A250097F0000](0100A250097F0000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Dragon Ball Xenoverse 2|[010078D000F88000](010078D000F88000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Dragon Blaze|[010099B00A2DC000](010099B00A2DC000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Dragon Quest Builders|[010008900705C000](010008900705C000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|Dragon Quest Builders 2|[abb2ac36c4d38805](abb2ac36c4d38805/cheats)|![JPN](https://nswdb.com/images/JPG.jpg)
+|Dragon Quest Builders 2|[010050000705E000](010050000705E000/cheats)|![JPN](https://nswdb.com/images/JPG.jpg)
 
 ### E
 |Name|TitleID|Region
@@ -133,7 +133,7 @@ There might be a cheat in the database but not listed here!
 ### H
 |Name|TitleID|Region
 |--|--|--
-|Hollow Knight|[0100633007D48000](0100633007D48000/cheats)|![UNKNOWN]()
+|Hollow Knight|[0100633007D48000](0100633007D48000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Hyrule Warriors: Definitive Edition|[0100AE00096EA000](0100AE00096EA000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 
 ### I
@@ -144,7 +144,7 @@ There might be a cheat in the database but not listed here!
 ### J
 |Name|TitleID|Region
 |--|--|--
-|Just Dance 2018|[0100A0500348A000](0100A0500348A000/cheats)|![UNKNOWN]()
+|Just Dance 2018|[0100A0500348A000](0100A0500348A000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Just Dance 2019|[010075600AE96000](010075600AE96000/cheats)|![EUR](http://nswdb.com/images/EUR.jpg)
 
 ### K
@@ -165,7 +165,7 @@ There might be a cheat in the database but not listed here!
 |Mega Man Legacy Collection|[01002D4007AE0000](01002D4007AE0000/cheats)|![USA](http://nswdb.com/images/USA.jpg)
 |Mega Man X Legacy Collection|[01005C60086BE000](01005C60086BE000/cheats)|![USA](http://nswdb.com/images/USA.jpg)
 |Monkey King: Master of the Clouds|[01004C500B8E0000](01004C500B8E0000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|Monster Boy and the Cursed Kingdom|[01006F7001D10000](01006F7001D10000/cheats)|![UNKNOWN]()
+|Monster Boy and the Cursed Kingdom|[01006F7001D10000](01006F7001D10000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 
 ### N
 |Name|TitleID|Region
@@ -173,8 +173,8 @@ There might be a cheat in the database but not listed here!
 |NBA Playgrounds 2|[01001AE00C1B2000](01001AE00C1B2000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Neko Navy Daydream Edition|[0100E5500B020800](0100E5500B020800/cheats)|![UNKNOWN]()
 |New Super Mario Bros U Deluxe|[0100EA80032EA000](0100EA80032EA000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|Nickelodeon Kart Racers|[0100D6200933C000](0100D6200933C000/cheats)|![UNKNOWN]()
-|Nightmare Boy|[01005F4009112000](01005F4009112000/cheats)|![UNKNOWN]()
+|Nickelodeon Kart Racers|[0100D6200933C000](0100D6200933C000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
+|Nightmare Boy|[01005F4009112000](01005F4009112000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 
 ### O
 |Name|TitleID|Region
@@ -184,15 +184,16 @@ There might be a cheat in the database but not listed here!
 |Okami HD|[0100276009872000](0100276009872000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Okami HD|[0100F10009870000](0100F10009870000/cheats)|![JPN](http://nswdb.com/images/JPN.jpg)
 |One Piece Unlimited World Red|[0100574002AF4000](0100574002AF4000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|Onimusha: Warlords|[0100416008A12000](0100416008A12000/cheats)|![UNKNOWN]()
+|Onimusha: Warlords|[0100416008A12000](0100416008A12000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 
 ### P
 |Name|TitleID|Region
 |--|--|--
 |Pokémon: Let's Go, Eevee!|[0100187003A36000](0100187003A36000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Pokémon: Let's Go, Pikachu!|[010003F003A34000](010003F003A34000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|Pokken Tournament DX|[0100B3F000BE2000](0100B3F000BE2000/cheats)|![UNKNOWN]()
-|PEACH BALL 閃 乱 カ グ ラ|[010082500350E000](010082500350E000/cheats)|![JPN](https://nswdb.com/images/JPG.jpg)
+|Pokken Tournament DX|[0100B3F000BE2000](0100B3F000BE2000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
+|Peach Ball Senran Kagura W Pack ver Marvelous|[010082500350E000](010082500350E000/cheats)|![JPN](https://nswdb.com/images/JPG.jpg)
+|Pro Yakyuu Famista Evolution|[01008EA0080F6000](01008EA0080F6000/cheats)|![JPN](https://nswdb.com/images/JPG.jpg)
 |Project Highrise Architects Edition|[0100BBD00976C000](0100BBD00976C000/cheats)|![EUR](http://nswdb.com/images/EUR.jpg)
 
 ### Q
@@ -217,7 +218,7 @@ There might be a cheat in the database but not listed here!
 |Stardew Valley|[0100E65002BB8000](0100E65002BB8000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |STRIKERS 1945|[0100FF5005B76000](0100FF5005B76000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |STRIKERS 1945 II|[0100720008ED2000](0100720008ED2000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|Super Bomberman R|[01007AD00013E000](01007AD00013E000/cheats)|![UNKNOWN]()
+|Super Bomberman R (rev001)|[01007AD00013E000](01007AD00013E000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Super Mario Odyssey|[0100000000010000](0100000000010000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Super Smash Bros. Ultimate|[01006A800016E000](01006A800016E000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Super Toy Cars|[0100384009344000](0100384009344000/cheats)|![UNKNOWN]()
@@ -227,18 +228,18 @@ There might be a cheat in the database but not listed here!
 |--|--|--
 |Tales of Vesperia|[01002C0008E52000](01002C0008E52000)|![WLD](http://nswdb.com/images/WLD.jpg)
 |TENGAI|[0100B2600A398000](0100B2600A398000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|The Binding of Isaac: Afterbirth+|[010021C000B6A000](010021C000B6A000/cheats)|![UNKNOWN]()
+|The Binding of Isaac: Afterbirth+|[010021C000B6A000](010021C000B6A000/cheats)|![USA](http://nswdb.com/images/USA.jpg)
 |The Legend of Zelda: Breath of the Wild|[01007EF00011E000](01007EF00011E000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |The Messenger|[0100DC300AC78000](0100DC300AC78000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |The World Ends With You: Final Remix|[0100C1500B82E000](0100C1500B82E000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|Tiny Barbarian DX|[0100D940022F6000](0100D940022F6000/cheats)|![UNKNOWN]()
+|Tiny Barbarian DX|[0100D940022F6000](0100D940022F6000/cheats)|![USA](http://nswdb.com/images/USA.jpg)
 |Titan Quest|[0100605008268000](0100605008268000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Toki|[0100F3400A432000](0100F3400A432000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 
 ### U
 |Name|TitleID|Region
 |--|--|--
-|Undertale|[010080B00AD66000](010080B00AD66000/cheats)|![UNKNOWN]()
+|Undertale|[010080B00AD66000](010080B00AD66000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 
 ### V
 |Name|TitleID|Region
@@ -249,13 +250,13 @@ There might be a cheat in the database but not listed here!
 |Name|TitleID|Region
 |--|--|--
 |WARRIORS OROCHI 4|[010016A00AEC0000](010016A00AEC0000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|Wonder Boy: The Dragon's Trap|[0100A6300150C000](0100A6300150C000/cheats)|![UNKNOWN]()
+|Wonder Boy: The Dragon's Trap|[0100A6300150C000](0100A6300150C000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 
 ### X
 |Name|TitleID|Region
 |--|--|--
 |Xenoblade Chronicles 2|[0100E95004038000](0100E95004038000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
-|Xenoblade Chronicles 2: Torna ~ The Golden Country|[0100C9F009F7A000](0100C9F009F7A000/cheats)|![UNKNOWN]()
+|Xenoblade Chronicles 2: Torna ~ The Golden Country|[0100C9F009F7A000](0100C9F009F7A000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 
 ### Y
 |Name|TitleID|Region
@@ -269,8 +270,6 @@ There might be a cheat in the database but not listed here!
 ### Others
 |Name|TitleID|Region
 |--|--|--
-|プ ロ 野 球 フ ァ ミ ス タ エ ボ リ ュ ー シ ョ ン|[01008EA0080F6000](01008EA0080F6000/cheats)|![JPN](https://nswdb.com/images/JPG.jpg)
-|ド ラ ゴ ン ク エ ス ト ビ ル ダ ー ズ ２ 　 破 壊 神 シ ド ー と か ら っ ぽ の 島|[010050000705E000](010050000705E000/cheats)|![JPN](https://nswdb.com/images/JPG.jpg)
 |ヨ ッ シ ー ク ラ フ ト ワ ー ル ド 体 験 版|[0100AE800C9C6000](0100AE800C9C6000/cheats)|![JPN](https://nswdb.com/images/JPG.jpg)
 
 # Credits
