@@ -286,6 +286,7 @@ exit /b
 
 :cheats_list
 copy nul templogs\cheats_list.txt >nul
+::copy nul cheats_list.txt >nul
 cd tools\sd_switch\cheats\titles
 for /D %%i in (*) do (
 	echo %%i>>..\..\..\..\templogs\cheats_list.txt
@@ -311,6 +312,7 @@ Setlocal disabledelayedexpansion
 TOOLS\gnuwin32\bin\grep.exe "%temp_cheat%" <tools\sd_switch\cheats\README.md | TOOLS\gnuwin32\bin\cut.exe -d ^| -f 4 | TOOLS\gnuwin32\bin\cut.exe -d ^! -f 2 | TOOLS\gnuwin32\bin\cut.exe -d ^( -f 1 > templogs\tempvar.txt
 endlocal
 set /p cheats_list_%temp_count%_2=<templogs\tempvar.txt
+::echo !cheats_list_%temp_count%_0!: !cheats_list_%temp_count%_1! !cheats_list_%temp_count%_2! >>cheats_list.txt
 set /a temp_count+=1
 goto:listing_cheats
 :skip_listing_cheats
