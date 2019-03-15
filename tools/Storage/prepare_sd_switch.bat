@@ -183,7 +183,13 @@ echo.
 	IF NOT "%atmosphere_enable_cheats%"=="" set atmosphere_enable_cheats=%atmosphere_enable_cheats:~0,1%
 :skip_ask_cheats_atmosphere
 
-set /p copy_reinx_pack=Souhaitez-vous copier le pack pour lancer ReiNX? (O/n):
+IF /i "%copy_atmosphere_pack%"=="o" (
+	echo copie du pack  ReiNX?
+	echo Attention: Vous avez choisi la copie du pack Atmosphere, si vous êtes en firmware 7.0.0 ou supérieur et si vous choisissez de copier aussi le pack ReiNX, Atmosphere ne sera plus lançable via son payload dédié "Fusee Primary", il faudra donc le lancer via Kosmos et les configurations de Hekate pour l'utiliser.
+	set /p copy_reinx_pack=Souhaitez-vous copier le pack pour lancer ReiNX? ^(O/n^):
+) else (
+	set /p copy_reinx_pack=Souhaitez-vous copier le pack pour lancer ReiNX? ^(O/n^):
+)
 IF NOT "%copy_reinx_pack%"=="" set copy_reinx_pack=%copy_reinx_pack:~0,1%
 IF /i "%copy_reinx_pack%"=="o" (
 	echo.
