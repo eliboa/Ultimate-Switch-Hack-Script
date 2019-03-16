@@ -531,13 +531,21 @@ IF /i "%copy_memloader%"=="o" (
 )
 
 IF /i "%copy_emu%"=="o" (
-	IF EXIST "%volume_letter%:\switch.settings" move "%volume_letter%:\switch.settings" "%volume_letter%:\switch.settings.bak" >nul
+	IF EXIST "%volume_letter%:\switch\pfba\skin\config.cfg" move "%volume_letter%:\switch\pfba\skin\config.cfg" "%volume_letter%:\switch\pfba\skin\config.cfg.bak" >nul
+	IF EXIST "%volume_letter%:\switch\pnes\skin\config.cfg" move "%volume_letter%:\switch\pnes\skin\config.cfg" "%volume_letter%:\switch\pnes\skin\config.cfg.bak" >nul
+	IF EXIST "%volume_letter%:\switch\psnes\skin\config.cfg" move "%volume_letter%:\switch\psnes\skin\config.cfg" "%volume_letter%:\switch\psnes\skin\config.cfg.bak" >nul
 			%windir%\System32\Robocopy.exe TOOLS\sd_switch\emulators %volume_letter%:\ /e >nul
 	IF /i "%keep_emu_configs%"=="o" (
-		del /q "%volume_letter%:\switch.settings" >nul
-		move "%volume_letter%:\switch.settings.bak" "%volume_letter%:\switch.settings" >nul
+		del /q "%volume_letter%:\switch\pfba\skin\config.cfg" >nul
+		move "%volume_letter%:\switch\pfba\skin\config.cfg.bak" "%volume_letter%:\switch\pfba\skin\config.cfg" >nul
+		del /q "%volume_letter%:\switch\pnes\skin\config.cfg" >nul
+		move "%volume_letter%:\switch\pnes\skin\config.cfg.bak" "%volume_letter%:\switch\pnes\skin\config.cfg" >nul
+		del /q "%volume_letter%:\switch\psnes\skin\config.cfg" >nul
+		move "%volume_letter%:\switch\psnes\skin\config.cfg.bak" "%volume_letter%:\switch\psnes\skin\config.cfg" >nul
 	) else (
-		IF EXIST "%volume_letter%:\switch.settings.bak" del /q "%volume_letter%:\switch.settings.bak" >nul
+		IF EXIST "%volume_letter%:\switch\pfba\skin\config.cfg.bak" del /q "%volume_letter%:\switch\pfba\skin\config.cfg.bak"
+		IF EXIST "%volume_letter%:\switch\pnes\skin\config.cfg.bak" del /q "%volume_letter%:\switch\pnes\skin\config.cfg.bak"
+		IF EXIST "%volume_letter%:\switch\psnes\skin\config.cfg.bak" del /q "%volume_letter%:\switch\psnes\skin\config.cfg.bak"
 	)
 )
 
