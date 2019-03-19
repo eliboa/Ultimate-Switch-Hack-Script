@@ -47,19 +47,26 @@ IF "%nsp_path%"=="" (
 	echo Aucun fichier NSP renseigné, le script va s'arrêter.
 	goto:end_script
 	)
-::echo.
-::echo Vous allez devoir sélectionner le dossier dans lequel le NSP découpé sera extrait.
-::pause
-::%windir%\system32\wscript.exe //Nologo tools\Storage\functions\select_dir.vbs "templogs\tempvar.txt"
-::set /p filepath=<templogs\tempvar.txt
-::IF NOT "%filepath%"=="" (
-	::set filepath=%filepath%\
-	::set filepath=%filepath:\\=\%
-::) else (
-	::echo Aucun dossier sélectionné, le script va s'arrêter.
-	::goto:end_script
-::)
-"tools\python3_scripts\splitNSP\splitNSP.exe" %params% "%nsp_path%"
+IF "%split_type%"=="1" (
+	echo.
+	echo Vous allez devoir sélectionner le dossier dans lequel le NSP découpé sera extrait.
+	pause
+	%windir%\system32\wscript.exe //Nologo tools\Storage\functions\select_dir.vbs "templogs\tempvar.txt"
+	set /p filepath=<templogs\tempvar.txt
+)
+IF "%split_type%"=="1" (
+	IF "%filepath%"=="" (
+		echo Aucun dossier sélectionné, le script va s'arrêter.
+		goto:end_script
+	)
+)
+IF "%split_type%"=="1" set filepath=%filepath%\
+IF "%split_type%"=="1" set filepath=%filepath:\\=\%
+IF "%split_type%"=="2" (
+	"tools\python3_scripts\splitNSP\splitNSP.exe" %params% "%nsp_path%"
+) else (
+	"tools\python3_scripts\splitNSP\splitNSP.exe" %params% -o %filepath% "%nsp_path%"
+)
 IF %errorlevel% NEQ 0 (
 	echo.
 	echo Une erreur inconnue s'est produite.
