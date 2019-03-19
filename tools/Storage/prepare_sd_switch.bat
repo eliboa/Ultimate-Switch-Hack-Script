@@ -176,11 +176,23 @@ IF /i NOT "%copy_atmosphere_pack%"=="o" goto:skip_ask_cheats_atmosphere
 	set /p atmosphere_enable_nogc_patch=Souhaitez-vous activer le patch nogc? (O/n^):
 	IF NOT "%atmosphere_enable_nogc_patch%"=="" set atmosphere_enable_nogc_patch=%atmosphere_enable_nogc_patch:~0,1%
 :skip_ask_nogc_atmosphere
+:ask_prodinfo_config_atmosphere
+echo.
+echo Configuration des options pour la partition PRODINFO pour Atmosphere
+echo.
+echo Activer l'écriture sur la partition PRODINFO (utile si vous compter utiliser le homebrew Incognito pour supprimer les infos spécifique à la console de cette partition mais sinon il vaut mieux désactiver cette option)?
+echo Notez qu'en cas d'activation pour le homebrew Incognito, il est préférable de désactiver cette option une fois que le homebrew aura fait se qu'il avait à faire.
+echo.
+echo O: Activer l'écriture sur la partition PRODINFO?
+echo Tout autre choix: Désactiver l'écriture sur la partition PRODINFO?
+echo.
+set /p atmosphere_enable_prodinfo_write=Faites votre choix: 
+:skip_ask_prodinfo_config_atmosphere
 IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_atmosphere
 :ask_cheats_atmosphere
 echo.
-	set /p atmosphere_enable_cheats=Souhaitez-vous copier les cheats pour Atmosphere (utilisable avec le homebrew EdiZon)? (O/n): 
-	IF NOT "%atmosphere_enable_cheats%"=="" set atmosphere_enable_cheats=%atmosphere_enable_cheats:~0,1%
+set /p atmosphere_enable_cheats=Souhaitez-vous copier les cheats pour Atmosphere (utilisable avec le homebrew EdiZon)? (O/n): 
+IF NOT "%atmosphere_enable_cheats%"=="" set atmosphere_enable_cheats=%atmosphere_enable_cheats:~0,1%
 :skip_ask_cheats_atmosphere
 
 IF /i "%copy_atmosphere_pack%"=="o" (
@@ -297,12 +309,12 @@ set cheats_profile_path=
 set cheats_profile_name=
 set cheats_profile=
 set copy_cheats=
+copy nul templogs\profiles_list.txt >nul
 IF /i "%atmosphere_enable_cheats%"=="o" set copy_cheats=Y
 IF /i "%sxos_enable_cheats%"=="o" set copy_cheats=Y
 IF NOT "%copy_cheats%"=="Y" goto:skip_verif_cheats_profile
 echo Sélection du profile pour la copie des cheats:
 set /a temp_count=1
-copy nul templogs\profiles_list.txt >nul
 IF NOT EXIST "tools\sd_switch\cheats\profiles\*.ini" (
 	goto:no_cheats_profile_created
 )
@@ -380,9 +392,17 @@ echo.
 echo CFWs et packs:
 IF /i "%copy_atmosphere_pack%"=="o" (
 	IF /i "%atmosphere_enable_nogc_patch%"=="o" (
-		echo Pack Atmosphere et Kosmos avec le patche NOGC
+		IF /i NOT "%atmosphere_enable_prodinfo_write%"=="o" (
+			echo Pack Atmosphere et Kosmos avec le patche NOGC, écriture sur PRODINFO désactivée
+		) else (
+			echo Pack Atmosphere et Kosmos avec le patche NOGC, écriture sur PRODINFO activée
+		)
 	) else (
-	echo Pack Atmosphere et Kosmos
+		IF /i NOT "%atmosphere_enable_prodinfo_write%"=="o" (
+			echo Pack Atmosphere et Kosmos, écriture sur PRODINFO désactivée
+		) else (
+			echo Pack Atmosphere et Kosmos, écriture sur PRODINFO activée
+		)
 	)
 )
 IF /i "%copy_reinx_pack%"=="o" (
@@ -415,9 +435,8 @@ IF "%pass_copy_mixed_pack%"=="Y" (
 	tools\gnuwin32\bin\sort.exe -n "%profile_path%"
 )
 echo.
-echo Cheats:
-echo.
 IF "%copy_cheats%"=="Y" (
+	echo Cheats:
 	IF "%copy_all_cheats_pack%"=="Y" (
 		echo La base de données des cheats sera entièrement copiée.
 	) else (
@@ -433,8 +452,8 @@ IF "%copy_cheats%"=="Y" (
 	) else (
 		echo Les cheats pour SX OS ne seront pas copiés.
 	)
+	echo.
 )
-echo.
 IF /i "%del_files_dest_copy%"=="1" echo Attention: Les fichiers de tous les CFWs seront réinitialisé avant la copie, dossier "titles" de ceux-ci inclus.
 IF /i "%del_files_dest_copy%"=="2" echo Attention: Les fichiers de la SD seront intégralement supprimés avant la copie.
 IF /i "%del_files_dest_copy%"=="0" echo Les fichiers de la SD seront concervés et seul les fichiers mis à jour seront remplacés.
@@ -495,6 +514,13 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\bootloader\payloads\Lockpick_RCM.bin >nul
 	del /Q /S "%volume_letter%:\atmosphere\.emptydir" >nul
 	del /Q /S "%volume_letter%:\bootloader\.emptydir" >nul
+	copy nul %volume_letter%:\atmosphere\prodinfo.ini >nul
+	echo [config]>>%volume_letter%:\atmosphere\prodinfo.ini
+	IF /i NOT "%atmosphere_enable_prodinfo_write%"=="o" (
+		echo allow_write=^0>>%volume_letter%:\atmosphere\prodinfo.ini
+	) else (
+		echo allow_write=^1>>%volume_letter%:\atmosphere\prodinfo.ini
+	)
 )
 
 IF /i "%copy_reinx_pack%"=="o" (
@@ -505,6 +531,7 @@ IF /i "%copy_reinx_pack%"=="o" (
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro" >nul
 	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res" >nul
 	IF EXIST "%volume_letter%:\ReiNX\titles\010000000000100D" rmdir /s /q "%volume_letter%:\ReiNX\titles\010000000000100D" >nul
+	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\ReiNX\reboot_payload.bin >nul
 )
 
 IF /i "%copy_sxos_pack%"=="o" (
