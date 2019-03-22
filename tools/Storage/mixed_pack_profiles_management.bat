@@ -222,6 +222,7 @@ echo Lockpick>>templogs\homebrews_list.txt
 echo Mod_Plague>>templogs\homebrews_list.txt
 echo N1dusd>>templogs\homebrews_list.txt
 echo NX-Shell>>templogs\homebrews_list.txt
+echo Payload_Launcher>>templogs\homebrews_list.txt
 echo Pplay>>templogs\homebrews_list.txt
 echo Sdsetup-switch>>templogs\homebrews_list.txt
 echo SwitchIdent>>templogs\homebrews_list.txt
