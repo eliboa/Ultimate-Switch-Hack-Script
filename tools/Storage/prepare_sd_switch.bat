@@ -564,6 +564,7 @@ IF /i "%copy_memloader%"=="o" (
 	%windir%\System32\Robocopy.exe TOOLS\memloader\mount_discs %volume_letter%:\ /e >nul
 	IF /i "%copy_sxos_pack%"=="o" copy /V /B TOOLS\memloader\memloader.bin %volume_letter%:\Memloader.bin >nul
 	IF /i "%copy_atmosphere_pack%"=="o" copy /V /B TOOLS\memloader\memloader.bin %volume_letter%:\bootloader\payloads\Memloader.bin >nul
+	copy /V /B TOOLS\memloader\memloader.bin %volume_letter%:\rr\payloads\memloader.bin >nul
 )
 
 IF /i "%copy_emu%"=="o" (
