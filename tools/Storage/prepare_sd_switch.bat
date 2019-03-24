@@ -512,7 +512,10 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\mixed\modular\EdiZon %volume_letter%:\ /e >nul
 	)
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\rr\payloads\Hekate.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\Atmosphere_fusee-primary.bin %volume_letter%:\rr\payloads\Atmosphere.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\bootloader\payloads\Lockpick_RCM.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\Retro_reloaded.bin %volume_letter%:\bootloader\payloads\Retro_reloaded.bin >nul
 	del /Q /S "%volume_letter%:\atmosphere\.emptydir" >nul
 	del /Q /S "%volume_letter%:\bootloader\.emptydir" >nul
 	copy nul %volume_letter%:\atmosphere\prodinfo.ini >nul
@@ -535,11 +538,13 @@ IF /i "%copy_reinx_pack%"=="o" (
 	IF EXIST "%volume_letter%:\ReiNX\hbl.nsp" del /q "%volume_letter%:\ReiNX\hbl.nsp" >nul
 	IF EXIST "%volume_letter%:\ReiNX\titles\010000000000100D\exefs.nsp" del /q "%volume_letter%:\ReiNX\titles\010000000000100D\exefs.nsp" >nul
 	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\ReiNX\reboot_payload.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\rr\payloads\ReiNX.bin >nul
 )
 
 IF /i "%copy_sxos_pack%"=="o" (
 	%windir%\System32\Robocopy.exe TOOLS\sd_switch\sxos %volume_letter%:\ /e >nul
 	IF /i "%copy_payloads%"=="o" copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\SXOS.bin >nul
+	IF /i "%copy_payloads%"=="o" copy /V /B TOOLS\sd_switch\payloads\Retro_reloaded.bin %volume_letter%:\Retro_reloaded.bin >nul
 	IF /i "%copy_atmosphere_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\bootloader\payloads\SXOS.bin >nul
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro" >nul
 	IF EXIST "%volume_letter%:\switch\appstore\res" rmdir /s /q "%volume_letter%:\switch\appstore\res" >nul
@@ -551,6 +556,7 @@ IF /i "%copy_sxos_pack%"=="o" (
 		)
 	)
 	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\Lockpick_RCM.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\rr\payloads\SXOS.bin >nul
 	del /Q /S "%volume_letter%:\sxos\.emptydir" >nul
 )
 
@@ -594,6 +600,7 @@ for /l %%i in (1,1,%temp_count%) do (
 del /Q /S "%volume_letter%:\switch\.emptydir" >nul
 del /Q /S "%volume_letter%:\Backup\.emptydir" >nul
 del /Q /S "%volume_letter%:\pk1decryptor\.emptydir" >nul
+del /Q /S "%volume_letter%:\rr\payloads\.emptydir" >nul
 IF EXIST "%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul 2>&1
 echo Copie terminée.
 goto:endscript
