@@ -480,6 +480,8 @@ IF /i "%del_files_dest_copy%"=="1" (
 	set del_files_dest_copy=0
 )
 
+call :copy_mixed_pack
+
 IF /i "%copy_atmosphere_pack%"=="o" (
 	IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches" >nul
 	IF EXIST "%volume_letter%:\atmosphere\exefs_patches" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches" >nul
@@ -512,8 +514,8 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\mixed\modular\EdiZon %volume_letter%:\ /e >nul
 	)
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin >nul
-	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\rr\payloads\Hekate.bin >nul
-	copy /V /B TOOLS\sd_switch\payloads\Atmosphere_fusee-primary.bin %volume_letter%:\rr\payloads\Atmosphere.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\RR\payloads\Hekate.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\Atmosphere_fusee-primary.bin %volume_letter%:\RR\payloads\Atmosphere.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\bootloader\payloads\Lockpick_RCM.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\Retro_reloaded.bin %volume_letter%:\bootloader\payloads\Retro_reloaded.bin >nul
 	del /Q /S "%volume_letter%:\atmosphere\.emptydir" >nul
@@ -538,7 +540,7 @@ IF /i "%copy_reinx_pack%"=="o" (
 	IF EXIST "%volume_letter%:\ReiNX\hbl.nsp" del /q "%volume_letter%:\ReiNX\hbl.nsp" >nul
 	IF EXIST "%volume_letter%:\ReiNX\titles\010000000000100D\exefs.nsp" del /q "%volume_letter%:\ReiNX\titles\010000000000100D\exefs.nsp" >nul
 	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\ReiNX\reboot_payload.bin >nul
-	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\rr\payloads\ReiNX.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\RR\payloads\ReiNX.bin >nul
 )
 
 IF /i "%copy_sxos_pack%"=="o" (
@@ -556,7 +558,7 @@ IF /i "%copy_sxos_pack%"=="o" (
 		)
 	)
 	copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\Lockpick_RCM.bin >nul
-	copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\rr\payloads\SXOS.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\RR\payloads\SXOS.bin >nul
 	del /Q /S "%volume_letter%:\sxos\.emptydir" >nul
 )
 
@@ -564,7 +566,7 @@ IF /i "%copy_memloader%"=="o" (
 	%windir%\System32\Robocopy.exe TOOLS\memloader\mount_discs %volume_letter%:\ /e >nul
 	IF /i "%copy_sxos_pack%"=="o" copy /V /B TOOLS\memloader\memloader.bin %volume_letter%:\Memloader.bin >nul
 	IF /i "%copy_atmosphere_pack%"=="o" copy /V /B TOOLS\memloader\memloader.bin %volume_letter%:\bootloader\payloads\Memloader.bin >nul
-	copy /V /B TOOLS\memloader\memloader.bin %volume_letter%:\rr\payloads\memloader.bin >nul
+	copy /V /B TOOLS\memloader\memloader.bin %volume_letter%:\RR\payloads\memloader.bin >nul
 )
 
 IF /i "%copy_emu%"=="o" (
@@ -586,6 +588,14 @@ IF /i "%copy_emu%"=="o" (
 	)
 )
 
+del /Q /S "%volume_letter%:\switch\.emptydir" >nul
+del /Q /S "%volume_letter%:\Backup\.emptydir" >nul
+del /Q /S "%volume_letter%:\pk1decryptor\.emptydir" >nul
+del /Q /S "%volume_letter%:\rr\payloads\.emptydir" >nul 2>&1
+IF EXIST "%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul 2>&1
+echo Copie terminée.
+goto:endscript
+
 :copy_mixed_pack
 %windir%\System32\Robocopy.exe tools\sd_switch\mixed\base %volume_letter%:\ /e >nul
 IF "%pass_copy_mixed_pack%"=="Y" goto:skip_copy_mixed_pack
@@ -597,14 +607,7 @@ for /l %%i in (1,1,%temp_count%) do (
 	%windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew! %volume_letter%:\ /e >nul
 )
 :skip_copy_mixed_pack
-
-del /Q /S "%volume_letter%:\switch\.emptydir" >nul
-del /Q /S "%volume_letter%:\Backup\.emptydir" >nul
-del /Q /S "%volume_letter%:\pk1decryptor\.emptydir" >nul
-del /Q /S "%volume_letter%:\rr\payloads\.emptydir" >nul
-IF EXIST "%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul 2>&1
-echo Copie terminée.
-goto:endscript
+exit /b
 
 :copy_cheats_profile
 IF "%~1"=="atmosphere" set temp_cheats_copy_path=%volume_letter%:\atmosphere\titles
