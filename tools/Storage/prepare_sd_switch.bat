@@ -165,6 +165,7 @@ IF /i "%launch_manual%"=="o" (
 	start DOC\files\sd_prepare.html
 )
 
+echo.
 set /p copy_atmosphere_pack=Souhaitez-vous copier le pack pour lancer Atmosphere via le payload Fusee-primary d'Atmosphere (CFW Atmosphere complet) ou via Hekate (pack Kosmos)? (O/n):
 IF NOT "%copy_atmosphere_pack%"=="" set copy_atmosphere_pack=%copy_atmosphere_pack:~0,1%
 IF /i NOT "%copy_atmosphere_pack%"=="o" goto:skip_ask_cheats_atmosphere
@@ -195,9 +196,10 @@ set /p atmosphere_enable_cheats=Souhaitez-vous copier les cheats pour Atmosphere
 IF NOT "%atmosphere_enable_cheats%"=="" set atmosphere_enable_cheats=%atmosphere_enable_cheats:~0,1%
 :skip_ask_cheats_atmosphere
 
+echo.
 IF /i "%copy_atmosphere_pack%"=="o" (
 	echo copie du pack  ReiNX?
-	echo Attention: Vous avez choisi la copie du pack Atmosphere, si vous êtes en firmware 7.0.0 ou supérieur et si vous choisissez de copier aussi le pack ReiNX, Atmosphere ne sera plus lançable via son payload dédié "Fusee Primary", il faudra donc le lancer via Kosmos et les configurations de Hekate pour l'utiliser.
+	echo Attention: Vous avez choisi la copie du pack Atmosphere, si vous êtes en firmware 7.0.0 ou supérieur et si vous choisissez de copier aussi le pack ReiNX, Atmosphere ne sera plus lançable via son payload dédié "Fusee Primary", il faudra donc le lancer via Kosmos et les configurations de Hekate pour l'utiliser ou passer par le payload de Retro_Reloaded.
 	set /p copy_reinx_pack=Souhaitez-vous copier le pack pour lancer ReiNX? ^(O/n^):
 ) else (
 	set /p copy_reinx_pack=Souhaitez-vous copier le pack pour lancer ReiNX? ^(O/n^):
@@ -212,9 +214,11 @@ IF /i "%copy_reinx_pack%"=="o" (
 	IF NOT "!reinx_enable_nogc_patch!"=="" set reinx_enable_nogc_patch=!reinx_enable_nogc_patch:~0,1!
 )
 
+echo.
 set /p copy_memloader=Souhaitez-vous copier les fichiers nécessaire à Memloader pour monter la SD, la partition EMMC, la partition Boot0 ou la partition Boot1 sur un PC en lançant simplement le payload de Memloader? (Si la copie de SXOS a été souhaité, le payload sera aussi copié à la racine de la SD pour pouvoir le lancer grâce au payload de SXOS) (O/n):
 IF NOT "%copy_memloader%"=="" set copy_memloader=%copy_memloader:~0,1%
 
+echo.
 set /p copy_sxos_pack=Souhaitez-vous copier le pack pour lancer SXOS? (O/n):
 IF NOT "%copy_sxos_pack%"=="" set copy_sxos_pack=%copy_sxos_pack:~0,1%
 IF /i NOT "%copy_sxos_pack%"=="o" goto:skip_ask_cheats_sxos
@@ -227,6 +231,7 @@ echo.
 	IF NOT "%sxos_enable_cheats%"=="" set sxos_enable_cheats=%sxos_enable_cheats:~0,1%
 :skip_ask_cheats_sxos
 
+echo.
 set /p copy_emu=Souhaitez-vous copier le pack d'émulateurs? (O/n):
 IF NOT "%copy_emu%"=="" set copy_emu=%copy_emu:~0,1%
 IF /i "%copy_emu%"=="o" (
@@ -236,6 +241,7 @@ IF /i "%copy_emu%"=="o" (
 	)
 )
 :define_select_profile
+echo.
 echo Sélection du profile pour la copie des homebrews optionnels:
 set /a temp_count=1
 copy nul templogs\profiles_list.txt >nul
@@ -313,6 +319,7 @@ copy nul templogs\profiles_list.txt >nul
 IF /i "%atmosphere_enable_cheats%"=="o" set copy_cheats=Y
 IF /i "%sxos_enable_cheats%"=="o" set copy_cheats=Y
 IF NOT "%copy_cheats%"=="Y" goto:skip_verif_cheats_profile
+echo.
 echo Sélection du profile pour la copie des cheats:
 set /a temp_count=1
 IF NOT EXIST "tools\sd_switch\cheats\profiles\*.ini" (
@@ -367,9 +374,11 @@ set cheats_profile_name=%cheats_profile_path:~0,-4%
 set cheats_profile_path=tools\sd_switch\cheats\profiles\%cheats_profile_path%
 :skip_verif_cheats_profile
 del /q templogs\profiles_list.txt >nul
+
 :define_del_files_dest_copy
 set del_files_dest_copy=
 IF /i NOT "%format_choice%"=="o" (
+	echo.
 	echo Suppression de données de la SD:
 	echo 1: Remettre les données de tous les CFWs à zéro sur la SD ^(supprimera les thèmes, configurations personnels, mods de jeux car les dossiers "titles" seront remis à zéro... donc bien sauvegarder vos données personnelles si vous souhaitez les concerver^)?
 	echo 2: Supprimer toutes les données de la SD?
@@ -564,9 +573,9 @@ IF /i "%copy_sxos_pack%"=="o" (
 
 IF /i "%copy_memloader%"=="o" (
 	%windir%\System32\Robocopy.exe TOOLS\memloader\mount_discs %volume_letter%:\ /e >nul
-	IF /i "%copy_sxos_pack%"=="o" copy /V /B TOOLS\memloader\memloader.bin %volume_letter%:\Memloader.bin >nul
-	IF /i "%copy_atmosphere_pack%"=="o" copy /V /B TOOLS\memloader\memloader.bin %volume_letter%:\bootloader\payloads\Memloader.bin >nul
-	copy /V /B TOOLS\memloader\memloader.bin %volume_letter%:\RR\payloads\memloader.bin >nul
+	IF /i "%copy_sxos_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\memloader.bin %volume_letter%:\Memloader.bin >nul
+	IF /i "%copy_atmosphere_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\memloader.bin %volume_letter%:\bootloader\payloads\Memloader.bin >nul
+	copy /V /B TOOLS\sd_switch\payloads\memloader.bin %volume_letter%:\RR\payloads\memloader.bin >nul
 )
 
 IF /i "%copy_emu%"=="o" (
@@ -605,6 +614,17 @@ for /l %%i in (1,1,%temp_count%) do (
 	TOOLS\gnuwin32\bin\sed.exe -n %%ip <"%profile_path%" >templogs\tempvar.txt
 	set /p temp_homebrew=<templogs\tempvar.txt
 	%windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew! %volume_letter%:\ /e >nul
+	IF "!temp_homebrew!"=="Payload_Launcher" (
+		copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\payloads\Lockpick_RCM.bin >nul
+		copy /V /B TOOLS\sd_switch\payloads\Retro_reloaded.bin %volume_letter%:\payloads\Retro_reloaded.bin >nul
+		IF /i "%copy_atmosphere_pack%"=="o" (
+			copy /V /B TOOLS\sd_switch\payloads\Atmosphere_fusee-primary.bin %volume_letter%:\payloads\Atmosphere_fusee-primary.bin >nul
+			copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\payloads\Hekate.bin >nul
+		)
+		IF /i "%copy_reinx_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\payloads\ReiNX.bin >nul
+		IF /i "%copy_sxos_pack%"=="o" copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\payloads\SXOS.bin >nul
+		IF /i "%copy_memloader%"=="o" copy /V /B TOOLS\sd_switch\payloads\memloader.bin %volume_letter%:\payloads\memloader.bin >nul
+	)
 )
 :skip_copy_mixed_pack
 exit /b
