@@ -606,6 +606,7 @@ echo Copie terminée.
 goto:endscript
 
 :copy_mixed_pack
+rmdir /s /q %volume_letter%:\RR
 %windir%\System32\Robocopy.exe tools\sd_switch\mixed\base %volume_letter%:\ /e >nul
 IF "%pass_copy_mixed_pack%"=="Y" goto:skip_copy_mixed_pack
 tools\gnuwin32\bin\grep.exe -c "" <"%profile_path%" > templogs\tempvar.txt
