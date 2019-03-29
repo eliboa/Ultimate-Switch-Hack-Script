@@ -26,7 +26,7 @@ echo 6: Autres fonctions?
 echo.
 echo 7: Fonctions à utiliser occasionnellement?
 echo.
-echo 8: Sauvegarder, restaurer ou réinitialiser les fichiers ou paramètres du script?
+echo 8: Sauvegarde/restauration et paramètres du script?
 echo.
 echo 9: Lancer ou configurer le client pour pouvoir jouer en réseau (serveur Switch-Lan-Play)?
 echo.

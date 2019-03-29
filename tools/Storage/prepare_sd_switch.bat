@@ -239,7 +239,80 @@ IF /i "%copy_emu%"=="o" (
 		set /p keep_emu_configs=Souhaitez-vous concerver vos anciens fichiers de configurations d'émulateurs? (O/n^):
 		IF NOT "!keep_emu_configs!"=="" set keep_emu_configs=!keep_emu_configs:~0,1!
 	)
+) else (
+	goto:skip_verif_emu_profile
 )
+:define_emu_select_profile
+echo.
+echo Sélection du profile pour la copie des émulateurs:
+set /a temp_count=1
+copy nul templogs\profiles_list.txt >nul
+IF NOT EXIST "tools\sd_switch\emulators\profiles\*.ini" (
+	goto:emu_no_profile_created
+)
+cd tools\sd_switch\emulators\profiles
+for %%p in (*.ini) do (
+	set temp_profilename=%%p
+	set temp_profilename=!temp_profilename:~0,-4!
+	echo !temp_count!: !temp_profilename!
+	echo %%p>> ..\..\..\..\templogs\profiles_list.txt
+	set /a temp_count+=1
+)
+cd ..\..\..\..
+:emu_no_profile_created
+IF EXIST "tools\default_configs\emu_profile_all.ini" (
+	echo %temp_count%: Tous les émulateurs.
+) else (
+	set /a temp_count-=1
+	set emu_no_default_config=Y
+)
+echo 0: Accéder à la gestion des profiles d'émulateurs.
+echo Tout autre choix: Ne copier aucun des émulateurs.
+echo.
+set emu_profile_path=
+set emu_profile=
+set /p emu_profile=Choisissez un profile d'émulateurs: 
+IF "%emu_profile%"=="" (
+	set pass_copy_emu_pack=Y
+	goto:skip_verif_emu_profile
+)
+call TOOLS\Storage\functions\strlen.bat nb "%emu_profile%"
+set i=0
+:check_chars_emu_profile
+IF %i% NEQ %nb% (
+	set check_chars=0
+	FOR %%z in (0 1 2 3 4 5 6 7 8 9) do (
+		IF "!emu_profile:~%i%,1!"=="%%z" (
+			set /a i+=1
+			set check_chars=1
+			goto:check_chars_emu_profile
+		)
+	)
+	IF "!check_chars!"=="0" (
+		set pass_copy_emu_pack=Y
+		goto:skip_verif_emu_profile
+	)
+)
+IF %emu_profile% GTR %temp_count% (
+	set pass_copy_emu_pack=Y
+		goto:skip_verif_emu_profile
+)
+IF "%emu_profile%"=="0" (
+	call tools\Storage\emulators_pack_profiles_management.bat
+	goto:define_emu_select_profile
+)
+IF %emu_profile% EQU %temp_count% (
+	IF NOT "%emu_no_default_config%"=="Y" (
+		set emu_profile_path=tools\default_configs\emu_profile_all.ini
+		goto:skip_verif_emu_profile
+	)
+)
+TOOLS\gnuwin32\bin\sed.exe -n %emu_profile%p <templogs\profiles_list.txt > templogs\tempvar.txt
+set /p emu_profile_path=<templogs\tempvar.txt
+set emu_profile_path=tools\sd_switch\emulators\profiles\%emu_profile_path%
+:skip_verif_emu_profile
+del /q templogs\profiles_list.txt >nul 2>&1
+
 :define_select_profile
 echo.
 echo Sélection du profile pour la copie des homebrews optionnels:
@@ -444,6 +517,15 @@ IF "%pass_copy_mixed_pack%"=="Y" (
 	tools\gnuwin32\bin\sort.exe -n "%profile_path%"
 )
 echo.
+IF /i "%copy_emu%"=="o" (
+	echo émulateurs:
+	IF "%pass_copy_emu_pack%"=="Y" (
+		echo Aucun émulateur ne sera copié.
+	) else (
+		tools\gnuwin32\bin\sort.exe -n "%emu_profile_path%"
+	)
+	echo.
+)
 IF "%copy_cheats%"=="Y" (
 	echo Cheats:
 	IF "%copy_all_cheats_pack%"=="Y" (
@@ -490,6 +572,7 @@ IF /i "%del_files_dest_copy%"=="1" (
 )
 
 call :copy_mixed_pack
+call :copy_emu_pack
 
 IF /i "%copy_atmosphere_pack%"=="o" (
 	IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches" >nul
@@ -578,25 +661,6 @@ IF /i "%copy_memloader%"=="o" (
 	copy /V /B TOOLS\sd_switch\payloads\memloader.bin %volume_letter%:\RR\payloads\memloader.bin >nul
 )
 
-IF /i "%copy_emu%"=="o" (
-	IF EXIST "%volume_letter%:\switch\pfba\skin\config.cfg" move "%volume_letter%:\switch\pfba\skin\config.cfg" "%volume_letter%:\switch\pfba\skin\config.cfg.bak" >nul
-	IF EXIST "%volume_letter%:\switch\pnes\skin\config.cfg" move "%volume_letter%:\switch\pnes\skin\config.cfg" "%volume_letter%:\switch\pnes\skin\config.cfg.bak" >nul
-	IF EXIST "%volume_letter%:\switch\psnes\skin\config.cfg" move "%volume_letter%:\switch\psnes\skin\config.cfg" "%volume_letter%:\switch\psnes\skin\config.cfg.bak" >nul
-			%windir%\System32\Robocopy.exe TOOLS\sd_switch\emulators %volume_letter%:\ /e >nul
-	IF /i "%keep_emu_configs%"=="o" (
-		del /q "%volume_letter%:\switch\pfba\skin\config.cfg" >nul
-		move "%volume_letter%:\switch\pfba\skin\config.cfg.bak" "%volume_letter%:\switch\pfba\skin\config.cfg" >nul
-		del /q "%volume_letter%:\switch\pnes\skin\config.cfg" >nul
-		move "%volume_letter%:\switch\pnes\skin\config.cfg.bak" "%volume_letter%:\switch\pnes\skin\config.cfg" >nul
-		del /q "%volume_letter%:\switch\psnes\skin\config.cfg" >nul
-		move "%volume_letter%:\switch\psnes\skin\config.cfg.bak" "%volume_letter%:\switch\psnes\skin\config.cfg" >nul
-	) else (
-		IF EXIST "%volume_letter%:\switch\pfba\skin\config.cfg.bak" del /q "%volume_letter%:\switch\pfba\skin\config.cfg.bak"
-		IF EXIST "%volume_letter%:\switch\pnes\skin\config.cfg.bak" del /q "%volume_letter%:\switch\pnes\skin\config.cfg.bak"
-		IF EXIST "%volume_letter%:\switch\psnes\skin\config.cfg.bak" del /q "%volume_letter%:\switch\psnes\skin\config.cfg.bak"
-	)
-)
-
 del /Q /S "%volume_letter%:\switch\.emptydir" >nul
 del /Q /S "%volume_letter%:\Backup\.emptydir" >nul
 del /Q /S "%volume_letter%:\pk1decryptor\.emptydir" >nul
@@ -606,7 +670,7 @@ echo Copie terminée.
 goto:endscript
 
 :copy_mixed_pack
-rmdir /s /q %volume_letter%:\RR
+rmdir /s /q %volume_letter%:\RR >nul 2>&1
 %windir%\System32\Robocopy.exe tools\sd_switch\mixed\base %volume_letter%:\ /e >nul
 IF "%pass_copy_mixed_pack%"=="Y" goto:skip_copy_mixed_pack
 tools\gnuwin32\bin\grep.exe -c "" <"%profile_path%" > templogs\tempvar.txt
@@ -628,6 +692,37 @@ for /l %%i in (1,1,%temp_count%) do (
 	)
 )
 :skip_copy_mixed_pack
+exit /b
+
+:copy_emu_pack
+IF /i NOT "%copy_emu%"=="o" (
+	goto:skip_copy_emu_pack
+) else (
+	IF "%pass_copy_emu_pack%"=="Y" goto:skip_copy_emu_pack
+	IF EXIST "%volume_letter%:\switch\pfba\skin\config.cfg" move "%volume_letter%:\switch\pfba\skin\config.cfg" "%volume_letter%:\switch\pfba\skin\config.cfg.bak" >nul
+	IF EXIST "%volume_letter%:\switch\pnes\skin\config.cfg" move "%volume_letter%:\switch\pnes\skin\config.cfg" "%volume_letter%:\switch\pnes\skin\config.cfg.bak" >nul
+	IF EXIST "%volume_letter%:\switch\psnes\skin\config.cfg" move "%volume_letter%:\switch\psnes\skin\config.cfg" "%volume_letter%:\switch\psnes\skin\config.cfg.bak" >nul
+			tools\gnuwin32\bin\grep.exe -c "" <"%emu_profile_path%" > templogs\tempvar.txt
+set /p temp_count=<templogs\tempvar.txt
+	for /l %%i in (1,1,%temp_count%) do (
+		TOOLS\gnuwin32\bin\sed.exe -n %%ip <"%emu_profile_path%" >templogs\tempvar.txt
+		set /p temp_emulator=<templogs\tempvar.txt
+		%windir%\System32\Robocopy.exe tools\sd_switch\emulators\pack\!temp_emulator! %volume_letter%:\ /e >nul
+	)
+	IF /i "%keep_emu_configs%"=="o" (
+		del /q "%volume_letter%:\switch\pfba\skin\config.cfg" >nul
+		move "%volume_letter%:\switch\pfba\skin\config.cfg.bak" "%volume_letter%:\switch\pfba\skin\config.cfg" >nul
+		del /q "%volume_letter%:\switch\pnes\skin\config.cfg" >nul
+		move "%volume_letter%:\switch\pnes\skin\config.cfg.bak" "%volume_letter%:\switch\pnes\skin\config.cfg" >nul
+		del /q "%volume_letter%:\switch\psnes\skin\config.cfg" >nul
+		move "%volume_letter%:\switch\psnes\skin\config.cfg.bak" "%volume_letter%:\switch\psnes\skin\config.cfg" >nul
+	) else (
+		IF EXIST "%volume_letter%:\switch\pfba\skin\config.cfg.bak" del /q "%volume_letter%:\switch\pfba\skin\config.cfg.bak"
+		IF EXIST "%volume_letter%:\switch\pnes\skin\config.cfg.bak" del /q "%volume_letter%:\switch\pnes\skin\config.cfg.bak"
+		IF EXIST "%volume_letter%:\switch\psnes\skin\config.cfg.bak" del /q "%volume_letter%:\switch\psnes\skin\config.cfg.bak"
+	)
+)
+:skip_copy_emu_pack
 exit /b
 
 :copy_cheats_profile
