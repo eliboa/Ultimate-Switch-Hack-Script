@@ -99,6 +99,7 @@ There might be a cheat in the database but not listed here!
 ### D
 |Name|TitleID|Region
 |--|--|--
+|Darksiders Warmastered Edition|[0100E1400BA96000](0100E1400BA96000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Dark Souls Remastered|[01004AB00A260000](01004AB00A260000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
 |Dead Cells|[0100646009FBE000](0100646009FBE000/cheats)|![EUR](http://nswdb.com/images/EUR.jpg)
 |Dead Cells|[0100FC000AEF0000](0100FC000AEF0000/cheats)|![WLD](http://nswdb.com/images/WLD.jpg)
