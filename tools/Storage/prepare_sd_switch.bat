@@ -189,6 +189,7 @@ echo Tout autre choix: Désactiver l'écriture sur la partition PRODINFO?
 echo.
 set /p atmosphere_enable_prodinfo_write=Faites votre choix: 
 :skip_ask_prodinfo_config_atmosphere
+call :modules_profile_choice "atmosphere"
 IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_atmosphere
 :ask_cheats_atmosphere
 echo.
@@ -213,6 +214,7 @@ IF /i "%copy_reinx_pack%"=="o" (
 	set /p reinx_enable_nogc_patch=Souhaitez-vous activer le patch nogc? (O/n^):
 	IF NOT "!reinx_enable_nogc_patch!"=="" set reinx_enable_nogc_patch=!reinx_enable_nogc_patch:~0,1!
 )
+IF /i "%copy_reinx_pack%"=="o" call :modules_profile_choice "reinx"
 
 echo.
 set /p copy_memloader=Souhaitez-vous copier les fichiers nécessaire à Memloader pour monter la SD, la partition EMMC, la partition Boot0 ou la partition Boot1 sur un PC en lançant simplement le payload de Memloader? (Si la copie de SXOS a été souhaité, le payload sera aussi copié à la racine de la SD pour pouvoir le lancer grâce au payload de SXOS) (O/n):
@@ -619,6 +621,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 	) else (
 		echo allow_write=^1>>%volume_letter%:\atmosphere\prodinfo.ini
 	)
+	call :copy_modules_pack "atmosphere"
 )
 
 IF /i "%copy_reinx_pack%"=="o" (
@@ -633,6 +636,7 @@ IF /i "%copy_reinx_pack%"=="o" (
 	IF EXIST "%volume_letter%:\ReiNX\titles\010000000000100D\exefs.nsp" del /q "%volume_letter%:\ReiNX\titles\010000000000100D\exefs.nsp" >nul
 	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\ReiNX\reboot_payload.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\RR\payloads\ReiNX.bin >nul
+	call :copy_modules_pack "reinx"
 )
 
 IF /i "%copy_sxos_pack%"=="o" (
@@ -668,6 +672,120 @@ del /Q /S "%volume_letter%:\rr\payloads\.emptydir" >nul 2>&1
 IF EXIST "%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul 2>&1
 echo Copie terminée.
 goto:endscript
+
+:modules_profile_choice
+:define_modules_select_profile
+echo.
+echo Sélection du profile pour la copie des modules optionnels du CFW %~1:
+set /a temp_count=1
+copy nul templogs\profiles_list.txt >nul
+IF NOT EXIST "tools\sd_switch\modules\profiles\*.ini" (
+	goto:modules_no_profile_created
+)
+cd tools\sd_switch\modules\profiles
+for %%p in (*.ini) do (
+	set temp_profilename=%%p
+	set temp_profilename=!temp_profilename:~0,-4!
+	echo !temp_count!: !temp_profilename!
+	echo %%p>> ..\..\..\..\templogs\profiles_list.txt
+	set /a temp_count+=1
+)
+cd ..\..\..\..
+:modules_no_profile_created
+IF EXIST "tools\default_configs\modules_profile_all.ini" (
+	echo %temp_count%: Tous les modules.
+	set modules_no_default_config=N
+) else (
+	set /a temp_count-=1
+	set modules_no_default_config=Y
+)
+echo 0: Accéder à la gestion des profiles de modules.
+echo Tout autre choix: Ne copier aucun des modules.
+echo.
+set modules_profile_path=
+set modules_profile=
+set pass_copy_modules_pack=
+set /p modules_profile=Choisissez un profile de modules: 
+IF "%modules_profile%"=="" (
+	set pass_copy_modules_pack=Y
+	goto:skip_verif_modules_profile
+)
+call TOOLS\Storage\functions\strlen.bat nb "%modules_profile%"
+set i=0
+:check_chars_modules_profile
+IF %i% NEQ %nb% (
+	set check_chars=0
+	FOR %%z in (0 1 2 3 4 5 6 7 8 9) do (
+		IF "!modules_profile:~%i%,1!"=="%%z" (
+			set /a i+=1
+			set check_chars=1
+			goto:check_chars_modules_profile
+		)
+	)
+	IF "!check_chars!"=="0" (
+		set pass_copy_modules_pack=Y
+		goto:skip_verif_modules_profile
+	)
+)
+IF %modules_profile% GTR %temp_count% (
+	set pass_copy_modules_pack=Y
+		goto:skip_verif_modules_profile
+)
+IF "%modules_profile%"=="0" (
+	call tools\Storage\modules_profiles_management.bat
+	goto:define_modules_select_profile
+)
+IF %modules_profile% EQU %temp_count% (
+	IF NOT "%modules_no_default_config%"=="Y" (
+		set modules_profile_path=tools\default_configs\modules_profile_all.ini
+		goto:skip_verif_modules_profile
+	)
+)
+TOOLS\gnuwin32\bin\sed.exe -n %modules_profile%p <templogs\profiles_list.txt > templogs\tempvar.txt
+set /p modules_profile_path=<templogs\tempvar.txt
+set modules_profile_path=tools\sd_switch\modules\profiles\%modules_profile_path%
+:skip_verif_modules_profile
+del /q templogs\profiles_list.txt >nul 2>&1
+IF "%~1"=="atmosphere" (
+	set atmosphere_modules_profile_path=%modules_profile_path%
+	set atmosphere_pass_copy_modules_pack=%pass_copy_modules_pack%
+)
+IF "%~1"=="reinx" (
+	set reinx_modules_profile_path=%modules_profile_path%
+	set reinx_pass_copy_modules_pack=%pass_copy_modules_pack%
+)
+IF "%~1"=="sxos" (
+	set sxos_modules_profile_path=%modules_profile_path%
+	set sxos_pass_copy_modules_pack=%pass_copy_modules_pack%
+)
+exit /b
+
+:copy_modules_pack
+IF "%~1"=="atmosphere" (
+	IF "%atmosphere_pass_copy_modules_pack%"=="Y" goto:skip_copy_modules_pack
+	set temp_modules_copy_path=%volume_letter%:\atmosphere
+	set temp_modules_profile_path=%atmosphere_modules_profile_path%
+)
+IF "%~1"=="reinx" (
+	IF "%reinx_pass_copy_modules_pack%"=="Y" goto:skip_copy_modules_pack
+	set temp_modules_copy_path=%volume_letter%:\ReiNX
+	set temp_modules_profile_path=%reinx_modules_profile_path%
+)
+IF "%~1"=="sxos" (
+	IF "%sxos_pass_copy_modules_pack%"=="Y" goto:skip_copy_modules_pack
+	set temp_modules_copy_path=%volume_letter%:\sxos
+	set temp_modules_profile_path=%sxos_modules_profile_path%
+)
+tools\gnuwin32\bin\grep.exe -c "" <"%temp_modules_profile_path%" > templogs\tempvar.txt
+set /p temp_count=<templogs\tempvar.txt
+for /l %%i in (1,1,%temp_count%) do (
+	TOOLS\gnuwin32\bin\sed.exe -n %%ip <"%temp_modules_profile_path%" >templogs\tempvar.txt
+	set /p temp_module=<templogs\tempvar.txt
+	%windir%\System32\Robocopy.exe tools\sd_switch\modules\pack\!temp_module!\titles %temp_modules_copy_path%\titles /e >nul
+	%windir%\System32\Robocopy.exe tools\sd_switch\modules\pack\!temp_module!\others %volume_letter%:\ /e >nul
+)
+:skip_copy_modules_pack
+exit /b
 
 :copy_mixed_pack
 rmdir /s /q %volume_letter%:\RR >nul 2>&1
