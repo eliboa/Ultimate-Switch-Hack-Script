@@ -178,11 +178,12 @@ IF %errorlevel% EQU 404 (
 	del /q templogs\modules_list.txt
 	exit /b 400
 )
-IF %count_modules% LEQ 20 (
-set /a modulo=0
-goto:skip:modulo_calc
-)
 set /a page_number=%count_modules%/20
+IF %count_modules% LEQ 20 (
+	set /a modulo=0
+	set /a page_number=1
+	goto:skip:modulo_calc
+)
 set mod_a=!count_modules!
 set mod_b=20
 set mod_counter=0
