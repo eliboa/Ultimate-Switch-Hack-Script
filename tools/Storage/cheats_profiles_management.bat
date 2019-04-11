@@ -167,7 +167,7 @@ echo %temp_cheat_name% %temp_cheat_region%: %temp_cheat_id%>>templogs\cheats_lis
 set /a temp_count+=1
 goto:listing_cheats_in_profile
 :skip_listing_cheats_in_profile
-%windir%\System32\sort.exe /l C <"templogs\cheats_list.txt" /o ""templogs\cheats_list.txt"
+%windir%\System32\sort.exe /l C <"templogs\cheats_list.txt" /o "templogs\cheats_list.txt"
 type "templogs\cheats_list.txt"
 del /q templogs\cheats_list.txt
 endlocal
@@ -183,6 +183,11 @@ IF %errorlevel% EQU 404 (
 	exit /b 400
 )
 set /a page_number=%count_cheats%/20
+IF %count_cheats% LEQ 20 (
+	set /a modulo=0
+	set /a page_number=1
+	goto:skip:modulo_calc
+)
 set mod_a=!count_cheats!
 set mod_b=20
 set mod_counter=0
@@ -194,6 +199,7 @@ for /l %%k in (1,1,!mod_a!) do (
 )
 if not defined modulo set modulo=0
 IF %modulo% NEQ 0 set /a page_number+=1
+:skip:modulo_calc
 :recall_add_remove_cheat
 echo Sélection d'un cheat à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%", page %selected_page%/%page_number%
 echo.
@@ -202,14 +208,19 @@ echo.
 IF %modulo% NEQ 0 (
 	IF %selected_page% EQU %page_number% (
 		set /a temp_max_display_cheats=%count_cheats%
-		set /a temp_min_display_cheats=%count_cheats%-%modulo%
+		set /a temp_min_display_cheats=%count_cheats%-%modulo%+1
 	) else (
 		set /a temp_max_display_cheats=%selected_page%*20
 		set /a temp_min_display_cheats=!temp_max_display_cheats!-19
 	)
 ) else (
-	set /a temp_max_display_cheats=%selected_page%*20
-	set /a temp_min_display_cheats=!temp_max_display_cheats!-19
+	IF %count_cheats% LEQ 20 (
+		set /a temp_max_display_cheats=%count_cheats%
+		set /a temp_min_display_cheats=1
+	) else (
+		set /a temp_max_display_cheats=%selected_page%*20
+		set /a temp_min_display_cheats=!temp_max_display_cheats!-19
+	)
 )
 for /l %%i in (%temp_min_display_cheats%,1,%temp_max_display_cheats%) do (
 	tools\gnuwin32\bin\grep.exe -c "!cheats_list_%%i_0!" <"%temp_path_profile%" > templogs\tempvar.txt

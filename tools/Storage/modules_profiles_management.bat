@@ -204,15 +204,15 @@ echo.
 IF %modulo% NEQ 0 (
 	IF %selected_page% EQU %page_number% (
 		set /a temp_max_display_modules=%count_modules%
-		set /a temp_min_display_modules=%count_modules%-%modulo%
+		set /a temp_min_display_modules=%count_modules%-%modulo%+1
 	) else (
 		set /a temp_max_display_modules=%selected_page%*20
 		set /a temp_min_display_modules=!temp_max_display_modules!-19
 	)
 ) else (
 	IF %count_modules% LEQ 20 (
-	set /a temp_max_display_modules=%count_modules%
-	set /a temp_min_display_modules=1
+		set /a temp_max_display_modules=%count_modules%
+		set /a temp_min_display_modules=1
 	) else (
 		set /a temp_max_display_modules=%selected_page%*20
 		set /a temp_min_display_modules=!temp_max_display_modules!-19
@@ -237,7 +237,6 @@ IF /i "%module_choice:~0,1%"=="p" (
 	set change_page=Y
 	set module_choice=%module_choice:~1%
 	)
-IF "%module_choice%"=="" set /a module_choice=0
 	call TOOLS\Storage\functions\strlen.bat nb "%module_choice%"
 set i=0
 :check_chars_module_choice

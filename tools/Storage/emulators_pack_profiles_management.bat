@@ -145,32 +145,89 @@ set /p profile_selected=<templogs\tempvar.txt
 exit /b
 
 :list_homebrews_in_profile
-tools\gnuwin32\bin\sort.exe -n <"tools\sd_switch\emulators\profiles\%~1"
+Setlocal disabledelayedexpansion
+copy nul templogs\homebrews_list.txt >nul
+tools\gnuwin32\bin\grep.exe -c "" <"tools\sd_switch\emulators\profiles\%~1" > templogs\tempvar.txt
+set /p count_homebrews=<templogs\tempvar.txt
+IF %count_homebrews% EQU 0 (
+	echo Aucun émulateur configuré pour ce profile.
+	endlocal
+	exit /b
+)
+%windir%\System32\sort.exe /l C <"tools\sd_switch\emulators\profiles\%~1" /o "templogs\homebrews_list.txt"
+type "templogs\homebrews_list.txt"
+del /q templogs\homebrews_list.txt
+endlocal
 exit /b
 
 :add_del_homebrew_in_profile
 set temp_profile=%~1
 set temp_path_profile=tools\sd_switch\emulators\profiles\%~1
-echo Sélection d'un émulateur à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%"
+set /a selected_page=1
+call :homebrews_list
+IF %errorlevel% EQU 404 (
+	del /q templogs\modules_list.txt
+	exit /b 400
+)
+set /a page_number=%count_homebrews%/20
+IF %count_homebrews% LEQ 20 (
+	set /a modulo=0
+	set /a page_number=1
+	goto:skip:modulo_calc
+)
+set mod_a=!count_homebrews!
+set mod_b=20
+set mod_counter=0
+for /l %%k in (1,1,!mod_a!) do (
+    set /a mod_counter+=1
+    set /a mod_a-=1
+    if !mod_counter!==!mod_b! set /a mod_counter=0
+    if !mod_a!==0 set modulo=!mod_counter!
+)
+if not defined modulo set modulo=0
+IF %modulo% NEQ 0 set /a page_number+=1
+:skip:modulo_calc
 :recall_add_remove_homebrew
+echo Sélection d'un émulateur à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%", page %selected_page%/%page_number%
 echo.
 echo Les émulateurs dont le nom est préfixé d'un "*" sont les émulateurs présent dans le profile.
 echo.
-call :homebrews_list
-for /l %%i in (1,1,%count_homebrews%) do (
-	tools\gnuwin32\bin\grep.exe -c "!homebrews_list_%%i!" <"%temp_path_profile%" > templogs\tempvar.txt
-	set /p temp_count_homebrews=<templogs\tempvar.txt
-	IF !temp_count_homebrews! EQU 0 (
-		echo %%i: !homebrews_list_%%i!
+IF %modulo% NEQ 0 (
+	IF %selected_page% EQU %page_number% (
+		set /a temp_max_display_homebrews=%count_homebrews%
+		set /a temp_min_display_homebrews=%count_homebrews%-%modulo%+1
 	) else (
-		echo %%i: *!homebrews_list_%%i!
+		set /a temp_max_display_homebrews=%selected_page%*20
+		set /a temp_min_display_homebrews=!temp_max_display_homebrews!-19
+	)
+) else (
+	IF %count_homebrews% LEQ 20 (
+		set /a temp_max_display_homebrews=%count_homebrews%
+		set /a temp_min_display_homebrews=1
+	) else (
+		set /a temp_max_display_homebrews=%selected_page%*20
+		set /a temp_min_display_homebrews=!temp_max_display_homebrews!-19
 	)
 )
+for /l %%i in (%temp_min_display_homebrews%,1,%temp_max_display_homebrews%) do (
+	tools\gnuwin32\bin\grep.exe -c "!homebrews_list_%%i_0!" <"%temp_path_profile%" > templogs\tempvar.txt
+	set /p temp_count_homebrews=<templogs\tempvar.txt
+	IF !temp_count_homebrews! EQU 0 (
+		echo %%i: !homebrews_list_%%i_0!
+	) else (
+		echo %%i: *!homebrews_list_%%i_0!
+	)
+)
+echo P: Changer de page, faire suivre le P d'un numéro de page valide.
 echo N'importe quel autre choix: Arrêter la modification de la liste des homebrews du profile.
 echo.
 set homebrew_choice=
 set /p homebrew_choice=Choisir un homebrew pour l'ajouter ou le supprimer: 
 IF "%homebrew_choice%"=="" set /a homebrew_choice=0
+IF /i "%homebrew_choice:~0,1%"=="p" (
+	set change_page=Y
+	set homebrew_choice=%homebrew_choice:~1%
+	)
 call TOOLS\Storage\functions\strlen.bat nb "%homebrew_choice%"
 set i=0
 :check_chars_homebrew_choice
@@ -187,8 +244,29 @@ IF %i% NEQ %nb% (
 exit /b 400
 	)
 )
-IF %homebrew_choice% GTR %count_homebrews% exit /b 400
-IF %homebrew_choice% EQU 0 exit /b 400
+IF "%change_page%"=="Y" (
+	IF %homebrew_choice% GTR %page_number% (
+		echo Cette page n'existe pas.
+		set change_page=
+		goto:recall_add_remove_homebrew
+	) else IF %homebrew_choice% LEQ 0 (
+	echo Cette page n'existe pas.
+	set change_page=
+	goto:recall_add_remove_homebrew
+	) else (
+		set selected_page=%homebrew_choice%
+		set change_page=
+		goto:recall_add_remove_homebrew
+	)
+)
+IF %homebrew_choice% GTR %count_homebrews% (
+	del /q templogs\homebrews_list.txt
+	exit /b 400
+)
+IF %homebrew_choice% EQU 0 (
+	del /q templogs\homebrews_list.txt
+	exit /b 400
+)
 TOOLS\gnuwin32\bin\sed.exe -n %homebrew_choice%p <templogs\homebrews_list.txt > templogs\tempvar.txt
 set /p homebrew_selected=<templogs\tempvar.txt
 tools\gnuwin32\bin\grep.exe -c "%homebrew_selected%" <"%temp_path_profile%" > templogs\tempvar.txt
@@ -205,18 +283,25 @@ exit /b
 
 :homebrews_list
 copy nul templogs\homebrews_list.txt >nul
-echo Khedgb>>templogs\homebrews_list.txt
-echo Mgba>>templogs\homebrews_list.txt
-echo Pfba>>templogs\homebrews_list.txt
-echo Pnes>>templogs\homebrews_list.txt
-echo Psnes>>templogs\homebrews_list.txt
-echo Vba-next>>templogs\homebrews_list.txt
+cd tools\sd_switch\emulators\pack
+for /D %%i in (*) do (
+	echo %%i>>..\..\..\..\templogs\homebrews_list.txt
+)
+cd ..\..\..\..
 tools\gnuwin32\bin\grep.exe -c "" <templogs\homebrews_list.txt > templogs\tempvar.txt
 set /p count_homebrews=<templogs\tempvar.txt
-for /l %%i in (1,1,%count_homebrews%) do (
-	TOOLS\gnuwin32\bin\sed.exe -n %%ip <templogs\homebrews_list.txt > templogs\tempvar.txt
-	set /p homebrews_list_%%i=<templogs\tempvar.txt
+set temp_count=1
+:listing_homebrews
+IF %count_homebrews% EQU 0 (
+	echo Erreur, il ne semble y avoir aucun émulateur dans le dossier "tools\sd_switch\emulators\pack" du script, le processus ne peut continuer.
+	exit /b 404
 )
+IF %temp_count% GTR %count_homebrews% goto:skip_listing_homebrews
+TOOLS\gnuwin32\bin\sed.exe -n %temp_count%p <templogs\homebrews_list.txt > templogs\tempvar.txt
+set /p homebrews_list_%temp_count%_0=<templogs\tempvar.txt
+set /a temp_count+=1
+goto:listing_homebrews
+:skip_listing_homebrews
 exit /b
 
 :end_script

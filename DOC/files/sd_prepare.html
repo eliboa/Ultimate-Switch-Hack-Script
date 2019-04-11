@@ -19,13 +19,13 @@ Pour utiliser certains homebrews comme Pplay il est recomandé de lancer le menu
 </p>
 <ul>
 <li>Sous SX OS il faut maintenir "R" en lançant un jeu  Sous SX OS. Si c'est via un XCI pour que cette méthode fonctionne, il faut d'abord le monter.</li>
-<li>SousAtmosphere il faut configurer le fichier de la carte sd "atmosphere/loader.ini", il faut changer la valeur de "hbl_tid" par le title_id d'un jeu installé sur la console et éventuellement passer la valeur de "override_key" à "R" au lieu de "!R" pour que le comportement soit le même que pour SX OS sur le jeu configuré (si cette valeur n'est pas changé, le jeu se lancera normalement uniquement en maintenant R au lancement de celui-ci)
+<li>Sous les dernières versions d'Atmosphere il faut, comme pour SX OS, maintenir le bouton "R" en lançant un jeu installé sur la console. D'ailleurs pour lancer le Homebrew Menu à partir de l'album, il est également nécessaire de maintenir "R" en lançant celui-ci<.
 <br/>
 Info : Le maintien du bouton "R" doit se faire après la sélection du compte que le jeu lancera (si le jeu fonctionne ainsi car certains jeux procèdent autrement au quel cas le bouton "R" devra être maintenu au moment de cliquer sur l'icône du jeu). 
 Du coup le mieux à faire est de maintenir le bouton "R" juste avant de cliquer sur l'icône du jeu et de le relâcher une fois le Homebrew Menu lancé.</li>
 <li>Pour ReiNX, il faut télécharger <a target="_new" href="https://gbatemp.net/threads/homebrew-menu-loader-legal-nsp.518433/">le HBMenu à installer en NSP</a> puis l'installer avec Goldleaf ou tout autre homebrew permettant d'installer des NSP. Une fois cela fait, vous aurez accès au Homebrew Menu directement via les icônes de jeux de la Switch et les 3 GO de RAM seront utilisés.
 <br/>
-Note: Cette méthode est compatible avec tous les CFWs mais pour SX OS elle est inutile selon moi et pour Atmosphere il est possible de faire autrement donc installer ce NSP doit se faire si aucune méthode alternative ne vous convient.</li>
+Note: Cette méthode est compatible avec tous les CFWs mais pour SX OS elle est inutile selon moi et pour Atmosphere il est possible de faire autrement donc installer ce NSP doit se faire si aucune méthode alternative ne vous convient pas.</li>
 </ul>
 &nbsp;
 <h2>Utiliser Kezplez-nx (devenu Lockpick mais le fonctionnement est quasiment le même)</h2>
@@ -33,7 +33,9 @@ Note: Cette méthode est compatible avec tous les CFWs mais pour SX OS elle est 
 <p>
 Ce homebrew permet de dumper les différentes clés utilisés par Hactool et autres dérivés. Attention, ne pas partager le fichier "prod.keys" obtenu grâce à ce homebrew car il contient des clés spécifiques à la console comme la tsec_key par exemple. Kezplez-nx est un peu particulier car il nécessite de dumper certains fichiers spécifique à la console avant de pouvoir être utilisé.
 <br/><br/>
-Voici comment l'utiliser:
+Note: Maintenant, il vaut mieux utiliser le payload Lockpick-RCM pour dumper ces clés, il n'y a besoin de rien sauf d'une SD dans la console et de lancer le payload via le mode RCM de la Switch et les clés seront dumpées.
+<br/><br/>
+Voici comment utiliser Kezplez-NX ou Lockpick:
 </p>
 <ul>
 <li>Dumper les fichiers "fuses.bin" et "tsec_keys.bin" avec la version d'Hekate incluse dans ce script. Ces options de dump se trouveront dans le menu "console info" ("Print fuse info" et "Print TSEC keys") et il faudra appuyer sur le bouton "Power" une fois l'info affichée pour la dumper sur la SD dans le dossier "/Backup/<un_nombre_hexadécimal>/Dumps" ou sinon dans le dossier "/Backup/Dumps".</li>
@@ -71,6 +73,15 @@ Note: Avec Lockpick, l'option de debug est à activer sur tous les firmwares pou
 <li>Goldleaf: Permet, entre autres,  d'installer des fichiers NSP sur la nand ou la SD. Un fichier contenant les clés de déchiffrements dumpé par Lockpick peut être placé dans le dossier "switch/Goldleaf" de la SD et nommé "keys.dat" pour utiliser toutes les fonctionnalités de ce homebrew.</li>
 <li>Tinfoil: Un installeur simple de NSP qui n'est plus mis à jour mais qui peux s'avérer pratique parfois.</li>
 <li>ZeroTwoXCI: Un fork de Tinfoil intégrant l'installation de fichier XCI comme s'il s'agissait de NSP (les fichiers sont convertis en NSP puis installés) (nécessite le fichier "prod.keys" contenant les clés de déchiffrements de Hactool (souvent le fichier "keys.txt" ou "keys.dat" à renommer en "prod.keys") à la racine de la SD).</li>
+</ul>
+<h2>Les modules optionnels</h2>
+&nbsp;
+<ul
+<li>hid-mitm: Permet de configurer une manette autre que celles de la Switch pour qu'elle soit reconnue comme un contrôleur Pro. Attention, ce module nécessite pour l'instant de passer par une application tiers pour que cela fonctionne et ceci ne sera pas expliqué ici.</li>
+<li>Slidenx: Un module qui permet de changer le son de connexion/déconnexion des joycons.</li>
+<li>Sys-clk: Ce module permet d'overclocker la console selon des profiles établis.</li>
+<li>Sys-FTPD: Lance un serveur FTP.</li>
+<li>Sys-Netcheat: Permet d'utiliser ou de chercher des cheats dans les jeux, ceci dit, pour le CFW Atmosphere/Kosmos, ce module est maintenant remplaçable par DMNT qui est inclu dans Atmosphere.</li>
 </ul>
 <h2>Contenu du pack "Kosmos" (anciennement "SDFilesSwitch")</h2>
 &nbsp;
