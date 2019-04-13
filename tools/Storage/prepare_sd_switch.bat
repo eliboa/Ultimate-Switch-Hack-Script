@@ -48,13 +48,14 @@ goto:list_volumes
 echo.
 echo.
 set volume_letter=
-set /p volume_letter=Entrez la lettre du volume de la SD que vous souhaitez utiliser:
+set /p volume_letter=Entrez la lettre du volume de la SD que vous souhaitez utiliser ou entrez "0" pour quitter le script:
 call TOOLS\Storage\functions\strlen.bat nb "%volume_letter%"
 IF %nb% EQU 0 (
 	echo La lettre de lecteur ne peut être vide. Réessayez.
 	goto:define_volume_letter
 )
 set volume_letter=%volume_letter:~0,1%
+IF "%volume_letter%"=="0" goto:endscript2
 set nb=1
 CALL TOOLS\Storage\functions\CONV_VAR_to_MAJ.bat volume_letter
 set i=0
@@ -158,7 +159,7 @@ IF "%ERRORLEVEL%"=="0" (
 :copy_to_sd
 set /p cancel_copy=Souhaitez-vous annuler la copie des différents fichiers vers votre SD (volume "%volume_letter%")? (O/n):
 IF NOT "%cancel_copy%"=="" set cancel_copy=%cancel_copy:~0,1%
-IF /i "%cancel_copy%"=="o" goto:endscript
+IF /i "%cancel_copy%"=="o" goto:endscript2
 set /p launch_manual=Souhaitez-vous lancer la page d'information sur se qui peut être copié (vivement conseillé)? (O/n):
 IF NOT "%launch_manual%"=="" set launch_manual=%launch_manual:~0,1%
 IF /i "%launch_manual%"=="o" (
@@ -901,5 +902,6 @@ exit /b
 
 :endscript
 pause
+:endscript2
 rmdir /s /q templogs
 endlocal
