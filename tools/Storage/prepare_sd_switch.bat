@@ -488,6 +488,13 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 			echo Pack Atmosphere et Kosmos, écriture sur PRODINFO activée
 		)
 	)
+	IF NOT "%atmosphere_pass_copy_modules_pack%"=="Y" (
+		Echo Modules optionnels pour Atmosphere:
+		tools\gnuwin32\bin\sort.exe -n "%atmosphere_modules_profile_path%"
+	) else (
+		echo Aucun module optionnel à copier.
+	)
+	echo.
 )
 IF /i "%copy_reinx_pack%"=="o" (
 	IF /i "%reinx_enable_nogc_patch%"=="o" (
@@ -495,6 +502,13 @@ IF /i "%copy_reinx_pack%"=="o" (
 	) else (
 	echo Pack ReiNX
 	)
+	IF NOT "%reinx_pass_copy_modules_pack%"=="Y" (
+		Echo Modules optionnels pour ReiNX:
+		tools\gnuwin32\bin\sort.exe -n "%reinx_modules_profile_path%"
+	) else (
+		echo Aucun module optionnel à copier.
+	)
+	echo.
 )
 IF /i "%copy_sxos_pack%"=="o" (
 	IF /i "%copy_payloads%"=="o" (
@@ -502,14 +516,19 @@ IF /i "%copy_sxos_pack%"=="o" (
 	) else (
 		echo Pack SX OS
 	)
+	echo.
 )
-IF /i "%copy_memloader%"=="o" echo Pack Memloader
+IF /i "%copy_memloader%"=="o" (
+	echo Pack Memloader
+	echo.
+)
 IF /i "%copy_emu%"=="o" (
 	IF /i "%keep_emu_configs%"=="o" (
 		echo Pack d'émulateurs avec concervation des fichiers de configurations de ceux-ci sur la SD
 	) else (
 		echo Pack d'émulateurs avec suppression des fichiers de configurations de ceux-ci sur la SD
 	)
+	echo.
 )
 echo.
 echo Homebrews optionnels:
