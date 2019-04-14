@@ -188,7 +188,11 @@ if not defined modulo set modulo=0
 IF %modulo% NEQ 0 set /a page_number+=1
 :skip:modulo_calc
 :recall_add_remove_homebrew
-echo Sélection d'un émulateur à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%", page %selected_page%/%page_number%
+IF %count_homebrews% LEQ 20 (
+	echo Sélection d'un émulateur à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%"
+) else (
+	echo Sélection d'un émulateur à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%", page %selected_page%/%page_number%
+)
 echo.
 echo Les émulateurs dont le nom est préfixé d'un "*" sont les émulateurs présent dans le profile.
 echo.
@@ -218,15 +222,20 @@ for /l %%i in (%temp_min_display_homebrews%,1,%temp_max_display_homebrews%) do (
 		echo %%i: *!homebrews_list_%%i_0!
 	)
 )
-echo P: Changer de page, faire suivre le P d'un numéro de page valide.
+IF %count_homebrews% GTR 20 echo P: Changer de page, faire suivre le P d'un numéro de page valide.
 echo N'importe quel autre choix: Arrêter la modification de la liste des homebrews du profile.
 echo.
 set homebrew_choice=
 set /p homebrew_choice=Choisir un homebrew pour l'ajouter ou le supprimer: 
 IF "%homebrew_choice%"=="" set /a homebrew_choice=0
+call TOOLS\Storage\functions\strlen.bat nb "%homebrew_choice%"
 IF /i "%homebrew_choice:~0,1%"=="p" (
 	set change_page=Y
-	set homebrew_choice=%homebrew_choice:~1%
+	IF %nb% equ 1 (
+		set homebrew_choice=0
+	) else (
+		set homebrew_choice=%homebrew_choice:~1%
+	)
 	)
 call TOOLS\Storage\functions\strlen.bat nb "%homebrew_choice%"
 set i=0

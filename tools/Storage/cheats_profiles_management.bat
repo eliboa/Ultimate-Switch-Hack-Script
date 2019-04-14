@@ -201,7 +201,11 @@ if not defined modulo set modulo=0
 IF %modulo% NEQ 0 set /a page_number+=1
 :skip:modulo_calc
 :recall_add_remove_cheat
-echo Sélection d'un cheat à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%", page %selected_page%/%page_number%
+IF %count_cheats% LEQ 20 (
+	echo Sélection d'un cheat à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%"
+) else (
+	echo Sélection d'un cheat à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%", page %selected_page%/%page_number%
+)
 echo.
 echo Les cheats dont le nom est préfixé d'un "*" sont les cheats présent dans le profile.
 echo.
@@ -231,17 +235,21 @@ for /l %%i in (%temp_min_display_cheats%,1,%temp_max_display_cheats%) do (
 		echo %%i: *!cheats_list_%%i_0!; !cheats_list_%%i_1! !cheats_list_%%i_2!
 	)
 )
-echo P: Changer de page, faire suivre le P d'un numéro de page valide.
+IF %count_cheats% GTR 20 echo P: Changer de page, faire suivre le P d'un numéro de page valide.
 echo N'importe quel autre choix: Arrêter la modification de la liste des cheats du profile.
 echo.
 set cheat_choice=
 set /p cheat_choice=Choisir un cheat pour l'ajouter/le supprimer ou sélectionner une autre page: 
 IF "%cheat_choice%"=="" set /a cheat_choice=0
+call TOOLS\Storage\functions\strlen.bat nb "%cheat_choice%"
 IF /i "%cheat_choice:~0,1%"=="p" (
 	set change_page=Y
-	set cheat_choice=%cheat_choice:~1%
+	IF %nb% equ 1 (
+		set cheat_choice=0
+	) else (
+		set cheat_choice=%cheat_choice:~1%
 	)
-IF "%cheat_choice%"=="" set /a cheat_choice=0
+	)
 	call TOOLS\Storage\functions\strlen.bat nb "%cheat_choice%"
 set i=0
 :check_chars_cheat_choice

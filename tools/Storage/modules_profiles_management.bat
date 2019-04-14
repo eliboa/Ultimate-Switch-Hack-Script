@@ -197,7 +197,11 @@ if not defined modulo set modulo=0
 IF %modulo% NEQ 0 set /a page_number+=1
 :skip:modulo_calc
 :recall_add_remove_module
-echo Sélection d'un module à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%", page %selected_page%/%page_number%
+IF %count_modules% LEQ 20 (
+	echo Sélection d'un module à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%"
+) else (
+	echo Sélection d'un module à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%", page %selected_page%/%page_number%
+)
 echo.
 echo Les modules dont le nom est préfixé d'un "*" sont les modules présent dans le profile.
 echo.
@@ -227,15 +231,20 @@ for /l %%i in (%temp_min_display_modules%,1,%temp_max_display_modules%) do (
 		echo %%i: *!modules_list_%%i_0!
 	)
 )
-echo P: Changer de page, faire suivre le P d'un numéro de page valide.
+IF %count_modules% GTR 20 echo P: Changer de page, faire suivre le P d'un numéro de page valide.
 echo N'importe quel autre choix: Arrêter la modification de la liste des modules du profile.
 echo.
 set module_choice=
 set /p module_choice=Choisir un module pour l'ajouter/le supprimer ou sélectionner une autre page: 
 IF "%module_choice%"=="" set /a module_choice=0
+call TOOLS\Storage\functions\strlen.bat nb "%module_choice%"
 IF /i "%module_choice:~0,1%"=="p" (
 	set change_page=Y
-	set module_choice=%module_choice:~1%
+	IF %nb% equ 1 (
+		set module_choice=0
+	) else (
+		set module_choice=%module_choice:~1%
+	)
 	)
 	call TOOLS\Storage\functions\strlen.bat nb "%module_choice%"
 set i=0
