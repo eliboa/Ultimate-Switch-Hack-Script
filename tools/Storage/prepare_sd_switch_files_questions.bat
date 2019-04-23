@@ -327,10 +327,10 @@ set confirm_copy=
 	set /p confirm_copy=Souhaitez-vous confirmer ceci? (O/n^): 
 IF NOT "%confirm_copy%"=="" set confirm_copy=%confirm_copy:~0,1%
 IF /i "%confirm_copy%"=="o" (
-	goto:endscript
+	exit /b 200
 ) else IF /i "%confirm_copy%"=="n" (
 	echo Opération annulée.
-	exit /b 200
+	goto:endscript
 ) else (
 	echo Choix inexistant.
 	goto:confirm_settings
