@@ -1,3 +1,6 @@
+::Script by Shadow256
+@echo off
+chcp 65001 >nul
 echo.
 IF "%profile_selected%"=="" (
 	echo Résumé de se qui sera copié sur la SD, lecteur "%volume_letter%:":
