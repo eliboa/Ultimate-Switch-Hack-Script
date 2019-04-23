@@ -57,6 +57,8 @@ copy /V "tools\sd_switch\emulators\profiles\*.ini" "KEY_SAVES\tools\sd_switch\em
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\modules" mkdir "KEY_SAVES\tools\sd_switch\modules"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\modules\profiles" mkdir "KEY_SAVES\tools\sd_switch\modules\profiles"
 copy /V "tools\sd_switch\modules\profiles\*.ini" "KEY_SAVES\tools\sd_switch\modules\profiles\
+IF NOT EXIST "KEY_SAVES\tools\sd_switch\profiles" mkdir "KEY_SAVES\tools\sd_switch\profiles"
+copy /V "tools\sd_switch\profiles\*.bat" "KEY_SAVES\tools\sd_switch\profiles\
 IF NOT EXIST KEY_SAVES\tools\Storage mkdir KEY_SAVES\tools\Storage
 copy /v tools\Storage\verif_update.ini KEY_SAVES\tools\Storage\verif_update.ini
 IF NOT EXIST KEY_SAVES\tools\toolbox mkdir KEY_SAVES\tools\toolbox

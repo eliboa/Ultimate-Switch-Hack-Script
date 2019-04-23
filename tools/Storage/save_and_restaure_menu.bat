@@ -21,13 +21,15 @@ echo 7: Supprimer le fichiers de clés utilisé par NSC_Builder?
 echo.
 echo 8: Supprimer les fichiers de clés utilisés par Hactool, XCI-Explorer, ChoiDuJour...?
 echo.
-echo 9: Configurer les profiles de copie de homebrews lors de la préparation d'une SD?
+echo 9: Configurer les profiles généraux utilisés lors de la préparation d'une SD?
 echo.
-echo 10: Configurer les profiles de copie de cheats lors de la préparation d'une SD?
+echo 10: Configurer les profiles de copie de homebrews utilisés lors de la préparation d'une SD?
 echo.
-echo 11: Configurer les profiles de copie d'émulateurs lors de la préparation d'une SD?
+echo 11: Configurer les profiles de copie de cheats utilisés lors de la préparation d'une SD?
 echo.
-echo 12: Configurer les profiles de copie de modules lors de la préparation d'une SD?
+echo 12: Configurer les profiles de copie d'émulateurs utilisés lors de la préparation d'une SD?
+echo.
+echo 13: Configurer les profiles de copie de modules utilisés lors de la préparation d'une SD?
 echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
@@ -41,10 +43,11 @@ IF "%action_choice%"=="5" goto:default_toolbox
 IF "%action_choice%"=="6" goto:default_switch-lan-play
 IF "%action_choice%"=="7" goto:default_keys_nsc_builder
 IF "%action_choice%"=="8" goto:default_keys_hactool
-IF "%action_choice%"=="9" goto:mixed_packs_profiles_management
-IF "%action_choice%"=="10" goto:cheats_profiles_management
-IF "%action_choice%"=="11" goto:emu_profiles_management
-IF "%action_choice%"=="12" goto:modules_profiles_management
+IF "%action_choice%"=="9" goto:sd_packs_profiles_management
+IF "%action_choice%"=="10" goto:mixed_packs_profiles_management
+IF "%action_choice%"=="11" goto:cheats_profiles_management
+IF "%action_choice%"=="12" goto:emu_profiles_management
+IF "%action_choice%"=="13" goto:modules_profiles_management
 goto:end_script
 :save_config
 set action_choice=
@@ -98,6 +101,13 @@ echo.
 del /q "tools\Hactool_based_programs\keys.txt" 2>nul
 del /q "tools\Hactool_based_programs\keys.dat" 2>nul
 echo Fichiers de clés pour les outils basés sur Hactool supprimés.
+goto:define_action_choice
+:sd_packs_profiles_management
+set action_choice=
+echo.
+call TOOLS\Storage\prepare_sd_switch_profiles_management.bat
+rmdir /s /q templogs
+@echo off
 goto:define_action_choice
 :mixed_packs_profiles_management
 set action_choice=
