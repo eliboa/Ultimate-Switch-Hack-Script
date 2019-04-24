@@ -237,7 +237,7 @@ IF %mixed_profile% EQU %temp_count% (
 )
 TOOLS\gnuwin32\bin\sed.exe -n %mixed_profile%p <templogs\profiles_list.txt > templogs\tempvar.txt
 set /p mixed_profile_path=<templogs\tempvar.txt
-set mixed_profile_path=tools\sd_switch\mixed\profiles\%profile_path%
+set mixed_profile_path=tools\sd_switch\mixed\profiles\%mixed_profile_path%
 :skip_verif_mixed_profile
 del /q templogs\profiles_list.txt >nul
 :define_select_cheats_profile
@@ -333,6 +333,7 @@ IF /i "%confirm_copy%"=="o" (
 	exit /b 200
 ) else IF /i "%confirm_copy%"=="n" (
 	echo Opération annulée.
+	set errorlevel=400
 	goto:endscript
 ) else (
 	echo Choix inexistant.

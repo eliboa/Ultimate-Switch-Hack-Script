@@ -288,6 +288,8 @@ IF /i "%confirm_copy%"=="o" (
 :test_copy_launch
 IF %errorlevel% EQU 200 (
 	goto:begin_copy
+) else IF %errorlevel% EQU 400 (
+	goto:endscript
 ) else (
 	echo Préparation de la SD annulée car une erreur inconnue est survenue, vérifiez que vous n'avez pas supprimer de profiles utilisés dans ce profile général.
 	echo Si le problème persiste, veuillez refaire ce profile.
