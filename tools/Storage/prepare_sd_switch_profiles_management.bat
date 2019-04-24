@@ -145,7 +145,7 @@ set profile_path=tools\sd_switch\profiles\%profile_selected%
 exit /b
 
 :save_profile_choices
-IF %errorlevel% EQU 200 exit /b
+IF %errorlevel% NEQ 200 exit /b
 set profile_path=tools\sd_switch\profiles\%profile_selected%
 echo set "copy_atmosphere_pack=%copy_atmosphere_pack%">%profile_path%
 echo set "atmosphere_enable_nogc_patch=%atmosphere_enable_nogc_patch%">>%profile_path%
@@ -172,7 +172,7 @@ echo set "cheats_profile_path=%cheats_profile_path%">>%profile_path%
 echo set "atmosphere_enable_cheats=%atmosphere_enable_cheats%">>%profile_path%
 echo set "sxos_enable_cheats=%sxos_enable_cheats%">>%profile_path%
 echo set "del_files_dest_copy=%del_files_dest_copy%">>%profile_path%
-echo Valeurs enregistrées avec succès pour le profile %profile_selected%.
+echo Valeurs enregistrées avec succès pour le profile %profile_selected:~0,-4%.
 echo.
 exit /b
 

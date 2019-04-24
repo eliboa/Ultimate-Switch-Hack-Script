@@ -93,10 +93,43 @@ IF %errorlevel% EQU 404 (
 	goto:define_action_choice
 )
 IF %errorlevel% EQU 0 (
+	Setlocal enabledelayedexpansion
+	cd tools\sd_switch\profiles
+	set /a temp_count=0
+	for %%p in (*.bat) do (
+		..\..\gnuwin32\bin\grep.exe -c "cheats_profile_path=tools\\sd_switch\\cheats\\profiles\\%profile_selected%" <"%%p" > ..\..\..\templogs\tempvar.txt
+		set /p temp_test_profile=<..\..\..\templogs\tempvar.txt
+		IF "!temp_test_profile!"=="1" (
+			set /a temp_count+=1
+			set temp_used_profile_list_!temp_count!=%%p
+		)
+	)
+	cd ..\..\..
+	IF !temp_count! EQU 0 (
+		goto:removing_profile
+	) else (
+		echo Ce profile est utilisé dans les profiles généraux suivant:
+		for /l %%k in (1,1,!temp_count!) do (
+			echo !temp_used_profile_list_%%k:~0,-4!
+		)
+	)
+	echo.
+	set define_del_profile=
+	set /p define_del_profile=Supprimer ce profile supprimera les profiles généraux auxquels il est lié, souhaitez-vous continuer? ^(O/n^): 
+	IF NOT "!define_del_profile!"=="" set define_del_profile=!define_del_profile:~0,1!
+	IF /i "!define_del_profile!"=="o" (
+		for /l %%k in (1,1,!temp_count!) do (
+			del /q tools\sd_switch\profiles\!temp_used_profile_list_%%k!
+		)
+	) else (
+		echo Opération annulée.
+		endlocal
+		goto:define_action_choice
+	)
+	:removing_profile
 	del /q "tools\sd_switch\cheats\profiles\%profile_selected%" >nul
 	echo Profile "%profile_selected:~0,-4%" supprimé avec succès.
-) else (
-	echo Opération annulée.
+	endlocal
 )
 pause
 goto:define_action_choice
@@ -119,7 +152,7 @@ cd ..\..\..\..
 echo N'importe quel autre choix: Revenir à l'action précédente.
 echo.
 set profile_choice=
-set /p profile_choice=Choisir un profile.
+set /p profile_choice=Choisir un profile: 
 IF "%profile_choice%"=="" set /a profile_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%profile_choice%"
 set i=0
