@@ -1,4 +1,4 @@
-[From MAX-CHEATS.com by matias3ds for Cat Quest 1 01]
+[Credits matias3ds]
 
 [99999999 GP]
 580f0000 02e636c8
@@ -20,6 +20,4 @@
 780f0000 00004b54
 640f0000 00000000 0001869f
 
-credits user optantic Thank You
 
-Only use one xp modifier at a time.

@@ -19,6 +19,8 @@ echo 6: Vérifier un fichier de clés?
 echo.
 echo 7: Nand toolbox?
 echo.
+echo 8: Utiliser le compagnon pour Hid-mitm?
+echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
 echo.
@@ -30,6 +32,7 @@ IF "%action_choice%"=="4" goto:create_update
 IF "%action_choice%"=="5" goto:verif_serials
 IF "%action_choice%"=="6" goto:test_keys
 IF "%action_choice%"=="7" goto:nand_toolbox
+IF "%action_choice%"=="8" goto:hid-mitm_compagnon
 goto:end_script
 :biskey_dump
 set action_choice=
@@ -71,6 +74,12 @@ goto:define_action_choice
 set action_choice=
 echo.
 call TOOLS\Storage\nand_toolbox.bat
+@echo off
+goto:define_action_choice
+:hid-mitm_compagnon
+set action_choice=
+echo.
+call tools\Hid-mitm_compagnon\start.bat
 @echo off
 goto:define_action_choice
 :end_script
