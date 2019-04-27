@@ -485,7 +485,7 @@ echo Choix inexistant.
 goto:set_atmo_power_menu_reboot_function
 :skip_set_atmo_power_menu_reboot_function
 set atmo_dmnt_cheats_enabled_by_default=
-set /p atmo_dmnt_cheats_enabled_by_default=Activer les cheats (si désactivé, ils devront être activé manuellement via EdiZon par exemple)? (O/n): 
+set /p atmo_dmnt_cheats_enabled_by_default=Etat des cheats activer par défaut (si désactivé, ils devront être activé manuellement via EdiZon par exemple)? (O/n): 
 IF NOT "%atmo_dmnt_cheats_enabled_by_default%"=="" set atmo_dmnt_cheats_enabled_by_default=%atmo_dmnt_cheats_enabled_by_default:~0,1%
 set atmo_dmnt_always_save_cheat_toggles=
 set /p atmo_dmnt_always_save_cheat_toggles=Activer la sauvegarde automatique de l'état des cheats (si désactivé, l'état des cheats sera sauvegardé seulement si un fichier de sauvegarde de ces étas est présent)? (O/n): 
