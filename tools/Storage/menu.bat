@@ -36,6 +36,8 @@ echo 11: Lancer Linux?
 echo.
 echo 12: Vérifier s'il existe une mise à jour du script?
 echo.
+echo 13: A propos du script?
+echo.
 echo 0: Lancer la documentation (recommandé)?
 echo.
 echo N'importe quelle autre choix: Quitter sans rien faire?
@@ -55,6 +57,7 @@ IF "%action_choice%"=="9" goto:client_netplay
 IF "%action_choice%"=="10" goto:server_netplay
 IF "%action_choice%"=="11" goto:launch_linux
 IF "%action_choice%"=="12" goto:check_update
+IF "%action_choice%"=="13" goto:about
 goto:end_script
 :launch_payload
 set action_choice=
@@ -135,6 +138,12 @@ goto:define_action_choice
 set action_choice=
 echo.
 start DOC\index.html
+goto:define_action_choice
+:about
+set action_choice=
+echo.
+call TOOLS\Storage\about.bat
+@echo off
 goto:define_action_choice
 :end_script
 exit

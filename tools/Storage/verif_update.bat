@@ -107,6 +107,7 @@ IF %ushs_version_verif:~6,1% GTR %ushs_version:~6,1% (
 	goto:skip_verif_update
 )
 :skip_verif_update
+echo Version actuelle du script: %ushs_version%
 IF "%update_finded%"=="" (
 	echo Aucune mise à jour générale du script trouvée.
 	goto:check_packs_update
@@ -137,6 +138,7 @@ start explorer.exe templogs\changelog.html
 goto:define_action_choice
 
 :check_packs_update
+echo Version actuelle des packs: %ushs_packs_version%
 IF "%update_packs_finded%"=="" (
 	echo Aucune mise à jour des packs trouvée.
 	goto:check_cheats_update
@@ -180,6 +182,7 @@ start explorer.exe templogs\changelog.html
 goto:define_packs_action_choice
 
 :check_cheats_update
+echo Version actuelle du pack de cheats: %ushs_cheats_version%
 IF "%update_cheats_finded%"=="" (
 	echo Aucune mise à jour des cheats trouvée.
 	pause

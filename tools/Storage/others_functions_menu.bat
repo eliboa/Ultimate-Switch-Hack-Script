@@ -23,6 +23,8 @@ echo 8: Découper un fichier NSP ou XCI en fichiers de 4 GO?
 echo.
 echo 9: Joindre les différentes parties d'un dump de la nand effectué par Hekate si cette fonctionnalité s'est activée dans celui-ci (le dump de la nand de SX OS est également supportée)?
 echo.
+echo 10: Compresser/décompresser un jeu grâce à nsZip?
+echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
 echo.
@@ -36,6 +38,7 @@ IF "%action_choice%"=="6" goto:extract_cert
 IF "%action_choice%"=="7" goto:verify_nsp
 IF "%action_choice%"=="8" goto:split_games
 IF "%action_choice%"=="9" goto:nand_joiner
+IF "%action_choice%"=="10" goto:nsZip
 goto:end_script
 :update_on_sd
 set action_choice=
@@ -89,6 +92,12 @@ goto:define_action_choice
 set action_choice=
 echo.
 call TOOLS\Storage\nand_joiner.bat
+@echo off
+goto:define_action_choice
+:nsZip
+set action_choice=
+echo.
+call TOOLS\Storage\nsZip.bat
 @echo off
 goto:define_action_choice
 :end_script
