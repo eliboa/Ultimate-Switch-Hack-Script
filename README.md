@@ -30,6 +30,7 @@ La licence GPL V3 s'applique sur les scripts batch se trouvant à la racine de c
 * Découpage de NSP ou de XCI pour pouvoir les mettre sur une SD formatée en FAT32.
 * Lancement du nécessaire pour jouer en ligne sur le réseau alternatif Switch-Lan-Play. Une liste de serveurs peut aussi être créée.
 * Création et lancement d'un serveur personnel pour Switch-Lan-Play.
+* Lancement du compagnon pour le module HID_mitm.
 
 ## Bugs connus:
 
