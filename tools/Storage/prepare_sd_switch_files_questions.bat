@@ -39,11 +39,13 @@ echo.
 echo Activer l'écriture sur la partition PRODINFO (utile si vous compter utiliser le homebrew Incognito pour supprimer les infos spécifique à la console de cette partition mais sinon il vaut mieux désactiver cette option)?
 echo Notez qu'en cas d'activation pour le homebrew Incognito, il est préférable de désactiver cette option une fois que le homebrew aura fait se qu'il avait à faire.
 echo.
-echo O: Activer l'écriture sur la partition PRODINFO?
-echo Tout autre choix: Désactiver l'écriture sur la partition PRODINFO?
-echo.
-set /p atmosphere_enable_prodinfo_write=Faites votre choix: 
+set /p atmosphere_enable_prodinfo_write=Activer l'écriture sur la partition PRODINFO? (O/n): 
 :skip_ask_prodinfo_config_atmosphere
+echo.
+set atmosphere_manual_config=
+set /p atmosphere_manual_config=Souhaitez-vous régler manuellement les options d'Atmosphere? (O/n): 
+IF NOT "%atmosphere_manual_config%"=="" set atmosphere_manual_config=%atmosphere_manual_config:~0,1%
+IF /i "%atmosphere_manual_config%"=="o" call :set_atmosphere_configs
 call :modules_profile_choice "atmosphere"
 IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_atmosphere
 :ask_cheats_atmosphere
@@ -425,6 +427,219 @@ IF "%~1"=="sxos" (
 	set sxos_modules_profile_path=%modules_profile_path%
 	set sxos_pass_copy_modules_pack=%pass_copy_modules_pack%
 )
+exit /b
+
+:set_atmosphere_configs
+echo Configuration manuelle d'Atmosphere:
+echo.
+set atmo_upload_enabled=
+set /p atmo_upload_enabled=Activer l'upload d'infos vers les serveurs Nintendo (non recommandé): (O/n): 
+IF NOT "%atmo_upload_enabled%"=="" set atmo_upload_enabled=%atmo_upload_enabled:~0,1%
+set atmo_usb30_force_enabled=
+set /p atmo_usb30_force_enabled=Activer l'USB 3 pour les homebrews (peut causer des problèmes)? (O/n): 
+IF NOT "%atmo_usb30_force_enabled%"=="" set atmo_usb30_force_enabled=%atmo_usb30_force_enabled:~0,1%
+set atmo_ease_nro_restriction=
+set /p atmo_ease_nro_restriction=Activer les restrictions NRO (non recommandé)? (O/n): 
+IF NOT "%atmo_ease_nro_restriction%"=="" set atmo_ease_nro_restriction=%atmo_ease_nro_restriction:~0,1%
+:set_atmo_fatal_auto_reboot_interval
+set atmo_fatal_auto_reboot_interval=
+set /p atmo_fatal_auto_reboot_interval=Temps à partir duquel la console redémarrera automatiquement en cas de crash (0 pour attendre indéfiniement jusqu'à l'appuie d'une touche par l'utilisateur) (temps en milisecondes): 
+IF "%atmo_fatal_auto_reboot_interval%"=="" set atmo_fatal_auto_reboot_interval=0
+call TOOLS\Storage\functions\strlen.bat nb "%atmo_fatal_auto_reboot_interval%"
+set i=0
+:check_chars_atmo_fatal_auto_reboot_interval
+IF %i% NEQ %nb% (
+	set check_chars=0
+	FOR %%z in (0 1 2 3 4 5 6 7 8 9) do (
+		IF "!atmo_fatal_auto_reboot_interval:~%i%,1!"=="%%z" (
+			set /a i+=1
+			set check_chars=1
+			goto:check_chars_atmo_fatal_auto_reboot_interval
+		)
+	)
+	IF "!check_chars!"=="0" (
+		echo Valeur incorrecte.
+		goto:set_atmo_fatal_auto_reboot_interval
+	)
+)
+IF %atmo_fatal_auto_reboot_interval% LSS 10 (
+	echo Cette valeur ne peut être inférieure à 10.
+	goto:set_atmo_fatal_auto_reboot_interval
+)
+:set_atmo_power_menu_reboot_function
+echo Comment doit redémarrer la console lorsque le bouton "Redémarrer" du menu de celle-ci est utilisé?
+echo 1: Redémarrer le payload "atmosphere/reboot_to_payload.bin" de la SD (recommandé).
+echo 2: Redémarrer en mode RCM.
+echo 3: Redémarrer normalement.
+echo.
+set atmo_power_menu_reboot_function=
+set /p atmo_power_menu_reboot_function=Faites votre choix: 
+IF "%atmo_power_menu_reboot_function%"=="" (
+	echo Ce choix ne peut être vide.
+	goto:set_atmo_power_menu_reboot_function
+)
+IF "%atmo_power_menu_reboot_function%"=="1" goto:skip_set_atmo_power_menu_reboot_function
+IF "%atmo_power_menu_reboot_function%"=="2" goto:skip_set_atmo_power_menu_reboot_function
+IF "%atmo_power_menu_reboot_function%"=="3" goto:skip_set_atmo_power_menu_reboot_function
+echo Choix inexistant.
+goto:set_atmo_power_menu_reboot_function
+:skip_set_atmo_power_menu_reboot_function
+set atmo_dmnt_cheats_enabled_by_default=
+set /p atmo_dmnt_cheats_enabled_by_default=Activer les cheats (si désactivé, ils devront être activé manuellement via EdiZon par exemple)? (O/n): 
+IF NOT "%atmo_dmnt_cheats_enabled_by_default%"=="" set atmo_dmnt_cheats_enabled_by_default=%atmo_dmnt_cheats_enabled_by_default:~0,1%
+set atmo_dmnt_always_save_cheat_toggles=
+set /p atmo_dmnt_always_save_cheat_toggles=Activer la sauvegarde automatique de l'état des cheats (si désactivé, l'état des cheats sera sauvegardé seulement si un fichier de sauvegarde de ces étas est présent)? (O/n): 
+IF NOT "%atmo_dmnt_always_save_cheat_toggles%"=="" set atmo_dmnt_always_save_cheat_toggles=%atmo_dmnt_always_save_cheat_toggles:~0,1%
+set atmo_fsmitm_redirect_saves_to_sd=
+set /p atmo_fsmitm_redirect_saves_to_sd=Activer la redirrection des sauvegardes vers la SD (expérimental donc non recommandé)? (O/n): 
+IF NOT "%atmo_fsmitm_redirect_saves_to_sd%"=="" set atmo_fsmitm_redirect_saves_to_sd=%atmo_fsmitm_redirect_saves_to_sd:~0,1%
+
+echo.
+echo Configuration des boutons à maintenir pour activer ou non certaines fonctionnalités au lancement d'un jeu:
+echo.
+echo Il faudra entrer le bouton pour activer la fonction ou ajouter un "!" devant le bouton pour que celui-ci la désactive.
+echo Voici la liste des boutons possibles:
+echo A, B, X, Y, L, R, ZL, ZR, LS, RS, SL, SR, +, -, DLEFT, DUP, DRIGHT, DDOWN
+echo.
+
+:set_atmo_hbl_override_key
+set atmo_hbl_override_key=
+set /p "atmo_hbl_override_key=Bouton de contrôle du Homebrew Menu: "
+Setlocal disabledelayedexpansion
+IF "%atmo_hbl_override_key%"=="" (
+	echo Cette valeur ne peut être vide.
+	endlocal
+	goto:set_atmo_hbl_override_key
+)
+call TOOLS\Storage\functions\strlen.bat nb "%atmo_hbl_override_key%"
+IF "%atmo_hbl_override_key:~0,1%"=="!" (
+	IF %nb% EQU 1 (
+		echo Cette valeur ne peut être utilisée.
+		endlocal
+		goto:set_atmo_hbl_override_key
+	)
+	set inverted_atmo_hbl_override_key=Y
+) else (
+set inverted_atmo_hbl_override_key=N
+)
+echo %inverted_atmo_hbl_override_key%>templogs\tempvar.txt
+endlocal
+set /p inverted_atmo_hbl_override_key=<templogs\tempvar.txt
+Setlocal disabledelayedexpansion
+IF "%inverted_atmo_hbl_override_key%"=="Y" (
+	echo "%atmo_hbl_override_key:~1%">templogs\tempvar.txt
+) else (
+	echo "%atmo_hbl_override_key%">templogs\tempvar.txt
+)
+endlocal
+set /p atmo_hbl_override_key=<templogs\tempvar.txt
+set atmo_hbl_override_key=%atmo_hbl_override_key:"=%
+:check_atmo_hbl_override_key
+set check_chars=0
+FOR %%z in (A B X Y L R ZL ZR LS RS SL SR + - DLEFT DUP DRIGHT DDOWN) do (
+	IF "%atmo_hbl_override_key%"=="%%z" (
+		set check_chars=1
+		goto:skip_check_atmo_hbl_override_key
+	)
+)
+IF "%check_chars%"=="0" (
+	echo Valeur incorrecte.
+	goto:set_atmo_hbl_override_key
+)
+:skip_check_atmo_hbl_override_key
+
+:set_atmo_cheats_override_key
+set atmo_cheats_override_key=
+set /p atmo_cheats_override_key=Bouton de contrôle des cheats: 
+Setlocal disabledelayedexpansion
+IF "%atmo_cheats_override_key%"=="" (
+	echo Cette valeur ne peut être vide.
+	endlocal
+	goto:set_atmo_cheats_override_key
+)
+call TOOLS\Storage\functions\strlen.bat nb "%atmo_cheats_override_key%"
+IF "%atmo_cheats_override_key:~0,1%"=="!" (
+	IF %nb% EQU 1 (
+		echo Cette valeur ne peut être utilisée.
+		endlocal
+		goto:set_atmo_cheats_override_key
+	)
+	set inverted_atmo_cheats_override_key=Y
+) else (
+set inverted_atmo_cheats_override_key=N
+)
+echo %inverted_atmo_cheats_override_key%>templogs\tempvar.txt
+endlocal
+set /p inverted_atmo_cheats_override_key=<templogs\tempvar.txt
+Setlocal disabledelayedexpansion
+IF "%inverted_atmo_cheats_override_key%"=="Y" (
+	echo "%atmo_cheats_override_key:~1%">templogs\tempvar.txt
+) else (
+	echo "%atmo_cheats_override_key%">templogs\tempvar.txt
+)
+endlocal
+set /p atmo_cheats_override_key=<templogs\tempvar.txt
+set atmo_cheats_override_key=%atmo_cheats_override_key:"=%
+:check_atmo_cheats_override_key
+set check_chars=0
+FOR %%z in (A B X Y L R ZL ZR LS RS SL SR + - DLEFT DUP DRIGHT DDOWN) do (
+	IF "%atmo_cheats_override_key%"=="%%z" (
+		set check_chars=1
+		goto:skip_check_atmo_cheats_override_key
+	)
+)
+IF "%check_chars%"=="0" (
+	echo Valeur incorrecte.
+	goto:set_atmo_cheats_override_key
+)
+:skip_check_atmo_cheats_override_key
+
+:set_atmo_layeredfs_override_key
+set atmo_layeredfs_override_key=
+set /p atmo_layeredfs_override_key=Bouton de contrôle de Layeredfs (mods de jeux par exemple): 
+Setlocal disabledelayedexpansion
+IF "%atmo_layeredfs_override_key%"=="" (
+	echo Cette valeur ne peut être vide.
+	endlocal
+	goto:set_atmo_layeredfs_override_key
+)
+call TOOLS\Storage\functions\strlen.bat nb "%atmo_layeredfs_override_key%"
+IF "%atmo_layeredfs_override_key:~0,1%"=="!" (
+	IF %nb% EQU 1 (
+		echo Cette valeur ne peut être utilisée.
+		endlocal
+		goto:set_atmo_layeredfs_override_key
+	)
+	set inverted_atmo_layeredfs_override_key=Y
+) else (
+set inverted_atmo_layeredfs_override_key=N
+)
+echo %inverted_atmo_layeredfs_override_key%>templogs\tempvar.txt
+endlocal
+set /p inverted_atmo_layeredfs_override_key=<templogs\tempvar.txt
+Setlocal disabledelayedexpansion
+IF "%inverted_atmo_layeredfs_override_key%"=="Y" (
+	echo "%atmo_layeredfs_override_key:~1%">templogs\tempvar.txt
+) else (
+	echo "%atmo_layeredfs_override_key%">templogs\tempvar.txt
+)
+endlocal
+set /p atmo_layeredfs_override_key=<templogs\tempvar.txt
+set atmo_layeredfs_override_key=%atmo_layeredfs_override_key:"=%
+:check_atmo_layeredfs_override_key
+set check_chars=0
+FOR %%z in (A B X Y L R ZL ZR LS RS SL SR + - DLEFT DUP DRIGHT DDOWN) do (
+	IF "%atmo_layeredfs_override_key%"=="%%z" (
+		set check_chars=1
+		goto:skip_check_atmo_layeredfs_override_key
+	)
+)
+IF "%check_chars%"=="0" (
+	echo Valeur incorrecte.
+	goto:set_atmo_layeredfs_override_key
+)
+:skip_check_atmo_layeredfs_override_key
+
 exit /b
 
 :endscript

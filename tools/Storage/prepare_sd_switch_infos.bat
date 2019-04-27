@@ -1,6 +1,7 @@
 ::Script by Shadow256
 @echo off
 chcp 65001 >nul
+Setlocal disabledelayedexpansion
 echo.
 IF "%profile_selected%"=="" (
 	echo Résumé de se qui sera copié sur la SD, lecteur "%volume_letter%:":
@@ -28,6 +29,69 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		tools\gnuwin32\bin\sort.exe -n "%atmosphere_modules_profile_path%"
 	) else (
 		echo Aucun module optionnel à copier.
+	)
+	echo.
+	IF /i NOT "%atmosphere_manual_config%"=="o" (
+		echo Configuration du CFW par défaut.
+	) else (
+		echo Configuration manuelle du CFW avec les paramètres suivants:
+		IF /i "%atmo_upload_enabled%"=="o" (
+			echo Upload d'infos vers les serveurs de Nintendo activé.
+		) else (
+			echo Upload d'infos vers les serveurs de Nintendo désactivé.
+		)
+		IF /i "%atmo_usb30_force_enabled%"=="o" (
+			echo USB3 activé.
+		) else (
+			echo USB3 désactivé.
+		)
+		IF /i "%atmo_ease_nro_restriction%"=="o" (
+			echo Restrictions NRO activées.
+		) else (
+			echo Restrictions NRO désactivées.
+		)
+		IF /i "%atmo_dmnt_cheats_enabled_by_default%"=="o" (
+			echo Etat des cheats par défaut: activé.
+		) else (
+			echo Etat des cheats par défaut: désactivé.
+		)
+		IF /i "%atmo_dmnt_always_save_cheat_toggles%"=="o" (
+			echo Sauvegarde automatique de l'état des cheats: toujours.
+		) else (
+			echo Sauvegarde automatique de l'état des cheats: seulement si un fichier d'état existe pour le jeu.
+		)
+		IF /i "%atmo_fsmitm_redirect_saves_to_sd%"=="o" (
+			echo Redirection des sauvegardes de jeu vers la SD activée.
+		) else (
+			echo Redirection des sauvegardes de jeu vers la SD désactivée.
+		)
+		IF "%atmo_fatal_auto_reboot_interval%"=="0" (
+			echo Temps avant de redémarrer en cas de crash: jusqu'à l'appui d'une touche par l'utilisateur
+		) else (
+			echo Temps avant de redémarrer en cas de crash: %atmo_fatal_auto_reboot_interval% MS
+		)
+		IF "%atmo_power_menu_reboot_function%"=="1" (
+			echo Action du menu redémarrer: redémarre le payload "/atmosphere/reboot_to_payload.bin" de la SD.
+		) else IF "%atmo_power_menu_reboot_function%"=="2" (
+			echo Action du menu redémarrer: redémarre en RCM.
+		) else IF "%atmo_power_menu_reboot_function%"=="3" (
+			echo Action du menu redémarrer: redémarre normalement.
+		)
+		IF "%inverted_atmo_hbl_override_key%"=="Y" (
+			echo Touche associée à l'activation du Homebrew Menu: toutes sauf %atmo_hbl_override_key%
+		) else (
+			echo Touche associée à l'activation du Homebrew Menu: %atmo_hbl_override_key%
+		)
+		IF "%inverted_atmo_cheats_override_key%"=="Y" (
+			echo Touche associée à l'activation des cheats: toutes sauf %atmo_cheats_override_key%
+		) else (
+			echo Touche associée à l'activation des cheats: %atmo_cheats_override_key%
+		)
+		IF "%inverted_atmo_layeredfs_override_key%"=="Y" (
+			echo Touche associée à l'activation de Layeredfs: toutes sauf %atmo_layeredfs_override_key%
+		) else (
+			echo Touche associée à l'activation de Layeredfs: %atmo_layeredfs_override_key%
+		)
 	)
 	echo.
 )
@@ -104,3 +168,4 @@ IF "%copy_cheats%"=="Y" (
 IF /i "%del_files_dest_copy%"=="1" echo Attention: Les fichiers de tous les CFWs seront réinitialisé avant la copie, dossier "titles" de ceux-ci inclus.
 IF /i "%del_files_dest_copy%"=="2" echo Attention: Les fichiers de la SD seront intégralement supprimés avant la copie.
 IF /i "%del_files_dest_copy%"=="0" echo Les fichiers de la SD seront concervés et seul les fichiers mis à jour seront remplacés.
+endlocal

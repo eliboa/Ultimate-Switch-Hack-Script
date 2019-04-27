@@ -356,6 +356,9 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 	) else (
 		echo allow_write=^1>>%volume_letter%:\atmosphere\prodinfo.ini
 	)
+	IF /i "%atmosphere_manual_config%"=="o" (
+		call :copy_atmosphere_configuration
+	)
 	call :copy_modules_pack "atmosphere"
 )
 
@@ -528,6 +531,93 @@ IF EXIST "%volume_letter%:\switch\ROMMENU" rmdir /s /q "%volume_letter%:\switch\
 IF EXIST "%volume_letter%:\switch\reboot_to_payload" rmdir /s /q "%volume_letter%:\switch\reboot_to_payload"
 IF EXIST "%volume_letter%:\switch\sx_installer" rmdir /s /q "%volume_letter%:\switch\sx_installer"
 IF EXIST "%volume_letter%:\switch\SXDUMPER" rmdir /s /q "%volume_letter%:\switch\SXDUMPER"
+exit /b
+
+:copy_atmosphere_configuration
+Setlocal disabledelayedexpansion
+IF /i "%atmo_upload_enabled%"=="o" (
+	set atmo_upload_enabled=0x1
+) else (
+	set atmo_upload_enabled=0x0
+)
+IF /i "%atmo_usb30_force_enabled%"=="o" (
+	set atmo_usb30_force_enabled=0x1
+) else (
+	set atmo_usb30_force_enabled=0x0
+)
+IF /i "%atmo_ease_nro_restriction%"=="o" (
+	set atmo_ease_nro_restriction=0x1
+) else (
+	set atmo_ease_nro_restriction=0x0
+)
+IF /i "%atmo_dmnt_cheats_enabled_by_default%"=="o" (
+	set atmo_dmnt_cheats_enabled_by_default=0x1
+) else (
+	set atmo_dmnt_cheats_enabled_by_default=0x0
+)
+IF /i "%atmo_dmnt_always_save_cheat_toggles%"=="o" (
+	set atmo_dmnt_always_save_cheat_toggles=0x1
+) else (
+	set atmo_dmnt_always_save_cheat_toggles=0x0
+)
+IF /i "%atmo_fsmitm_redirect_saves_to_sd%"=="o" (
+	set atmo_fsmitm_redirect_saves_to_sd=0x1
+) else (
+	set atmo_fsmitm_redirect_saves_to_sd=0x0
+)
+set atmo_fatal_auto_reboot_interval=0x%atmo_fatal_auto_reboot_interval%
+IF "%atmo_power_menu_reboot_function%"=="1" (
+set atmo_power_menu_reboot_function=payload
+) else IF "%atmo_power_menu_reboot_function%"=="2" (
+set atmo_power_menu_reboot_function=rcm
+) else IF "%atmo_power_menu_reboot_function%"=="3" (
+set atmo_power_menu_reboot_function=normal
+)
+IF "%inverted_atmo_hbl_override_key%"=="Y" set atmo_hbl_override_key=!%atmo_hbl_override_key%
+IF "%inverted_atmo_cheats_override_key%"=="Y" set atmo_cheats_override_key=!%atmo_cheats_override_key%
+IF "%inverted_atmo_layeredfs_override_key%"=="Y" set atmo_layeredfs_override_key=!%atmo_layeredfs_override_key%
+echo ; Disable uploading error reports to Nintendo>%volume_letter%:\atmosphere\system_settings.ini
+echo [eupld]>>%volume_letter%:\atmosphere\system_settings.ini
+echo upload_enabled = u8!%atmo_upload_enabled%>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; Enable USB 3.0 superspeed for homebrew>>%volume_letter%:\atmosphere\system_settings.ini
+echo [usb]>>%volume_letter%:\atmosphere\system_settings.ini
+echo usb30_force_enabled = u8!%atmo_usb30_force_enabled%>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; Control whether RO should ease its validation of NROs.>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; (note: this is normally not necessary, and ips patches can be used.)>>%volume_letter%:\atmosphere\system_settings.ini
+echo [ro]>>%volume_letter%:\atmosphere\system_settings.ini
+echo ease_nro_restriction = u8!%atmo_ease_nro_restriction%>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; Atmosphere custom settings>>%volume_letter%:\atmosphere\system_settings.ini
+echo [atmosphere]>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; Reboot from fatal automatically after some number of milliseconds.>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; If field is not present or 0, fatal will wait indefinitely for user input.>>%volume_letter%:\atmosphere\system_settings.ini
+echo fatal_auto_reboot_interval = u64!%atmo_fatal_auto_reboot_interval%>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; Make the power menu's "reboot" button reboot to payload.>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; Set to "payload" to reboot to "/atmosphere\reboot_to_payload.bin" payload, "normal" for normal reboot, "rcm" for rcm reboot.>>%volume_letter%:\atmosphere\system_settings.ini
+echo power_menu_reboot_function = str!%atmo_power_menu_reboot_function%>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; Controls whether dmnt cheats should be toggled on or off by >>%volume_letter%:\atmosphere\system_settings.ini
+echo ; default. 1 = toggled on by default, 0 = toggled off by default.>>%volume_letter%:\atmosphere\system_settings.ini
+echo dmnt_cheats_enabled_by_default = u8!%atmo_dmnt_cheats_enabled_by_default%>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; Controls whether dmnt should always save cheat toggle state>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; for restoration on new game launch. 1 = always save toggles,>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; 0 = only save toggles if toggle file exists.>>%volume_letter%:\atmosphere\system_settings.ini
+echo dmnt_always_save_cheat_toggles = u8!%atmo_dmnt_always_save_cheat_toggles%>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; Controls whether fs.mitm should redirect save files>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; to directories on the sd card.>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; 0 = Do not redirect, 1 = Redirect.>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; NOTE: EXPERIMENTAL>>%volume_letter%:\atmosphere\system_settings.ini
+echo ; If you do not know what you are doing, do not touch this yet.>>%volume_letter%:\atmosphere\system_settings.ini
+echo fsmitm_redirect_saves_to_sd = u8!%atmo_fsmitm_redirect_saves_to_sd%>>%volume_letter%:\atmosphere\system_settings.ini
+
+echo [hbl_config]>%volume_letter%:\atmosphere\loader.ini
+echo title_id=010000000000100D>>%volume_letter%:\atmosphere\loader.ini
+echo override_any_app=true>>%volume_letter%:\atmosphere\loader.ini
+echo path=atmosphere/hbl.nsp>>%volume_letter%:\atmosphere\loader.ini
+echo override_key=%atmo_hbl_override_key%>>%volume_letter%:\atmosphere\loader.ini
+echo.>>%volume_letter%:\atmosphere\loader.ini
+echo [default_config]>>%volume_letter%:\atmosphere\loader.ini
+echo override_key=%atmo_layeredfs_override_key%>>%volume_letter%:\atmosphere\loader.ini
+echo cheat_enable_key=%atmo_cheats_override_key%>>%volume_letter%:\atmosphere\loader.ini
+endlocal
 exit /b
 
 :endscript
