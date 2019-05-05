@@ -14,7 +14,7 @@ pause
 echo.
 echo Vous allez devoir sélectionner le fichier XCI/NSP à compresser/décompresser.
 pause
-%windir%\system32\wscript.exe //Nologo ..\Storage\functions\open_file.vbs "" "Fichier de jeu Switch (*.xci;*.nsp;*.xciz;*.nspz)|*.xci|*.nsp|*.xciz|*.nspz|" "Sélection du jeu à compresser/décompresser" "templogs\tempvar.txt"
+%windir%\system32\wscript.exe //Nologo tools\Storage\functions\open_file.vbs "" "Fichier de jeu Switch (*.xci;*.nsp;*.xciz;*.nspz)|*.xci|*.nsp|*.xciz|*.nspz|" "Sélection du jeu à compresser/décompresser" "templogs\tempvar.txt"
 set /p game_path=<templogs\tempvar.txt
 IF "%game_path%"=="" (
 	echo Aucun jeu sélectionné, la conversion est annulée.
