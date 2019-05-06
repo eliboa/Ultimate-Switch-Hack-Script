@@ -8,7 +8,7 @@ goto end
 
 :nsp_repack
 ECHO -----------------
-echo Réempactage en nsp.
+echo Repacking as nsp 
 ECHO -----------------
 if exist "%w_folder%\secure\*.dat" del "%w_folder%\secure\*.dat" >NUL 2>&1
 
@@ -27,7 +27,7 @@ exit /B
 
 :nsp_convert
 ECHO -----------------
-echo Réempactage en nsp.
+echo Repacking as nsp 
 ECHO -----------------
 if exist "%w_folder%\secure\*.dat" del "%w_folder%\secure\*.dat" >NUL 2>&1
 
@@ -46,7 +46,7 @@ exit /B
 
 :sp_nsp_convert
 ECHO -----------------
-echo Réempactage en nsp.
+echo Repacking as nsp 
 ECHO -----------------
 if exist "!tfolder!\secure\*.dat" del "!tfolder!\secure\*.dat" >NUL 2>&1
 
@@ -63,3 +63,4 @@ exit /B
 
 :end
 PING -n 3 127.0.0.1 >NUL 2>&1
+

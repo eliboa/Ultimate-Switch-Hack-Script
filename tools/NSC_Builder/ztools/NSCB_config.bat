@@ -7,22 +7,21 @@ call :logo
 echo ********************************************************
 echo OPTION - CONFIGURATION
 echo ********************************************************
-echo Tapez "1" pour les options du mode automatique
-echo Tapez "2" pour les OPTIONS globales et manuelles.
-echo Tapez "3" pour vérifier le fichier de clés.
-::echo Input "4" to INSTALL DEPENDENCIES
+echo Input "1" for AUTO-MODE OPTIONS
+echo Input "2" for GLOBAL AND MANUAL OPTIONS
+echo Input "3" to VERIFY KEYS.TXT 
+REM echo Input "4" to INSTALL DEPENDENCIES
 echo.
-echo Tapez "c" pour voir le profile actuel
-echo Tapez "d" pour remettre les paramètres par défaut
-echo Tapez "0" pour revenir au menu principal du script
+echo Input "c" to read CURRENT PROFILE
+echo Input "d" to set DEFAULT SETTINGS
+echo Input "0" to go back to the MAIN PROGRAM
 echo .......................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 if /i "%bs%"=="1" goto sc2
 if /i "%bs%"=="2" goto sc3
 if /i "%bs%"=="3" goto verify_keys
-if /i "%bs%"=="4" goto idepend
+rem if /i "%bs%"=="4" goto idepend
 
 if /i "%bs%"=="c" call :curr_set1
 if /i "%bs%"=="c" call :curr_set2
@@ -35,7 +34,7 @@ if /i "%bs%"=="d" echo.
 if /i "%bs%"=="d" pause
 
 if /i "%bs%"=="0" goto salida
-echo Choix inexistant.
+echo WRONG CHOICE
 echo.
 goto sc1
 
@@ -45,19 +44,18 @@ call :logo
 echo ********************************************************
 echo AUTO-MODE - CONFIGURATION
 echo ********************************************************
-echo Tapez "1" pour changer le paramètre de réempactage
-echo Tapez "2" pour changer le traitement d'un répertoire
-echo Tapez "3" pour changer la configuration du patchage RSV
-echo Tapez "4" pour changer la configuration de la KEYGENERATION (crypto des NCA)
+echo Input "1" to change REPACK configuration
+echo Input "2" to change FOLDER'S TREATMENT 
+echo Input "3" to change RSV patching configuration
+echo Input "4" to change KEYGENERATION configuration
 echo.
-echo Tapez "c" pour connaître les paramètres du mode automatique
+echo Input "c" to read CURRENT AUTO-MODE SETTINGS
 echo Input "d" to set DEFAULT AUTO-MODE SETTINGS
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo .......................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 if /i "%bs%"=="1" goto op_repack
 if /i "%bs%"=="2" goto op_pfolder
 if /i "%bs%"=="3" goto op_RSV
@@ -74,7 +72,7 @@ if /i "%bs%"=="d" goto sc1
 
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
-echo Choix inexistant.
+echo WRONG CHOICE
 echo.
 goto sc2
 
@@ -82,21 +80,20 @@ goto sc2
 cls
 call :logo
 echo *******************************************************
-echo Configuration du réempactage
+echo REPACK configuration
 echo *******************************************************
-echo Option de réempactage pour le mode automatique
+echo REPACK OPTION FOR AUTO-MODE
 echo .......................................................
-echo Tapez "1" pour réempacter en NSP
-echo Tapez "2" pour réempacter en XCI
-echo Tapez "3" pour réempacter dans les deux formats
+echo Input "1" to repack as NSP
+echo Input "2" to repack as XCI
+echo Input "3" to repack as BOTH
 echo.
-echo Tapez "b" pour revenir au menu de configuration du mode automatique
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to AUTO-MODE - CONFIGURATION
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo .......................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "v_rep=none"
 if /i "%bs%"=="1" set "v_rep=nsp"
 if /i "%bs%"=="2" set "v_rep=xci"
@@ -106,7 +103,7 @@ if /i "%bs%"=="b" goto sc2
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%v_rep%"=="none" echo Choix inexistant
+if "%v_rep%"=="none" echo WRONG CHOICE
 if "%v_rep%"=="none" echo.
 if "%v_rep%"=="none" goto op_repack
 
@@ -123,20 +120,19 @@ goto sc2
 cls
 call :logo
 echo **********************************************************************
-echo traitement de répertoire
+echo FOLDER'S TREATMENT
 echo **********************************************************************
-echo Comment traiter un répertoire en mode automatique?
+echo HOW TO TREAT FOLDER'S IN AUTO-MODE
 echo ......................................................................
-echo Tapez "1" pour réempacter les fichiers du répertoire individuellement (un fichier pour un contenu)
-echo Tapez "2" pour réempacter les fichiers du répertoire ensemble (1 fichier incluant tout le contenu)
+echo Input "1" to repack folder's files individually (single-content file)
+echo Input "2" to repack folder's files together (multi-content file)
 echo.
-echo Tapez "b" pour revenir au menu de configuration du mode automatique
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to AUTO-MODE - CONFIGURATION
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo ......................................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "v_fold=none"
 if /i "%bs%"=="1" set "v_fold=indiv"
 if /i "%bs%"=="2" set "v_fold=multi"
@@ -145,7 +141,7 @@ if /i "%bs%"=="b" goto sc2
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%v_fold%"=="none" echo Choix inexistant.
+if "%v_fold%"=="none" echo WRONG CHOICE
 if "%v_fold%"=="none" echo.
 if "%v_fold%"=="none" goto op_pfolder
 
@@ -162,22 +158,22 @@ goto sc2
 cls
 call :logo
 echo ***************************************************************************
-echo Patch de la version du système requise
+echo REQUIRED SYSTEM VERSION PATCHING
 echo ***************************************************************************
-echo Patch de la version du système requise via les meta des NCA en mode automatique
+echo PATCH REQUIRED_SYSTEM_VERSION IN THE META NCA (AUTO-MODE)
 echo ...........................................................................
-echo Patch la version du système requise, permettant que la console ne demande pas de mettre à jour sur le firmware requis pour lire le jeu.
+echo Patches the RequiredSystemVersion so console doesn't ask for updates bigger
+echo the required FW to decypher the crypto
 echo.
-echo Tapez "1" pour patcher la version du système requise dans les  meta NCA
-echo Tapez "2" pour ne pas patcher la version du système requise dans les  meta NCA
+echo Input "1" to PATCH Required System Version in the meta nca
+echo Input "2" to leave Required System Version UNCHANGED
 echo.
-echo Tapez "b" pour revenir au menu de configuration du mode automatique
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to AUTO-MODE - CONFIGURATION
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo ...........................................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "v_RSV=none"
 if /i "%bs%"=="1" set "v_RSV=-pv true"
 if /i "%bs%"=="2" set "v_RSV=-pv false"
@@ -186,7 +182,7 @@ if /i "%bs%"=="b" goto sc2
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%v_RSV%"=="none" echo Choix inexistant.
+if "%v_RSV%"=="none" echo WRONG CHOICE
 if "%v_RSV%"=="none" echo.
 if "%v_RSV%"=="none" goto op_RSV
 
@@ -203,29 +199,30 @@ goto sc2
 cls
 call :logo
 echo ***************************************************************************
-echo Patcher si la KEYGENERATION est plus grande que
+echo PATCH IF KEYGENERATION IS BIGGER THAN
 echo ***************************************************************************
-echo Changer la  KEYGENERATION si elle est plus grande que le numéro configuré ici en mode automatique.
+echo CHANGE KEYGENERATION IF BIGGER THAN THE SET NUMBER(AUTO-MODE)
 echo ...........................................................................
-echo Change la kegeneration et recalcul le keyblock pour utiliser une masterkey inférieur pour décrypter les NCA.
+echo Changes the kegeneration and recalculates the keyblock to use a lower 
+echo masterkey to decrypt the nca.
 echo.
-echo Tapez "f" pour ne pas changer la keygeneration
-echo Tapez "0" pour configurer la keygeneration à 0 (FW 1.0)
-echo Tapez "1" pour configurer la keygeneration à 1 (FW 2.0-2.3)
-echo Tapez "2" pour configurer la keygeneration à 2 (FW 3.0)
-echo Tapez "3" pour configurer la keygeneration à 3 (FW 3.0.1-3.02)
-echo Tapez "4" pour configurer la keygeneration à 4 (FW 4.0.0-4.1.0)
-echo Tapez "5" pour configurer la keygeneration à 5 (FW 5.0.0-5.1.0)
-echo Tapez "6" pour configurer la keygeneration à 6 (FW 6.0.0-6.1.0)
-echo Tapez "7" pour configurer la keygeneration à 7 (FW 6.2.0)
+echo Input "f" to not change the keygeneration
+echo Input "0" to change top keygeneration to 0 (FW 1.0)
+echo Input "1" to change top keygeneration to 1 (FW 2.0-2.3)
+echo Input "2" to change top keygeneration to 2 (FW 3.0)
+echo Input "3" to change top keygeneration to 3 (FW 3.0.1-3.02)
+echo Input "4" to change top keygeneration to 4 (FW 4.0.0-4.1.0)
+echo Input "5" to change top keygeneration to 5 (FW 5.0.0-5.1.0)
+echo Input "6" to change top keygeneration to 6 (FW 6.0.0-6.1.0)
+echo Input "7" to change top keygeneration to 7 (FW 6.2.0)
+echo Input "8" to change top keygeneration to 8 (FW 7.0.0-7.0.1)
 echo.
-echo Tapez "b" pour revenir au menu de configuration du mode automatique
-echo Tapez "c" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to AUTO-MODE - CONFIGURATION
+echo Input "c" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo ...........................................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "v_KGEN=none"
 if /i "%bs%"=="f" set "v_KGEN=-kp false"
 if /i "%bs%"=="0" set "v_KGEN=-kp 0"
@@ -236,12 +233,13 @@ if /i "%bs%"=="4" set "v_KGEN=-kp 4"
 if /i "%bs%"=="5" set "v_KGEN=-kp 5"
 if /i "%bs%"=="6" set "v_KGEN=-kp 6"
 if /i "%bs%"=="7" set "v_KGEN=-kp 7"
+if /i "%bs%"=="7" set "v_KGEN=-kp 8"
 
 if /i "%bs%"=="b" goto sc2
 if /i "%bs%"=="c" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%v_RSV%"=="none" echo Choix inexistant
+if "%v_RSV%"=="none" echo WRONG CHOICE
 if "%v_RSV%"=="none" echo.
 if "%v_RSV%"=="none" goto op_RSV
 
@@ -258,26 +256,26 @@ goto sc2
 cls
 call :logo
 echo **********************************************
-echo configuration des options globales
+echo GLOBAL OPTIONS - CONFIGURATION
 echo **********************************************
-echo Tapez "1" pour changer la couleur du texte et du fond
-echo Tapez "2" -pour changer le nom du répertoire de travail (répertoire temporaire)
-echo Tapez "3" pour changer le nom du répertoire de sortie
-echo Tapez "4" Pour changer le traitement des fichiers DELTA
-echo Tapez "5" pour changer la configuration zip (cré ou non un fichier zip contenant les NCA)
-echo Tapez "6" pour changer l'option de sortie automatique du script
-echo Tapez "7" pour configurer l'affichage du message concernant le réglage de la KEY-GENERATION
-echo Tapez "8" pour régler le buffer
-echo Tapez "9" pour régler les options EXFAT/FAT32
-echo Tapez "10" pour régler comment organiser les fichiers en sortie
+echo Input "1" to change text and background COLOR
+echo Input "2" to change WORK FOLDER's name
+echo Input "3" to change OUTPUT FOLDER's name
+echo Input "4" to change DELTA files treatment
+echo Input "5" to change ZIP configuration
+echo Input "6" to change AUTO-EXIT configuration
+echo Input "7" to skip KEY-GENERATION PROMPT
+echo Input "8" to set file stream BUFFER
+echo Input "9" to set file FAT32\EXFAT options
+echo Input "10" to how to ORGANIZE output files
+echo Input "11" to set NEW MODE OR LEGACY MODE
 echo.
-echo Tapez "c" pour voir les paramètres globaux courant
-echo Tapez "d" pour remettre les paramètres globaux par défaut
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "c" to read CURRENT GLOBAL SETTINGS
+echo Input "d" to set DEFAULT GLOBAL SETTINGS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 
 if /i "%bs%"=="1" goto op_color
 if /i "%bs%"=="2" goto op_wfolder
@@ -289,6 +287,7 @@ if /i "%bs%"=="7" goto op_kgprompt
 if /i "%bs%"=="8" goto op_buffer
 if /i "%bs%"=="9" goto op_fat
 if /i "%bs%"=="10" goto op_oforg
+if /i "%bs%"=="11" goto op_nscbmode
 
 if /i "%bs%"=="c" call :curr_set2
 if /i "%bs%"=="c" echo.
@@ -302,7 +301,7 @@ if /i "%bs%"=="d" goto sc1
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-echo Choix inexistant.
+echo WRONG CHOICE
 echo.
 goto sc3
 
@@ -310,35 +309,34 @@ goto sc3
 cls
 call :logo
 echo ********************************************************
-echo configuration des couleurs
+echo COLOR - CONFIGURATION                                
 echo ********************************************************
 echo --------------------------------------------------------
-echo Couleur du texte
+echo FOREGROUND COLOR (TEXT COLOR)                      
 echo --------------------------------------------------------
-echo Tapez "1" pour changer la couleur du texte en blanc clair (défaut)
-echo Tapez "2" pour changer la couleur du texte en noir
-echo Tapez "3" pour changer la couleur du texte en bleu
-echo Tapez "4" pour changer la couleur du texte en vert
-echo Tapez "5" pour changer la couleur du texte en AQUA
-echo Tapez "6" pour changer la couleur du texte en rouge
-echo Tapez "7" pour changer la couleur du texte en pourpre
-echo Tapez "8" pour changer la couleur du texte en jaune
-echo Tapez "9" pour changer la couleur du texte en blanc
-echo Tapez "10" pour changer la couleur du texte en gris
-echo Tapez "11" pour changer la couleur du texte en bleu clair
-echo Tapez "12" pour changer la couleur du texte en vert clair
-echo Tapez "13" pour changer la couleur du texte en AQUA clair
-echo Appuyez surt "14" pour changer la couleur du texte en rouge clair
-echo Tapez "15" pour changer la couleur du texte en pourpre clair
-echo Tapez "16" pour changer la couleur du texte en jaune clair
+echo Input "1" to change text color to BRIGHT WHITE (DEFAULT)
+echo Input "2" to change text color to BLACK
+echo Input "3" to change text color to BLUE
+echo Input "4" to change text color to GREEN
+echo Input "5" to change text color to AQUA
+echo Input "6" to change text color to RED
+echo Input "7" to change text color to PURPLE
+echo Input "8" to change text color to YELLOW
+echo Input "9" to change text color to WHITE
+echo Input "10" to change text color to GRAY
+echo Input "11" to change text color to LIGHT BLUE
+echo Input "12" to change text color to LIGHT GREEN
+echo Input "13" to change text color to LIGHT AQUA
+echo Input "14" to change text color to LIGHT RED
+echo Input "15" to change text color to LIGHT PURPLE
+echo Input "16" to change text color to LIGHT YELLOW
 echo.
-echo Tapez "d" pour remettre la couleur du texte par défaut
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "d" to set default color configuration
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo.
-set bd=
-set /p bd="Faite votre choix: "
+set /p bd="Enter your choice: "
 
 set "v_colF=F"
 if /i "%bd%"=="1" set "v_colF=F"
@@ -367,32 +365,31 @@ if /i "%bd%"=="0" goto sc1
 if /i "%bd%"=="e" goto salida
 
 echo -----------------------------------------------------
-echo Couleur de fond
+echo BACKGROUND COLOR
 echo -----------------------------------------------------
-echo Tapez "1" pour changer la couleur de fond en bleu (défaut)
-echo Tapez "2" pour changer la couleur de fond en noir
-echo Tapez "3" pour changer la couleur de fond en vert
-echo Tapez "4" pour changer la couleur de fond en AQUA
-echo Tapez "5" pour changer la couleur de fond en rouge
-echo Tapez "6" pour changer la couleur de fond en pourpre
-echo Tapez "7" pour changer la couleur de fond en jaune
-echo Tapez "8" pour changer la couleur de fond en blanc
-echo Tapez "9" pour changer la couleur de fond en gris
-echo Tapez "10" pour changer la couleur de fond en blanc clair
-echo Tapez "11" pour changer la couleur de fond en bleu clair
-echo Tapez "12" pour changer la couleur de fond en vert clair
-echo Tapez "13" pour changer la couleur de fond en AQUA clair
-echo Tapez "14" pour changer la couleur de fond en rouge clair
-echo Tapez "15" pour changer la couleur de fond en pourpre clair
-echo Tapez "16" pour changer la couleur de fond en jaune clair
+echo Input "1" to change background color to BLUE (DEFAULT)
+echo Input "2" to change background color to BLACK
+echo Input "3" to change background color to GREEN
+echo Input "4" to change background color to AQUA
+echo Input "5" to change background color to RED
+echo Input "6" to change background color to PURPLE
+echo Input "7" to change background color to YELLOW
+echo Input "8" to change background color to WHITE
+echo Input "9" to change background color to GRAY
+echo Input "10" to change background color to BRIGHT WHITE
+echo Input "11" to change background color to LIGHT BLUE
+echo Input "12" to change background color to LIGHT GREEN
+echo Input "13" to change background color to LIGHT AQUA
+echo Input "14" to change background color to LIGHT RED
+echo Input "15" to change background color to LIGHT PURPLE
+echo Input "16" to change background color to LIGHT YELLOW
 echo.
-echo Tapez "d" pour remettre la couleur de fond par défaut
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "d" to set default color configuration
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 
 set /a "v_colB=1"
 if /i "%bs%"=="1" set /a "v_colB=1"
@@ -436,16 +433,15 @@ goto sc3
 cls
 call :logo
 echo ***********************************
-echo Configuration du répertoire de travail
+echo WORK FOLDER's name - CONFIGURATION
 echo ***********************************
-echo Tapez "1" pour remettre le répertoire de travail par défaut
+echo Input "1" to set default work folder's name
 echo.
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo.
-set bs=
-set /p bs="Ou entrez un nouveau nom: "
+set /p bs="Or type a new name: "
 set "v_wf=%bs%"
 if /i "%bs%"=="1" set "v_wf=NSCB_temp"
 
@@ -468,16 +464,15 @@ goto sc3
 cls
 call :logo
 echo *************************************
-echo Configuration du répertoire de sortie
+echo OUTPUT FOLDER's name - CONFIGURATION
 echo *************************************
-echo Tapez "1" pour remettre le répertoire de sortie par défaut
+echo Input "1" to set default output folder's name
 echo.
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo.
-set bs=
-set /p bs="Ou entrez un nouveau nom: "
+set /p bs="Or type a new name: "
 set "v_of=%bs%"
 if /i "%bs%"=="1" set "v_of=NSCB_output"
 
@@ -500,22 +495,25 @@ goto sc3
 cls
 call :logo
 echo ***************************************************************************
-echo Configuration du traitement des fichiers DELTA
+echo DELTA files treatment - CONFIGURATION
 echo ***************************************************************************
-echo Passer les fichiers NCA DELTA lors de l'extraction d'une mise à jour
+echo SKIP DELTA NCA FILES WHEN EXTRACTING UPDATES
 echo ...........................................................................
-echo Les deltas servent à convertir une mise à jour précédente vers la nouvelle, les mises à jour peuvent contenir la mise à jour complète et les deltasS. Les deltas sont nossives et non nécessaires pour les  xci, ils peuvent servir à installer un NSP plus rapidement et à convertir une précédente mise à jour vers la nouvelle. Sans les deltas la mise à jour précédente restera dans le système et devra être désinstallée manuellement.
+echo The deltas serve to convert previous updates into new ones, updates can
+echo incorporate the full update + deltas. Deltas are nocive and innecessary
+echo for xci, while they serve to install faster nsp and convert previous
+echo updates to the new one. Without deltas your old update will stay in the
+echo system and you'll need to uninstall it.
 echo.
-echo Tapez "1" pour passer les fichiers  deltas (configuration par défaut)
-echo Tapez "2" pour réempacter les fichiers deltas
+echo Input "1" to skip deltas (default configuration)
+echo Input "2" to repack deltas
 echo.
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo ...........................................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "v_delta=none"
 if /i "%bs%"=="1" set "v_delta=--C_clean_ND"
 if /i "%bs%"=="1" set "v_delta2_=-ND true"
@@ -526,7 +524,7 @@ if /i "%bs%"=="b" goto sc3
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%v_delta%"=="none" echo Choix inexistant.
+if "%v_delta%"=="none" echo WRONG CHOICE
 if "%v_delta%"=="none" echo.
 if "%v_delta%"=="none" goto op_delta
 
@@ -550,21 +548,20 @@ goto sc3
 cls
 call :logo
 echo ***************************************************************************
-echo Génération de fichiers zip
+echo ZIP FILES GENERATION
 echo ***************************************************************************
-echo Génère des fichiers ZIP contenant les KEYBLOCK et les informations du fichier
+echo GENERATE ZIP FILES WITH KEYBLOCK AND FILE INFORMATION
 echo ...........................................................................
 echo.
-echo Tapez "1" pour générer les fichiers zip (configuration par défaut)
-echo Tapez "2" pour ne pas générer de fichiers zip
+echo Input "1" to generate zip files
+echo Input "2" to not generate zip files (default configuration) 
 echo.
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo ...........................................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "v_gzip=none"
 if /i "%bs%"=="1" set "v_gzip=true"
 if /i "%bs%"=="2" set "v_gzip=false"
@@ -573,7 +570,7 @@ if /i "%bs%"=="b" goto sc3
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%v_gzip%"=="none" echo Choix inexistant.
+if "%v_gzip%"=="none" echo WRONG CHOICE
 if "%v_gzip%"=="none" echo.
 if "%v_gzip%"=="none" goto op_zip
 
@@ -590,21 +587,20 @@ goto sc3
 cls
 call :logo
 echo ***************************************************************************
-echo Configuration de la sortie automatique du script en mode manuel
+echo AUTO-EXIT CONFIGURATION (MANUAL MODES)
 echo ***************************************************************************
-echo Quitter le script automatiquement à la fin du traitement ou demander d'appuyez sur une touche pour continuer.
+echo Auto exit after processing files or ask to process next.
 echo ...........................................................................
 echo.
-echo Tapez "1" pour désactiver la sortie automatique (configuration par défaut)
-echo Tapez "2" pour activer la sortie automatique
+echo Input "1" to set off auto-exit (default configuration)
+echo Input "2" to to set on auto-exit
 echo.
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo ...........................................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "v_exit=none"
 if /i "%bs%"=="1" set "v_exit=false"
 if /i "%bs%"=="2" set "v_exit=true"
@@ -613,7 +609,7 @@ if /i "%bs%"=="b" goto sc3
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%v_exit%"=="none" echo Choix inexistant.
+if "%v_exit%"=="none" echo WRONG CHOICE
 if "%v_exit%"=="none" echo.
 if "%v_exit%"=="none" goto op_aexit
 
@@ -630,19 +626,18 @@ goto sc3
 cls
 call :logo
 echo ***************************************************************************
-echo Voir ou non le message permettant de configurer la version du système requise et le changement de la KEYGENERATION
+echo SHOW\SKIP REQUIRED_SYSTEM_VERSION AND KEYGENERATION CHANGE PROPMT
 echo ***************************************************************************
 echo.
-echo Tapez "1" pour voir le message de configuration du RSV (option par défaut)
-echo Tapez "2" pour ne pas voir le message de configuration du RSV (option par défaut)
+echo Input "1" to show RSV prompt (default configuration)
+echo Input "2" to not show RSV prompt
 echo.
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo ...........................................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "skipRSVprompt=none"
 if /i "%bs%"=="1" set "skipRSVprompt=false"
 if /i "%bs%"=="2" set "skipRSVprompt=true"
@@ -651,7 +646,7 @@ if /i "%bs%"=="b" goto sc3
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%skipRSVprompt%"=="none" echo Choix inexistant.
+if "%skipRSVprompt%"=="none" echo WRONG CHOICE
 if "%skipRSVprompt%"=="none" echo.
 if "%skipRSVprompt%"=="none" goto op_kgprompt
 
@@ -668,29 +663,29 @@ goto sc3
 cls
 call :logo
 echo ***************************************************************************
-echo Régler le buffer pour la copie et l'ajout de fichier récupéré ou copier de/vers un NSP\XCI
+echo SET BUFFER FOR COPY AND APPENDING FILES FROM\TO NSP\XCI
 echo ***************************************************************************
-echo Cette option affecte la vitesse de ces processus et dépend de votre système. Le buffer par défaut est réglé à 64kB.
+echo This option affects the speed of the process. The ideal buffer depends on
+echo your system. Deffault is set at 64kB
 echo.
-echo Tapez "1" pour régler le buffer à 80kB
-echo Tapez "2" pour régler le buffer à 72kB
-echo Tapez "3" pour régler le buffer à 64kB (Default)
-echo Tapez "4" pour régler le buffer à 56kB
-echo Tapez "5" pour régler le buffer à 48kB
-echo Tapez "6" pour régler le buffer à 40kB
-echo Tapez "7" pour régler le buffer à 32kB
-echo Tapez "8" pour régler le buffer à 24kB
-echo Tapez "9" pour régler le buffer à 16kB
-echo Tapez "10" pour régler le buffer à 8kB
+echo Input "1"  to change BUFFER to 80kB
+echo Input "2"  to change BUFFER to 72kB
+echo Input "3"  to change BUFFER to 64kB (Default)
+echo Input "4"  to change BUFFER to 56kB
+echo Input "5"  to change BUFFER to 48kB
+echo Input "6"  to change BUFFER to 40kB
+echo Input "7"  to change BUFFER to 32kB
+echo Input "8"  to change BUFFER to 24kB
+echo Input "9"  to change BUFFER to 16kB
+echo Input "10" to change BUFFER to  8kB
 
-REM echo.
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo.
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo ...........................................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "v_buffer=none"
 if /i "%bs%"=="1" set "v_buffer=-b 81920"
 if /i "%bs%"=="2" set "v_buffer=-b 73728"
@@ -707,7 +702,7 @@ if /i "%bs%"=="b" goto sc3
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%v_buffer%"=="none" echo Choix inexistant.
+if "%v_buffer%"=="none" echo WRONG CHOICE
 if "%v_buffer%"=="none" echo.
 if "%v_buffer%"=="none" goto op_buffer
 
@@ -724,22 +719,24 @@ goto sc3
 cls
 call :logo
 echo ***************************************************************************
-echo Régler l'option permettant de générer des fichiers utilisables sur des cartes SD formatées en FAT32
+echo SET FAT32 FROM YOUR SD CARD TO GENERATE SPLIT FILES IF NEEDED
 echo ***************************************************************************
-echo Le Rommenu de SX OS  supporte les fichiers ns0, ns1,.. pour les fichiers nsp splittés et également les fichiers 00, 01 dans un répertoire noté comme archivé, c'est pour cela que les deux options sont proposées. Les autres installeurs ne supporte quand à eux que l'option des répertoires archivées.
+echo SX OS rommenu supports ns0, ns1,.. files for splitted nsp files as well
+echo as 00, 01 files in an archived folder, to reflect this 2 options are given.
 echo.
-echo Tapez "1" pour utiliser le format exfat (option par défaut)
-echo Tapez "2" pour utiliser le format FAT32 spécifique à SX OS (fichiers xc0 et ns0)
-echo Tapez "3" pour utiliser le format FAT32 fat32 pour tous les CFWs (répertoire archivé)
-
+echo Input "1" to change CARD FORMAT to exfat (Default)
+echo Input "2" to change CARD FORMAT to fat32 for SX OS (xc0 and ns0 files)
+echo Input "3" to change CARD FORMAT to fat32 for all CFW (archive folder)
 echo.
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Note: Archive folder option exports nsp files as folders and xci files 
+echo splitted files.
+echo.
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo ...........................................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "v_fat1=none"
 set "v_fat2=none"
 if /i "%bs%"=="1" set "v_fat1=-fat exfat"
@@ -753,7 +750,7 @@ if /i "%bs%"=="b" goto sc3
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%v_fat1%"=="none" echo Choix inexistant.
+if "%v_fat1%"=="none" echo WRONG CHOICE
 if "%v_fat1%"=="none" echo.
 if "%v_fat1%"=="none" goto op_fat
 if "%v_fat2%"=="none" echo WRONG CHOICE
@@ -779,19 +776,18 @@ goto sc3
 cls
 call :logo
 echo ***************************************************************************
-echo Organisation des fichiers du répertoire de sortie
+echo ORGANIZATION FORMAT FOR OUTPUT ITEMS IN OUTPUT FOLDER
 echo ***************************************************************************
 echo.
-echo Tapez "1" pour organiser les fichiers séparément (default)
-echo Tapez "2" pour organiser les fichiers dans des répertoires selon le contenu
+echo Input "1" to organize files separetely (default)
+echo Input "2" to organize files in folders set by content
 echo.
-echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
-echo Tapez "0" pour revenir au menu de configuration
-echo Tapez "e" pour revenir au menu principal du script
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
 echo ...........................................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set "v_oforg=none"
 if /i "%bs%"=="1" set "v_oforg=inline"
 if /i "%bs%"=="2" set "v_oforg=subfolder"
@@ -800,7 +796,7 @@ if /i "%bs%"=="b" goto sc3
 if /i "%bs%"=="0" goto sc1
 if /i "%bs%"=="e" goto salida
 
-if "%v_oforg%"=="none" echo Choix inexistant.
+if "%v_oforg%"=="none" echo WRONG CHOICE
 if "%v_oforg%"=="none" echo.
 if "%v_oforg%"=="none" goto op_oforg
 
@@ -813,9 +809,46 @@ echo.
 pause
 goto sc3
 
+:op_nscbmode
+cls
+call :logo
+echo ***************************************************************************
+echo START PROGRAM WITH NEW MODE OR LEGACY MODE
+echo ***************************************************************************
+echo.
+echo Input "1" to start with NEW MODE (default)
+echo Input "2" to start with LEGACY MODE
+echo.
+echo Input "b" to return to GLOBAL OPTIONS
+echo Input "0" to return to CONFIG MENU
+echo Input "e" to go back to the MAIN PROGRAM
+echo ...........................................................................
+echo.
+set /p bs="Enter your choice: "
+set "v_nscbmode=none"
+if /i "%bs%"=="1" set "v_nscbmode=new"
+if /i "%bs%"=="2" set "v_nscbmode=legacy"
+
+if /i "%bs%"=="b" goto sc3
+if /i "%bs%"=="0" goto sc1
+if /i "%bs%"=="e" goto salida
+
+if "%v_nscbmode%"=="none" echo WRONG CHOICE
+if "%v_nscbmode%"=="none" echo.
+if "%v_nscbmode%"=="none" goto op_nscbmode
+
+set v_nscbmode="NSBMODE=%v_nscbmode%"
+set v_nscbmode="%v_nscbmode%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "132" -nl "set %v_nscbmode%" 
+echo.
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "132" -nl "Line in config was changed to: "
+echo.
+pause
+goto sc3
+
 :def_set1
 echo.
-echo **Options du mode automatique**
+echo **AUTO-MODE OPTIONS**
 REM vrepack
 set "v_rep=both"
 set v_rep="vrepack=%v_rep%"
@@ -848,7 +881,7 @@ exit /B
 
 :def_set2
 echo.
-echo **Paramètres globaux**
+echo **GLOBAL OPTIONS**
 REM OP_COLOR
 set "v_colF=F"
 set /a "v_colB=1"
@@ -936,11 +969,18 @@ set v_oforg="%v_oforg%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "125" -nl "set %v_oforg%" 
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "125" -nl "Line in config was changed to: "
 
+REM NSCB MODE
+set "v_nscbmode=new"
+set v_nscbmode="NSBMODE=%v_nscbmode%"
+set v_nscbmode="%v_nscbmode%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "132" -nl "set %v_nscbmode%" 
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "132" -nl "Line in config was changed to: "
+
 exit /B
 
 :curr_set1
 echo.
-echo **Paramètres actuels du mode automatique**
+echo **CURRENT AUTO-MODE OPTIONS**
 REM vrepack
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "57" -nl "File repack is set to: "
 
@@ -957,7 +997,7 @@ exit /B
 
 :curr_set2
 echo.
-echo **Paramètres courant des paramètres globaux**
+echo **CURRENT GLOBAL OPTIONS**
 REM OP_COLOR
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "3" -nl "Color is set to: "
 endlocal
@@ -992,28 +1032,34 @@ REM FAT format
 REM OUTPUT ORGANIZING format
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "125" -nl "Output organization is set to: "
 
+REM NSCB MODE
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "132" -nl "NSCB mode is set to: "
+
+
 exit /B
+
 
 :verify_keys
 cls
 call :logo
 echo ***************************************************************************
-echo Vérification des clés dans le fichier KEYS.TXT avec les HASHES SHA256 des bonnes clés
+echo VERIFY KEYS IN KEYS.TXT AGAINST SHA256 HASHES FROM THE CORRECT KEYS
 echo ***************************************************************************
 
 %pycommand% "%nut%" -nint_keys "%dec_keys%"
 
 echo ...........................................................................
-echo Tapez "0" pour revenir au menu de configuration.
-echo Tapez "1" pour revenir au menu principal.
+echo Input "0" to return to CONFIG MENU
+echo Input "1" to go back to the MAIN PROGRAM
 echo ...........................................................................
 echo.
-set bs=
 set /p bs="Enter your choice: "
 set bs=%bs:"=%
 
 if /i "%bs%"=="0" goto sc1
-if /i "%bs%"=="1" goto salida
+if /i "%bs%"=="e" goto salida
+
+
 
 :salida
 exit /B
@@ -1033,7 +1079,7 @@ ECHO =============================     BY JULESONTHEROAD     ===================
 ECHO -------------------------------------------------------------------------------------
 ECHO "                                POWERED BY SQUIRREL                                "
 ECHO "                    BASED IN THE WORK OF BLAWAR AND LUCA FRAGA                     "
-ECHO                                  VERSION %program_version%
+ECHO                                     VERSION 0.83
 ECHO -------------------------------------------------------------------------------------                   
 ECHO Program's github: https://github.com/julesontheroad/NSC_BUILDER
 ECHO Blawar's github:  https://github.com/blawar

@@ -1,12 +1,9 @@
 @ECHO OFF
-chcp 65001 >nul
-set "program_version=0.81D"
-
 :TOP_INIT
 set "prog_dir=%~dp0"
 set "bat_name=%~n0"
 set "ofile_name=%bat_name%_options.cmd"
-Title NSC_Builder v%program_version%. -- Profile: %ofile_name% -- par JulesOnTheRoad
+Title NSC_Builder v0.83. -- Profile: %ofile_name% -- by JulesOnTheRoad
 ::-----------------------------------------------------
 ::EDIT THIS VARIABLE TO LINK OTHER OPTION FILE
 ::-----------------------------------------------------
@@ -28,6 +25,7 @@ set "manual_intro=%manual_intro%"
 set "va_exit=%va_exit%"
 set "skipRSVprompt=%skipRSVprompt%"
 set "oforg=%oforg%"
+set "NSBMODE=%NSBMODE%"
 REM set "trn_skip=%trn_skip%"
 REM set "updx_skip=%updx_skip%"
 REM set "ngx_skip=%ngx_skip%"
@@ -42,7 +40,6 @@ set "capRSV=%capRSV%"
 set "fatype=%fatype%"
 set "fexport=%fexport%"
 set "skdelta=%skdelta%"
-
 REM PROGRAMS
 set "nut=%nut%"
 set "xci_lib=%xci_lib%"
@@ -116,9 +113,10 @@ goto folder_ind_mode
 
 ::AUTO MODE. INDIVIDUAL REPACK PROCESSING OPTION.
 :folder_ind_mode
+if "%fatype%" EQU "-fat fat32" goto folder_ind_mode_fat32
 call :program_logo
 echo --------------------------------------
-echo Auto-Mode. Le réempactage individuel est activé.
+echo Auto-Mode. Individual repacking is set
 echo --------------------------------------
 echo.
 ::*************
@@ -146,9 +144,9 @@ REM endlocal & ( set "vpack=!vrepack!" )
 REM if "%trn_skip%" EQU "true" ( call :check_titlerights )
 if "%vrename%" EQU "true" ( call :addtags_from_nsp )
 
-if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "nsp" -dc "%%f" )
-if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "xci" -dc "%%f" )
-if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "both" -dc "%%f" )
+if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "nsp" -dc "%%f" )
+if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "xci" -dc "%%f" )
+if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "both" -dc "%%f" )
 
 if not exist "%fold_output%" MD "%fold_output%" >NUL 2>&1
 
@@ -161,7 +159,7 @@ move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%fold_output%\%filename%.nsp" )
 
 RD /S /Q "%w_folder%" >NUL 2>&1
-echo Terminé.
+echo DONE
 call :thumbup
 )
 
@@ -176,9 +174,9 @@ MD "%w_folder%"
 call :getname
 if "%vrename%" EQU "true" ( call :addtags_from_xci )
 
-if "%vrepack%" EQU "nsp" (  %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "nsp" -dc "%%f" )
-if "%vrepack%" EQU "xci" (  %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "xci" -dc "%%f" )
-if "%vrepack%" EQU "both" (  %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "both" -dc "%%f" )
+if "%vrepack%" EQU "nsp" (  %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "nsp" -dc "%%f" )
+if "%vrepack%" EQU "xci" (  %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "xci" -dc "%%f" )
+if "%vrepack%" EQU "both" (  %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "both" -dc "%%f" )
 
 if not exist "%fold_output%" MD "%fold_output%" >NUL 2>&1
 
@@ -191,19 +189,171 @@ move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%fold_output%\%filename%.nsp" )
 
 RD /S /Q "%w_folder%" >NUL 2>&1
-echo Terminé.
+echo DONE
 call :thumbup
 )
 ECHO ---------------------------------------------------
-ECHO *********** Tous les fichiers ont été traités! ************* 
+ECHO *********** ALL FILES WERE PROCESSED! ************* 
+ECHO ---------------------------------------------------
+goto aut_exit_choice
+
+:folder_ind_mode_fat32
+CD /d "%prog_dir%"
+call :program_logo
+echo --------------------------------------
+echo Auto-Mode. Individual repacking is set
+echo --------------------------------------
+echo.
+::*************
+::FOR NSP FILES
+::*************
+for /r "%~1" %%f in (*.nsp) do (
+set "target=%%f"
+if exist "%w_folder%" RD /s /q "%w_folder%" >NUL 2>&1
+
+MD "%w_folder%"
+MD "%w_folder%\secure"
+
+set "filename=%%~nf"
+set "orinput=%%f"
+set "showname=%orinput%"
+call :processing_message
+REM echo %safe_var%>safe.txt
+call :squirrell
+%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%%f"
+if "%zip_restore%" EQU "true" ( set "ziptarget=%%f" )
+if "%zip_restore%" EQU "true" ( call :makezip )
+call :getname
+REM setlocal enabledelayedexpansion
+REM set vpack=!vrepack!
+REM endlocal & ( set "vpack=!vrepack!" )
+
+REM if "%trn_skip%" EQU "true" ( call :check_titlerights )
+if "%vrename%" EQU "true" ( call :addtags_from_nsp )
+
+if "%vrepack%" EQU "nsp" ( call "%nsp_lib%" "repack" "%w_folder%" )
+if "%vrepack%" EQU "xci" ( call "%xci_lib%" "repack" "%w_folder%" )
+if "%vrepack%" EQU "both" ( call "%nsp_lib%" "repack" "%w_folder%" )
+if "%vrepack%" EQU "both" ( call "%xci_lib%" "repack" "%w_folder%" )
+setlocal enabledelayedexpansion
+if not exist "%fold_output%" MD "%fold_output%" >NUL 2>&1
+set "gefolder=%fold_output%\!end_folder!"
+if "%oforg%" EQU "inline" ( set "gefolder=%fold_output%" )
+MD "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.xci" "%gefolder%" >NUL 2>&1
+move  "%w_folder%\*.xc*" "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.nsp" "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.ns*" "%gefolder%" >NUL 2>&1
+if exist "%w_folder%\*.zip" ( MD "%zip_fold%" ) >NUL 2>&1
+move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
+if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%gefolder%\%filename%.nsp" )
+endlocal
+RD /S /Q "%w_folder%" >NUL 2>&1
+echo DONE
+call :thumbup
+)
+
+::FOR XCI FILES
+for /r "%~1" %%f in (*.xci) do (
+if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
+set "filename=%%~nf"
+set "orinput=%%f"
+set "showname=%orinput%"
+call :processing_message
+MD "%w_folder%"
+MD "%w_folder%\secure"
+call :getname
+echo -------------------------------------
+echo Extracting secure partition from xci 
+echo -------------------------------------
+%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%%f"
+echo DONE
+if "%vrename%" EQU "true" ( call :addtags_from_xci )
+if "%vrepack%" EQU "nsp" ( call "%nsp_lib%" "convert" "%w_folder%" )
+if "%vrepack%" EQU "xci" ( call "%xci_lib%" "repack" "%w_folder%" )
+if "%vrepack%" EQU "both" ( call "%nsp_lib%" "convert" "%w_folder%" )
+if "%vrepack%" EQU "both" ( call "%xci_lib%" "repack" "%w_folder%" )
+setlocal enabledelayedexpansion
+MD "%fold_output%\!end_folder!" >NUL 2>&1
+move "%w_folder%\*.xci" "%fold_output%\!end_folder!" >NUL 2>&1
+move  "%w_folder%\*.xc*"  "%fold_output%\!end_folder!" >NUL 2>&1
+move "%w_folder%\*.nsp" "%fold_output%\!end_folder!" >NUL 2>&1
+move "%w_folder%\*.ns*" "%fold_output%\!end_folder!" >NUL 2>&1
+if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%fold_output%\!end_folder!\%filename%.nsp" )
+endlocal
+RD /S /Q "%w_folder%" >NUL 2>&1
+echo DONE
+call :thumbup
+)
+ECHO ---------------------------------------------------
+ECHO *********** ALL FILES WERE PROCESSED! ************* 
 ECHO ---------------------------------------------------
 goto aut_exit_choice
 
 ::AUTO MODE. MULTIREPACK PROCESSING OPTION.
 :folder_mult_mode
+if "%fatype%" EQU "-fat fat32" goto folder_mult_mode_fat32
 call :program_logo
 echo --------------------------------------
-echo Auto-Mode. Le Multi-réempactage est activé.
+echo Auto-Mode. Multi-repacking is set
+echo --------------------------------------
+if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
+MD "%w_folder%"
+if exist "%prog_dir%mlist.txt" del "%prog_dir%mlist.txt" >NUL 2>&1
+
+echo - Generating filelist
+%pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%mlist.txt" -ff "%~1"
+echo   DONE
+
+if "%vrepack%" EQU "nsp" echo ......................................
+if "%vrepack%" EQU "nsp" echo REPACKING FOLDER CONTENT TO NSP
+if "%vrepack%" EQU "nsp" echo ......................................
+if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t cnsp -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+if "%vrepack%" EQU "nsp" echo.
+
+if "%vrepack%" EQU "xci" echo ......................................
+if "%vrepack%" EQU "xci" echo REPACKING FOLDER CONTENT TO XCI
+if "%vrepack%" EQU "xci" echo ......................................
+if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t xci -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+if "%vrepack%" EQU "xci" echo.
+
+if "%vrepack%" EQU "both" echo ......................................
+if "%vrepack%" EQU "both" echo REPACKING FOLDER CONTENT TO NSP
+if "%vrepack%" EQU "both" echo ......................................
+if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t xci -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+if "%vrepack%" EQU "both" echo.
+
+if "%vrepack%" EQU "both" echo ......................................
+if "%vrepack%" EQU "both" echo REPACKING FOLDER CONTENT TO XCI
+if "%vrepack%" EQU "both" echo ......................................
+if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t cnsp -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+if "%vrepack%" EQU "both" echo.
+
+setlocal enabledelayedexpansion
+if not exist "%fold_output%" MD "%fold_output%" >NUL 2>&1
+set "gefolder=%fold_output%\!end_folder!"
+if "%oforg%" EQU "inline" ( set "gefolder=%fold_output%" )
+MD "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.xci" "%gefolder%" >NUL 2>&1
+move  "%w_folder%\*.xc*" "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.nsp" "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.ns*" "%gefolder%" >NUL 2>&1
+if exist "%w_folder%\*.zip" ( MD "%zip_fold%" ) >NUL 2>&1
+move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
+if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -tfile "%w_folder%\filename.txt" -ifo "%w_folder%\archfolder" -archive "%gefolder%" )
+endlocal
+RD /S /Q "%w_folder%" >NUL 2>&1
+ECHO ---------------------------------------------------
+ECHO *********** ALL FILES WERE PROCESSED! ************* 
+ECHO ---------------------------------------------------
+call :thumbup
+goto aut_exit_choice
+
+:folder_mult_mode_fat32
+CD /d "%prog_dir%"
+call :program_logo
+echo --------------------------------------
+echo Auto-Mode. Multi-repacking is set
 echo --------------------------------------
 echo.
 set "filename=%~n1"
@@ -219,7 +369,7 @@ set "showname=%orinput%"
 call :processing_message
 ::echo %safe_var%>safe.txt
 call :squirrell
-%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% -o "%w_folder%\secure" %nf_cleaner% "%%f"
+%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%%f"
 if "%zip_restore%" EQU "true" ( set "ziptarget=%%f" )
 if "%zip_restore%" EQU "true" ( call :makezip )
 )
@@ -227,10 +377,10 @@ if "%zip_restore%" EQU "true" ( call :makezip )
 ::FOR XCI FILES
 for /r "%~1" %%f in (*.xci) do (
 echo ------------------------------------
-echo Extraction de la partition secure du xci...
+echo Extracting secure partition from xci
 echo ------------------------------------
-%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% -o "%w_folder%\secure" %nf_cleaner% "%%f"
-echo Terminé.
+%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%%f"
+echo DONE
 )
 if "%vrepack%" EQU "nsp" ( call "%nsp_lib%" "convert" "%w_folder%" )
 if "%vrepack%" EQU "xci" ( call "%xci_lib%" "repack" "%w_folder%" )
@@ -250,11 +400,11 @@ move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%gefolder%\%filename%.nsp" )
 endlocal
 RD /S /Q "%w_folder%" >NUL 2>&1
-echo Terminé.
+echo DONE
 call :thumbup
 )
 ECHO ---------------------------------------------------
-ECHO *********** Tous les fichiers ont été traités! ************* 
+ECHO *********** ALL FILES WERE PROCESSED! ************* 
 ECHO ---------------------------------------------------
 goto aut_exit_choice
 
@@ -264,12 +414,13 @@ if "%~x1"==".nsp" ( goto nsp )
 if "%~x1"==".xci" ( goto xci )
 if "%~x1"==".*" ( goto other )
 :other
-echo Aucun fichier valide n'a été entré. Le programme accepte seulement les fichiers xci ou nsp.
-echo Vous allez être redirigé vers le mode manuel.
+echo No valid file was dragged. The program only accepts xci or nsp files.
+echo You'll be redirected to manual mode.
 pause
 goto manual
 
 :nsp
+if "%fatype%" EQU "-fat fat32" goto file_nsp_fat32
 set "orinput=%~f1"
 set "filename=%~n1"
 set "target=%~1"
@@ -284,9 +435,9 @@ MD "%w_folder%"
 call :getname
 if "%vrename%" EQU "true" call :addtags_from_nsp
 
-if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "nsp" -dc "%~1" )
-if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "xci" -dc "%~1" )
-if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "both" -dc "%~1"  )
+if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "nsp" -dc "%~1" )
+if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "xci" -dc "%~1" )
+if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "both" -dc "%~1"  )
 
 if not exist "%fold_output%" MD "%fold_output%" >NUL 2>&1
 
@@ -299,11 +450,50 @@ move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%fold_output%\%filename%.nsp" )
 
 RD /S /Q "%w_folder%" >NUL 2>&1
-echo Terminé.
+echo DONE
+call :thumbup
+goto aut_exit_choice
+
+:file_nsp_fat32
+CD /d "%prog_dir%"
+set "orinput=%~f1"
+set "filename=%~n1"
+set "target=%~1"
+set "showname=%orinput%"
+call :processing_message
+if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
+call :squirrell
+%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%~1"
+if "%zip_restore%" EQU "true" ( set "ziptarget=%~1" )
+if "%zip_restore%" EQU "true" ( call :makezip )
+call :getname
+if "%vrename%" EQU "true" call :addtags_from_nsp
+::echo "%vrepack%"
+::echo "%nsp_lib%"
+if "%vrepack%" EQU "nsp" ( call "%nsp_lib%" "repack" "%w_folder%" )
+if "%vrepack%" EQU "both" ( call "%nsp_lib%" "repack" "%w_folder%" )
+if "%vrepack%" EQU "xci" ( call "%xci_lib%" "repack" "%w_folder%" )
+if "%vrepack%" EQU "both" ( call "%xci_lib%" "repack" "%w_folder%" )
+setlocal enabledelayedexpansion
+if not exist "%fold_output%" MD "%fold_output%" >NUL 2>&1
+set "gefolder=%fold_output%\!end_folder!"
+if "%oforg%" EQU "inline" ( set "gefolder=%fold_output%" )
+MD "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.xci" "%gefolder%" >NUL 2>&1
+move  "%w_folder%\*.xc*" "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.nsp" "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.ns*" "%gefolder%" >NUL 2>&1
+if exist "%w_folder%\*.zip" ( MD "%zip_fold%" ) >NUL 2>&1
+move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
+if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%gefolder%\%filename%.nsp" )
+endlocal
+RD /S /Q "%w_folder%" >NUL 2>&1
+echo DONE
 call :thumbup
 goto aut_exit_choice
 
 :xci
+if "%fatype%" EQU "-fat fat32" goto file_xci_fat32
 set "filename=%~n1"
 set "orinput=%~f1"
 set "showname=%orinput%"
@@ -315,9 +505,9 @@ call :getname
 
 if "%vrename%" EQU "true" call :addtags_from_xci
 
-if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "nsp" -dc "%~1" )
-if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "xci" -dc "%~1" )
-if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "both" -dc "%~1"  )
+if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "nsp" -dc "%~1" )
+if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "xci" -dc "%~1" )
+if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "both" -dc "%~1"  )
 
 MD "%fold_output%\" >NUL 2>&1
 
@@ -330,19 +520,53 @@ move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%fold_output%\%filename%.nsp" )
 
 RD /S /Q "%w_folder%" >NUL 2>&1
-echo Terminé.
+echo DONE
 call :thumbup
 goto aut_exit_choice
+
+:file_xci_fat32
+CD /d "%prog_dir%"
+set "filename=%~n1"
+set "orinput=%~f1"
+set "showname=%orinput%"
+call :processing_message
+if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
+MD "%w_folder%"
+MD "%w_folder%\secure"
+call :getname
+echo ------------------------------------
+echo Extracting secure partition from xci 
+echo ------------------------------------
+%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%~1"
+echo DONE
+if "%vrename%" EQU "true" call :addtags_from_xci
+if "%vrepack%" EQU "nsp" ( call "%nsp_lib%" "convert" "%w_folder%" )
+if "%vrepack%" EQU "xci" ( call "%xci_lib%" "repack" "%w_folder%" )
+if "%vrepack%" EQU "both" ( call "%nsp_lib%" "convert" "%w_folder%" )
+if "%vrepack%" EQU "both" ( call "%xci_lib%" "repack" "%w_folder%" )
+setlocal enabledelayedexpansion
+if exist "%fold_output%\!end_folder!" RD /S /Q "%fold_output%\!end_folder!" >NUL 2>&1
+MD "%fold_output%\!end_folder!" >NUL 2>&1
+move  "%w_folder%\*.xci"  "%fold_output%\!end_folder!" >NUL 2>&1
+move  "%w_folder%\*.xc*"  "%fold_output%\!end_folder!" >NUL 2>&1
+move  "%w_folder%\*.nsp"  "%fold_output%\!end_folder!" >NUL 2>&1
+move "%w_folder%\*.ns*" "%fold_output%\!end_folder!" >NUL 2>&1
+if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%fold_output%\!end_folder!\%filename%.nsp" )
+endlocal
+RD /S /Q "%w_folder%" >NUL 2>&1
+echo DONE
+call :thumbup
+goto aut_exit_choice
+
 :aut_exit_choice
 if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
 if /i "%va_exit%"=="true" ( PING -n 2 127.0.0.1 >NUL 2>&1 )
 if /i "%va_exit%"=="true" goto salida
 echo.
-echo Tapez "0" pour revenir à la sélection du mode.
-echo Tapez "1" pour quitter le script
+echo Input "0" to go to the mode selection
+echo Input "1" to exit the program
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 if /i "%bs%"=="0" goto manual_Reentry
 if /i "%bs%"=="1" goto salida
@@ -353,37 +577,37 @@ endlocal
 cls
 call :program_logo
 echo ********************************
-echo Vous êtes entré en mode manuel.
+echo YOU'VE ENTERED INTO MANUAL MODE
 echo ********************************
 if "%manual_intro%" EQU "indiv" ( goto normalmode ) 
 if "%manual_intro%" EQU "multi" ( goto multimode )
 if "%manual_intro%" EQU "split" ( goto SPLMODE )
-if "%manual_intro%" EQU "update" ( goto UPDMODE )
+::if "%manual_intro%" EQU "update" ( goto UPDMODE )
 goto manual_Reentry
 
 :manual_Reentry
 cls
+if "%NSBMODE%" EQU "legacy" call "%prog_dir%ztools\LEGACY.bat"
 call :program_logo
 ECHO .......................................................
-echo Tapez "1" pour traiter les fichiers individuellement (un fichier en entré donnera un fichier en sortie).
-echo Tapez "2" pour entrer en mode multi-réempactage (plusieurs fichiers empactés dans un seul fichier en sortie).
-echo Tapez "3" pour spliter du contenu d'un fichier aux multiples contenus.
-echo Tapez "4" pour entrer en mode mise à jour (mode expérimental).
-echo Tapez "5" pour obtenir des informations sur un fichier.
-echo Tapez "6" pour entrer en mode construction de la base de données.
-REM echo Tapez "7" pour entrez en mode avancé.
-echo Tapez "0" pour configurer le script.
+echo Input "1" to process files INDIVIDUALLY
+echo Input "2" to enter into MULTI-PACK mode
+echo Input "3" to enter into MULTI-CONTENT SPLITTER mode
+echo Input "4" to enter into FILE-INFO mode
+echo Input "5" to enter DATABASE building mode
+echo Input "0" to enter into CONFIGURATION mode
+echo.
+echo Input "L" to enter LEGACY MODES
 echo .......................................................
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 if /i "%bs%"=="1" goto normalmode
 if /i "%bs%"=="2" goto multimode
 if /i "%bs%"=="3" goto SPLMODE
-if /i "%bs%"=="4" goto UPDMODE
-if /i "%bs%"=="5" goto INFMODE
-if /i "%bs%"=="6" goto DBMODE
+if /i "%bs%"=="4" goto INFMODE
+if /i "%bs%"=="5" goto DBMODE
+if /i "%bs%"=="L" call "%prog_dir%ztools\LEGACY.bat"
 REM if /i "%bs%"=="7" goto ADVMODE
 if /i "%bs%"=="0" goto OPT_CONFIG
 goto manual_Reentry
@@ -397,7 +621,7 @@ REM ////////////////////////////////////////////////
 cls
 call :program_logo
 echo -----------------------------------------------
-echo Traitement individuel activé.
+echo INDIVIDUAL PROCESSING ACTIVATED
 echo -----------------------------------------------
 if exist "list.txt" goto prevlist
 goto manual_INIT
@@ -414,43 +638,44 @@ if !conta! LEQ 0 ( del list.txt )
 endlocal
 if not exist "list.txt" goto manual_INIT
 ECHO .......................................................
-ECHO Une précédente liste a été trouvée. Que souhaitez-vous faire?
+ECHO A PREVIOUS LIST WAS FOUND. WHAT DO YOU WANT TO DO?
 :prevlist0
 ECHO .......................................................
-echo Tapez "1" pour lancer le traitement à partir de la liste.
-echo Tapez "2" pour supprimer la liste et en faire une nouvelle.
-echo Tapez "3" pour continuer à constuire la liste.
+echo Input "1" to auto-start processing from the previous list
+echo Input "2" to erase list and make a new one.
+echo Input "3" to continue building the previous list
 echo .......................................................
-echo NOTE: En tapant 3 vous verrez la liste précédente que vous pourrez modifier avant de lancer son traitement.
+echo NOTE: By pressing 3 you'll see the previous list 
+echo before starting the processing the files and you will 
+echo be able to add and delete items from the list
 echo.
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Or Input "0" to return to the MODE SELECTION MENU
 ECHO *************************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 if /i "%bs%"=="3" goto showlist
 if /i "%bs%"=="2" goto delist
 if /i "%bs%"=="1" goto start_cleaning
 if /i "%bs%"=="0" goto manual_Reentry
 echo.
-echo Choix inexistant.
+echo BAD CHOICE
 goto prevlist0
 :delist
 del list.txt
 cls
 call :program_logo
 echo -----------------------------------------------
-echo Traitement individuel activé.
+echo INDIVIDUAL PROCESSING ACTIVATED
 echo -----------------------------------------------
 echo ..................................
-echo Vous avez décidé de commencer une nouvelle liste.
+echo YOU'VE DECIDED TO START A NEW LIST
 echo ..................................
 :manual_INIT
 endlocal
 ECHO ***********************************************
-echo Tappez "0" pour revenir à la sélection du mode.
+echo Input "0" to return to the MODE SELECTION MENU
 ECHO ***********************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%list.txt" -uin "%uinput%" -ff "uinput"
@@ -463,18 +688,18 @@ if /i "%eval%"=="0" goto manual_Reentry
 goto checkagain
 echo.
 :checkagain
-echo Que souhaitez-vous faire?
+echo WHAT DO YOU WANT TO DO?
 echo ......................................................................
-echo "Glissez un autre fichier et appuyer sur entrer pour l'ajouter à la liste."
+echo "DRAG ANOTHER FILE OR FOLDER AND PRESS ENTER TO ADD ITEMS TO THE LIST"
 echo.
-echo Tapez "1" pour commencer le traitement.
-echo Tapez "e" pour quitter.
-echo Tapez "i" pour voir la liste des fichiers à traiter.
-echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
-echo Tapez "z" pour supprimer toute la liste.
+echo Input "1" to start processing
+echo Input "e" to exit
+echo Input "i" to see list of files to process
+echo Input "r" to remove some files (counting from bottom)
+echo Input "z" to remove the whole list
 echo ......................................................................
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Or Input "0" to return to the MODE SELECTION MENU
 ECHO *************************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%list.txt" -uin "%uinput%" -ff "uinput"
@@ -494,8 +719,7 @@ if /i "%eval%"=="z" del list.txt
 goto checkagain
 
 :r_files
-set bs=
-set /p bs="Entrez le nombre de fichiers à supprimer de la liste en partant du bas: "
+set /p bs="Input the number of files you want to remove (from bottom): "
 set bs=%bs:"=%
 
 setlocal enabledelayedexpansion
@@ -528,10 +752,10 @@ endlocal
 cls
 call :program_logo
 echo -------------------------------------------------
-echo Traitement individuel activé.
+echo INDIVIDUAL PROCESSING ACTIVATED
 echo -------------------------------------------------
 ECHO -------------------------------------------------
-ECHO                 Fichiers à traiter:
+ECHO                 FILES TO PROCESS 
 ECHO -------------------------------------------------
 for /f "tokens=*" %%f in (list.txt) do (
 echo %%f
@@ -542,86 +766,96 @@ for /f "tokens=*" %%f in (list.txt) do (
 set /a conta=!conta! + 1
 )
 echo .................................................
-echo Vous avez ajouté !conta! fichiers à traiter.
+echo YOU'VE ADDED !conta! FILES TO PROCESS
 echo .................................................
 endlocal
 
 goto checkagain
 
 :s_cl_wrongchoice
-echo Choix inexistant.
+echo wrong choice
 echo ............
 :start_cleaning
 echo *******************************************************
-echo Choisir quoi faire après le traitement des fichiers:
+echo CHOOSE WHAT TO DO AFTER PROCESSING THE SELECTED FILES
 echo *******************************************************
-echo Tapez "1" pour réempacter les fichiers de la liste en nsp.
-echo Tapez "2" pour réempacter les fichiers de la liste en xci.
-echo Tapez "3" pour réempacter les fichiers de la liste dans les deux formats.
-echo Tapez "0" pour seulement créer les fichiers zip!!!!
+echo Input "1" to repack list as nsp
+echo Input "2" to repack list as xci
+echo Input "3" to repack list as both
+echo.
+echo SPECIAL OPTIONS:
+echo Input "4" to erase deltas from nsp files
+echo Input "5" to rename xci or nsp files
 echo.
 ECHO ******************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
+echo Or Input "b" to return to the list options
 ECHO ******************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 set vrepack=none
 if /i "%bs%"=="b" goto checkagain
 if /i "%bs%"=="1" set "vrepack=nsp"
 if /i "%bs%"=="2" set "vrepack=xci"
 if /i "%bs%"=="3" set "vrepack=both"
+if /i "%bs%"=="4" set "vrepack=nodelta"
+if /i "%bs%"=="4" goto s_KeyChange_skip
+if /i "%bs%"=="5" set "vrepack=renamef"
+if /i "%bs%"=="5" goto rename
 if %vrepack%=="none" goto s_cl_wrongchoice
 :s_RSV_wrongchoice
 if /i "%skipRSVprompt%"=="true" set "patchRSV=-pv false"
 if /i "%skipRSVprompt%"=="true" goto s_KeyChange_skip
 echo *******************************************************
-echo Souhaitez-vous patcher la version requise du système?
+echo DO YOU WANT TO PATCH THE REQUIRED-SYSTEM-VERSION
 echo *******************************************************
+echo If you choose to patch it will be set to match the 
+echo nca crypto so it'll only ask to update your system
+echo in the case it's necessary
 echo.
-echo Tapez "0" pour ne pas "patcher" la version requise du système.
-echo Tapez "1" pour "patcher" la version requise du système.
+echo Input "0" to don't patch the Required System Version
+echo Input "1" to "PATCH" the Required System Version
 echo.
 ECHO ******************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
+echo Or Input "b" to return to the list options
 ECHO ******************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 set "patchRSV=none"
 if /i "%bs%"=="b" goto checkagain
 if /i "%bs%"=="0" set "patchRSV=-pv false"
 if /i "%bs%"=="1" set "patchRSV=-pv true"
-echo Choix inexistant.
+if /i "%patchRSV%"=="none" echo WRONG CHOICE
 if /i "%patchRSV%"=="none" goto s_RSV_wrongchoice
 if /i "%bs%"=="0" goto s_KeyChange_skip 
 
 :s_KeyChange_wrongchoice
 echo *******************************************************
-echo Régler la KEYGENERATION\RSV maximale autorisée.
+echo SET MAXIMUM KEYGENERATION\RSV ALOWED
 echo *******************************************************
-echo La keygeneration et le RSV seront utilisés selon ce paramètre de la keygeneration si la clé trouvé est supérieur à celle définie ici.
-echo Cela ne fonctionne pas toujours sous les firmwares inférieurs que celui requis par le fichier.
+echo Depending on your choice keygeneration and RSV will be
+echo lowered to the corresponding keygeneration range in case
+echo read keygeneration value is bigger than the one specified
+echo in the program.
+echo THIS WON'T ALWAYS WORK TO LOWER THE FIRMWARE REQUIREMENT.
 echo.
-echo Tapez "f" pour ne pas changer la keygeneration
-echo Tapez "0" pour changer la keygeneration à 0 (FW 1.0)
-echo Tapez "1" pour changer la keygeneration à 1 (FW 2.0-2.3)
-echo Tapez "2" pour changer la keygeneration à 2 (FW 3.0)
-echo Tapez "3" pour changer la keygeneration à 3 (FW 3.0.1-3.02)
-echo Tapez "4" pour changer la keygeneration à 4 (FW 4.0.0-4.1.0)
-echo Tapez "5" pour changer la keygeneration à 5 (FW 5.0.0-5.1.0)
-echo Tapez "6" pour changer la keygeneration à 6 (FW 6.0.0-6.1.0)
-echo Tapez "7" pour changer la keygeneration à 7 (FW 6.2.0)
-echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-7.0.1)
+echo Input "f" to not change the keygeneration
+echo Input "0" to change top keygeneration to 0 (FW 1.0)
+echo Input "1" to change top keygeneration to 1 (FW 2.0-2.3)
+echo Input "2" to change top keygeneration to 2 (FW 3.0)
+echo Input "3" to change top keygeneration to 3 (FW 3.0.1-3.02)
+echo Input "4" to change top keygeneration to 4 (FW 4.0.0-4.1.0)
+echo Input "5" to change top keygeneration to 5 (FW 5.0.0-5.1.0)
+echo Input "6" to change top keygeneration to 6 (FW 6.0.0-6.1.0)
+echo Input "7" to change top keygeneration to 7 (FW 6.2.0)
+echo Input "8" to change top keygeneration to 8 (FW 7.0.0-7.0.1)
 echo.
 ECHO ******************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
+echo Or Input "b" to return to the list options
 ECHO ******************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 set "vkey=none"
 if /i "%bs%"=="b" goto checkagain
@@ -644,7 +878,7 @@ if /i "%bs%"=="7" set "vkey=-kp 7"
 if /i "%bs%"=="7" set "capRSV=--RSVcap 404750336"
 if /i "%bs%"=="8" set "vkey=-kp 8"
 if /i "%bs%"=="8" set "capRSV=--RSVcap 469762048"
-if /i "%vkey%"=="none" echo Choix inexistant.
+if /i "%vkey%"=="none" echo WRONG CHOICE
 if /i "%vkey%"=="none" goto s_KeyChange_wrongchoice
 
 :s_KeyChange_skip
@@ -663,25 +897,179 @@ move /y "list.txt.new" "list.txt" >nul
 call :contador_NF
 )
 ECHO ---------------------------------------------------
-ECHO *********** Tous les fichiers ont été traités! ************* 
+ECHO *********** ALL FILES WERE PROCESSED! *************
 ECHO ---------------------------------------------------
+goto s_exit_choice
+
+:rename
+:s_rename_wrongchoice1
+echo.
+echo *******************************************************
+echo TYPE OF RENAME
+echo *******************************************************
+echo Normal modes:
+echo Input "1" to ALWAYS rename
+echo Input "2" to NOT RENAME IF [TITLEID] is present
+echo Input "3" to NOT RENAME IF [TITLEID] is equal to the one calculated
+echo Input "4" to ONLY ADD ID
+echo.
+echo Clean tags:
+echo Input "5" to REMOVE [] tags from the filename
+echo Input "6" to REMOVE () tags from the filename
+echo Input "7" to REMOVE [] and () tags from the filename
+echo.
+ECHO ******************************************
+echo Or Input "0" to return to the list options
+ECHO ******************************************
+echo.
+set /p bs="Enter your choice: "
+set bs=%bs:"=%
+set "renmode=none"
+if /i "%bs%"=="0" goto checkagain
+if /i "%bs%"=="1" set "renmode=force"
+if /i "%bs%"=="1" set "oaid=false"
+if /i "%bs%"=="2" set "renmode=skip_corr_tid"
+if /i "%bs%"=="2" set "oaid=false"
+if /i "%bs%"=="3" set "renmode=skip_if_tid"
+if /i "%bs%"=="3" set "oaid=false"
+if /i "%bs%"=="4" set "renmode=skip_corr_tid"
+if /i "%bs%"=="4" set "oaid=true"
+
+if /i "%bs%"=="5" set "tagtype=[]"
+if /i "%bs%"=="5" goto filecleantags
+if /i "%bs%"=="6" set "tagtype=()"
+if /i "%bs%"=="6" goto filecleantags
+if /i "%bs%"=="7" set "tagtype=false"
+if /i "%bs%"=="7" goto filecleantags
+
+if /i "%renmode%"=="none" echo WRONG CHOICE
+if /i "%renmode%"=="none" goto s_rename_wrongchoice1
+echo.
+:s_rename_wrongchoice2
+echo *******************************************************
+echo ADD VERSION NUMBER
+echo *******************************************************
+echo Adds content version number to filename
+echo.
+echo Input "1" to ADD version number
+echo Input "2" to NOT ADD version number
+echo Input "3" to NOT ADD version in xci if VERSION=0
+echo.
+ECHO *********************************************
+echo Or Input "b" to return to TYPE OF RENAME
+echo Or Input "0" to return to the list options
+ECHO *********************************************
+echo.
+set /p bs="Enter your choice: "
+set bs=%bs:"=%
+set "nover=none"
+if /i "%bs%"=="0" goto checkagain
+if /i "%bs%"=="b" goto s_rename_wrongchoice1
+if /i "%bs%"=="1" set "nover=false"
+if /i "%bs%"=="2" set "nover=true"
+if /i "%bs%"=="3" set "nover=xci_no_v0"
+if /i "%nover%"=="none" echo WRONG CHOICE
+if /i "%nover%"=="none" goto s_rename_wrongchoice2
+echo.
+:s_rename_wrongchoice3
+echo *******************************************************
+echo ADD LANGUAGE STRING
+echo *******************************************************
+echo Adds language tags for games and updates
+echo.
+echo Input "1" to NOT ADD language string
+echo Input "2" to ADD language string
+echo.
+echo Note: Language can't be read from dlcs so this option
+echo won't affect them
+echo.
+ECHO *********************************************
+echo Or Input "b" to return to ADD VERSION NUMBER
+echo Or Input "0" to return to the list options
+ECHO *********************************************
+echo.
+set /p bs="Enter your choice: "
+set bs=%bs:"=%
+set "addlangue=none"
+if /i "%bs%"=="0" goto checkagain
+if /i "%bs%"=="b" goto s_rename_wrongchoice2
+if /i "%bs%"=="1" set "addlangue=false"
+if /i "%bs%"=="2" set "addlangue=true"
+if /i "%addlangue%"=="none" echo WRONG CHOICE
+if /i "%addlangue%"=="none" goto s_rename_wrongchoice3
+echo.
+:s_rename_wrongchoice4
+echo *******************************************************
+echo KEEP DLC NAMES
+echo *******************************************************
+echo Either keep name without tags or use DLC NUMBER X as name
+echo NOTE: This is done this way since dlc names can't be read
+echo from file, only dlc numbers
+echo.
+echo Input "1" to KEEP basename
+echo Input "2" to RENAME as DLC Number
+echo Input "3" to keep basename and ADD DLC NUMBER AS TAG
+echo.
+ECHO *********************************************
+echo Or Input "b" to return to ADD  KEEP DLC NAMES
+echo Or Input "0" to return to the list options
+ECHO *********************************************
+echo.
+set /p bs="Enter your choice: "
+set bs=%bs:"=%
+set "dlcrname=none"
+if /i "%bs%"=="0" goto checkagain
+if /i "%bs%"=="b" goto s_rename_wrongchoice3
+if /i "%bs%"=="1" set "dlcrname=false"
+if /i "%bs%"=="2" set "dlcrname=true"
+if /i "%bs%"=="3" set "dlcrname=tag"
+if /i "%dlcrname%"=="none" echo WRONG CHOICE
+if /i "%dlcrname%"=="none" goto s_rename_wrongchoice4
+echo.
+cls
+call :program_logo
+for /f "tokens=*" %%f in (list.txt) do (
+%pycommand% "%nut%" -renf "single" -tfile "%prog_dir%list.txt" -t xci nsp -renm %renmode% -nover %nover% -oaid %oaid% -addl %addlangue% -dlcrn %dlcrname%
+more +1 "list.txt">"list.txt.new"
+move /y "list.txt.new" "list.txt" >nul
+call :contador_NF
+)
+ECHO ---------------------------------------------------
+ECHO *********** ALL FILES WERE PROCESSED! *************
+ECHO ---------------------------------------------------
+goto s_exit_choice
+
+:filecleantags
+cls
+call :program_logo
+for /f "tokens=*" %%f in (list.txt) do (
+%pycommand% "%nut%" -cltg "single" -tfile "%prog_dir%list.txt" -t xci nsp -tgtype "%tagtype%"
+more +1 "list.txt">"list.txt.new"
+move /y "list.txt.new" "list.txt" >nul
+call :contador_NF
+)
+ECHO ---------------------------------------------------
+ECHO *********** ALL FILES WERE PROCESSED! *************
+ECHO ---------------------------------------------------
+goto s_exit_choice
+
 :s_exit_choice
 if exist list.txt del list.txt
 if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
 if /i "%va_exit%"=="true" ( PING -n 2 127.0.0.1 >NUL 2>&1 )
 if /i "%va_exit%"=="true" goto salida
 echo.
-echo Tapez "0" pour revenir à la sélection du mode.
-echo Tapez "1" pour quitter le script
+echo Input "0" to go back to the mode selection
+echo Input "1" to exit the program
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 if /i "%bs%"=="0" goto manual_Reentry
 if /i "%bs%"=="1" goto salida
 goto s_exit_choice
 
 :nsp_manual
+if "%fatype%" EQU "-fat fat32" goto nsp_manual_fat32
 rem set "filename=%name%"
 rem set "showname=%orinput%"
 if "%zip_restore%" EQU "true" ( call :makezip )
@@ -691,10 +1079,10 @@ call :squirrell
 
 if "%vrename%" EQU "true" call :addtags_from_nsp
 
-if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "nsp" -dc "%orinput%" -tfile "%prog_dir%list.txt")
-if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "xci" -dc "%orinput%" -tfile "%prog_dir%list.txt")
-if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "both" -dc "%orinput%" -tfile "%prog_dir%list.txt")
-
+if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "nsp" -dc "%orinput%" -tfile "%prog_dir%list.txt")
+if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "xci" -dc "%orinput%" -tfile "%prog_dir%list.txt")
+if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "both" -dc "%orinput%" -tfile "%prog_dir%list.txt")
+if "%vrepack%" EQU "nodelta" ( %pycommand% "%nut%" %buffer% -o "%w_folder%" -tfile "%prog_dir%list.txt" --erase_deltas "")
 
 move "%w_folder%\*.xci" "%fold_output%" >NUL 2>&1
 move  "%w_folder%\*.xc*" "%fold_output%" >NUL 2>&1
@@ -705,14 +1093,59 @@ move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%fold_output%\%filename%.nsp" )
 
 RD /S /Q "%w_folder%" >NUL 2>&1
-echo Terminé.
+echo DONE
 call :thumbup
 call :delay
+goto end_nsp_manual
+
+:nsp_manual_fat32
+CD /d "%prog_dir%"
+set "filename=%name%"
+set "showname=%orinput%"
+call :processing_message
+
+if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
+call :squirrell
+
+if "%vrepack%" EQU "zip" ( goto nsp_just_zip )
+
+%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%orinput%"
+
+:nsp_just_zip
+if "%zip_restore%" EQU "true" ( call :makezip )
+call :getname
+if "%vrename%" EQU "true" call :addtags_from_nsp
+if "%vrepack%" EQU "nsp" ( call "%nsp_lib%" "repack" "%w_folder%" "%%f")
+if "%vrepack%" EQU "xci" ( call "%xci_lib%" "repack" "%w_folder%" "%%f")
+if "%vrepack%" EQU "both" ( call "%nsp_lib%" "repack" "%w_folder%" "%%f")
+if "%vrepack%" EQU "both" ( call "%xci_lib%" "repack" "%w_folder%" "%%f")
+setlocal enabledelayedexpansion
+if "%zip_restore%" EQU "true" ( goto :nsp_just_zip2 )
+if exist "%fold_output%\!end_folder!" RD /S /Q "%fold_output%\!end_folder!" >NUL 2>&1
+:nsp_just_zip2
+if not exist "%fold_output%" MD "%fold_output%" >NUL 2>&1
+set "gefolder=%fold_output%\!end_folder!"
+if "%oforg%" EQU "inline" ( set "gefolder=%fold_output%" )
+MD "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.xci" "%gefolder%" >NUL 2>&1
+move  "%w_folder%\*.xc*" "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.nsp" "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.ns*" "%gefolder%" >NUL 2>&1
+if exist "%w_folder%\*.zip" ( MD "%zip_fold%" ) >NUL 2>&1
+move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
+if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%gefolder%\%filename%.nsp" )
+endlocal
+RD /S /Q "%w_folder%" >NUL 2>&1
+echo DONE
+call :thumbup
+call :delay
+goto end_nsp_manual
 
 :end_nsp_manual
 exit /B
 
 :xci_manual
+if "%fatype%" EQU "-fat fat32" goto xci_manual_fat32
 ::FOR XCI FILES
 if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
 MD "%w_folder%"
@@ -720,9 +1153,9 @@ MD "%w_folder%"
 set "filename=%name%"
 set "showname=%orinput%"
 
-if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "nsp" -dc "%orinput%" -tfile "%prog_dir%list.txt")
-if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "xci" -dc "%orinput%" -tfile "%prog_dir%list.txt")
-if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -o "%w_folder%" -t "both" -dc "%orinput%" -tfile "%prog_dir%list.txt")
+if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "nsp" -dc "%orinput%" -tfile "%prog_dir%list.txt")
+if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "xci" -dc "%orinput%" -tfile "%prog_dir%list.txt")
+if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -o "%w_folder%" -t "both" -dc "%orinput%" -tfile "%prog_dir%list.txt")
 
 if not exist "%fold_output%" MD "%fold_output%" >NUL 2>&1
 
@@ -735,9 +1168,49 @@ move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%fold_output%\%filename%.nsp" )
 
 RD /S /Q "%w_folder%" >NUL 2>&1
-echo Terminé.
+echo DONE
 call :thumbup
 call :delay
+goto end_xci_manual
+
+:xci_manual_fat32
+CD /d "%prog_dir%"
+::FOR XCI FILES
+cls
+if "%vrepack%" EQU "zip" ( goto end_xci_manual )
+set "filename=%name%"
+call :program_logo
+set "showname=%orinput%"
+call :processing_message
+if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
+MD "%w_folder%"
+MD "%w_folder%\secure"
+call :getname
+echo ------------------------------------
+echo Extracting secure partition from xci
+echo ------------------------------------
+%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%orinput%"
+echo DONE
+if "%vrename%" EQU "true" call :addtags_from_xci
+if "%vrepack%" EQU "nsp" ( call "%nsp_lib%" "convert" "%w_folder%" )
+if "%vrepack%" EQU "xci" ( call "%xci_lib%" "repack" "%w_folder%" )
+if "%vrepack%" EQU "both" ( call "%nsp_lib%" "convert" "%w_folder%" )
+if "%vrepack%" EQU "both" ( call "%xci_lib%" "repack" "%w_folder%" )
+setlocal enabledelayedexpansion
+if exist "%fold_output%\!end_folder!" RD /S /Q "%fold_output%\!end_folder!" >NUL 2>&1
+MD "%fold_output%\!end_folder!" >NUL 2>&1
+move  "%w_folder%\*.xci"  "%fold_output%\!end_folder!" >NUL 2>&1
+move  "%w_folder%\*.xc*"  "%fold_output%\!end_folder!" >NUL 2>&1
+move  "%w_folder%\*.nsp"  "%fold_output%\!end_folder!" >NUL 2>&1
+move "%w_folder%\*.ns*" "%fold_output%\!end_folder!" >NUL 2>&1
+if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%fold_output%\!end_folder!\%filename%.nsp" )
+endlocal
+RD /S /Q "%w_folder%" >NUL 2>&1
+echo DONE
+call :thumbup
+call :delay
+goto end_xci_manual
+
 :end_xci_manual
 exit /B
 
@@ -748,7 +1221,7 @@ for /f "tokens=*" %%f in (list.txt) do (
 set /a conta=!conta! + 1
 )
 echo ...................................................
-echo Encore !conta! fichiers à traiter.
+echo STILL !conta! FILES TO PROCESS
 echo ...................................................
 PING -n 2 127.0.0.1 >NUL 2>&1
 set /a conta=0
@@ -766,7 +1239,7 @@ if exist %w_folder% RD /S /Q "%w_folder%" >NUL 2>&1
 cls
 call :program_logo
 echo -----------------------------------------------
-echo Mode MULTI-réempactage activé.
+echo MULTI-REPACK MODE ACTIVATED
 echo -----------------------------------------------
 if exist "mlist.txt" goto multi_prevlist
 goto multi_manual_INIT
@@ -783,43 +1256,44 @@ if !conta! LEQ 0 ( del mlist.txt )
 endlocal
 if not exist "mlist.txt" goto multi_manual_INIT
 ECHO .......................................................
-ECHO Une précédente liste a été trouvée. Que souhaitez-vous faire?
+ECHO A PREVIOUS LIST WAS FOUND. WHAT DO YOU WANT TO DO?
 :multi_prevlist0
 ECHO .......................................................
-echo Tapez "1" pour lancer le traitement à partir de la liste.
-echo Tapez "2" pour supprimer la liste et en faire une nouvelle.
-echo Tapez "3" pour continuer à constuire la liste.
+echo Input "1" to auto-start processing from the previous list
+echo Input "2" to erase list and make a new one.
+echo Input "3" to continue building the previous list
 echo .......................................................
-echo NOTE: En tapant 3 vous verrez la liste précédente que vous pourrez modifier avant de lancer son traitement.
+echo NOTE: By pressing 3 you'll see the previous list 
+echo before starting the processing the files and you will 
+echo be able to add and delete items from the list
 echo.
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Or Input "0" to return to the MODE SELECTION MENU
 ECHO *************************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 if /i "%bs%"=="3" goto multi_showlist
 if /i "%bs%"=="2" goto multi_delist
 if /i "%bs%"=="1" goto multi_start_cleaning
 if /i "%bs%"=="0" goto manual_Reentry
 echo.
-echo Choix inexistant.
+echo BAD CHOICE
 goto multi_prevlist0
 :multi_delist
 del mlist.txt
 cls
 call :program_logo
 echo -----------------------------------------------
-echo Mode MULTI-réempactage activé.
+echo MULTI-REPACK MODE ACTIVATED
 echo -----------------------------------------------
 echo ..................................
-echo Vous avez décidé de commencer une nouvelle liste.
+echo YOU'VE DECIDED TO START A NEW LIST
 echo ..................................
 :multi_manual_INIT
 endlocal
 ECHO ***********************************************
-echo Tappez "0" pour revenir à la sélection du mode.
+echo Input "0" to return to the MODE SELECTION MENU
 ECHO ***********************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%mlist.txt" -uin "%uinput%" -ff "uinput"
@@ -832,19 +1306,19 @@ if /i "%eval%"=="0" goto manual_Reentry
 goto multi_checkagain
 echo.
 :multi_checkagain
-echo Que souhaitez-vous faire?
+echo WHAT DO YOU WANT TO DO?
 echo ......................................................................
-echo "Glissez un autre fichier et appuyer sur entrer pour l'ajouter à la liste."
+echo "DRAG ANOTHER FILE OR FOLDER AND PRESS ENTER TO ADD ITEMS TO THE LIST"
 echo.
-echo Tapez "1" pour commencer le traitement.
-echo Tapez "2" pour configurer un logo personnalisé venant d'un nsp/nca.
-echo Tapez "e" pour quitter.
-echo Tapez "i" pour voir la liste des fichiers à traiter.
-echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
-echo Tapez "z" pour supprimer toute la liste.
+echo Input "1" to start processing
+REM echo Input "2" to set a custom logo from a nsp/nca
+echo Input "e" to exit
+echo Input "i" to see list of files to process
+echo Input "r" to remove some files (counting from bottom)
+echo Input "z" to remove the whole list
 echo ......................................................................
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Or Input "0" to return to the MODE SELECTION MENU
 ECHO *************************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%mlist.txt" -uin "%uinput%" -ff "uinput"
@@ -856,7 +1330,7 @@ endlocal
 
 if /i "%eval%"=="0" goto manual_Reentry
 if /i "%eval%"=="1" goto multi_start_cleaning
-if /i "%eval%"=="2" goto multi_set_clogo
+REM if /i "%eval%"=="2" goto multi_set_clogo
 if /i "%eval%"=="e" goto salida
 if /i "%eval%"=="i" goto multi_showlist
 if /i "%eval%"=="r" goto multi_r_files
@@ -866,8 +1340,7 @@ goto multi_checkagain
 
 
 :multi_r_files
-set bs=
-set /p bs="Entrez le nombre de fichiers à supprimer de la liste en partant du bas: "
+set /p bs="Input the number of files you want to remove (from bottom): "
 set bs=%bs:"=%
 
 setlocal enabledelayedexpansion
@@ -900,10 +1373,10 @@ endlocal
 cls
 call :program_logo
 echo -------------------------------------------------
-echo Mode MULTI-réempactage activé.
+echo MULTI-REPACK MODE ACTIVATED
 echo -------------------------------------------------
 ECHO -------------------------------------------------
-ECHO                 Fichiers à traiter:
+ECHO                FILES TO PROCESS 
 ECHO -------------------------------------------------
 for /f "tokens=*" %%f in (mlist.txt) do (
 echo %%f
@@ -914,86 +1387,100 @@ for /f "tokens=*" %%f in (mlist.txt) do (
 set /a conta=!conta! + 1
 )
 echo .................................................
-echo Vous avez ajouté !conta! fichiers à traiter.
+echo YOU'VE ADDED !conta! FILES TO PROCESS
 echo .................................................
 endlocal
 
 goto multi_checkagain
 
 :m_cl_wrongchoice
-echo Choix inexistant.
+echo wrong choice
 echo ............
 :multi_start_cleaning
 echo *******************************************************
-echo Choisir quoi faire après le traitement des fichiers:
+echo CHOOSE WHAT TO DO AFTER PROCESSING THE SELECTED FILES
 echo *******************************************************
-echo Tapez "1" pour réempacter les fichiers de la liste en nsp.
-echo Tapez "2" pour réempacter les fichiers de la liste en xci.
-echo Tapez "3" pour réempacter les fichiers de la liste dans les deux formats.
+echo STANDARD CRYPTO OPTIONS:
+echo Input "1" to repack list as Ticketless NSP
+echo Input "2" to repack list as XCI
+echo Input "3" to repack list as both T-NSP and XCI
+echo.
+echo SPECIAL OPTIONS:
+echo Input "4" to as NSP with only Unmodified eshop nca files
+echo Input "5" to repack list as both NSP-U and XCI
 echo.
 ECHO *****************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
+echo Or Input "b" to return to the option list
 ECHO *****************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 set vrepack=none
 if /i "%bs%"=="b" goto multi_checkagain
-if /i "%bs%"=="1" set "vrepack=nsp"
+if /i "%bs%"=="1" set "vrepack=cnsp"
 if /i "%bs%"=="2" set "vrepack=xci"
-if /i "%bs%"=="3" set "vrepack=both"
+if /i "%bs%"=="3" set "vrepack=cboth"
+
+if /i "%bs%"=="4" set "vrepack=nsp"
+if /i "%bs%"=="4" set "skipRSVprompt=true"
+if /i "%bs%"=="5" set "vrepack=both"
+
 if %vrepack%=="none" goto m_cl_wrongchoice
 :m_RSV_wrongchoice
 if /i "%skipRSVprompt%"=="true" set "patchRSV=-pv false"
+if /i "%skipRSVprompt%"=="true" set "vkey=-kp false"
 if /i "%skipRSVprompt%"=="true" goto m_KeyChange_skip
 echo *******************************************************
-echo Souhaitez-vous patcher la version requise du système?
+echo DO YOU WANT TO PATCH THE REQUIRED-SYSTEM-VERSION
 echo *******************************************************
-echo Si vous choisissez de la patcher la version nécessaire sera allignée sur la version de la cryptographie des NCA donc une demande de mise à jour ne sera effectué que si nécessaire.
+echo If you choose to patch it will be set to match the 
+echo nca crypto so it'll only ask to update your system
+echo in the case it's necessary
 echo.
-echo Tapez "0" pour ne pas "patcher" la version requise du système.
-echo Tapez "1" pour "patcher" la version requise du système.
+echo Input "0" to don't patch the Required System Version
+echo Input "1" to "PATCH" the Required System Version
 echo.
 ECHO *****************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
+echo Or Input "b" to return to the option list
 ECHO *****************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 set patchRSV=none
 if /i "%bs%"=="b" goto multi_checkagain
 if /i "%bs%"=="0" set "patchRSV=-pv false"
+if /i "%bs%"=="0" set "vkey=-kp false"
 if /i "%bs%"=="1" set "patchRSV=-pv true"
-if /i "%patchRSV%"=="none" echo Choix inexistant.
+if /i "%patchRSV%"=="none" echo WRONG CHOICE
 if /i "%patchRSV%"=="none" goto m_RSV_wrongchoice
 if /i "%bs%"=="0" goto m_KeyChange_skip 
 
 :m_KeyChange_wrongchoice
 echo *******************************************************
-echo Régler la KEYGENERATION\RSV maximale autorisée.
+echo SET MAXIMUM KEYGENERATION\RSV ALOWED
 echo *******************************************************
-echo La keygeneration et le RSV seront utilisés selon ce paramètre de la keygeneration si la clé trouvé est supérieur à celle définie ici.
-echo Cela ne fonctionne pas toujours sous les firmwares inférieurs que celui requis par le fichier.
+echo Depending on your choice keygeneration and RSV will be
+echo lowered to the corresponding keygeneration range in case
+echo read keygeneration value is bigger than the one specified
+echo in the program.
+echo THIS WON'T ALWAYS WORK TO LOWER THE FIRMWARE REQUIREMENT.
 echo.
-echo Tapez "f" pour ne pas changer la keygeneration
-echo Tapez "0" pour changer la keygeneration à 0 (FW 1.0)
-echo Tapez "1" pour changer la keygeneration à 1 (FW 2.0-2.3)
-echo Tapez "2" pour changer la keygeneration à 2 (FW 3.0)
-echo Tapez "3" pour changer la keygeneration à 3 (FW 3.0.1-3.02)
-echo Tapez "4" pour changer la keygeneration à 4 (FW 4.0.0-4.1.0)
-echo Tapez "5" pour changer la keygeneration à 5 (FW 5.0.0-5.1.0)
-echo Tapez "6" pour changer la keygeneration à 6 (FW 6.0.0-6.1.0)
-echo Tapez "7" pour changer la keygeneration à 7 (FW 6.2.0)
-echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-7.0.1)
+echo Input "f" to not change the keygeneration
+echo Input "0" to change top keygeneration to 0 (FW 1.0)
+echo Input "1" to change top keygeneration to 1 (FW 2.0-2.3)
+echo Input "2" to change top keygeneration to 2 (FW 3.0)
+echo Input "3" to change top keygeneration to 3 (FW 3.0.1-3.02)
+echo Input "4" to change top keygeneration to 4 (FW 4.0.0-4.1.0)
+echo Input "5" to change top keygeneration to 5 (FW 5.0.0-5.1.0)
+echo Input "6" to change top keygeneration to 6 (FW 6.0.0-6.1.0)
+echo Input "7" to change top keygeneration to 7 (FW 6.2.0)
+echo Input "8" to change top keygeneration to 8 (FW 7.0.0-7.0.1)
 echo.
 ECHO *****************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
+echo Or Input "b" to return to the option list
 ECHO *****************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 set "vkey=none"
 if /i "%bs%"=="b" goto multi_checkagain
@@ -1016,18 +1503,70 @@ if /i "%bs%"=="7" set "vkey=-kp 7"
 if /i "%bs%"=="7" set "capRSV=--RSVcap 404750336"
 if /i "%bs%"=="8" set "vkey=-kp 8"
 if /i "%bs%"=="8" set "capRSV=--RSVcap 469762048"
-if /i "%vkey%"=="none" echo Choix inexistant.
+if /i "%vkey%"=="none" echo WRONG CHOICE
 if /i "%vkey%"=="none" goto m_KeyChange_wrongchoice
 
 :m_KeyChange_skip
+if "%fatype%" EQU "-fat fat32" goto m_KeyChange_skip_fat32
+REM For the current beta the filenames are calculted. This code remains commented for future reintegration
+rem echo *******************************************************
+rem echo ENTER FINAL FILENAME FOR THE OUTPUT FILE
+rem echo *******************************************************
+rem echo.
+rem echo Or Input "b" to return to the option list
+rem echo.
+rem set /p bs="Please type the name without extension: "
+rem set finalname=%bs:"=%
+rem if /i "%finalname%"=="b" goto multi_checkagain
+
+cls
+if "%vrepack%" EQU "cnsp" call :program_logo
+if "%vrepack%" EQU "cnsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t cnsp -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+
+if "%vrepack%" EQU "xci" call :program_logo
+if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t xci -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+
+if "%vrepack%" EQU "nsp" call :program_logo
+if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t nsp -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+
+if "%vrepack%" EQU "cboth" call :program_logo
+if "%vrepack%" EQU "cboth" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t xci -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+if "%vrepack%" EQU "cboth" call :program_logo
+if "%vrepack%" EQU "cboth" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t cnsp -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+
+if "%vrepack%" EQU "both" call :program_logo
+if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t nsp -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+if "%vrepack%" EQU "both" call :program_logo
+if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -fat exfat -fx files %skdelta% -t xci -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -dmul "calculate" )
+
+setlocal enabledelayedexpansion
+if not exist "%fold_output%" MD "%fold_output%" >NUL 2>&1
+set "gefolder=%fold_output%\!end_folder!"
+if "%oforg%" EQU "inline" ( set "gefolder=%fold_output%" )
+MD "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.xci" "%gefolder%" >NUL 2>&1
+move  "%w_folder%\*.xc*" "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.nsp" "%gefolder%" >NUL 2>&1
+move "%w_folder%\*.ns*" "%gefolder%" >NUL 2>&1
+if exist "%w_folder%\*.zip" ( MD "%zip_fold%" ) >NUL 2>&1
+move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
+if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -tfile "%w_folder%\filename.txt" -ifo "%w_folder%\archfolder" -archive "%gefolder%" )
+endlocal
+RD /S /Q "%w_folder%" >NUL 2>&1
+ECHO ---------------------------------------------------
+ECHO *********** ALL FILES WERE PROCESSED! *************
+ECHO ---------------------------------------------------
+goto m_exit_choice
+
+:m_KeyChange_skip_fat32
+CD /d "%prog_dir%"
 echo *******************************************************
-echo Entrez le nom du fichier final qui sera créé.
+echo ENTER FINAL FILENAME FOR THE OUTPUT FILE
 echo *******************************************************
 echo.
-echo Ou tapez "b" pour revenir aux options de la liste.
+echo Or Input "b" to return to the option list
 echo.
-set bs=
-set /p bs="Tapez le nom du fichier sans l'extention ou choisissez une option: "
+set /p bs="Please type the name without extension: "
 set finalname=%bs:"=%
 if /i "%finalname%"=="b" goto multi_checkagain
 
@@ -1067,19 +1606,20 @@ if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfold
 endlocal
 RD /S /Q "%w_folder%" >NUL 2>&1
 ECHO ---------------------------------------------------
-ECHO *********** Tout les fichiers ont été traités! *************
+ECHO *********** ALL FILES WERE PROCESSED! *************
 ECHO ---------------------------------------------------
+goto m_exit_choice
+
 :m_exit_choice
 if exist mlist.txt del mlist.txt
 if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
 if /i "%va_exit%"=="true" ( PING -n 2 127.0.0.1 >NUL 2>&1 )
 if /i "%va_exit%"=="true" goto salida
 echo.
-echo Tapez "0" pour revenir à la sélection du mode.
-echo Tapez "1" pour quitter le script.
+echo Input "0" to go back to the mode selection
+echo Input "1" to exit the program
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 if /i "%bs%"=="0" goto manual_Reentry
 if /i "%bs%"=="1" goto salida
@@ -1090,10 +1630,10 @@ goto m_exit_choice
 set "showname=%orinput%"
 call :processing_message
 call :squirrell
-%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" -tfile "%prog_dir%mlist.txt" %nf_cleaner% "%orinput%"
+%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%orinput%"
 if "%zip_restore%" EQU "true" ( set "ziptarget=%orinput%" )
 if "%zip_restore%" EQU "true" ( call :makezip )
-echo Terminé.
+echo DONE
 call :thumbup
 call :delay
 exit /B
@@ -1108,10 +1648,10 @@ MD "%w_folder%\normal" >NUL 2>&1
 MD "%w_folder%\update" >NUL 2>&1
 call :getname
 echo ------------------------------------
-echo Extraction de la partition secure du xci...
+echo Extracting secure partition from xci
 echo ------------------------------------
-%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" -tfile "%prog_dir%mlist.txt" %nf_cleaner% "%orinput%"
-echo Terminé.
+%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%orinput%"
+echo DONE
 call :thumbup
 call :delay
 exit /B
@@ -1123,29 +1663,29 @@ for /f "tokens=*" %%f in (mlist.txt) do (
 set /a conta=!conta! + 1
 )
 echo ...................................................
-echo Encore !conta! fichiers à traiter.
+echo STILL !conta! FILES TO PROCESS
 echo ...................................................
 PING -n 2 127.0.0.1 >NUL 2>&1
 set /a conta=0
 endlocal
 exit /B
 
-
+REM the logo function has been disabled temporarly for the current beta, the code remains here
+REM unaccessed for future modification and reintegration
 :multi_set_clogo
 cls
 call :program_logo
 echo ------------------------------------------
-echo Définissez un logo personnalisé ou un jeu prédominant.
+echo Set custom logo or predominant game
 echo ------------------------------------------
-echo Plus approprié pour les fichiers XCI. 
-echo Actuellement, les logos personnalisé et les noms sont définis en glissant un nsp ou un control nca.
-echo En faisant ainsi, le script va copier le control nca dans la partition Normal.
-echo Si vous n'ajoutez pas un logo personnalisé, celui-ci sera ajouté via un des fichiers ajoutés pour le réempactage.
+echo Indicated for multi-game xci. 
+echo Currently custom logos and names are set dragging a nsp or control nca
+echo That way the program will copy the control nca in the normal partition
+echo If you don't add a custom logo the logo will be set from one of your games
 echo ..........................................
-echo Tapez "b" pour revenir à la construction de la liste.
+echo Input "b" to go back to the list builder
 echo ..........................................
-set bs=
-set /p bs="Ou glissez un fichier NSP ou NCA sur la fenêtre et appuyez sur entrer: "
+set /p bs="OR DRAG A NSP OR NCA FILE OVER THE WINDOW AND PRESS ENTER: "
 set bs=%bs:"=%
 if /i "%bs%"=="b" ( goto multi_checkagain )
 if exist "%bs%" ( goto multi_checklogo )
@@ -1174,13 +1714,13 @@ if exist "%w_folder%\normal" RD /S /Q "%w_folder%\normal" >NUL 2>&1
 set /p nsptype=<"%w_folder%\nsptype.txt"
 del "%w_folder%\nsptype.txt"
 if "%nsptype%" EQU "DLC" echo.
-if "%nsptype%" EQU "DLC" echo ---Le NSP n'a pas de CONTROL NCA---
+if "%nsptype%" EQU "DLC" echo ---NSP DOESN'T HAVE A CONTROL NCA---
 if "%nsptype%" EQU "DLC" echo.
 if "%nsptype%" EQU "DLC" ( goto multi_set_clogo )
 MD "%w_folder%\normal" >NUL 2>&1
 %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\normal" --NSP_copy_nca_control "%custlogo%"
 echo ................
-echo "Logo extrait."
+echo "EXTRACTED LOGO"
 echo ................
 echo.
 goto multi_checkagain
@@ -1193,7 +1733,7 @@ if exist "%w_folder%\normal" RD /S /Q "%w_folder%\normal" >NUL 2>&1
 set /p ncatype=<"%w_folder%\ncatype.txt"
 del "%w_folder%\ncatype.txt"
 if "%ncatype%" NEQ "Content.CONTROL" echo.
-if "%ncatype%" NEQ "Content.CONTROL" echo ---Le NCA n'est pas un type CONTROL ---
+if "%ncatype%" NEQ "Content.CONTROL" echo ---NCA IS NOT A CONTROL TYPE---
 if "%ncatype%" NEQ "Content.CONTROL" echo.
 if "%ncatype%" NEQ "Content.CONTROL" ( goto multi_set_clogo )
 MD "%w_folder%\normal" >NUL 2>&1
@@ -1214,7 +1754,7 @@ cls
 call :program_logo
 if exist %w_folder% RD /S /Q "%w_folder%" >NUL 2>&1
 echo -----------------------------------------------
-echo Mode split activé.
+echo SPLITTER MODE ACTIVATED
 echo -----------------------------------------------
 if exist "splist.txt" goto sp_prevlist
 goto sp_manual_INIT
@@ -1231,43 +1771,44 @@ if !conta! LEQ 0 ( del splist.txt )
 endlocal
 if not exist "splist.txt" goto sp_manual_INIT
 ECHO .......................................................
-ECHO Une précédente liste a été trouvée. Que souhaitez-vous faire?
+ECHO A PREVIOUS LIST WAS FOUND. WHAT DO YOU WANT TO DO?
 :sp_prevlist0
 ECHO .......................................................
-echo Tapez "1" pour lancer le traitement à partir de la liste.
-echo Tapez "2" pour supprimer la liste et en faire une nouvelle.
-echo Tapez "3" pour continuer à constuire la liste.
+echo Input "1" to auto-start processing from the previous list
+echo Input "2" to erase list and make a new one.
+echo Input "3" to continue building the previous list
 echo .......................................................
-echo NOTE: En tapant 3 vous verrez la liste précédente que vous pourrez modifier avant de lancer son traitement.
+echo NOTE: By pressing 3 you'll see the previous list 
+echo before starting the processing the files and you will 
+echo be able to add and delete items from the list
 echo.
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Or Input "0" to return to the MODE SELECTION MENU
 ECHO *************************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 if /i "%bs%"=="3" goto sp_showlist
 if /i "%bs%"=="2" goto sp_delist
 if /i "%bs%"=="1" goto sp_start_cleaning
 if /i "%bs%"=="0" goto manual_Reentry
 echo.
-echo Choix inexistant.
+echo BAD CHOICE
 goto sp_prevlist0
 :sp_delist
 del splist.txt
 cls
 call :program_logo
 echo -----------------------------------------------
-echo Mode split activé.
+echo SPLITTER MODE ACTIVATED
 echo -----------------------------------------------
 echo ..................................
-echo Vous avez décidé de commencer une nouvelle liste.
+echo YOU'VE DECIDED TO START A NEW LIST
 echo ..................................
 :sp_manual_INIT
 endlocal
 ECHO ***********************************************
-echo Tappez "0" pour revenir à la sélection du mode.
+echo Input "0" to return to the MODE SELECTION MENU
 ECHO ***********************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%splist.txt" -uin "%uinput%" -ff "uinput"
@@ -1281,18 +1822,18 @@ if /i "%eval%"=="0" goto manual_Reentry
 
 echo.
 :sp_checkagain
-echo Que souhaitez-vous faire?
+echo WHAT DO YOU WANT TO DO?
 echo ......................................................................
-echo "Glissez un autre fichier et appuyer sur entrer pour l'ajouter à la liste."
+echo "DRAG ANOTHER FILE OR FOLDER AND PRESS ENTER TO ADD ITEMS TO THE LIST"
 echo.
-echo Tapez "1" pour commencer le traitement.
-echo Tapez "e" pour quitter.
-echo Tapez "i" pour voir la liste des fichiers à traiter.
-echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
-echo Tapez "z" pour supprimer toute la liste.
+echo Input "1" to start processing
+echo Input "e" to exit
+echo Input "i" to see list of files to process
+echo Input "r" to remove some files (counting from bottom)
+echo Input "z" to remove the whole list
 echo ......................................................................
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Or Input "0" to return to the MODE SELECTION MENU
 ECHO *************************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%splist.txt" -uin "%uinput%" -ff "uinput"
@@ -1312,8 +1853,7 @@ if /i "%eval%"=="z" del splist.txt
 goto sp_checkagain
 
 :sp_r_files
-set bs=
-set /p bs="Entrez le nombre de fichiers à supprimer de la liste en partant du bas: "
+set /p bs="Input the number of files you want to remove (from bottom): "
 set bs=%bs:"=%
 
 setlocal enabledelayedexpansion
@@ -1346,10 +1886,10 @@ endlocal
 cls
 call :program_logo
 echo -------------------------------------------------
-echo Mode split activé.
+echo SPLITTER MODE ACTIVATED
 echo -------------------------------------------------
 ECHO -------------------------------------------------
-ECHO                 Fichiers à traiter:
+ECHO                FILES TO PROCESS 
 ECHO -------------------------------------------------
 for /f "tokens=*" %%f in (splist.txt) do (
 echo %%f
@@ -1360,29 +1900,28 @@ for /f "tokens=*" %%f in (splist.txt) do (
 set /a conta=!conta! + 1
 )
 echo .................................................
-echo Vous avez ajouté !conta! fichiers à traiter.
+echo YOU'VE ADDED !conta! FILES TO PROCESS
 echo .................................................
 endlocal
 
 goto sp_checkagain
 
 :sp_cl_wrongchoice
-echo Choix inexistant.
+echo wrong choice
 echo ............
 :sp_start_cleaning
 echo *******************************************************
-echo Choisir quoi faire après le traitement des fichiers:
+echo CHOOSE WHAT TO DO AFTER PROCESSING THE SELECTED FILES
 echo *******************************************************
-echo Tapez "1" pour réempacter les fichiers de la liste en nsp.
-echo Tapez "2" pour réempacter les fichiers de la liste en xci.
-echo Tapez "3" pour réempacter les fichiers de la liste dans les deux formats.
+echo Input "1" to repack list as nsp
+echo Input "2" to repack list as xci
+echo Input "3" to repack list as both
 echo.
 ECHO ******************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
+echo Or Input "b" to return to the list options
 ECHO ******************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 set vrepack=none
 if /i "%bs%"=="b" goto sp_checkagain
@@ -1416,7 +1955,7 @@ endlocal
 call :sp_contador_NF
 )
 ECHO ---------------------------------------------------
-ECHO *********** Tout les fichiers ont été traités! *************
+ECHO *********** ALL FILES WERE PROCESSED! *************
 ECHO ---------------------------------------------------
 :SPLIT_exit_choice
 if exist splist.txt del splist.txt
@@ -1424,26 +1963,68 @@ if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
 if /i "%va_exit%"=="true" ( PING -n 2 127.0.0.1 >NUL 2>&1 )
 if /i "%va_exit%"=="true" goto salida
 echo.
-echo Tapez "0" pour revenir à la sélection du mode.
-echo Tapez "1" pour quitter le script.
+echo Input "0" to go back to the mode selection
+echo Input "1" to exit the program
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 if /i "%bs%"=="0" goto manual_Reentry
 if /i "%bs%"=="1" goto salida
 goto SPLIT_exit_choice
 
 :split_content
+if "%fatype%" EQU "-fat fat32" goto split_content_fat32
 set "showname=%orinput%"
 set "sp_repack=%vrepack%"
 if exist "%w_folder%" RD /S /Q  "%w_folder%" >NUL 2>&1
 MD "%w_folder%" >NUL 2>&1
 call :processing_message
 call :squirrell
-if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% -o "%w_folder%" %fatype% %fexport% -t "nsp" -dspl "%orinput%" -tfile "%prog_dir%splist.txt")
-if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% -o "%w_folder%" %fatype% %fexport% -t "xci" -dspl "%orinput%" -tfile "%prog_dir%splist.txt")
-if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% -o "%w_folder%" %fatype% %fexport% -t "both" -dspl "%orinput%" -tfile "%prog_dir%splist.txt")
+if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% -o "%w_folder%" -fat exfat -fx files -t "nsp" -dspl "%orinput%" -tfile "%prog_dir%splist.txt")
+if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% -o "%w_folder%" -fat exfat -fx files -t "xci" -dspl "%orinput%" -tfile "%prog_dir%splist.txt")
+if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% -o "%w_folder%" -fat exfat -fx files -t "both" -dspl "%orinput%" -tfile "%prog_dir%splist.txt")
+
+call :thumbup
+call :delay
+exit /B
+
+:split_content_fat32
+CD /d "%prog_dir%"
+set "showname=%orinput%"
+set "sp_repack=%vrepack%"
+if exist "%w_folder%" RD /S /Q  "%w_folder%" >NUL 2>&1
+MD "%w_folder%" >NUL 2>&1
+call :processing_message
+call :squirrell
+%pycommand% "%nut%" %buffer% -o "%w_folder%" --splitter "%orinput%" -pe "secure"
+for /f "usebackq tokens=*" %%f in ("%w_folder%\dirlist.txt") do (
+setlocal enabledelayedexpansion
+rem echo "!sp_repack!"
+set "tfolder=%%f"
+set "fname=%%~nf"
+set "test=%%~nf"
+set test=!test:[DLC]=!
+rem echo !test!
+rem echo "!test!"
+rem echo "!fname!"
+if "!test!" NEQ "!fname!" ( set "sp_repack=nsp" )
+rem echo "!sp_repack!"
+set "test=%%~nf"
+set test=!test:[UPD]=!
+rem echo !test!
+rem echo "!test!"
+rem echo "!fname!"
+if "!test!" NEQ "!fname!" ( set "sp_repack=nsp" )
+rem echo "!sp_repack!"
+if "!sp_repack!" EQU "nsp" ( call "%nsp_lib%" "sp_convert" "%w_folder%" "!tfolder!" "!fname!" )
+if "!sp_repack!" EQU "xci" ( call "%xci_lib%" "sp_repack" "%w_folder%" "!tfolder!" "!fname!" )
+if "!sp_repack!" EQU "both" ( call "%nsp_lib%" "sp_convert" "%w_folder%" "!tfolder!" "!fname!" )
+if "!sp_repack!" EQU "both" ( call "%xci_lib%" "sp_repack" "%w_folder%" "!tfolder!" "!fname!" )
+endlocal
+more +1 "%w_folder%\dirlist.txt">"%w_folder%\dirlist.txt.new"
+move /y "%w_folder%\dirlist.txt.new" "%w_folder%\dirlist.txt" >nul
+)
+del "%w_folder%\dirlist.txt" >NUL 2>&1
 
 call :thumbup
 call :delay
@@ -1456,443 +2037,12 @@ for /f "tokens=*" %%f in (splist.txt) do (
 set /a conta=!conta! + 1
 )
 echo ...................................................
-echo Encore !conta! fichiers àtraiter.
+echo STILL !conta! FILES TO PROCESS
 echo ...................................................
 PING -n 2 127.0.0.1 >NUL 2>&1
 set /a conta=0
 endlocal
 exit /B
-
-::///////////////////////////////////////////////////
-::///////////////////////////////////////////////////
-::UPDATE MODE -> FIRST APPROACH
-::///////////////////////////////////////////////////
-::///////////////////////////////////////////////////
-
-:UPDMODE
-cls
-call :program_logo
-if exist %w_folder% RD /S /Q "%w_folder%" >NUL 2>&1
-echo -------------------------------------------------------------------
-echo                      Mode mise à jour activé.
-echo -------------------------------------------------------------------
-if exist "UPDlist.txt" goto upd_prevlist
-goto upd_ADD_BASE
-:upd_prevlist
-set conta=0
-for /f "tokens=*" %%f in (UPDlist.txt) do (
-echo %%f
-) >NUL 2>&1
-setlocal enabledelayedexpansion
-for /f "tokens=*" %%f in (UPDlist.txt) do (
-set /a conta=!conta! + 1
-) >NUL 2>&1
-if !conta! LEQ 0 ( del UPDlist.txt )
-endlocal
-:upd_ADD_BASE
-ECHO.
-echo Tappez "0" pour revenir à la sélection du mode.
-ECHO.
-ECHO *******************************************************************
-ECHO                         Indiquez le contenu de base. 
-ECHO *******************************************************************
-ECHO.
-set bs=
-set /p bs="Glissez le fichier que vous souhaitez mettre à jour ou choisissez une option et appuyez sur "Entrer": "
-
-set basefile=%bs:"=%
-if /i "%basefile%"=="0" goto manual_Reentry
-
-set "test=%basefile%"
-set "basecheck=false" 
-set test=%test:.xci=%
-if "%test%" NEQ "%basefile%" ( set "basecheck=true" )
-set "test=%basefile%"
-set test=%test:.nsp=%
-if "%test%" NEQ "%basefile%" ( set "basecheck=true" )
-::echo %basecheck%
-if "%basecheck%" EQU "false" ( 
-echo. 
-echo ---Mauvais type de fichier. Veuillez réessayer---
-echo. 
-)
-if "%basecheck%" EQU "false" ( goto upd_ADD_BASE)
-if not exist "UPDlist.txt" goto upd_ADD_UPD_FILES
-ECHO ..................................................................
-ECHO Une précédente liste de fichiers à mettre à jour a été trouvée. Que souhaitez-vous faire?
-:upd_prevlist0
-ECHO ..................................................................
-echo Tapez "1" pour commencer à mettre à jour le contenu de base.
-echo Tapez "2" pour supprimer la liste et en faire une nouvelle.
-echo Tapez "3" pour continuer à constuire la liste.
-echo ..................................................................
-echo NOTE: En appuyant sur 3 vous verrez la liste précédente que vous pourrez modifier avant de lancer son traitement.
-echo.
-ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
-ECHO *************************************************
-echo.
-set bs=
-set /p bs="Faites votre choix: "
-set bs=%bs:"=%
-if /i "%bs%"=="3" goto upd_showlist
-if /i "%bs%"=="2" goto upd_delist
-if /i "%bs%"=="1" goto upd_starts
-if /i "%bs%"=="0" goto manual_Reentry
-echo.
-echo Choix inexistant.
-goto upd_prevlist0
-:upd_delist
-del UPDlist.txt
-cls
-call :program_logo
-echo -------------------------------------------------------------------
-echo                      Mode mise à jour activé.
-echo -------------------------------------------------------------------
-echo ..................................
-echo Vous avez décidé de commencer une nouvelle liste.
-echo ..................................
-:upd_ADD_UPD_FILES
-ECHO.
-ECHO *******************************************************************
-ECHO Veuillez indiquer les fichiers que vous souhaitez ajouter pour mettre à jour le contenu de base.
-ECHO *******************************************************************
-ECHO.
-echo Tappez "0" pour revenir à la sélection du mode.
-ECHO.
-%pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%UPDlist.txt" -uin "%uinput%" -ff "uinput"
-set /p eval=<"%uinput%"
-set eval=%eval:"=%
-if /i "%eval%"=="0" goto manual_Reentry
-goto upd_checkagain
-
-echo.
-:upd_checkagain
-echo.
-echo Que souhaitez-vous faire?
-echo ......................................................................
-echo "Glissez un autre fichier et appuyer sur entrer pour l'ajouter à la liste."
-echo.
-echo Tapez "1" pour commencer le traitement.
-echo Tapez "2" pour changer de contenu de base.
-echo Tapez "i" pour voir la liste des fichiers à traiter.
-echo Tapez "b" pour voir quel contenu de base est utilisé actuellement.
-echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
-echo Tapez "z" pour supprimer toute la liste.
-echo Tapez "e" pour quitter.
-echo ......................................................................
-ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
-ECHO *************************************************
-echo.
-%pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%UPDlist.txt" -uin "%uinput%" -ff "uinput"
-set /p eval=<"%uinput%"
-set eval=%eval:"=%
-setlocal enabledelayedexpansion
-echo+ >"%uinput%"
-endlocal
-
-if /i "%eval%"=="0" goto manual_Reentry
-if /i "%eval%"=="1" goto upd_starts
-if /i "%eval%"=="2" goto upd_ADD_BASE
-if /i "%eval%"=="e" goto salida
-if /i "%eval%"=="i" goto upd_showlist
-if /i "%eval%"=="b" goto upd_showbase
-if /i "%eval%"=="r" goto upd_r_files
-if /i "%eval%"=="z" del UPDlist.txt
-goto upd_checkagain
-
-
-:upd_showbase
-cls
-call :program_logo
-ECHO -------------------------------------------------
-ECHO                Contenu de base 
-ECHO -------------------------------------------------
-echo %basefile%
-goto upd_checkagain
-
-:upd_r_files
-set bs=
-set /p bs="Entrez le nombre de fichiers à supprimer de la liste en partant du bas: "
-set bs=%bs:"=%
-
-setlocal enabledelayedexpansion
-set conta=
-for /f "tokens=*" %%f in (UPDlist.txt) do (
-set /a conta=!conta! + 1
-)
-
-set /a pos1=!conta!-!bs!
-set /a pos2=!conta!
-set string=
-
-:upd_update_list1
-if !pos1! GTR !pos2! ( goto :upd_update_list2 ) else ( set /a pos1+=1 )
-set string=%string%,%pos1%
-goto :upd_update_list1 
-:upd_update_list2
-set string=%string%,
-set skiplist=%string%
-Set "skip=%skiplist%"
-setlocal DisableDelayedExpansion
-(for /f "tokens=1,*delims=:" %%a in (' findstr /n "^" ^<UPDlist.txt'
-) do Echo=%skip%|findstr ",%%a," 2>&1>NUL ||Echo=%%b
-)>UPDlist.txt.new
-endlocal
-move /y "UPDlist.txt.new" "UPDlist.txt" >nul
-endlocal
-
-:upd_showlist
-cls
-call :program_logo
-echo -------------------------------------------------
-echo                      Mode mise à jour activé.
-echo -------------------------------------------------
-ECHO -------------------------------------------------
-ECHO                 Fichiers à traiter:
-ECHO -------------------------------------------------
-for /f "tokens=*" %%f in (UPDlist.txt) do (
-echo %%f
-)
-setlocal enabledelayedexpansion
-set conta=
-for /f "tokens=*" %%f in (UPDlist.txt) do (
-set /a conta=!conta! + 1
-)
-echo .................................................
-echo Vous avez ajouté !conta! fichiers à traiter.
-echo .................................................
-endlocal
-
-goto upd_checkagain
-
-:upd_wrongchoice1
-echo Choix inexistant.
-echo ............
-:upd_starts
-echo *******************************************************
-echo Comment souhaitez-vous procéder avec le fichier de base?
-echo *******************************************************
-echo Tapez "1" pour supprimer les mises à jour précédentes.
-echo Tapez "2" pour supprimer les anciens DLCs.
-echo Tapez "3" pour supprimer les précédentes mises à jour et DLCs.
-echo.
-ECHO ******************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
-echo.
-set bs=
-set /p bs="faites votre choix: "
-set bs=%bs:"=%
-set cskip=none
-if /i "%bs%"=="b" goto upd_checkagain
-if /i "%bs%"=="1" set "cskip=upd"
-if /i "%bs%"=="2" set "cskip=dlc"
-if /i "%bs%"=="3" set "cskip=both"
-if %cskip%=="none" goto upd_wrongchoice1
-goto upd_pack_choice
-:upd_wrongchoice2
-echo Choix inexistant.
-echo ............
-:upd_pack_choice
-echo *******************************************************
-echo Choisissez comment  réempacter le résultat.
-echo *******************************************************
-echo Tapez "1" pour réempacter le contenu en NSP.
-echo Tapez "2" pour réempacter le contenu en XCI.
-echo Tapez "3" pour réempacter le contenu  dans les deux formats.
-echo.
-ECHO ******************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
-echo.
-set bs=
-set /p bs="Faites votre choix: "
-set vrepack=none
-if /i "%bs%"=="b" goto upd_checkagain
-if /i "%bs%"=="1" set "vrepack=nsp"
-if /i "%bs%"=="2" set "vrepack=xci"
-if /i "%bs%"=="3" set "vrepack=both"
-if %vrepack%=="none" goto upd_pack_choice
-if /i "%skipRSVprompt%"=="true" set "patchRSV=-pv false"
-if /i "%skipRSVprompt%"=="true" goto upd_KeyChange_skip
-echo *******************************************************
-echo Souhaitez-vous patcher la version requise du système?
-echo *******************************************************
-echo Si vous choisissez de la patcher la version nécessaire sera allignée sur la version de la cryptographie des NCA donc une demande de mise à jour ne sera effectué que si nécessaire.
-echo.
-echo Tapez "0" pour ne pas "patcher" la version requise du système.
-echo Tapez "1" pour "patcher" la version requise du système.
-echo.
-ECHO ******************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
-echo.
-set bs=
-set /p bs="Faites votre choix: "
-set bs=%bs:"=%
-set patchRSV=none
-if /i "%bs%"=="b" goto upd_checkagain
-if /i "%bs%"=="0" set "patchRSV=-pv false"
-if /i "%bs%"=="1" set "patchRSV=-pv true"
-if /i "%patchRSV%"=="none" echo Choix inexistant.
-if /i "%patchRSV%"=="none" goto m_RSV_wrongchoice
-if /i "%bs%"=="0" goto upd_KeyChange_skip 
-
-:upd_KeyChange_wrongchoice
-echo *******************************************************
-echo Régler la KEYGENERATION\RSV maximale autorisée.
-echo *******************************************************
-echo La keygeneration et le RSV seront utilisés selon ce paramètre de la keygeneration si la clé trouvé est supérieur à celle définie ici.
-echo Cela ne fonctionne pas toujours sous les firmwares inférieurs que celui requis par le fichier.
-echo.
-echo Tapez "f" pour ne pas changer la keygeneration
-echo Tapez "0" pour changer la keygeneration à 0 (FW 1.0)
-echo Tapez "1" pour changer la keygeneration à 1 (FW 2.0-2.3)
-echo Tapez "2" pour changer la keygeneration à 2 (FW 3.0)
-echo Tapez "3" pour changer la keygeneration à 3 (FW 3.0.1-3.02)
-echo Tapez "4" pour changer la keygeneration à 4 (FW 4.0.0-4.1.0)
-echo Tapez "5" pour changer la keygeneration à 5 (FW 5.0.0-5.1.0)
-echo Tapez "6" pour changer la keygeneration à 6 (FW 6.0.0-6.1.0)
-echo Tapez "7" pour changer la keygeneration à 7 (FW 6.2.0)
-echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-7.0.1)
-echo.
-ECHO ******************************************
-echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
-echo.
-set bs=
-set /p bs="Faites votre choix: "
-set bs=%bs:"=%
-set "vkey=none"
-if /i "%bs%"=="b" goto upd_checkagain
-if /i "%bs%"=="f" set "vkey=-kp false"
-if /i "%bs%"=="0" set "vkey=-kp 0"
-if /i "%bs%"=="0" set "capRSV=--RSVcap 0"
-if /i "%bs%"=="1" set "vkey=-kp 1"
-if /i "%bs%"=="1" set "capRSV=--RSVcap 65796"
-if /i "%bs%"=="2" set "vkey=-kp 2"
-if /i "%bs%"=="2" set "capRSV=--RSVcap 201327002"
-if /i "%bs%"=="3" set "vkey=-kp 3"
-if /i "%bs%"=="3" set "capRSV=--RSVcap 201392178"
-if /i "%bs%"=="4" set "vkey=-kp 4"
-if /i "%bs%"=="4" set "capRSV=--RSVcap 268435656"
-if /i "%bs%"=="5" set "vkey=-kp 5"
-if /i "%bs%"=="5" set "capRSV=--RSVcap 335544750"
-if /i "%bs%"=="6" set "vkey=-kp 6"
-if /i "%bs%"=="6" set "capRSV=--RSVcap 402653494"
-if /i "%bs%"=="7" set "vkey=-kp 7"
-if /i "%bs%"=="7" set "capRSV=--RSVcap 404750336"
-if /i "%bs%"=="8" set "vkey=-kp 8"
-if /i "%bs%"=="8" set "capRSV=--RSVcap 469762048"
-if /i "%vkey%"=="none" echo Choix inexistant.
-if /i "%vkey%"=="none" goto m_KeyChange_wrongchoice
-
-:upd_KeyChange_skip
-cls
-call :program_logo
-
-if exist "%w_folder%" RD /S /Q "%w_folder%" >NUL 2>&1
-MD "%w_folder%" >NUL 2>&1
-%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" -cskip "%cskip%" --updbase "%basefile%"
-
-for %%i in ("%basefile%") do (
-set "filename=%%~ni"
-)
-call :getname
-
-for /f "tokens=*" %%f in (UPDlist.txt) do (
-set "name=%%~nf"
-set "filename=%%~nxf"
-set "orinput=%%f"
-if "%%~nxf"=="%%~nf.nsp" call :UPD_nsp_manual
-if "%%~nxf"=="%%~nf.xci" call :UPD_xci_manual
-more +1 "UPDlist.txt">"UPDlist.txt.new"
-move /y "UPDlist.txt.new" "UPDlist.txt" >nul
-call :UPD_contador_NF
-)
-set "filename=%end_folder%[multi]"
-if "%vrepack%" EQU "nsp" ( call "%nsp_lib%" "convert" "%w_folder%" )
-if "%vrepack%" EQU "xci" ( call "%xci_lib%" "repack" "%w_folder%" )
-if "%vrepack%" EQU "both" ( call "%nsp_lib%" "convert" "%w_folder%" )
-if "%vrepack%" EQU "both" ( call "%xci_lib%" "repack" "%w_folder%" )
-
-setlocal enabledelayedexpansion
-if not exist "%fold_output%" MD "%fold_output%" >NUL 2>&1
-set "gefolder=%fold_output%\!end_folder!"
-if "%oforg%" EQU "inline" ( set "gefolder=%fold_output%" )
-MD "%gefolder%" >NUL 2>&1
-move "%w_folder%\*.xci" "%gefolder%" >NUL 2>&1
-move  "%w_folder%\*.xc*" "%gefolder%" >NUL 2>&1
-move "%w_folder%\*.nsp" "%gefolder%" >NUL 2>&1
-move "%w_folder%\*.ns*" "%gefolder%" >NUL 2>&1
-if exist "%w_folder%\*.zip" ( MD "%zip_fold%" ) >NUL 2>&1
-move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
-if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%gefolder%\%filename%.nsp" )
-endlocal
-RD /S /Q "%w_folder%" >NUL 2>&1
-ECHO ---------------------------------------------------
-ECHO *********** Tout les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
-:UPD_exit_choice
-if exist UPDlist.txt del UPDlist.txt
-if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
-if /i "%va_exit%"=="true" ( PING -n 2 127.0.0.1 >NUL 2>&1 )
-if /i "%va_exit%"=="true" goto salida
-echo.
-echo Tapez "0" pour revenir à la sélection du mode.
-echo Tapez "1" pour quitter le script.
-echo.
-set bs=
-set /p bs="Faites votre choix: "
-set bs=%bs:"=%
-if /i "%bs%"=="0" goto manual_Reentry
-if /i "%bs%"=="1" goto salida
-goto UPD_exit_choice
-
-:UPD_nsp_manual
-set "showname=%orinput%"
-call :processing_message
-call :squirrell
-%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" -tfile "%prog_dir%UPDlist.txt" %nf_cleaner% "%orinput%"
-if "%zip_restore%" EQU "true" ( set "ziptarget=%orinput%" )
-if "%zip_restore%" EQU "true" ( call :makezip )
-call :thumbup
-call :delay
-exit /B
-
-:UPD_xci_manual
-set "showname=%orinput%"
-call :processing_message
-MD "%w_folder%" >NUL 2>&1
-MD "%w_folder%\secure" >NUL 2>&1
-MD "%w_folder%\normal" >NUL 2>&1
-MD "%w_folder%\update" >NUL 2>&1
-call :getname
-echo ------------------------------------
-echo Extraction de la partition secure du xci...
-echo ------------------------------------
-%pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" -tfile "%prog_dir%UPDlist.txt" %nf_cleaner% "%orinput%"
-echo Terminé.
-call :thumbup
-call :delay
-exit /B
-
-:UPD_contador_NF
-setlocal enabledelayedexpansion
-set /a conta=0
-for /f "tokens=*" %%f in (UPDlist.txt) do (
-set /a conta=!conta! + 1
-)
-echo ...................................................
-echo Encore !conta! fichiers à traiter.
-echo ...................................................
-PING -n 2 127.0.0.1 >NUL 2>&1
-set /a conta=0
-endlocal
-exit /B
-
 
 ::///////////////////////////////////////////////////
 ::///////////////////////////////////////////////////
@@ -1903,7 +2053,7 @@ exit /B
 cls
 call :program_logo
 echo -----------------------------------------------
-echo Mode génération de la base de données activé
+echo DATABASE GENERATION MODE ACTIVATED
 echo -----------------------------------------------
 if exist "DBL.txt" goto DBprevlist
 goto DBmanual_INIT
@@ -1920,46 +2070,47 @@ if !conta! LEQ 0 ( del DBL.txt )
 endlocal
 if not exist "DBL.txt" goto DBmanual_INIT
 ECHO .......................................................
-ECHO Une précédente liste a été trouvée. Que souhaitez-vous faire?
+ECHO A PREVIOUS LIST WAS FOUND. WHAT DO YOU WANT TO DO?
 :DBprevlist0
 ECHO .......................................................
-echo Tapez "1" pour lancer le traitement à partir de la liste.
-echo Tapez "2" pour supprimer la liste et en faire une nouvelle.
-echo Tapez "3" pour continuer à constuire la liste.
+echo Input "1" to auto-start processing from the previous list
+echo Input "2" to erase list and make a new one.
+echo Input "3" to continue building the previous list
 echo .......................................................
-echo NOTE: En tapant 3 vous verrez la liste précédente que vous pourrez modifier avant de lancer son traitement.
+echo NOTE: By pressing 3 you'll see the previous list 
+echo before starting the processing the files and you will 
+echo be able to add and delete items from the list
 echo.
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Or Input "0" to return to the MODE SELECTION MENU
 ECHO *************************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 if /i "%bs%"=="3" goto DBshowlist
 if /i "%bs%"=="2" goto DBdelist
 if /i "%bs%"=="1" goto DBstart_cleaning
 if /i "%bs%"=="0" goto manual_Reentry
 echo.
-echo Choix inexistant.
+echo BAD CHOICE
 goto DBprevlist0
 :DBdelist
 del DBL.txt
 cls
 call :program_logo
 echo -----------------------------------------------
-echo Mode génération de la base de données activé
+echo INDIVIDUAL PROCESSING ACTIVATED
 echo -----------------------------------------------
 echo ..................................
-echo Vous avez décidé de commencer une nouvelle liste.
+echo YOU'VE DECIDED TO START A NEW LIST
 echo ..................................
 :DBmanual_INIT
 endlocal
 ECHO ***********************************************
-echo Tappez "0" pour revenir à la sélection du mode.
+echo Input "0" to return to the MODE SELECTION MENU
 ECHO ***********************************************
 echo.
-set /p bs="Faites glisser un fichier ou choisissez une option et appuyez sur Entrer: "
+set /p bs="PLEASE DRAG A FILE OR FOLDER OVER THE WINDOW AND PRESS ENTER: "
 set bs=%bs:"=%
 if /i "%bs%"=="0" goto manual_Reentry
 set "targt=%bs%"
@@ -1977,22 +2128,21 @@ goto DBcheckagain
 goto DBcheckagain
 echo.
 :DBcheckagain
-echo Que souhaitez-vous faire?
+echo WHAT DO YOU WANT TO DO?
 echo ......................................................................
-echo "Glissez un autre fichier et appuyer sur entrer pour l'ajouter à la liste."
+echo "DRAG ANOTHER FILE OR FOLDER AND PRESS ENTER TO ADD ITEMS TO THE LIST"
 echo.
-echo Tapez "1" pour commencer le traitement.
-echo Tapez "e" pour quitter.
-echo Tapez "i" pour voir la liste des fichiers à traiter.
-echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
-echo Tapez "z" pour supprimer toute la liste.
+echo Input "1" to start processing
+echo Input "e" to exit
+echo Input "i" to see list of files to process
+echo Input "r" to remove some files (counting from bottom)
+echo Input "z" to remove the whole list
 echo ......................................................................
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Or Input "0" to return to the MODE SELECTION MENU
 ECHO *************************************************
 echo.
-set bs=
-set /p bs="Glissez un fichier ou choisissez une option: "
+set /p bs="Drag file/folder or set option: "
 set bs=%bs:"=%
 if /i "%bs%"=="0" goto manual_Reentry
 if /i "%bs%"=="1" goto DBstart_cleaning
@@ -2008,8 +2158,7 @@ goto DBcheckfile
 goto DBsalida
 
 :DBr_files
-set bs=
-set /p bs="Entrez le nombre de fichiers à supprimer de la liste en partant du bas: "
+set /p bs="Input the number of files you want to remove (from bottom): "
 set bs=%bs:"=%
 
 setlocal enabledelayedexpansion
@@ -2042,10 +2191,10 @@ endlocal
 cls
 call :program_logo
 echo -------------------------------------------------
-echo Mode génération de la base de données activé
+echo INDIVIDUAL PROCESSING ACTIVATED
 echo -------------------------------------------------
 ECHO -------------------------------------------------
-ECHO                 Fichiers à traiter:
+ECHO                 FILES TO PROCESS 
 ECHO -------------------------------------------------
 for /f "tokens=*" %%f in (DBL.txt) do (
 echo %%f
@@ -2056,31 +2205,30 @@ for /f "tokens=*" %%f in (DBL.txt) do (
 set /a conta=!conta! + 1
 )
 echo .................................................
-echo Vous avez ajouté !conta! fichiers à traiter.
+echo YOU'VE ADDED !conta! FILES TO PROCESS
 echo .................................................
 endlocal
 
 goto DBcheckagain
 
 :DBs_cl_wrongchoice
-echo Choix inexistant.
+echo wrong choice
 echo ............
 :DBstart_cleaning
 echo *******************************************************
-echo Choisir quoi faire après le traitement des fichiers:
+echo CHOOSE WHAT TO DO AFTER PROCESSING THE SELECTED FILES
 echo *******************************************************
-echo Tapez "1" pour générer une base de données NUTDB
-echo Tapez "2" pour générer une base de données étendue
-echo Tapez "3" pour générer une base de données sans clés (étendue)
-echo Tapez "4" pour générer les trois bases de données
-echo Tapez "Z" pour créer un fichier zip
+echo Input "1" TO GENERATE NUTDB DATABASE
+echo Input "2" TO GENERATE EXTENDED DATABASE
+echo Input "3" TO GENERATE KEYLESS DATABASE (EXTENDED)
+echo Input "4" TO GENERATE ALL 3 ABOVE DATABASES
+echo Input "Z" TO MAKE ZIP FILES
 echo.
 ECHO ******************************************
-echo Ou tapez "0" pour revenir aux options de la liste.
+echo Or Input "0" to return to the list options
 ECHO ******************************************
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 set vrepack=none
 if /i "%bs%"=="0" goto DBcheckagain
@@ -2114,7 +2262,7 @@ move /y "DBL.txt.new" "DBL.txt" >nul
 call :DBcontador_NF
 )
 ECHO ---------------------------------------------------
-ECHO *********** Tout les fichiers ont été traités! *************
+ECHO *********** ALL FILES WERE PROCESSED! *************
 ECHO ---------------------------------------------------
 :DBs_exit_choice
 if exist DBL.txt del DBL.txt
@@ -2122,11 +2270,10 @@ if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
 if /i "%va_exit%"=="true" ( PING -n 2 127.0.0.1 >NUL 2>&1 )
 if /i "%va_exit%"=="true" goto salida
 echo.
-echo Tapez "0" pour revenir à la sélection du mode.
-echo Tapez "1" pour quitter le script.
+echo Input "0" to go back to the mode selection
+echo Input "1" to exit the program
 echo.
-set bs=
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 if /i "%bs%"=="0" goto manual_Reentry
 if /i "%bs%"=="1" goto salida
@@ -2153,7 +2300,7 @@ if exist "%w_folder%\*.zip" ( MD "%zip_fold%" ) >NUL 2>&1
 move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 RD /S /Q "%w_folder%" >NUL 2>&1
 
-echo Terminé.
+echo DONE
 call :thumbup
 call :delay
 
@@ -2171,7 +2318,7 @@ move /y "DBL.txt.new" "DBL.txt" >nul
 call :DBcontador_NF
 )
 ECHO ---------------------------------------------------
-ECHO *********** Tout les fichiers ont été traités! *************
+ECHO *********** ALL FILES WERE PROCESSED! *************
 ECHO ---------------------------------------------------
 goto DBs_exit_choice
 
@@ -2187,7 +2334,7 @@ for /f "tokens=*" %%f in (DBL.txt) do (
 set /a conta=!conta! + 1
 )
 echo ...................................................
-echo Encore !conta! fichiers à traiter.
+echo STILL !conta! FILES TO PROCESS
 echo ...................................................
 PING -n 2 127.0.0.1 >NUL 2>&1
 set /a conta=0
@@ -2243,7 +2390,7 @@ ECHO =============================     BY JULESONTHEROAD     ===================
 ECHO -------------------------------------------------------------------------------------
 ECHO "                                POWERED BY SQUIRREL                                "
 ECHO "                    BASED IN THE WORK OF BLAWAR AND LUCA FRAGA                     "
-ECHO                                  VERSION %program_version%
+ECHO                                   VERSION 0.83 (NEW)
 ECHO -------------------------------------------------------------------------------------                   
 ECHO Program's github: https://github.com/julesontheroad/NSC_BUILDER
 ECHO Blawar's github:  https://github.com/blawar
@@ -2301,7 +2448,7 @@ exit /B
 
 :makezip
 echo.
-echo Création d'un fichier  zip pour %ziptarget%...
+echo Making zip for %ziptarget%
 echo.
 %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\zip" --zip_combo "%ziptarget%"
 %pycommand% "%nut%" -o "%w_folder%\zip" --NSP_c_KeyBlock "%ziptarget%"
@@ -2327,7 +2474,7 @@ RD /S /Q "%w_folder%\zip" >NUL 2>&1
 exit /B
 
 :processing_message
-echo Traitement de  %showname%...
+echo Processing %showname%
 echo.
 exit /B
 
@@ -2352,8 +2499,8 @@ del "%w_folder%\nsptype.txt" >NUL 2>&1
 if "%type%" EQU "BASE" ( set filename=%filename%[%titleid%][v0] )
 if "%type%" EQU "UPDATE" ( set filename=%filename%[%titleid%][UPD] )
 if "%type%" EQU "DLC" ( set filename=%filename%[%titleid%][DLC] )
-exit /B
 
+exit /B
 :addtags_from_xci
 dir "%w_folder%\secure\*.cnmt.nca" /b  >"%w_folder%\ncameta.txt"
 set /p ncameta=<"%w_folder%\ncameta.txt"
@@ -2383,23 +2530,24 @@ exit /B
 :missing_things
 call :program_logo
 echo ....................................
-echo Il manque les choses suivantes:
+echo You're missing the following things:
 echo ....................................
 echo.
-if not exist "%op_file%" echo - Le fichier de configuration n'est pas correctement défini ou est manquant.
-if not exist "%nut%" echo - "squirrel.exe" n'est pas correctement défini ou est manquant.
-if not exist "%xci_lib%" echo - "XCI.bat" n'est pas correctement défini ou est manquant.
-if not exist "%nsp_lib%" echo - "NSP.bat" n'est pas correctement défini ou est manquant.
-if not exist "%zip%" echo - "7za.exe" n'est pas correctement défini ou est manquant.
-if not exist "%hacbuild%" echo - "hacbuild.exe" n'est pas correctement défini ou est manquant.
-if not exist "%listmanager%" echo - "listmanager.exe" n'est pas correctement défini ou est manquant.
-if not exist "%batconfig%" echo - "NSCB_config.bat" n'est pas correctement défini ou est manquant.
-if not exist "%infobat%" echo - "info.bat" n'est pas correctement défini ou est manquant.
+if not exist "%op_file%" echo - The config file is not correctly pointed or is missing.
+if not exist "%nut%" echo - "nut_RTR.py" is not correctly pointed or is missing.
+if not exist "%xci_lib%" echo - "XCI.bat" is not correctly pointed or is missing.
+if not exist "%nsp_lib%" echo - "NSP.bat" is not correctly pointed or is missing.
+if not exist "%zip%" echo - "7za.exe" is not correctly pointed or is missing.
+
+if not exist "%hacbuild%" echo - "hacbuild.exe" is not correctly pointed or is missing.
+if not exist "%listmanager%" echo - "listmanager.py" is not correctly pointed or is missing.
+if not exist "%batconfig%" echo - "NSCB_config.bat" is not correctly pointed or is missing.
+if not exist "%infobat%" echo - "info.bat" is not correctly pointed or is missing.
 ::File full route
-if not exist "%dec_keys%" echo - "keys.txt" n'est pas correctement défini ou est manquant.
+if not exist "%dec_keys%" echo - "keys.txt" is not correctly pointed or is missing.
 echo.
 pause
-echo Le script va s'arrêter.
+echo Program will exit now
 PING -n 2 127.0.0.1 >NUL 2>&1
 goto salida
 :salida

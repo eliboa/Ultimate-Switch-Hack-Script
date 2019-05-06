@@ -35,11 +35,11 @@ type nul>testfile>"%w_folder%\secure\0"
 :nodummy
 endlocal
 echo -------------------------------
-echo Construction du fichier  xci.
+echo Repacking as xci
 echo -------------------------------
 if exist "%w_folder%\secure\*.dat" del "%w_folder%\secure\*.dat" >NUL 2>&1
 if exist "%w_folder%\secure\*.xml" del "%w_folder%\secure\*.xml" >NUL 2>&1
-%pycommand% "%nut%" %buffer% -ifo "%w_folder%" %fatype% --create_xci "%w_folder%\%filename%[xcib].xci" %fatype% 
+%pycommand% "%nut%" %buffer% -ifo "%w_folder%" %fatype% --create_xci "%w_folder%\%filename%[xcib].xci"
 exit /B
 
 :sp_xci_repack
@@ -92,7 +92,7 @@ del "!tfolder!\lc_list.txt"
 
 :sp_build
 echo -------------------------------
-echo Construction du fichier  xci.
+echo Repacking as xci
 echo -------------------------------
 if exist "!tfolder!\secure\*.dat" del "!tfolder!\secure\*.dat" >NUL 2>&1
 if exist "!tfolder!\secure\*.xml" del "!tfolder!\secure\*.xml" >NUL 2>&1

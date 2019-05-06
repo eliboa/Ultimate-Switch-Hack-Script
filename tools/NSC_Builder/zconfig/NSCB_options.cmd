@@ -59,7 +59,7 @@ set "vrepack=both"
 ::Type of repack for folders
 ::indiv->repack multiple input files as multiple output file. INDIVIDUAL MODE
 ::multi->repack multiple input files as single output file. MULTI-MODE
-set "fi_rep=indiv"
+set "fi_rep=multi"
 ::--------------------------------------------------------------
 ::OPTION 6: MANUAL MODE INTRO
 ::--------------------------------------------------------------
@@ -124,3 +124,10 @@ set "fexport=-fx files"
 ::inline -> All files go to root folder
 ::subfolder -> Files go to folder named by game
 set "oforg=inline"
+
+::--------------------------------------------------------------
+::OPTION 14: NEW OR LEGACY
+::--------------------------------------------------------------
+::SETS THE PROGRAM STARTUP FOR NEW MODES OR LEGACY MODES
+::value is new or legacy
+set "NSBMODE=new"
