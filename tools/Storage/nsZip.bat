@@ -66,7 +66,7 @@ IF %compression_level% GTR 22 (
 )
 set params=-l %compression_level%
 :skip_set_params
-"tools\nsZip\nsZip.exe" -i "%game_path%" -o "%output_path%" -t "templogs\" %params%
+"tools\nsZip\nsZip.exe" -i "%game_path:\=\\%" -o "%output_path:\=\\%" -t "templogs" %params%
 IF %errorlevel% NEQ 0 (
 	echo.
 	echo Erreur pendant la tentative de compression/décompression.
