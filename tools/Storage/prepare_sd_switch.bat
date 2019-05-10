@@ -437,6 +437,14 @@ for /l %%i in (1,1,%temp_count%) do (
 	%windir%\System32\Robocopy.exe tools\sd_switch\modules\pack\!temp_module!\titles %temp_modules_copy_path%\titles /e >nul
 	%windir%\System32\Robocopy.exe tools\sd_switch\modules\pack\!temp_module!\others %volume_letter%:\ /e >nul
 )
+IF "%~1"=="reinx" (
+	for %%f in ("%temp_modules_copy_path%\titles") do (
+		IF EXIST "%%f\flags\*.*" (
+			move %%f\flags\*.* %%f
+			rmdir /s /q %%f\flags
+		)
+	)
+)
 :skip_copy_modules_pack
 exit /b
 
