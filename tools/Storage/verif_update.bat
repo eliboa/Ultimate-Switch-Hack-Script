@@ -66,21 +66,11 @@ tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p ushs_version_verif=<templogs\version.txt
 IF "%ushs_version_verif%"=="" goto:end_script
-IF EXIST tools\sd_switch\version.txt (
-	set /p ushs_packs_version=<tools\sd_switch\version.txt
-) else (
-	set /p ushs_packs_version=<tools\packs_version.txt
-)
 tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\version.txt" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/tools/sd_switch/version.txt
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p ushs_packs_version_verif=<templogs\version.txt
 IF "%ushs_packs_version_verif%"=="" goto:end_script
 IF %ushs_packs_version_verif% GTR %ushs_packs_version% set update_packs_finded=O
-IF EXIST tools\sd_switch\cheats\version.txt (
-	set /p ushs_cheats_version=<tools\sd_switch\cheats\version.txt
-) else (
-	set /p ushs_cheats_version=<tools\cheats_version.txt
-)
 tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\version.txt" https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master/tools/sd_switch/cheats/version.txt
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p ushs_cheats_version_verif=<templogs\version.txt

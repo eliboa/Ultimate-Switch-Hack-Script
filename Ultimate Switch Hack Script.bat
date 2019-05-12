@@ -3,6 +3,16 @@
 ::MODE con:cols=140 lines=70
 chcp 1252 >nul
 set /p ushs_version=<tools\version.txt
+IF EXIST tools\sd_switch\version.txt (
+	set /p ushs_packs_version=<tools\sd_switch\version.txt
+) else (
+	set /p ushs_packs_version=<tools\packs_version.txt
+)
+IF EXIST tools\sd_switch\cheats\version.txt (
+	set /p ushs_cheats_version=<tools\sd_switch\cheats\version.txt
+) else (
+	set /p ushs_cheats_version=<tools\cheats_version.txt
+)
 cls
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 cd /d "%~dp0"
