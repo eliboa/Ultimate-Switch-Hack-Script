@@ -481,10 +481,10 @@ IF /i NOT "%copy_emu%"=="o" (
 	IF EXIST "%volume_letter%:\switch\pfba\skin\config.cfg" move "%volume_letter%:\switch\pfba\skin\config.cfg" "%volume_letter%:\switch\pfba\skin\config.cfg.bak" >nul
 	IF EXIST "%volume_letter%:\switch\pnes\skin\config.cfg" move "%volume_letter%:\switch\pnes\skin\config.cfg" "%volume_letter%:\switch\pnes\skin\config.cfg.bak" >nul
 	IF EXIST "%volume_letter%:\switch\psnes\skin\config.cfg" move "%volume_letter%:\switch\psnes\skin\config.cfg" "%volume_letter%:\switch\psnes\skin\config.cfg.bak" >nul
-			tools\gnuwin32\bin\grep.exe -c "" <"%general_profile_path%" > templogs\tempvar.txt
+			tools\gnuwin32\bin\grep.exe -c "" <"%emu_profile_path%" > templogs\tempvar.txt
 set /p temp_count=<templogs\tempvar.txt
 	for /l %%i in (1,1,%temp_count%) do (
-		TOOLS\gnuwin32\bin\sed.exe -n %%ip <"%general_profile_path%" >templogs\tempvar.txt
+		TOOLS\gnuwin32\bin\sed.exe -n %%ip <"%emu_profile_path%" >templogs\tempvar.txt
 		set /p temp_emulator=<templogs\tempvar.txt
 		%windir%\System32\Robocopy.exe tools\sd_switch\emulators\pack\!temp_emulator! %volume_letter%:\ /e >nul
 	)
