@@ -160,6 +160,7 @@ IF %errorlevel% NEQ 0 (
 ) else (
 	del /q tools\packs_version.txt
 	copy templogs\changelog.html DOC\files\packs_changelog.html
+	%windir%\System32\Robocopy.exe tools\sd_switch\payloads Payloads /e
 	echo Mise à jour des packs effectuée avec succès.
 	pause
 	goto:end_script
