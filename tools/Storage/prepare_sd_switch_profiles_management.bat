@@ -18,7 +18,7 @@ echo.
 echo 1: Créer un profile?
 echo 2: Modifier un profile?
 echo 3: Supprimer un profile?
-echo 0: Obtenir la liste des éléments qui seront copiés d'un profile?
+echo 0: Obtenir la liste des éléments qui seront copiés via un profile?
 echo N'importe quel autre choix: Revenir au menu précédent?
 echo.
 set action_choice=
@@ -75,12 +75,15 @@ IF %errorlevel% EQU 404 (
 	echo Aucun profile à modifier, veuillez en créer un.
 	goto:define_action_choice
 )
+set /a errorlevel=0
 :skip_modify_select_profile
 IF %errorlevel% EQU 0 (
 	call tools\Storage\prepare_sd_switch_files_questions.bat
-	call :save_profile_choices
 ) else (
 	echo Opération annulée.
+)
+IF %errorlevel% EQU 200 (
+	call :save_profile_choices
 )
 goto:define_action_choice
 
@@ -189,7 +192,7 @@ echo set "atmosphere_enable_cheats=%atmosphere_enable_cheats%">>"%profile_path%"
 echo set "sxos_enable_cheats=%sxos_enable_cheats%">>"%profile_path%"
 echo set "del_files_dest_copy=%del_files_dest_copy%">>"%profile_path%"
 echo Valeurs enregistrées avec succès pour le profile %profile_selected:~0,-4%.
-echo.
+pause
 exit /b
 
 :end_script

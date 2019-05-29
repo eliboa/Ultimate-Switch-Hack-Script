@@ -332,7 +332,9 @@ set confirm_copy=
 	set /p confirm_copy=Souhaitez-vous confirmer ceci? (O/n^): 
 IF NOT "%confirm_copy%"=="" set confirm_copy=%confirm_copy:~0,1%
 IF /i "%confirm_copy%"=="o" (
-	exit /b 200
+	set errorlevel=200
+	goto:endscript
+	
 ) else IF /i "%confirm_copy%"=="n" (
 	echo Opération annulée.
 	set errorlevel=400
@@ -639,7 +641,6 @@ IF "%check_chars%"=="0" (
 	goto:set_atmo_layeredfs_override_key
 )
 :skip_check_atmo_layeredfs_override_key
-
 exit /b
 
 :endscript

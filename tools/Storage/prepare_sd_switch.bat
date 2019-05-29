@@ -160,26 +160,66 @@ IF "%ERRORLEVEL%"=="0" (
 :define_general_select_profile
 echo.
 echo Sélection du profile général:
-set /a temp_count=1
+set /a temp_count=0
 copy nul templogs\profiles_list.txt >nul
 IF NOT EXIST "tools\sd_switch\profiles\*.bat" (
 	goto:general_no_profile_created
 )
 cd tools\sd_switch\profiles
 for %%p in (*.bat) do (
+	set /a temp_count+=1
 	set temp_profilename=%%p
 	set temp_profilename=!temp_profilename:~0,-4!
 	echo !temp_count!: !temp_profilename!
 	echo %%p>> ..\..\..\templogs\profiles_list.txt
-	set /a temp_count+=1
 )
 cd ..\..\..
 :general_no_profile_created
+set /a count_default_profile=%temp_count%
 IF EXIST "tools\default_configs\general_profile_all.bat" (
-	echo %temp_count%: Profile recommandé, ne contient pas le patch NOGC et met juste à jour les fichiers existant de la SD donc ce profile n'est pas toujours adapté.
+	set /a general_profile_number=1
+	set /a general_profile_number+=%temp_count%
+	set /a count_default_profile+=1
+	echo !count_default_profile!: Profile Atmosphere + SXOS + Memloader recommandé, ne contient pas le patch NOGC et met juste à jour les fichiers existant de la SD donc ce profile n'est pas toujours adapté.
 ) else (
-	set /a temp_count-=1
 	set general_no_default_config=Y
+)
+IF EXIST "tools\default_configs\atmosphere_profile_all.bat" (
+	IF "%general_no_default_config%"=="Y" (
+		set /a atmosphere_profile_number=1
+	) else (
+		set /a atmosphere_profile_number=2
+	)
+	set /a atmosphere_profile_number+=%temp_count%
+	set /a count_default_profile+=1
+	echo !count_default_profile!: Profile Atmosphere recommandé, ne contient pas le patch NOGC et met juste à jour les fichiers existant de la SD donc ce profile n'est pas toujours adapté.
+) else (
+	set atmosphere_no_default_config=Y
+)
+IF EXIST "tools\default_configs\sxos_profile_all.bat" (
+	IF "%general_no_default_config%"=="Y" (
+		IF "%atmosphere_no_default_config%"=="Y" (
+			set /a sxos_profile_number=1
+		)
+	) else IF "%atmosphere_no_default_config%"=="Y" (
+		set /a sxos_profile_number=2
+	) else (
+		set /a sxos_profile_number=3
+	)
+	IF "%atmosphere_no_default_config%"=="Y" (
+		IF "%general_no_default_config%"=="Y" (
+			set /a sxos_profile_number=1
+		)
+	) else IF "%general_no_default_config%"=="Y" (
+		set /a sxos_profile_number=2
+	) else (
+		set /a sxos_profile_number=3
+	)
+	set /a sxos_profile_number+=%temp_count%
+	set /a count_default_profile+=1
+	echo !count_default_profile!: Profile  SXOS recommandé,  met juste à jour les fichiers existant de la SD donc ce profile n'est pas toujours adapté.
+) else (
+	set sxos_no_default_config=Y
 )
 echo 0: Accéder à la gestion des profiles généraux.
 echo E: Terminer le script sans préparer la SD.
@@ -210,7 +250,7 @@ IF %i% NEQ %nb% (
 		goto:skip_verif_general_profile
 	)
 )
-IF %general_profile% GTR %temp_count% (
+IF %general_profile% GTR %count_default_profile% (
 	set pass_copy_general_pack=Y
 		goto:skip_verif_general_profile
 )
@@ -218,20 +258,34 @@ IF "%general_profile%"=="0" (
 	call tools\Storage\prepare_sd_switch_profiles_management.bat
 	goto:define_general_select_profile
 )
-IF %general_profile% EQU %temp_count% (
+IF %general_profile% EQU %general_profile_number% (
 	IF NOT "%general_no_default_config%"=="Y" (
-		set pass_prepare_general_pack=Y
+		set pass_prepare_packs=Y
 		set general_profile_path=tools\default_configs\general_profile_all.bat
+		goto:skip_verif_general_profile
+	)
+)
+IF %general_profile% EQU %atmosphere_profile_number% (
+	IF NOT "%atmosphere_no_default_config%"=="Y" (
+		set pass_prepare_packs=Y
+		set general_profile_path=tools\default_configs\atmosphere_profile_all.bat
+		goto:skip_verif_general_profile
+	)
+)
+IF %general_profile% EQU %sxos_profile_number% (
+	IF NOT "%sxos_no_default_config%"=="Y" (
+		set pass_prepare_packs=Y
+		set general_profile_path=tools\default_configs\sxos_profile_all.bat
 		goto:skip_verif_general_profile
 	)
 )
 TOOLS\gnuwin32\bin\sed.exe -n %general_profile%p <templogs\profiles_list.txt > templogs\tempvar.txt
 set /p general_profile_path=<templogs\tempvar.txt
 set general_profile_path=tools\sd_switch\profiles\%general_profile_path%
-set pass_prepare_general_pack=Y
+set pass_prepare_packs=Y
 :skip_verif_general_profile
 del /q templogs\profiles_list.txt >nul 2>&1
-IF NOT "%pass_prepare_general_pack%"=="Y" (
+IF NOT "%pass_prepare_packs%"=="Y" (
 	call tools\Storage\prepare_sd_switch_files_questions.bat
 	goto:test_copy_launch
 ) else (
@@ -318,6 +372,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		copy /V /B TOOLS\sd_switch\payloads\Atmosphere_fusee-primary.bin %volume_letter%:\Atmosphere_fusee-primary.bin >nul
 		copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\Hekate.bin >nul
 	)
+	copy /V /B TOOLS\sd_switch\payloads\Atmosphere_fusee-primary.bin %volume_letter%:\bootloader\payloads\Atmosphere_fusee-primary.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\bootloader\payloads\Hekate.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\bootloader\update.bin >nul
 	IF EXIST "%volume_letter%:\switch\GagOrder.nro" del /q "%volume_letter%:\switch\GagOrder.nro" >nul
@@ -379,6 +434,10 @@ IF /i "%copy_reinx_pack%"=="o" (
 
 IF /i "%copy_sxos_pack%"=="o" (
 	%windir%\System32\Robocopy.exe TOOLS\sd_switch\sxos %volume_letter%:\ /e >nul
+	IF NOT EXIST "%volume_letter%:\sept\*.*" mkdir %volume_letter%:\sept
+	IF NOT EXIST "%volume_letter%:\sept\sept-primary.bin" copy /v /b tools\sd_switch\atmosphere\sept\sept-primary.bin %volume_letter%:\sept\sept-primary.bin
+	IF NOT EXIST "%volume_letter%:\sept\sept-secondary.bin" copy /v /b tools\sd_switch\atmosphere\sept\sept-secondary.bin %volume_letter%:\sept\sept-secondary.bin
+	IF NOT EXIST "%volume_letter%:\sept\sept-secondary.enc" copy /v /b tools\sd_switch\atmosphere\sept\sept-secondary.enc %volume_letter%:\sept\sept-secondary.enc
 	IF /i "%copy_payloads%"=="o" (
 		copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\SXOS.bin >nul
 		copy /V /B TOOLS\sd_switch\payloads\Retro_reloaded.bin %volume_letter%:\Retro_reloaded.bin >nul
