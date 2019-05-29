@@ -2,6 +2,8 @@
 chcp 65001 > nul
 setlocal
 :define_action_choice
+cls
+echo Menu des autres fonctionnalités
 echo.
 echo Que souhaitez-vous faire?
 echo.
@@ -46,66 +48,77 @@ goto:end_script
 :update_on_sd
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\prepare_update_on_sd.bat
 @echo off
 goto:define_action_choice
 :convert_game
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\convert_game_to_nsp.bat
 @echo off
 goto:define_action_choice
 :install_nsp_network
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\install_nsp_network.bat
 @echo off
 goto:define_action_choice
 :install_nsp_usb
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\install_nsp_usb.bat
 @echo off
 goto:define_action_choice
 :convert_BOTW
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\convert_BOTW.bat
 @echo off
 goto:define_action_choice
 :extract_cert
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\extract_cert.bat
 @echo off
 goto:define_action_choice
 :verify_nsp
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\verify_nsp.bat
 @echo off
 goto:define_action_choice
 :split_games
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\split_games.bat
 @echo off
 goto:define_action_choice
 :nand_joiner
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\nand_joiner.bat
 @echo off
 goto:define_action_choice
 :nsZip
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\nsZip.bat
 @echo off
 goto:define_action_choice
 :nereba
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\nereba.bat
 @echo off
 goto:define_action_choice

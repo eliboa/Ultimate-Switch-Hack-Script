@@ -2,13 +2,14 @@
 chcp 65001 > nul
 IF EXIST log.txt del /q log.txt
 set ushs_launch=Y
-cls
 ::Header
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 echo :::::::::::::::::::::::::::::::::::::
 echo ::Shadow256 Ultimate Switch Hack Script %ushs_version%::
 echo :::::::::::::::::::::::::::::::::::::
 :define_action_choice
+cls
+echo Menu principal
 echo.
 echo Que souhaitez-vous faire?
 echo.
@@ -62,30 +63,35 @@ goto:end_script
 :launch_payload
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\launch_payload.bat > log.txt 2>&1
 @echo off
 goto:define_action_choice
 :launch_toolbox
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\toolbox.bat
 @echo off
 goto:define_action_choice
 :mount_discs
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\mount_discs.bat
 @echo off
 goto:define_action_choice
 :prepare_sd
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\prepare_sd_switch.bat
 @echo off
 goto:define_action_choice
 :launch_NSC_Builder
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\preload_NSC_Builder.bat
 endlocal
 @echo off
@@ -93,36 +99,42 @@ goto:define_action_choice
 :others_functions
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\others_functions_menu.bat
 @echo off
 goto:define_action_choice
 :ocasional_functions
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\ocasional_functions_menu.bat
 @echo off
 goto:define_action_choice
 :save_and_restaure
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\save_and_restaure_menu.bat
 @echo off
 goto:define_action_choice
 :client_netplay
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\netplay.bat
 @echo off
 goto:define_action_choice
 :server_netplay
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\launch_switch_lan_play_server.bat
 @echo off
 goto:define_action_choice
 :launch_linux
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\launch_linux.bat
 @echo off
 goto:define_action_choice
@@ -130,6 +142,7 @@ goto:define_action_choice
 set action_choice=
 echo.
 set force_update=1
+cls
 call TOOLS\Storage\verif_update.bat
 set force_update=
 @echo off
@@ -137,11 +150,13 @@ goto:define_action_choice
 :launch_doc
 set action_choice=
 echo.
+cls
 start DOC\index.html
 goto:define_action_choice
 :about
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\about.bat
 @echo off
 goto:define_action_choice

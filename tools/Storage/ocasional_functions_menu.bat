@@ -2,6 +2,8 @@
 chcp 65001 > nul
 setlocal
 :define_action_choice
+cls
+echo Menu des fonctions occasionnelles
 echo.
 echo Que souhaitez-vous faire?
 echo.
@@ -37,48 +39,56 @@ goto:end_script
 :biskey_dump
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\biskey_dump.bat
 @echo off
 goto:define_action_choice
 :update_shofel2
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\update_shofel2.bat
 @echo off
 goto:define_action_choice
 :install_drivers
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\install_drivers.bat
 @echo off
 goto:define_action_choice
 :create_update
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\create_update.bat
 @echo off
 goto:define_action_choice
 :verif_serials
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\serial_checker.bat
 @echo off
 goto:define_action_choice
 :test_keys
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\test_keys.bat
 @echo off
 goto:define_action_choice
 :nand_toolbox
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\nand_toolbox.bat
 @echo off
 goto:define_action_choice
 :hid-mitm_compagnon
 set action_choice=
 echo.
+cls
 call tools\Hid-mitm_compagnon\start.bat
 @echo off
 goto:define_action_choice
