@@ -29,6 +29,9 @@ echo.
 echo Je ne pourrais être tenu pour responsable en cas de dommage lié à l'utilisation de ce script ou des outils qu'il contient. 
 pause 
 :define_action_type
+cls
+echo Préparation d'un package de mise à jour
+echo.
 Echo Que souhaitez-vous faire?
 echo.
 echo 1: Préparer un firmware qui sera copié sur la SD pour une installation via ChoiDuJour-NX?
@@ -37,17 +40,19 @@ echo 3: Effectuer les deux actions.
 echo 4: Préparer une SD avec les différents CFWs et homebrews utiles et revenir à ce menu ensuite?
 echo N'importe quel autre choix: Revenir au menu précédent.
 echo.
+set action_type=
 set /p action_type=Faites votre choix: 
 IF NOT "%action_type%"=="" set action_type=%action_type:~0,1%
 IF "%action_type%"=="4" (
 	set action_type=
+	cls
 	call tools\storage\prepare_sd_switch.bat > log.txt 2>&1
 	@echo off
 	goto:define_action_type
 )
-IF "%action_type%"=="1" goto:define_firmware_choice
-IF "%action_type%"=="2" goto:define_firmware_choice
-IF "%action_type%"=="3" goto:define_firmware_choice
+IF "%action_type%"=="1" cls & goto:define_firmware_choice
+IF "%action_type%"=="2" cls & goto:define_firmware_choice
+IF "%action_type%"=="3" cls & goto:define_firmware_choice
 goto:end_script
 :define_firmware_choice
 echo Choisissez le firmware que vous souhaitez préparer?

@@ -18,6 +18,8 @@ echo.
 echo Attention: Les opérations effectuées par ces fonctions peuvent intervenir sur la nand de votre console, vous êtes seul responsable de se que vous faites.
 pause
 :define_action_choice
+cls
+echo Boîte à outils de la nand
 echo.
 echo Que souhaitez-vous faire?
 echo.
@@ -31,15 +33,17 @@ echo N'importe quel autre choix: Revenir au menu précédent?
 echo.
 set action_choice=
 set /p action_choice=Faites votre choix: 
-IF "%action_choice%"=="1" goto:info_nand
-IF "%action_choice%"=="2" goto:dump_nand
-IF "%action_choice%"=="3" goto:restaure_nand
-IF "%action_choice%"=="4" goto:autorcm_management
+IF "%action_choice%"=="1" cls & goto:info_nand
+IF "%action_choice%"=="2" cls & goto:dump_nand
+IF "%action_choice%"=="3" cls & goto:restaure_nand
+IF "%action_choice%"=="4" cls & goto:autorcm_management
 IF "%action_choice%"=="5" (
+	cls
 	call tools\storage\nand_joiner.bat
 	goto:define_action_choice
 )
 IF "%action_choice%"=="0" (
+	cls
 	call tools\storage\mount_discs.bat
 	goto:define_action_choice
 )

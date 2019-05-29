@@ -49,5 +49,4 @@ start explorer.exe templogs\changelog.html
 goto:define_action_choice
 :end_script
 rmdir /s /q templogs 2>nul
-cls
 endlocal

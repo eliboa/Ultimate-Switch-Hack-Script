@@ -9,8 +9,10 @@ mkdir templogs
 echo Ce script va permettre d'installer et de lancer le nécessaire pour utiliser le jeu en réseau alternatif de la Switch.
 echo Pour plus d'informations sur le sujet, choisissez d'ouvrir la documentation lorsque cela sera proposé.
 pause
-echo.
 :select_install
+cls
+echo Client de jeu en réseau alternatif
+echo.
 echo Que souhaitez-vous faire:
 echo.
 echo 1: Lancer le client?
@@ -18,6 +20,7 @@ echo 2: Installation de Winpcap (à ne faire qu'une seule fois)?
 echo 0: Lancer la documentation?
 echo N'importe quel autre choix: Revenir au menu précédent.
 echo.
+set install_choice=
 set /p install_choice=Votre choix: 
 IF NOT "%install_choice%"=="" set install_choice=%install_choice:~0,1%
 IF "%install_choice%"=="1" goto:launch_client
@@ -139,6 +142,8 @@ set new_server_addr=
 IF NOT EXIST "tools\netplay\servers_list.txt" (
 	copy nul "tools\netplay\servers_list.txt"
 )
+cls
+echo Gestion des serveurs du réseau alternatif
 echo.
 echo Que souhaitez-vous faire:
 echo.

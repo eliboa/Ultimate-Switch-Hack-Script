@@ -4,8 +4,10 @@ chcp 65001 > nul
 echo Ce script va permettre d'installer les drivers nécessaires au bon fonctionnement de la Switch avec le PC.
 echo Pour plus d'informations sur les différentes méthodes, choisissez d'ouvrir la documentation lorsque cela sera proposé.
 pause
-echo.
 :select_install
+cls
+echo Installation de drivers
+echo.
 echo Choisissez comment installer les drivers:
 echo.
 echo 1: Installation automatique pour le mode RCM (installation recommandée pour ce mode)?

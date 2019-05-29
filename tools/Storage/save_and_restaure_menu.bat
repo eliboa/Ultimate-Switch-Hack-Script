@@ -2,6 +2,8 @@
 chcp 65001 > nul
 setlocal
 :define_action_choice
+cls
+echo Menu de Paramètres
 echo.
 echo Que souhaitez-vous faire?
 echo.
@@ -52,18 +54,21 @@ goto:end_script
 :save_config
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\save_configs.bat
 @echo off
 goto:define_action_choice
 :restaure_config
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\restore_configs.bat
 @echo off
 goto:define_action_choice
 :restaure_default
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\restore_default.bat
 @echo off
 goto:define_action_choice
@@ -72,6 +77,7 @@ set action_choice=
 echo.
 del /q tools\Storage\verif_update.ini 2>nul
 echo Paramètre de mise à jour automatique réinitialisé.
+pause
 goto:define_action_choice
 :default_toolbox
 set action_choice=
@@ -81,12 +87,14 @@ mkdir tools\toolbox
 copy tools\default_configs\default_tools.txt tools\toolbox\default_tools.txt
 copy nul tools\toolbox\user_tools.txt
 echo Programmes personnels de la Toolbox réinitialisés.
+pause
 goto:define_action_choice
 :default_switch-lan-play
 set action_choice=
 echo.
 copy /v "tools\default_configs\servers_list.txt" "tools\netplay\servers_list.txt"
 echo Liste de serveurs Switch-Lan-Play réinitialisée.
+pause
 goto:define_action_choice
 :default_keys_nsc_builder
 :default_switch-lan-play
@@ -94,6 +102,7 @@ set action_choice=
 echo.
 del /q "tools\NSC_Builder\keys.txt" 2>nul
 echo Fichier de clés pour NSC_Builder supprimé.
+pause
 goto:define_action_choice
 :default_keys_hactool
 set action_choice=
@@ -101,10 +110,12 @@ echo.
 del /q "tools\Hactool_based_programs\keys.txt" 2>nul
 del /q "tools\Hactool_based_programs\keys.dat" 2>nul
 echo Fichiers de clés pour les outils basés sur Hactool supprimés.
+pause
 goto:define_action_choice
 :sd_packs_profiles_management
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\prepare_sd_switch_profiles_management.bat
 rmdir /s /q templogs
 @echo off
@@ -112,6 +123,7 @@ goto:define_action_choice
 :mixed_packs_profiles_management
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\mixed_pack_profiles_management.bat
 rmdir /s /q templogs
 @echo off
@@ -119,6 +131,7 @@ goto:define_action_choice
 :cheats_profiles_management
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\cheats_profiles_management.bat
 rmdir /s /q templogs
 @echo off
@@ -126,6 +139,7 @@ goto:define_action_choice
 :emu_profiles_management
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\emulators_pack_profiles_management.bat
 rmdir /s /q templogs
 @echo off
@@ -133,6 +147,7 @@ goto:define_action_choice
 :modules_profiles_management
 set action_choice=
 echo.
+cls
 call TOOLS\Storage\modules_profiles_management.bat
 rmdir /s /q templogs
 @echo off

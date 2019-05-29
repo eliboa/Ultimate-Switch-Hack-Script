@@ -9,8 +9,9 @@ IF EXIST templogs (
 mkdir templogs
 IF NOT EXIST "tools\sd_switch\mixed\profiles\*.*" mkdir "tools\sd_switch\mixed\profiles"
 
-echo Gestions de profiles pour la sélection de homebrews optionnels à copier durant la préparation d'une SD.
 :define_action_choice
+cls
+echo Gestion des profiles de homebrews
 echo.
 echo Que souhaitez-vous faire?
 echo.
@@ -22,10 +23,10 @@ echo N'importe quel autre choix: Revenir au menu précédent?
 echo.
 set action_choice=
 set /p action_choice=Faites votre choix: 
-IF "%action_choice%"=="1" goto:create_profile
-IF "%action_choice%"=="2" goto:modify_profile
-IF "%action_choice%"=="3" goto:remove_profile
-IF "%action_choice%"=="0" goto:info_profile
+IF "%action_choice%"=="1" cls & goto:create_profile
+IF "%action_choice%"=="2" cls & goto:modify_profile
+IF "%action_choice%"=="3" cls & goto:remove_profile
+IF "%action_choice%"=="0" cls & goto:info_profile
 goto:end_script
 
 :info_profile

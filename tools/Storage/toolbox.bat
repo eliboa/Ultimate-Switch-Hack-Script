@@ -18,6 +18,8 @@ echo Par contre, vous pouvez également gérer votre liste de programmes personnel
 echo.
 echo Attention, du fait du fonctionnement qui peut différer pour chaque programme, vous vous devez de gérer vous-même les dépendances de ceux-ci, cette boîte à outils ne sert qu'à lancer ou organiser vos outils.
 :define_action_choice
+cls
+echo Boîte à outils
 echo.
 echo Que souhaitez-vous faire?
 echo.
@@ -28,12 +30,14 @@ echo N'importe quel autre choix: Revenir au menu précédent.
 echo.
 set action_choice=
 set /p action_choice=Faites votre choix: 
-IF "%action_choice%"=="1" goto:launch_software
-IF "%action_choice%"=="2" goto:launch_working_folder
-IF "%action_choice%"=="3" goto:config_softwares_list
+IF "%action_choice%"=="1" cls & goto:launch_software
+IF "%action_choice%"=="2" cls & goto:launch_working_folder
+IF "%action_choice%"=="3" cls & goto:config_softwares_list
 goto:end_script
 
 :launch_software
+cls
+echo Lancement d'un logiciel
 echo.
 echo Liste des logiciels:
 echo.
@@ -116,6 +120,7 @@ IF NOT "%software_path%"=="" (
 call :extract_base_folder "%software_path%"
 start "" /d "%software_folder_path%" "%software_path%"
 goto:launch_software
+
 :launch_working_folder
 TOOLS\gnuwin32\bin\grep.exe -c "" <tools\toolbox\user_tools.txt > templogs\tempvar.txt
 set /p count_software_user=<templogs\tempvar.txt
@@ -172,7 +177,10 @@ IF NOT "%software_path%"=="" (
 call :extract_base_folder "%software_path%"
 start explorer.exe "%software_folder_path%"
 goto:launch_working_folder
+
 :config_softwares_list
+cls
+echo Configuration de la liste des logiciels de la boîte à outils
 echo.
 echo Que souhaitez-vous faire?
 echo.
