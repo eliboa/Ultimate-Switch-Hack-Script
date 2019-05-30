@@ -35,7 +35,7 @@ echo 9: Lancer ou configurer le client pour pouvoir jouer en réseau (serveur Sw
 echo.
 echo 10: Lancer un serveur pour le jeu en réseau (serveur Switch-Lan-Play)?
 echo.
-echo 11: Lancer Linux?
+echo 11: Lancer Linux (fonctionnalité opsolète)?
 echo.
 echo 12: Vérifier s'il existe une mise à jour du script?
 echo.
