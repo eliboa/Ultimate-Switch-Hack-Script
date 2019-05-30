@@ -2,6 +2,7 @@
 chcp 65001 > nul
 setlocal
 :define_action_choice
+set action_choice=
 cls
 echo Menu des fonctions occasionnelles
 echo.

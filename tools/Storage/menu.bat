@@ -2,13 +2,15 @@
 chcp 65001 > nul
 IF EXIST log.txt del /q log.txt
 set ushs_launch=Y
+:define_action_choice
+set action_choice=
+cls
 ::Header
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 echo :::::::::::::::::::::::::::::::::::::
 echo ::Shadow256 Ultimate Switch Hack Script %ushs_version%::
 echo :::::::::::::::::::::::::::::::::::::
-:define_action_choice
-cls
+echo.
 echo Menu principal
 echo.
 echo Que souhaitez-vous faire?
