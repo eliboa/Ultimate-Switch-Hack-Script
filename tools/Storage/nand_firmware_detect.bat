@@ -29,12 +29,45 @@ IF "%biskeys_path%"=="" (
 	echo Aucun fichier de dump des clés renseigné, le script va s'arrêter.
 	goto:end_script
 )
-"tools\python3_scripts\FVI\FVI.exe" -b="%biskeys_path%" "%dump_path%"
+"tools\python3_scripts\FVI\FVI.exe" -b="%biskeys_path%" "%dump_path%" >templogs\log.txt
 IF %errorlevel% NEQ 0 (
 	echo.
 	echo Une erreur inconnue s'est produite.
 	goto:end_script
 )
+"tools\gnuwin32\bin\tail.exe" --lines=2 <"templogs\log.txt" >templogs\log2.txt
+"tools\gnuwin32\bin\tail.exe" --lines=1 <"templogs\log2.txt" | "tools\gnuwin32\bin\cut.exe" -d : -f 2- >templogs\log.txt
+set /p last_launch_info=<templogs\log.txt
+set last_launch_info=%last_launch_info:~1%
+"tools\gnuwin32\bin\head.exe" --lines=1 <"templogs\log2.txt" | "tools\gnuwin32\bin\cut.exe" -d : -f 2- >templogs\log.txt
+set /p firmware_info=<templogs\log.txt
+set firmware_info=%firmware_info:~1%
+echo %firmware_info% | "tools\gnuwin32\bin\cut.exe" -d " " -f 1 >templogs\tempvar.txt
+set /p firmware_version=<templogs\tempvar.txt
+echo %firmware_info% | "tools\gnuwin32\bin\cut.exe" -d " " -f 2- >templogs\tempvar.txt
+set /p firmware_exfat=<templogs\tempvar.txt
+set firmware_exfat=%firmware_exfat:(=%
+set firmware_exfat=%firmware_exfat:)=%
+set firmware_exfat=%firmware_exfat: =%
+IF /i "%firmware_exfat%"=="noexfat" (
+	echo Firmware %firmware_version% ne possédant pas le driver EXFAT.
+) else (
+	echo Firmware %firmware_version% possédant le driver EXFAT.
+)
+echo %last_launch_info% | "tools\gnuwin32\bin\cut.exe" -d " " -f 1 >templogs\tempvar.txt
+set /p date_last_launch_info=<templogs\tempvar.txt
+set date_last_launch_info=%date_last_launch_info: =%
+echo %date_last_launch_info% | "tools\gnuwin32\bin\cut.exe" -d - -f 1 >templogs\tempvar.txt
+set /p year_last_launch_info=<templogs\tempvar.txt
+echo %date_last_launch_info% | "tools\gnuwin32\bin\cut.exe" -d - -f 2 >templogs\tempvar.txt
+set /p month_last_launch_info=<templogs\tempvar.txt
+echo %date_last_launch_info% | "tools\gnuwin32\bin\cut.exe" -d - -f 3 >templogs\tempvar.txt
+set /p day_last_launch_info=<templogs\tempvar.txt
+set day_last_launch_info=%day_last_launch_info: =%
+echo %last_launch_info% | "tools\gnuwin32\bin\cut.exe" -d " " -f 2 >templogs\tempvar.txt
+set /p hour_last_launch_info=<templogs\tempvar.txt
+set hour_last_launch_info=%hour_last_launch_info: =%
+echo Dernière date de lancement du firmware: %day_last_launch_info%-%month_last_launch_info%-%year_last_launch_info% à %hour_last_launch_info%
 :end_script
 pause
 :finish_script
