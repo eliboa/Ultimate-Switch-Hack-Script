@@ -33,6 +33,7 @@ IF "%biskeys_path%"=="" (
 IF %errorlevel% NEQ 0 (
 	echo.
 	echo Une erreur inconnue s'est produite.
+	echo Il est possible que le fichiers de clés fourni ne corresponde pas au dump de la nand indiqué ou que le dump de la nand soit corrompu.
 	goto:end_script
 )
 "tools\gnuwin32\bin\tail.exe" --lines=2 <"templogs\log.txt" >templogs\log2.txt
