@@ -28,6 +28,7 @@ echo 2: Dumper la nand ou une partition de la nand de la console, copier un fich
 echo 3: Restaurer la nand ou une partition de la nand de la console sur la console ou dans un fichier de dump?
 echo 4: Activer/désactiver l'auto-RCM d'une partition BOOT0 ?
 echo 5: Joindre un dump fait en plusieurs parties, par exemple un dump fait via Hekate sur une SD formatée en FAT32.
+echo 6: Connaître le firmware ainsi que le status du driver EXFAT d'un dump de nand (dump splité non pris en charge)?
 echo 0: Charger une partie de la nand avec Memloader?
 echo N'importe quel autre choix: Revenir au menu précédent?
 echo.
@@ -40,6 +41,11 @@ IF "%action_choice%"=="4" cls & goto:autorcm_management
 IF "%action_choice%"=="5" (
 	cls
 	call tools\storage\nand_joiner.bat
+	goto:define_action_choice
+)
+IF "%action_choice%"=="6" (
+	cls
+	call tools\storage\nand_firmware_detect.bat
 	goto:define_action_choice
 )
 IF "%action_choice%"=="0" (
