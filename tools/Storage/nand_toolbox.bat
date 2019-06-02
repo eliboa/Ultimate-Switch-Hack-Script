@@ -315,7 +315,6 @@ set /p count_disks=<templogs\tempvar.txt
 set /a temp_count=0
 set /a real_count=0
 copy nul templogs\disks_list.txt >nul
-set /a count_disks=%count_disks%-1
 :disks_listing
 set /a temp_count+=1
 IF %temp_count% GTR %count_disks% (
