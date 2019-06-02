@@ -381,7 +381,7 @@ IF "%action_type%"=="1" (
 	IF EXIST "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro" (
 		del /q "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
 	)
-	copy /V /B "tools\sd_switch\mixed\modular\ChoiDuJourNX\ChoiDuJourNX.nro" "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
+	copy /V /B "tools\sd_switch\mixed\modular\ChoiDuJourNX\switch\ChoiDuJourNX\ChoiDuJourNX.nro" "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
 	echo Les fichiers ont été copiés.
 )
 IF "%action_type%"=="3" (
