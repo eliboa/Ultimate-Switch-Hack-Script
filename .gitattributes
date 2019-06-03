@@ -1,4 +1,7 @@
+/.gitattributes	export-ignore
 /README.md	export-ignore
 /changelog.md	export-ignore
 /packs_changelog.md	export-ignore
 /.gitignore	export-ignore
+/DOC/generate_changelogs_html_files_from_changelogs_md_files.bat	export-ignore
+/tools/sd_switch/cheats/del_txt_files_in_first_subfolders_of_titles_folder.bat	export-ignore
