@@ -1,0 +1,1308 @@
+<h1>Changelog Ultimate Switch Hack Script</h1>
+&nbsp;
+<h2>V2.10.85</h2>
+<ul>
+<li>Mise à jour de NSC_Builder en version 0.86B.</li>
+<li>Dans la Nand Toolbox, la proposition de choix du travail sur des partitions spécifiques lors des procédures de restauration/sauvegarde de la nand n'est maintenant faite que si cela est nécessaire.</li>
+<li>Mise à jour des MD5 des différentes clés pour le script de vérification d'un fichier de clés Switch, maintenant les clés vérifiées sont celles obtenues avec  Lockpick-RCM et les clés vérifiables vont jusqu'au firmware 8.0.1.</li>
+</ul>
+<h2>V2.10.84</h2>
+<ul>
+<li>Correction d'un bug important dans la Nand Toolbox, maintenant il est redevenu possible de travailler sur un lecteur physique pour le dump ou la restauration  via NXNandManager.</li>
+</ul>
+<h2>V2.10.83</h2>
+<ul>
+<li>Correction d'un bug important lors de la préparation d'un firmware sur la SD, maintenant le homebrew ChoiDuJourNX sera correctement copié.</li>
+</ul>
+<h2>V2.10.82</h2>
+<ul>
+<li>Amélioration de la fonctionnalité d'infos sur le firmware d'un dump de nand, maintenant les résultats sont affichés en français.</li>
+</ul>
+<h2>V2.10.81</h2>
+<ul>
+<li>Ajout d'une nouvelle fonctionnalité à la Nand Toolbox, maintenant il est possible de vérifier le firmware sur lequel se trouve un dump de nand ainsi que le status du driver EXFAT si l'on possède aussi les Bis Keys de la console associée au dump, merci au projet <a target="_blank" href="https://github.com/shchmue/FVI">FVI</a> sur lequel s'appuie cette fonctionnalité.</li>
+</ul>
+<h2>V2.10.80</h2>
+<ul>
+<li>Quelques changements mineurs dans les menus concernant l'affichage de ceux-ci ainsi que l'anticipation de bugs possibles.</li>
+</ul>
+<h2>V2.10.79</h2>
+<ul>
+<li>Correction d'un bug important qui empêchait l'enregistrement de profiles généraux lors de la création ou de la modification de ceux-ci.</li>
+<li>Dans le pack SX OS, les fichiers principaux de Sept sont maintenant copiés car je considère que ces fichiers sont devenus indispensables pour beaucoup de situations.</li>
+<li>Ajout de deux nouveaux profiles généraux par défaut lors de la préparation d'une SD, l'un pour ne copier qu'Atmosphere et l'autre pour ne copier que SX OS (chacun avec les homebrews et émulateurs recommandés ainsi que les cheats, les cheats sont non activés par défaut dans les fichiers de configuration d'Atmosphere).</li>
+</ul>
+<h2>V2.10.78</h2>
+<ul>
+<li>Encore quelques corrections esthétiques.</li>
+</ul>
+<h2>V2.10.77</h2>
+<ul>
+<li>Correction d'un bug qui faisait que la version du script n'était pas bien détecté lorsque le script était lancé en tant qu'administrateur, ceci entrainant des bugs comme la mise à jour du script qui indiquait toujours une mise à jour même si en dernière version.</li>
+<li>Les menus sont rafraichis à chaque fois qu'il sont chargés ou qu'ils chargent quelque chose, permettant d'avoir une meilleur lecture.</li>
+<li>Les menus principaux ont des titre permettant maintenant de les identifier plus facilement.</li>
+</ul>
+<h2>V2.10.76</h2>
+<ul>
+<li>Lors de la mise à jour des packs via le script, les fichiers de payloads mis à jour dans les packs seront aussi copiés dans le dossier "Payloads" permettant de lister des payloads à lancer; cette action n'aura lieu que si la mise à jour des packs a été faite avec succès. De cette façon, si seulement un CFW a été mis à jour dans les packs, il ne sera plus nécessaire de télécharger tout le script pour avoir la possibilité de lancer le payload de celui-ci mis à jour, ceci se fera tout seul en ne mettant à jour que les packs. Cette modification est un avantage pour l'utilisateur qui a un peu moins de téléchargements à faire et c'est aussi un avantage pour moi qui n'aura plus à traiter ce genre de mise à jour dans deux endroits différents, notemment au niveau des changelogs.</li>
+</ul>
+<h2>V2.10.75</h2>
+<ul>
+<li>Mise à jour du payload de lancement d'Atmosphere "Fusee Primary" vers la version 0.8.10 d'Atmosphere.</li>
+</ul>
+<h2>V2.10.74</h2>
+<ul>
+<li>Dans la préparation d'une SD, le profile général recommandé ne contient plus les modules pour Atmosphere ni les cheats pour Atmosphere et SX OS, maintenant cette configuration est des plus basique pour éviter les bugs liés à certains modules et se sera un bon profile de test pour une console qui présenterai des soucis de démarrage.</li>
+<li>Mise à jour du payload Lockpick_RCM vers la dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V2.10.73</h2>
+<ul>
+<li>Mise à jour du payload Lockpick_RCM vers la dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V2.10.72</h2>
+<ul>
+<li>Correction d'un bug dans le script permettant de préparer une mise à jour sur la SD, maintenant le homebrew ChoiDuJourNX est correctement copié.</li>
+</ul>
+<h2>V2.10.71</h2>
+<ul>
+<li>Correction d'un bug important dans la préparation d'une SD qui faisait que le pack d'émulateurs n'était pas copié.</li>
+</ul>
+<h2>V2.10.70</h2>
+<ul>
+<li>Mise à jour de NSC_Builder en version 0.85B.</li>
+<li>Mise à jour du payload Lockpick_RCM vers la dernière version Master du Github, compilé par moi-même.</li>
+<li>Ajout de l'émulateur Reicast dans le profile général par défaut.</li>
+</ul>
+<h2>V2.10.69</h2>
+<ul>
+<li>Le script de remise à zéro a été un peu retravaillé, quelques fichiers supplémentaires sont maintenant supprimés (profiles, compte mega configuré, fichiers de firmwares téléchargés, clés et d'autres fichiers/dossiers pouvant avoir été créés durant certains scripts).</li>
+<li>Ajout de la possibilité de consulter les derniers changelogs (généraux et packs) via la page "A propos".</li>
+<li>Changement du moment auquel sont détectés les versions des packs et du pack de cheats, maintenant cela est fait dès le lancement du script. Ceci corrige donc le problème qu'il y avait dans la page "A propos" qui n'affichait pas correctement ces informations dans la plupart des cas.</li>
+</ul>
+<h2>V2.10.68</h2>
+<ul>
+<li>Mise à jour du payload Lockpick_RCM vers la dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V2.10.67 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Implémentation d'un script permettant de préparer le nécessaire pour <a target="_blank" href="https://github.com/pixel-stuck/nereba">l'exploit Nereba</a> (préparation de la SD, lancement du serveur <a target="_blank" href="https://github.com/reswitched/pegaswitch">Pegaswitch</a>). Ce script se trouve dans le menu des autres fonctions du menu principal.</li>
+<li>Modification du script lançant le serveur personnel de Switch-Lan-Play et modifications importantes dans l'arborescence des dossiers utilisé par celui-ci.</li>
+<li>Mise à jour des packs en version 165.</li>
+<li>Mise à jour de la documentation et du readme.</li>
+</ul>
+<h2>V2.10.66</h2>
+<ul>
+<li>Normalement, l'ensemble des modules devraient fonctionner avec ReiNX se qui n'était pas le cas avant.</li>
+<li>Suppression de certains fichiers inutiles dans les dossiers de modules (non géré par le script mais ceci dit ces fichiers ne devraient pas être gênants sur la SD, pour infos se sont les fichiers "git.gud" donc si vous souhaitez les supprimer il faudra le faire manuellement).</li>
+<li>Mise à jour de XCI Explorer en version 1.4.7.</li>
+</ul>
+<h2>V2.10.64</h2>
+<ul>
+<li>Encore un bug fixé dans le script de NSZip, maintenant celui-ci fonctionne complètement.</li>
+<li>Mise à jour du payload de Retro_reloaded en dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V2.10.63</h2>
+<ul>
+<li>Correction d'un bug dans le script de NSZip, maintenant la sélection du fichier devrait fonctionner.</li>
+</ul>
+<h2>V2.10.62</h2>
+<ul>
+<li>Mise à jour de NSC_Builder en version 0.83B. Par contre, celui-ci n'est plus traduit en français.</li>
+<li>Mise à jour de la documentation pour supprimer l'indication que NSC_Builder est traduit en français puisque cela n'est plus le cas.</li>
+</ul>
+<h2>V2.10.61</h2>
+<ul>
+<li>Correction d'un bug dans le script de NSZip.</li>
+</ul>
+<h2>V2.10.60</h2>
+<ul>
+<li>Ajout des firmwares 8.0.0 et 8.0.1 dans le script de copie d'une mise à jour sur la SD.</li>
+</ul>
+<h2>V2.10.59</h2>
+<ul>
+<li>Mise à jour du payload de Retro_reloaded vers la dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V2.10.58</h2>
+<ul>
+<li>Ajout d'un script permettant d'utiliser NSZip, le script est accessible dans le menu des autres fonctionnalités du script.</li>
+<li>Affichage des versions actuelles des éléments dans le script de mise à jour.</li>
+<li>Création d'un script "A propos" qui permet d'afficher quelques infos sur le script, pour l'instant c'est très basique.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V2.10.57</h2>
+<ul>
+<li>Ajout de la possibilité de configurer manuellement certains paramètres de Atmosphere durant la préparation d'une SD. Si ceci est effectué durant la préparation d'un profile général, les paramètres seront sauvegardés dans celui-ci.</li>
+<li>Correction d'un bug dans l'enregistrement des valeurs dans un profile général contenant des espaces dans son nom.</li>
+</ul>
+<h2>V2.10.56</h2>
+<ul>
+<li>Mise à jour du payload de lancement d'Atmosphere en version 0.8.9.</li>
+</ul>
+<h2>V2.10.55</h2>
+<ul>
+<li>Mise à jour du payload de ReiNX en version 2.2.1.</li>
+</ul>
+<h2>V2.10.54</h2>
+<ul>
+<li>Ajout du compagnon de Hid-mitm dans les fonctions occasionnelles du script.</li>
+</ul>
+<h2>V2.10.53</h2>
+<ul>
+<li>Correction de quelques bugs dans la préparation d'une SD; encore.</li>
+</ul>
+<h2>V2.10.52 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise à jour du payload de ReiNX en version 2.2.</li>
+</li>
+<h2>V2.10.51</h2>
+<ul>
+<li>Amélioration des gestions de profiles (particulièrement la vérification de la présence d'un profile dans les profiles généraux lors de la suppression pour ajouter un contrôle d'erreur important) et diverses corrections de bugs dans la gestion de profiles généraux, maintenant cela correspond beaucoup plus à se que je souhaite.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V2.10.50 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise à jour de Hekate en version 4.10.1.</li>
+<li>Le fichier "update.bin" de Hekate est maintenant copié par le script de préparation d'une SD via le dossier "payloads" des packs, se qui permet de supprimer le fichier contenu dans le pack Atmosphere.</li>
+</ul>
+<h2>V2.10.49</h2>
+<ul>
+<li>Intégration d'une gestion de profiles généraux dans la préparation d'une SD, permettant de simplifier celle-ci une fois les profiles créés. La gestion de ces profiles peut être atteinte via la préparation d'une SD ou via le menu général de configuration. Enfin, les profiles créés seront sauvegardés via la fonction de sauvegarde des fichiers importants et donc pourront être restaurés. Il reste des améliorations à faire pour cette fonctionnalité (ainsi que pour la gestion des profiles en général) que je prévois pour les futurs mises à jour mais cela devrait est acceptable en l'état.</li>
+<li>Création d'un profile général par défaut pour la préparation d'une SD, il contient le pack Atmosphere/Kosmos avec l'écriture sur la partitionPRODINFO activée et le patch NOGC désactivé et quelques modules utiles installés, le pack SX OS, les homebrews les plus utiles, les cheats pour Atmosphere et SX OS installés et le pack d'émulateurs qui remplace  les fichiers de configurations de ceux-ci.</li>
+<li>Mise à jour de la documentation des packs.</li>
+<li>Mise à jour de la liste des choses à faire, liste se trouvant dans la documentation.</li>
+</ul>
+<h2>V2.10.48</h2>
+<ul>
+<li>Mise à jour du payload Retro_reloaded vers la dernière version du Github, compilé par moi-même.</li>
+</ul>
+<h2>V2.10.47</h2>
+<ul>
+<li>Mise à jour de Hekate en version 4.10.</li>
+<li>Mise à jour de 4NXCI en version 4.03.</li>
+</ul>
+<h2>V2.10.46</h2>
+<ul>
+<li>Mise à jour de Lockpick-RCM en version 1.1.1.</li>
+<li>Mise à jour de Fusee_primary vers la version 0.8.8 d'Atmosphere.</li>
+<li>Mise à jour de NXNandManager en version 1.1.1.</li>
+<li>Quelques préparations pour de futurs fonctionnalités.</li>
+</ul>
+<h2>V2.10.45</h2>
+<ul>
+<li>Mise à jour de XCI Explorer en version 1.4.6.</li>
+</ul>
+<h2>V2.10.44</h2>
+<ul>
+<li>Corrections de bugs et quelques ajustements dans les divers scripts de gestion de profiles, notamment avec le changement de page.</li>
+<li>Mise à jour du payload Hekate vers la dernière version du Github, compilé par moi-même.</li>
+</ul>
+<h2>V2.10.43</h2>
+<ul>
+<li>Ajout du module Ldn_mitm à la configuration intégrant tous les modules dans la préparation d'une SD.</li>
+</ul>
+<h2>V2.10.42</h2>
+<ul>
+<li>Ajout de la liste des modules copiés pour les CFW dans le résumé de la préparation d'une SD.</li>
+<li>Ajout de Nxsh à la copie de tous les homebrews optionnels.</li>
+<li>Ajout de Freebird et de Nxsh à la configuration de copie de tous les modules du script de préparation d'une SD.</li>
+<li>Mise à jour de la documentation des packs.</li>
+</ul>
+<h2>V2.10.41</h2>
+<ul>
+<li>Intégration de NSZip avec un script qui lui est dédié (script en cours de création).</li>
+<li>Intégration de Renxpack avec un script qui lui est dédié (script en cours de création).</li>
+<li>Mise à jour de 4NXCI en version 4.02.</li>
+</ul>
+<h2>V2.10.40</h2>
+<ul>
+<li>Corrections de bugs dans le script de gestion de profiles des cheats.</li>
+<li>Modification de certaines fonctions de gestion de profiles, maintenant les scripts sont configurés plus ou moins sur la même façon de fonctionner.</li>
+<li>Mise à jour de la documentation des packs.</li>
+</ul>
+<h2>V2.10.39</h2>
+<ul>
+<li>Correction d'un bug faisant planter le script de gestion des profiles pour les modules optionnels.</li>
+</ul>
+<h2>V2.10.38 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Ajout d'une gestion de modules dans la préparation d'une SD. Comme pour les homebrews ou les cheats, les modules peuvent être gérés via des profiles qui peuvent être configurés soit pendant la préparation de la SD, soit via le menu de paramètres du script et bien-sûr, les profiles sont sauvegardés par la fonction de sauvegarde.</li>
+<li>Révision de pas mal d'éléments des packs ReiNX et Atmosphere, justement pour coller avec la nouvelle gestion de modules. Il est fortement conseillé de réinitialiser les fichiers de CFW de la SD si vous mettez à jour la SD créée avec une version précédente du script.</li>
+</ul>
+<h2>V2.10.37</h2>
+<ul>
+<li>Mise à jour de 4NXCI en version 4.01.</li>
+<li>Mise à jour du payload de ReiNX pour la version 2.1.1.</li>
+</ul>
+<h2>V2.10.36</h2>
+<ul>
+<li>Ajout de H2test dans les outils par défaut de la Toolbox.</li>
+<li>Mise à jour du payload de Retro_Reloaded.</li>
+</ul>
+<h2>V2.10.35 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Ajout de la création de profiles pour le pack d'émulateurs. Comme pour les autres gestions de profiles, celle-ci peut être configurée pendant la préparation d'une SD ou dans le menu de configuration du script.</li>
+<li>Le script de sauvegarde des éléments importants prend maintenant en compte les profiles d'émulateurs.</li>
+<li>Le menu "Sauvegarder, restaurer ou réinitialiser les fichiers ou paramètres du script" du menu principal a été renommé "Sauvegarde/restauration et paramètres du script" pour être plus explicite sur son contenu.</li>
+</ul>
+<h2>V2.10.34 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Modification de l'organisation de certains dossiers car il y avait des soucis avec Retro_Reloaded.</li>
+<li>Dans la préparation d'une SD, Retro_Reloaded est réinitialisé à chaque nouvelle préparation de la SD, permettant ainsi d'éviter des bugs innatendus.</li>
+</ul>
+<h2>V2.10.33 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise à jour de Goldtree en version 0.5.</li>
+</ul>
+<h2>V2.10.32 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Dans la préparation d'une SD, l'affichage du texte est un peu plus aéré et la copie de payloads pour le homebrew Payload_Launcher suit maintenant les choix effectués pendant le script, excepté pour quelques payloads qui sont copiés par défaut avec ce homebrew. Une autre modification, la copie du payload Memloader est maintenant basée sur le fichier présent dans les packs plutôt que sur l'ancien fichier utilisé par le script qui était resté là depuis un moment, j'aurais dû faire cette modification bien plus tôt mais elle est passée à la trape jusque là.</li>
+<li>Suppression du fichier "memloader.bin" devenu inutile.</li>
+</ul>
+<h2>V2.10.31</h2>
+<ul>
+<li>Correction d'un bug dans la préparation d'une SD, les payloads des CFWs n'étaient pas copiés pour être utilisés par Retro_Reloaded.</li>
+</ul>
+<h2>V2.10.30 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise à jour du payload de Retro_Reloaded en version 0.46.</li>
+<li>Mise à jour de la préparation d'une SD pour inclure la copie de Memloader dans Retro_Reloaded si le pack est copié.</li>
+</ul>
+<h2>V2.10.29 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Support du payload de <a target="_blank" href="https://github.com/RetroGamer74/RR_RetroReloaded/releases">Retro_reloaded</a> pour la fonctionnalité de lancement de payload ainsi que dans la préparation d'une SD, celui-ci sera copié aux endroits importants selon les choix effectués. Cette modification apporte donc pas mal de modifications dans les packs qui passent en version 119.</li>
+</ul>
+<h2>V2.10.28 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise à jour de la préparation d'une SD pour supprimer un dossier de la SD qui ne servira plus avec les packs en version 118.</li>
+</ul>
+<h2>V2.10.27 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Prise en compte du homebrew Payload_Launcher dans la gestion de profile pour les homebrews optionnels, ajout de celui-ci dans la liste de copie de tous les homebrews par défaut et description de celui-ci dans la doc.</li>
+</ul>
+<h2>V2.10.26 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Dans la préparation d'une SD, la copie du pack ReiNX a été légèrement modifiée pour utiliser correctement la configuration des packs en version 115, voir le changelog des packs pour plus d'infos.</li>
+</ul>
+<h2>V2.10.25</h2>
+<ul>
+<li>Ajout de la possibilité de rebooter sur ReiNX directement via le homebrew Reboot_to_payload ou via le menu de redémarrage de la console pour le CFW ReiNX. Le payload de ReiNX est donc maintenant copié sur la SD grâce au script de préparation d'une SD dans le répertoire "ReiNX" de celle-ci et est nommé "reboot_payload.bin", ceci permettant le redémarrage souhaité.</li>
+<li>Toujours dans la préparation d'une SD mais pour le pack Atmosphere cette fois, ajout de la possibilité de configurer les droits d'écriture sur la partition PRODINFO.</li>
+</ul>
+<h2>V2.10.24</h2>
+<ul>
+<li>Mise à jour de Split_NSP en dernière version "Master" du Github et mise à jour du script l'utilisant pour prendre en compte les nouveaux paramètres.</li>
+</ul>
+<h2>V2.10.23</h2>
+<ul>
+<li>Mise à jour du payload de lancement de ReiNX en version 2.1.</li>
+</ul>
+<h2>V2.10.22 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise à jour de la préparation d'une SD pour prendre en compte les fichiers de configurations des nouvelles versions de Pnes, Psnes et PFBA. Les packs doivent donc être en version 108.</li>
+<li>Mise à jour de la documentation des packs.</li>
+</ul>
+<h2>V2.10.21</h2>
+<ul>
+<li>Mise à jour du payload lançant ReiNX, le CFW doit donc être mis à jour.</li>
+<li>Dans la préparation de la SD, si Atmosphere est choisi pour être copié, un message d'avertissement pour la copie de ReiNX et les firmwares 7.0.0 et supérieur est affiché pour prévenir qu'Atmosphere ne sera plus utilisable via son payload Fusee Primary pour ces firmwares.</li>
+</ul>
+<h2>V2.10.20</h2>
+<ul>
+<li>Intégration d'une gestion de profiles pour la copie de cheats dans la préparation d'une SD ainsi que dans les fonctionnalités de sauvegarde/restauration. Il est à noter que les profiles sont sauvegardés quand la fonction de sauvegarde des fichiers importants est effectuée.</li>
+<li>Quelques autres petites corrections.</li>
+<li>Mise à jour des bugs connus dans la documentation.</li>
+</ul>
+<h2>V2.10.19</h2>
+<ul>
+<li>Mise à jour de 4NXCI en version 4.0.</li>
+</ul>
+<h2>V2.10.18</h2>
+<ul>
+<li>Mise à jour du payload SimpleUF2 en version 0.99R4.</li>
+<li>Dans la préparation d'une SD, correction des textes apparaissant lors des demandes de copie de cheats, la fonction était fonctionnelle mais le message n'était pas le bon.</li>
+</ul>
+<h2>V2.10.17</h2>
+<ul>
+<li>Dans la préparation d'une SD, EdiZon est automatiquement copié sur la SD si la copie de cheats est choisie pour le pack Atmosphere.</li>
+</ul>
+<h2>V2.10.16</h2>
+<ul>
+<li>Ajout de la copie d'une base de données de cheats dans la préparation d'une SD pour les packs Atmosphere et SX OS.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V2.10.15</h2>
+<ul>
+<li>Mise à jour de Hekate en version 4.9.1, important pour utiliser les nouveaux fichiers de configurations du packs Atmosphere si lancé via Hekate.</li>
+</ul>
+<h2>V2.10.14</h2>
+<ul>
+<li>Il est maintenant possible de restaurer une partie d'un dump ou un dump complet dans un fichier de dump, permettant par exemple de remplacer une partition dans un dump déjà effectué.</li>
+</ul>
+<h2>V2.10.13</h2>
+<ul>
+<li>Mise à jour de NxNandManager en version 1.1.</li>
+</ul>
+<h2>V2.10.12 (ne surtout pas écraser une ancienne version car beaucoup de remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Fusion du pack Atmosphere et Kosmos en un seul pack. Pour l'instant, les anciennes configurations de Hekate ont été gardées et ont été renommé en "nom_du_fichier_de_configuration.ini.old", pour les restaurer il suffira de renommer le fichier en supprimant le ".old" à la fin.</li>
+<li>Mise à jour de la documentation des packs.</li>
+</ul>
+<h2>V2.10.11</h2>
+<ul>
+<li>Mise à jour de NXNandManager.</li>
+<li>Ajout de la possibilité d'activer/désactiver l'auto-RCM sur un fichier de dump de la partition BOOT0 ou directement sur un périphérique ayant monté cette partition au préalable.</li>
+<li>Prise en charge des dumps splittés pour la restauration.</li>
+<li>Mise à jour de Hekate en version 4.9.</li>
+<li>Correction du fichier de configuration de NSC_Builder qui n'indiquait pas le bon chemin vers le fichier de clés.</li>
+</ul>
+<h2>V2.10.10</h2>
+<ul>
+<li>Remise en place de Goldtree en version 0.4.</li>
+<li>Mise à jour de NSC_Builder en version BETA 0.81D.</li>
+</ul>
+<h2>V2.10.09 (ne surtout pas écraser une ancienne version car beaucoup de remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise à jour du message d'introduction du script permettant de mettre un firmware installable via ChoiDuJourNX sur la SD pour clarifier un peu plus les choses.</li>
+<li>Ajout du payload Lockpick_rcm dans la liste de payload et copie de celui-ci dans les packs Atmosphere, Kosmos et SX OS.</li>
+<li>Ajout des homebrews DZ, N1dusd et Lithium dans la liste des homebrews optionnels, les packs doivent être en version 96.</li>
+<li>Mise à jour de NSC_Builder en version 0.81 Beta2.</li>
+<li>Mise à jour de la documentation des packs.</li>
+</ul>
+<h2>V2.10.08</h2>
+<ul>
+<li>Possibilité d'accéder à la fonction de réunification d'un dump de nand splitté via la Nand Toolbox.</li>
+<li>Dans la préparation d'une SD, la fonction de suppression de données de la SD a été modifiée, elle permet maintenant de soit supprimer toutes les données de la SD, soit de supprimer toutes les données des CFWs (dossier "titles" de ceux-ci inclus) ou soit de ne rien supprimer et de faire la copie normalement.</li>
+</ul>
+<h2>V2.10.07</h2>
+<ul>
+<li>Correction d'un bug dans la réunification d'un dump de nand, les dumps de Hekate de 15 parties provoquaient toujours une erreur indiquant des fichiers manquants et donc la réunification ne pouvait se faire. Un autre bug a été corrigé, le dump est correctement conservé à la fin du script. Enfin, une vérification est faite pour savoir si un fichier "rawnand.bin" existe déjà à l'emplacement de copie du fichier pour savoir si le fichier doit être écrasé ou non.</li>
+</ul>
+<h2>V2.10.06</h2>
+<ul>
+<li>Mise à jour de NSC_Builder en version 0.80 beta, version traduite.</li>
+</ul>
+<h2>V2.10.05</h2>
+<ul>
+<li>Correction d'un bug introduit par laversion 2.10.03 se produisant à la fin de la préparation d'une SD.</li>
+</ul>
+<h2>V2.10.04</h2>
+<ul>
+<li>Correction d'un bug empêchant le script permettant de joindre les fichiers d'une nand splitée d'être réunifiée.</li>
+</ul>
+<h2>V2.10.03</h2>
+<ul>
+<li>Petits bugs corrigés dans la préparation d'une SD.</li>
+</ul>
+<h2>V2.10.02</h2>
+<ul>
+<li>Le lancement d'un payload via un fichier sélectionné fonctionne maintenant correctement.</li>
+</ul>
+<h2>V2.10.01</h2>
+<ul>
+<li>Lors de la préparation d'une SD, le résumé de se qui sera copié sera affiché à la fin du paramétrage, permettant ainsi d'annuler ou de confirmer l'action de copie.</li>
+</ul>
+<h2>V2.10.00 (ne surtout pas écraser une ancienne version car beaucoup de remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Maintenant, il est possible de créer des profiles pour installer les homebrews que vous souhaitez sur la SD lors de la préparation de celle-ci. En conséquence, les anciennes versions de mon script ne fonctionneront plus avec les nouveaux packs et certaines fonctionnalités comme la préparation d'un package de mise à jour sur la SD pour être installé avec ChoiDuJourNX ne fonctionneront plus. Cette nouvelle version de mon script doit donc absolument être utilisée avec une version des packs au moins égal à 94 et les anciennes versions de mon script ne fonctionneront qu'avec la version 93 ou moins des packs. De fait, je conseil d'utiliser la fonction de sauvegarde/restauration de configurations pour mettre à jour sans perdre vos paramètres ou fichiers de clés.</li>
+<li>La fonction de sauvegarde sauvegardera maintenant aussi les profiles d'installation des homebrews optionnels.</li>
+<li>Le script de préparation d'une mise à jour pour ChoiDuJourNX permet maintenant de télécharger et de travailler sur le firmware 7.0.1. Ce script a éussi été revu pour être adapté à la nouvelle version 94 des packs.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V2.00.18</h2>
+<ul>
+<li>Le script de préparation d'une SD propose d'activer ou non le patch "nogc" pour le pack Kosmos, ceci est lié à la nouvelle configuration de Hekate 4.8 pour lequel les configurations avec le patch "nogc" ne servent plus à rien car ce patch est géré via un paramètre de configuration global.</li>
+</ul>
+<h2>V2.00.17</h2>
+<ul>
+<li>Remplacement du payload de ReiNX pour qu'il soit compatible avec la version 89 des packs.</li>
+<li>Mise à jour de Hekate en version 4.8.</li>
+<li>Downgrade de Goldtree en version 0.3 car beaucoup de gens semblent avoir des soucis avec la 0.4.</li>
+</ul>
+<h2>V2.00.16</h2>
+<ul>
+<li>Mise à jour du payload d'Atmosphere pour la version 0.8.4.</li>
+<li>Mise à jour du payload de ReiNX avec la dernière version "master" du Github, compilé par moi-même.</li>
+<li>Mise à jour de NxNandManager avec la dernière version "Master" du Github, compilé par moi-même.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V2.00.15</h2>
+<ul>
+<li>Mise à jour de NxNandManager, les fichiers ne sont plus compressés avec UPX.</li>
+</ul>
+<h2>V2.00.14</h2>
+<ul>
+<li>Ajout de la fonction de gestion de nand dans les fonctions occasionnelles, merci à @eliboa qui a durement travaillé sur cela avec NxNandManager.</li>
+<li>Pour monter les différentes parties de la Switch, la version de Memloader utilisée est celle utilisée par la dernière version de Tegra_RCM_Gui, celle-ci permet de s'afranchir de la confirmation sur la console pour monter le stockage souhaité. L'ancienne version de Memloader est toujours présente car elle est celle qui est utilisée lors de la copie de ce payload sur la SD lors de la préparation de celle-ci.</li>
+<li>Mise à jour de la documentation.</li>
+<li>Peut-être d'autres choses que j'ai oubliées.</li>
+</ul>
+<h2>V2.00.13 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise à jour de Hekate en version 4.6_svc.</li>
+<li>Mise à jour du script de préparation d'une SD qui élimine des doublons de fichiers dans les packs, voir le changelog des packs (version 86) pour plus d'infos sur cette adaptation.</li>
+</ul>
+<h2>V2.00.12</h2>
+<ul>
+<li>Mise à jour de Goldtree en version 0.4.</li>
+</ul>
+<h2>V2.00.11 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Le script permettant de préparer une SD avec un firmware et ChoiDuJour-NX supporte maintenant le téléchargement du firmware 7.0.0. Attention, les différents CFWs ne sont pas encore compatibles avec ce firmware.</li>
+<li>Mise à jour de Biskeydump en version8.</li>
+<li>Mise à jour de 4NXCI en version 3.06.</li>
+<li>Suppression du pack préparant un pack Kosmos allégé pour la version 1.0.0, maintenant le pack principal fonctionnera sur tous les firmwares car toutes les permissions sont activées pour toutes les configurations dans Hekate (sauf configuration "stock"). De fait, la fonction spécifique de mon script pour ce firmware a aussi été supprimée.</li>
+</ul>
+<h2>V2.00.10</h2>
+<ul>
+<li>Correction d'un bug dans la fonction de téléchargement d'un firmware qui faisait planter le script si celui-ci était ensuite converti via ChoiDuJour puis que l'on tentait de refaire une action de ce script derrière.</li>
+</ul>
+<h2>V2.00.09</h2>
+<ul>
+<li>Le script de vérification des clés affiche maintenant les clés manquantes qui peuvent être vérifiables. Il affiche également le nombre de clés dans chacune des listes affichées en sortie si celle-ci sont supérieurs à une. Enfin, pour les développeurs, la fonction de test des clés retourne maintenant toutes les listes affichées en plus de la liste des clés vérifiées se qui pourra servir à des usages futur, la fonction de création d'un fichier de clés pour ChoiDuJour a été modifiée pour être adaptée à ce dernier changement.</li>
+</ul>
+<h2>V2.00.08</h2>
+<ul>
+<li>Correction d'un bug dans NSC_Builder qui empêchait d'utiliser correctement le mode mise à jour.</li>
+<li>Modification du script de lancement de NSC_builder pour supprimer des choses qui m'avaient servi à faire du debug et donc inutile maintenant.</li>
+<li>Diverses optimisations et modifications du script Python de gestion des clés d'un fichier de clés.</li>
+</ul>
+<h2>V2.00.07</h2>
+<ul>
+<li>Ajout d'un script Python permettant de tester les clés du fichier "prod.keys" (connu aussi sous le nom "keys.txt" ou "keys.dat"...) pour savoir si des clés sont inconnues/uniques ou incorrectes. Ce script permet aussi de créer un fichier de clés pour ChoiDuJour ne contenant que les clés nécessaires à ce processus; le fichier sera basé sur un fichier de clés complet qui devra être fourni par l'utilisateur. Enfin, le script permet aussi de créer le fichier permettant de vérifier les clés dans les autres fonctionnalités mais attention, aucune vérification n'est faite durant ce processus et le fichier précédent sera supprimé donc n'utilisez cette fonctionnalité que si vous savez se que vous faites. Le script se trouve dans le dossier "tools\python3_scripts\Keys_management" et nécessite Python 3 pour être exécuté via le fichier "keys_management.py"; exécuter le script sans paramètre affichera son aide. Il y a beaucoup de choses à améliorer pour ce script (optimisation du code notemment) mais pour l'instant il fonctionne ainsi, c'est mon premier vrai script Python donc soyez indulgent.</li>
+<li>Lorsqu'une création de package de mise à jour via ChoiDuJour est tentée, le fichier de clé utilisé est maintenant créé à la volé via le fichier de clés fourni au script, ceci permet d'éviter les erreurs liées aux clés inconnues de Hactool pendant le processus. Ceci est rendu possible grâce au script Python décrit précédemment.</li>
+<li>Ajout d'une fonction permettant de tester les clés qui ne sont pas uniques à la console et de savoir si certaines sont fausses. Par exemple, il est possible de tester un fichier de clé "prod.keys" créé par le homebrew Lockpick. Ceci est rendu possible grâce au script Python décrit précédemment. Cette fonctionnalité se trouve dans le menu des fonctions occasionnelles.</li>
+<li>Mise à jour du script Python de Gitget pour que le chemin de "SVN.exe" soit correctement détecté quelque soit l'endroit d'où le script est exécuté.</li>
+<li>Mise à jour du readme pour inclure la licence GPL V3 au nouveau script Python créé.</li>
+</ul>
+<h2>V2.00.06</h2>
+<ul>
+<li>Ajout d'une vérification dans les scripts de préparation d'une SD au cas où la mise à jour des packs via le script ait échoué. Si le fichier "tools\packs_version.txt" est trouvé, ces scripts ne fonctionneront pas car ce fichier indique qu'une mise à jour des packs via le script a ratée alors que la non présence de ce fichier indique que la mise à jour des packs via le script a réussie.</li>
+</ul>
+<h2>V2.00.05</h2>
+<ul>
+<li>Mise à jour de la vérification des packs qui prendra maintenant en compte la version qui était installé avant si la mise à jour a plantée et que le script a été redémarré entre temps. Du coup, la version des packs ne sera mise à jour que si l'installation réussi.</li>
+</ul>
+<h2>V2.00.04</h2>
+<ul>
+<li>Ajout de Gitget et d'une version portable de SVN qui serviront par la suite pour mettre à jour le script ou au moins certaines parties de celui-ci.</li>
+<li>Possibilité de mettre à jour directement les packs du script via la fonction de mise à jour, qu'elle soit automatique au début du script ou manuelle via les menus. La mise à jour prend du temps car elle retélécharge tout le contenu des packs à chaque fois mais c'est le mieux que j'ai trouvé pour le moment.</li>
+<li>Ajout d'une version pour l'ensemble des packs du script pour vérifier s'il existe une mise à jour des packs et ajout d'un changelog spécifique aux packs dans la documentation.</li>
+<li>Ajout de l'émulateur MGBA au pack d'émulateurs.</li>
+<li>Mise à jour de SX Installer en version 1.3.</li>
+<li>Mise à jour des différents scripts et configurations pour EdiZon.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V2.00.03 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise à jour de Atmosphere vers la dernière version "Master" du Github pour les packs Kosmos et Atmosphere, compilés par moi-même.</li>
+<li>Mise à jour de EdiZon en dernière version "Master" du Github, compilé par moi-même.</li>
+<li>Le homebrew "CFW-Setting" a été renommé "Kosmos-Toolbox" dans le packs Kosmos.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V2.00.02</h2>
+<ul>
+<li>Correction d'un bug pendant la préparation d'une SD qui faisait que le fichier de configuration de Hekate n'était pas correctement copié quand on installait le pack Kosmos et le pack Atmosphere en même temps (bug initié dans la version 2.00.00).</li>
+</ul>
+<h2>V2.00.01</h2>
+<ul>
+<li>Correction de bugs dans le script de lancement de NSC_Builder pour la fonction permettant d'ouvrir le répertoire de sortie des fichiers de celui-ci. D'autres bugs importants dans ce script ont été corrigés également.</li>
+<li>NSC_Builder s'exécute maintenant dans une fenêtre à part de mon script se qui l'empêche définitivement d'avoir la moindre influance sur celui-ci.</li>
+</ul>
+<h2>V2.00.00</h2>
+<ul>
+<li>Mise à jour de Atmosphere en version 0.8.3 pour les packs Kosmos et Atmosphere. Le homebrew "reboot_to_payload" a été ajouté et le payload choisi pour le reboot est Hekate pour les deux packs, ceux qui utilisent le pack Atmosphere pouront redémarer celui-ci en lançant le payload via Hekate, il sera automatiquement copié dans le bon répertoire de la SD pendant l'installation du pack.</li>
+<li>Mise à jour du HBL en version 2.1.0 pour les packs Atmosphere, Kosmos et ReiNX.</li>
+<li>Mise à jour du payload Simple-UF2 en version 97.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.99.97</h2>
+<ul>
+<li>Mise à jour de EdiZon en version 2.0.1.</li>
+</ul>
+<h2>V1.99.96</h2>
+<ul>
+<li>Mise à jour de Atmosphere vers la dernière version"master" du Github pour les packs Atmosphere et Kosmos, compilé par moi-même.</li>
+<li>Mise à jour de EdiZon en version 2.0.</li>
+<li>Ajout des sources pythons pour SSNC et NSC_Builder, ne servira pas pour le script mais permet de voir le code source des éléments compilés avec Pyinstaller pour ceux que cela intéresse. Les autres projets utilisant Python avaient déjà les sources incluses, seul ces deux projets ne les incluaient pas, c'est maintenant chose faite.</li>
+</ul>
+<h2>V1.99.95 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Suppression d'un dossier qui ne sert pas pour l'instant pour le script.</li>
+<li>Ajout de Kip Select dans le pack Atmosphere.</li>
+<li>Mise à jour de Pplay en version 1.5.</li>
+<li>Mise à jour de NX-Shell en version 1.20.</li>
+<li>Mise à jour de Goldleaf et de Goldtree en version 0.3.</li>
+<li>Mise à jour de Atmosphere vers la dernière version"master" du Github pour les packs Atmosphere et Kosmos, compilé par moi-même.</li>
+<li>Mise à jour d'EdiZon et de SwitchIdent vers la dernière version "master" du Github, compilés par moi-même.</li>
+</ul>
+<h2>V1.99.94</h2>
+<ul>
+<li>Ajout du payload Pk1decryptor permettant de récupérer certaines clés qui pourront peut-être servir un jour et qui permet aussi de décrypter le package 1 de la Switch. Le dossier nécessaire à cette oppération est maintenant créé sur la SD lors de l'installation de tout les packs, il suffira d'y mettre le bon fichier à déchiffrer. Attention, les clés ou infos obtenuent sont unique pour chaque console donc il ne faut pas les partager.</li>
+<li>Mise à jour du client Switch-Lan-Play en version 0.1.0.</li>
+<li>Mise à jour de SwitchIdent vers la dernière version "master" du Github, compilé par moi-même.</li>
+</ul>
+<h2>V1.99.93</h2>
+<ul>
+<li>Le problème des répertoires vides manquant sur le Github a été résolu et les scripts de préparation de la SD ont été mis à jour pour s'adapter à ces changements.</li>
+</ul>
+<h2>V1.99.92 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Correction d'un bug qui faisait que parfois, certains dossiers vides n'étaient pas copiés pendant la préparation d'une SD et cela pouvait poser des problèmes pour certaines actions.</li>
+</ul>
+<h2>V1.99.91 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Ajout du homebrew SX Installer dans le pack SX OS.</li>
+<li>Déplacement de SX Dumper pour qu'il soit uniquement copié lors du choix du pack SX OS.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.99.90</h2>
+<ul>
+<li>Ajout d'une option au menu principal permettant de vérifier s'il existe une mise à jour du script.</li>
+</ul>
+<h2>V1.99.89</h2>
+<ul>
+<li>Ajout de la méthode pour lancer les homebrews en profitant des 3 GO de RAM dans la documentation, au début de la documentation des différents packs pouvant être installés par le script.</li>
+<li>Ajout du payload Simple-UF2_Universal_Hekate dans la liste des payloads pouvant être lancé. Ce payload permet de lancer un fichier de payload nommé "payload.bin" et placé à la racine de la SD et si ce fichier n'est pas trouvé, Hekate sera lancé. Pour plus d'infos sur ce projet, voir <a target="_new" href="https://gbatemp.net/threads/modchip-software-simple-uf2-with-switchboot-save-fuses-without-autorcm.526607/">cette page sur Gbatemp</a>.</li>
+<li>Mise à jour de Atmosphere vers la dernière version "master" du Github, compilé par moi-même pour les pack Atmosphere et Kosmos.</li>
+<li>Mise à jour de SwitchIdent vers la dernière version "master" du Github, compilé par moi-même.</li>
+</ul>
+<h2>V1.99.88</h2>
+<ul>
+<li>Petit changement dans le fonctionnement de la toolbox, maintenant le mode choisi au démarrage de celle-ci restera actif tant que l'utilisateur n'aura pas décidé d'en changer.</li>
+<li>Mise à jour de JKSV en version 01/08/2019.</li>
+<li>Mise à jour de Pplay en version 1.3.</li>
+<li>Mise à jour du module SysFTPD vers la dernière version "master" du github pour les packs Kosmos et ReiNX.</li>
+<li>Recompilation par mes soins de la dernière version "master" du Github d'Atmosphere avec LibNX 2.0 pour les packs Atmosphere et Kosmos.</li>
+<li>Mise à jour de SwitchIdent vers la dernière version "master" du Github, compilé par moi-même.</li>
+<li>Mise à jour de SX OS en version 2.5.2.</li>
+<li>Mise à jour de EdiZon en version 1.7.0.</li>
+</ul>
+<h2>V1.99.85</h2>
+<ul>
+<li>Correction d'un très gros bug dans la toolbox qui posait problème lors de l'ajout d'un programme, le chemin vers celui-ci n'était pas bien retourné et de fait le lancement de ces programmes ne fonctionnait pas. Si vous aviez créé une liste de programme pour votre toolbox, merci de la réinitialiser car elle ne fonctionne donc pas avec les anciennes versions.</li>
+<li>Petite modification de la documentation.</li>
+</ul>
+<h2>V1.99.84</h2>
+<ul>
+<li>Le fichier de base de données de serials a été renommé, les anciennes versions du script pour cette fonctionnalité ne fonctionneront donc plus.</li>
+<li>Mise à jour de l'adresse permettant de me faire remonter des incohérences sur la base de données des numéros de série de consoles patchées ou non.</li>
+<li>Mise à jour de la base de données des serials.</li>
+<li>Ajout d'une version Beta de la base de données des serials et possibilité de choisir la base de données qui sera utilisée par le script de vérification des serials.</li>
+<li>Ajout de la possibilité de changer de base de données pendant le script de vérification des serials sans avoir à le relancer.</li>
+</ul>
+<h2>V1.99.82</h2>
+<ul>
+<li>Mise à jour du script de vérification des serials, la base de donnée est maintenant mise à jour via la dernière version présente sur mon Github.</li>
+</ul>
+<h2>V1.99.81</h2>
+<ul>
+<li>Mise à jour de Kosmos Updater dans le pack Kosmos.</li>
+<li>Mise à jour de Edizon en version 1.6.0.</li>
+<li>Mise à jour de Sdsetup en version 0.3-alpha.</li>
+<li>Mise à jour de Lockpick en version 1.2.</li>
+</ul>
+<h2>V1.99.80 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Encodage changé pour le script de lancement du client de Switch-Lan-Play car "Sed" pose problème avec le "chcp 65001" et les lettres accentués. De fait, l'encodage de ce script est passé en "chcp 1252" (encodage "windows-1252") donc il est possible que les anciennes listes de serveurs ne fonctionnent plus avec cette nouvelle version, veuillez donc les recréer. Un bug important a normalement été corrigé dans cette fonction, maintenant les serveurs contenant le caractère "/" devrait pouvoir être renommé correctement.</li>
+<li>Ajout de la possibilité d'activer ou de désactiver la fonction de vérification des mises à jour automatique. Le paramètre peut aussi être réinitialisé si nécessaire via le menu de sauvegarde/restauration/réinitialisation, d'ailleurs le paramètre est sauvegardé par la fonction de sauvegarde.</li>
+<li>Ajout de la boîte à outils (toolbox) permettant de lancer des logiciels possédant une interface graphique ou étant des scripts fonctionnant sans paramètres particuliers (tous programmes stand alone en gros). La toolbox permet également de configurer une liste personnelle de programmes de ce type. Elle sera sauvegardée par la fonction de sauvegarde (l'intégralité du dossier sera sauvegardé) et elle peut aussi être restaurée par défaut (l'intégralité du dossier est restauré par défaut) (la réinitialisation complète du script la réinitialise également).</li>
+<li>La liste de serveurs pour Switch-Lan-Play peut maintenant être réinitialisée via le menu de sauvegarde/restauration/réinitialisation.</li>
+<li>Les différents fichiers de clés peuvent maintenant être supprimer via le menu de sauvegarde/restauration/réinitialisation.</li>
+<li>Nombreuses corrections de bugs dans la fonction de mise à jour automatique.</li>
+<li>Correction d'un bug dans la fonction de sauvegarde qui ne sauvegardait pas correctement le fichier de clés de NSC_Builder.</li>
+<li>Ajout de GuiFormat spécialement pour les outils par défaut de la toolbox.</li>
+<li>Déplacement de certains fichiers de configuration par défaut histoire de mieux organiser les choses.</li>
+<li>Mise à jour de la documentation et du readme.</li>
+</ul>
+<h2>V1.99.03</h2>
+<ul>
+<li>Ajout d'une fonctionnalité permettant de lancer facilement son propre serveur pour Switch-Lan-Play.</li>
+</ul>
+<h2>V1.99.02</h2>
+<ul>
+<li>Ajout de la possibilité de préparer une SD spécifiquement pour le firmware 1.0.0 avec un pack Kosmos lite (fonctionnalité se trouvant dans les fonctions occasionelles).</li>
+<li>Correction de quelques bugs.</li>
+</ul>
+<h2>V1.99.01 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Changement du nom du dossier principal.</li>
+<li>Suppression de SX OS 2.3 Beta.</li>
+<li>Mise en place de la vérification de mises à jour du script après le premier écran.</li>
+<li>Mise en place du <a target="_new" href="https://github.com/shadow2560/Ultimate-Switch-Hack-Script/">Github du projet</a>.</li>
+<li>Mise à jour de SX OS en version 2.5.1 Beta.</li>
+<li>Mise à jour de SlideNX dans le pack Kosmos.</li>
+<li>Modification des fichiers ".ini" de Hekate du pack Kosmos, ceux-ci ont été nettoyés et corrigés.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.99</h2>
+<ul>
+<li>Ajout de la version du script dans la barre de titre.</li>
+<li>Correction d'un bug lors de la préparation d'une SD qui faisait que le formatage se lançait même si on décidait de l'annuler.</li>
+<li>Si on choisi de supprimer les fichiers de la SD pendant la préparation de celle-ci, une demande de confirmation de ce choix sera faite.</li>
+<li>Correction de quelques bugs pour le script lançant NSC_Builder.</li>
+<li>Mise à jour de NSC_Builder en version 0.79.</li>
+<li>Mise à jour de Ldn_mitm en version 1.1.2.</li>
+<li>Mise à jour de Sys-netcheat dans le pack Kosmos.</li>
+<li>Mise à jour de Switch-Lan-Play.</li>
+<li>Mise à jour du HBMenu vers la dernière version "master", compilé par moi-même.</li>
+</ul>
+<h2>V1.98</h2>
+<ul>
+<li>Mise à jour de ChoiDuJourNX en version 1.0.1.</li>
+<li>Mise à jour de Checkpoint en version 3.6.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.97</h2>
+<ul>
+<li>Légère modification du lancement de Goldtree, le processus se lance maintenant indépendament du script pour éviter d'entrer en conflit avec lui.</li>
+<li>Ajout du homebrew Sdsetup dans les différents packs.</li>
+<li>Mise à jour de Lockpick en version 1.1.1.</li>
+<li>Mise à jour de ReiNXToolkit en version 1.2.</li>
+<li>Mise à jour de NX-Shell en version 1.10.</li>
+</ul>
+<h2>V1.96 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise à jour de CFW-Settings dans le pack Kosmos et le homebrew a également été renommé comme dans le pack officiel Kosmos, l'ancien dossier "switch/CFWSettings" sera supprimé de la SD par le script s'il existe.</li>
+<li>Lors de l'installation automatique des drivers, il est maintenant demandé si l'utilisateur souhaite lancer un payload ou non.</li>
+<li>Mise à jour de Goldleaf et de Goldtree en version 0.2.</li>
+</ul>
+<h2>V1.95</h2>
+<ul>
+<li>Correction d'un bug dans la préparation d'une SD de la version 1.94 lié à une faute d'inattention de ma part au niveau du code et qui faisait planter le script.</li>
+</ul>
+<h2>V1.94 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Correction de bugs dans le script de préparation d'une SD, la copie des payloads pour le pack Kosmos ne se faisait pas corectement.</li>
+</ul>
+<h2>V1.93 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Correction d'un bug pour le patch "nogc" de ReiNX.</li>
+<li>Correction d'un bug qui faisait qu'après l'exécution de NSC_Builder les couleurs ne revenaient pas à la normal.</li>
+<li>Correction de quelques bugs dans les scripts de NSC_Builder qui faisait que les scripts fonctionnaient mal ou de manière aléatoire si aucune valeur n'était entrée lors des choix proposées. Tous les bugs ne sont pas corrigés (j'en ai repéré encore quelques uns car le contrôle d'erreurs n'est parfois pas suffisant) mais une partie le sont.</li>
+<li>Remplacement de Tinfoil par Goldleaf. Si vous ne souhaitez plus utiliser Tinfoil, il faudra le supprimer manuellement de la SD.</li>
+<li>Le script permettant d'installer les jeux via USB est maintenant basé sur Goldtree et Goldleaf, l'ancien script fonctionnant avec Tinfoil n'est plus disponible.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.92 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Ajout du Rommenu de SX OS pour le pack ReiNX (le Rommenu utilisé est la version 2.2 Beta).</li>
+<li>Ajout du module Sys_FTPD dans les modules de ReiNX (le module est désactivé par défaut, à activer avec le homebrew ReiNX Toolbox).</li>
+<li>Changement de la méthode de lancement du homebrew loader pour ReiNX par la méthode dite "legacy", permettant de changer quelques options de celui-ci. Attention, le fichier "ReiNX/hbl.nsp" devra être supprimé à la main de la SD, le script ne s'en occupera pas et si cela n'est pas fait, le CFW pourrait avoir des comportements anormaux.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.91</h2>
+<ul>
+<li>Mise à jour de Lockpick en version 1.1.</li>
+<li>Mise à jour de Ldn_mitm en version 1.1.1 dans le pack Kosmos er TeiNX. Le homebrew Ldnmitm_config a également été ajouté dans ces packs.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.90</h2>
+<ul>
+<li>Le script permettant de joindre les parties d'une nand splitée vérifie qu'il y a assez d'espace disque pour copier le fichier. Dans ce script, la vérification de la taille final du fichier a également été corrigée.</li>
+<li>Ajout d'un message indiquant que le fichier de la base de données pour la vérification des numéros de série ne peut être téléchargée et modification du fichier "config.ini" de SSNC car il y avait une petite erreur dedans qui l'empêchait de fonctionner sans connexion à internet. Pour l'instant, le téléchargement de la base de donnée a été désactivé et un fichier modifiée de celle-ci est utilisé car il y a quelques erreurs dans la base de données de SSNC actuellement.</li>
+<li>Mise à jour de Ldn_mitm en version 0.2.3 dans le pack Kosmos et ajout du module pour ReiNX en version 0.2.2 pour ReiNX, le module sera à activer avec ReiNX Toolbox pour ce CFW.</li>
+<li>Mise à jour de ReiNX et de JKSV vers la dernière version "master", compilés par moi-même.</li>
+</ul>
+<h2>V1.89</h2>
+<ul>
+<li>Réintégration de ReiNX car depuis la 2.0 certaines fonctionnalités diffèrent d'Atmosphere. La version réintégrée est la dernière version "master" du Github compilée par moi-même, la version 2.0 présentait un bug qui l'empêchait de démarrer. Je conseil de nettoyer complètement le dossier "ReiNX" sur la SD avant d'installer le pack, beaucoup de choses ont changées avec cette version.</li>
+</ul>
+<h2>V1.88 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Ajout du homebrew Pplay, le premier lecteur multimédia vraiment fonctionnel pour la Switch.</li>
+<li>Mise à jour de Atmosphere vers la dernière version "master" du Github, compilé par moi-même. La version d'Atmosphere du pack Kosmos a également été mise à jour.</li>
+<li>Retrait de ReiNX des packs de CFW, il ne présente aujourd'hui plus aucun intérêt par rapport à Atmosphere. Pour l'instant il ne sera pas retiré de la documentation au cas où mais le choix ne sera plus proposé pendant le script et les fichiers le concernant ont été retirés.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.87</h2>
+<ul>
+<li>Mise à jour de Atmosphere vers la dernière version "Master" du Github, compilé par moi-même. Le pack Kosmos a également été mis à jour avec cette dernière version et certains fichiers de ReiNX utilisent également cette dernière version d'Atmosphere compilée.</li>
+<li>Mise à jour de Hekate vers la dernière version "master" du Github, compilé par moi-même. Le pack Kosmos bénéficie donc aussi de cette mise à jour.</li>
+<li>Mise à jour de JKSV via la dernière version "master" du Github, compilé par moi-même.</li>
+</ul>
+<h2>V1.86</h2>
+<ul>
+<li>Mise à jour du payload de ReiNX que j'avais oublié de mettre à jour dans la version précédente.</li>
+<li>Remplacement d'une dll dans le script permettant de vérifier les numéros de série de console, cette correction concerne les systèmes 32 bits sur lequel le script n'aurait pas fonctionné.</li>
+<li>Mise à jour de NSC_Builder vers la dernière version "master" du Github.</li>
+<li>Mise à jour de FTPD, de JKSV et du HBMenu en dernière version, compilés par moi-même.</li>
+<li>Rétablissement de la couleur par défaut une fois que le script NSC_Builder se termine.</li>
+<li>Petite mise à jour du tuto pour ChoiDuJourNX dans la doc.</li>
+</ul>
+<h2>V1.85</h2>
+<ul>
+<li>Ajout d'une fonction permettant de vérifier si une console est patchée ou non (fonction trouvable dans les fonctionnalités à utiliser occasionnellement du script), merci à AkdM de Logic-sunrise pour sa base de donnée et pour son script Python qui m'a énormément simplifié le travail.</li>
+</ul>
+<h2>V1.84</h2>
+<ul>
+<li>Mise à jour de SX OS en version 2.5 Beta.</li>
+<li>Mise à jour de ReiNX vers la dernière version "master" du Github, compilé par moi-même.</li>
+</ul>
+<h2>V1.83</h2>
+<ul>
+<li>Ajout d'une nouvelle fonctionnalité permettant de télécharger un firmware spécifique pour le copier sur la SD en vu d'une mise à jour via ChoiDuJourNX ou d'une création d'un package de mise à jour via ChoiDuJour. Ce script remplace l'ancienne fonctionnalité qui se trouvait dans les "autres fonctions" et l'ancienne méthode a été déplacée dans les "fonctions occasionnelles". Attention, veuillez bien lire tous les avertissements et les informations données au début de ce nouveau script.</li>
+<li>Mise à jour du script permettant de créé un package de mise à jour via ChoiDuJour pour l'adapté également au nouveau script de préparation d'une mise à jour décrit précédemment.</li>
+<li>Mise à jour de NSC_Builder avec la petite modification effectuée sur le "master" du Github.</li>
+<li>Ajout de la possibilité d'ouvrir le répertoire de sortie de NSC_Builder dans l'explorateur Windows une fois que celui-ci se termine.</li>
+<li>Ajout de la sauvegarde du fichier "tools\megatools\mega.ini" via le script de sauvegarde des éléments importants.</li>
+<li>Mise à jour de certains fichiers du pack Kosmos.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.82</h2>
+<ul>
+<li>Mise à jour de Hekate en version 4.6.</li>
+<li>Mise à jour du module Ldn_mitm dans le pack Kosmos.</li>
+<li>Mise à jour de SX OS en version 2.4.1 beta.</li>
+<li>Mise à jour de JKSV vers la dernière version "Master" du Github, compilé par moi-même.</li>
+</ul>
+<h2>V1.81</h2>
+<ul>
+<li>Mise à jour de NSC_Builder en version 0.78.</li>
+<li>Mise à jour de Switch-lan-plad en vrsion 0.0.7.</li>
+</ul>
+<h2>V1.80</h2>
+<ul>
+<li>Mise à jour de SX OS en version 2.4 beta. Comme il semble y avoir des problèmes pour cette version, je vais exceptionnellement mettre la version 2.3 beta dans un dossier nomé "SX OS 2.3B" à la racine du script pour ceux souhaitant revenir sous cette version, ils n'auront qu'à copier le fichier "boot.dat" que contiendra le dossier à la racine de la SD pour repasser en 2.3 (non compatible avec le firmware 6.2.0 pour rappel alors que la 2.4 l'est).</li>
+<li>Mise à jour du tuto sur Lockpick dans la documentation.</li>
+<li>Mise à jour de NSC_Builder vers la version 0.77, traduite et adaptée comme d'habitude.</li>
+</ul>
+<h2>V1.79 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour de NSC_Builder vers la dernière version "Master" du Github, traduite et modifiée pour mon script. Je rappel que même si le script a été modifié, il peut tout de même être utilisé de manière totalement indépendante et sans avoir besoin d'installer Python 3.7 et les dépendances.</li>
+<li>Correction d'un bug dans le script permettant de joindre les fichiers de dump de la nand, le script ne détectait pas corectement les dumps en 15 parties.</li>
+<li>Correction du fichier "hekate_ipl.ini" pour le pack Kosmos.</li>
+<li>Ajout d'un avertissement sur la mise en veille de la Switch lors de l'installation de jeux via Tinfoil et le réseau ou l'USB.</li>
+<li>Mise à jour de Tinfoil vers la dernière version, compilé par moi-même.</li>
+<li>Mises à jour mineurs de la documentation.</li>
+</ul>
+<h2>V1.78</h2>
+<ul>
+<li>Correction du pack Kosmos, normalement il devrait fonctionner maintenant.</li>
+<li>Ajout du HBL pour le pack ReiNX, il avait été oublié dans la version précédente.</li>
+<li>Correction d'un bug introduit dans la versions 1.74 pour les scripts d'installation de jeu via le réseau et via l'USB.</li>
+<li>D'autres petites corrections de bugs dans différents scripts.</li>
+</ul>
+<h2>V1.77 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour de ReiNX vers la dernière version, compilée par moi-même. Cette version apporte donc le support du firmware 6.2.0.</li>
+<li>Correction du script de réunification d'un dump, le dump splité via SX OS ne fonctionnait pas.</li>
+<li>Mise à jour de certains fichiers du pack Kosmos.</li>
+<li>Suppression de Kezplez-NX qui est maintenant remplacé par Lockpick, j'ai compilé la toute dernière version au passage.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.76 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Ajout de la fonctionnalité de réunification des fichiers d'un dump splité fait avec SX OS dans le script de réunification de dump. Ce script n'a pas du tout été testé car je n'ai pas de dump splité sous la main pour le faire donc les retours seront grandement appréciés sur cette fonctionnalité, que se soit un dump fait via Hekate ou SX OS.</li>
+<li>Mise à jour de Atmosphere en version 0.8.2. Avec cette nouvelle version, l'ensemble des fichiers d'Atmosphere se trouve dans le dossier "atmosphere" de la SD donc  les fichiers "BCT.ini" et "fusee-secondary.bin" se trouvant à la racine de la SD seront supprimés par le script de préparation d'une SD.</li>
+</ul>
+<h2>V1.75</h2>
+<ul>
+<li>Création d'un script permettant de joindre les fichiers de la nand dumpée en plusieurs parties via Hekate (celle de 15*2 GO ou 30*1 GO) (utile pour ceux utilisant une SD en FAT32 ou une SD plus petite que la taille final du dump). Ce script effectu quelques vérifications mais il vaut mieux testé immédiatement le dump obtenu avec HacDiskMount, le lancement de celui-ci sera proposé à la fin du script. Ce script se trouve dans la partie "Autres fonctions" du menu principal.</li>
+<li>Mise à jour vers la dernière version "master" de NSC_Builder, traduction et adaptation de celle-ci à mon script.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.74 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour de Atmosphere en version 0.8.1.</li>
+<li>Mise à jour de Hekate en version 4.5.</li>
+<li>Mise à jour de Atmosphere dans le pack Kosmos vers la version 11.5 de Kosmos.</li>
+<li>Mise à jour des sig_patches (ES et FS) pour Atmosphere et Kosmos.</li>
+<li>Mise à jour de Memloader en V3.</li>
+<li>Mise à jour de 4NXCI en version 2.10.</li>
+<li>Mise à jour du HBMenu avec la dernière version de Kosmos.</li>
+<li>Ajout du homebrew "BiggestDump" dans les homebrews installés par défaut.</li>
+<li>Mise à jour de Biskeydump en version 7.</li>
+<li>Mise à jour de Switch Lan Play en version 0.0.6.</li>
+<li>Mise à jour de XCI Explorer en version 1.4.4.</li>
+</ul>
+<h2>V1.73</h2>
+<ul>
+<li>Mise à jour de NSC_Builder et désactivation de l'option "patchRSV" car elle pose problème pour l'instant et cré des jeux qui ne se lancent pas si on utilise le mode multi.</li>
+<li>Mise à jour de Hactool en version 1.2.2.</li>
+<li>Mise à jour de SwitchIddent en dernière version, compilé par moi-même.</li>
+</ul>
+<h2>V1.72</h2>
+<ul>
+<li>Correction d'un bug dans NSC_Builder qui l'empêchait de fonctionner correctement si le chemin contenant le script avait des espaces.</li>
+</ul>
+<h2>V1.71</h2>
+<ul>
+<li>Mise à jour de NSC_Builder en version 1.65, toujours modifiée pour être aussi adaptée à mon script.</li>
+</ul>
+<h2>V1.70 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour du script NSC_Builder en dernière version "master" du Github et correction de quelques erreurs que j'avais faites dans celui-ci ainsi que dans sa procédure de lancement, j'espère que tout fonctionnera bien. J'ai également fait une petite modification dans le script car il y a un bug avec les fichiers d'entrée se finissant par un "2" ou un "1" et qui donnait une erreur au niveau du répertoire de sortie, se qui n'est plus le cas maintenant.</li>
+<li>Mise à jour de SX OS en version 2.3 beta.</li>
+<li>Suppression de WainDumper pour le remplacer par SXDumper 1.0.2.</li>
+</ul>
+<h2>V1.69</h2>
+<ul>
+<li>Traduction du script NSC_Builder V0.6.1 (sauf le fichier Python qui ne sera probablement jamais traduit) et adaptation de celui-ci à mon script. Il est à noter que le script peut toujours être utilisé indépendament de mon script mais sans avoir à installer Python ni les dépendances. Pour le moment le script n'a pas été testé pour tout les cas de figure mais il devrait fonctionner correctement.</li>
+</ul>
+<h2>V1.68 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Changement d'un élément du fichier de configuration de NSC_Builder (emplacement du fichier de clés) qui le faisait planter.</li>
+<li>Correction d'un bug dans le script de lancement de NSC_Builder qui faisait que le fichier de clé était tout le temps demandé.</li>
+<li>Correction d'un bug qui se produisait lorsque le script était quitté brutalement, presque tout les scripts nécessitaient cette correction.</li>
+<li>Mise à jour de 4NXCI en version 2.01.</li>
+<li>Mise à jour de Kosmos en version 11.0.1.</li>
+</ul>
+<h2>V1.67 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Suppression du pack RajNX car Atmosphere fait aussi bien le travail.</li>
+<li>Ajout d'une variable permettant de savoir si le script a été lancé via le menu principal. Cette variable est utile pour les scripts qui peuvent être indépendants comme NSC_Builder, sera utilisée plus tard.</li>
+<li>Ajout de NSC_builder, version non modifiée et non traduite pour le moment, seul Python n'est pas requis pour l'utiliser.</li>
+<li>Ajout du homebrew WAINDUMPER 2.0 qui permet de dumper les cartouches de jeux. Pour l'instant je n'ai pas supprimer GCDumpTool mais cela sera peut-être fait dans les prochaines versions si je juge que ce homebrew n'est plus utile.</li>
+<li>Mise à jour de Hactool en version 1.2.1.</li>
+<li>Mise à jour de Atmosphere en version 0.7.5.</li>
+<li>Mise à jour de NX-Shell en version 1.05.</li>
+<li>Mise à jour de SDFilesSwitch vers Kosmos V11.</li>
+<li>Mise à jour de SysFTPd et de Atmosphere dans le pack SDFilesSwitch vers la dernière version, compilés par moi-même.</li>
+<li>Mise à jour du HBMenu en dernière version, compilé par moi-même.</li>
+</ul>
+<h2>V1.66 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Implémentation du patche "nogc" pour Atmosphere (utile en firmware 4.0.0 et supérieur si vous étiez avant en firmware inférieur au 4.0.0 et que vous souhaitez downgrader un jour sans perdre l'usage du port cartouche pour les firmware inférieur au 4.0.0). Si on ne souhaite plus utiliser ce patche, il suffit de réinstaller le pack Atmosphere et de répondre non lorsque la question de l'application du patche "nogc" pour Atmosphere sera posée, tout comme c'est le cas depuis un moment avec le pack ReiNX. Il est à noter que le patche "nogc" pour Atmosphere et pour ReiNX n'est pas le même et qu'ils sont donc indépendant l'un de l'autre.</li>
+<li>Suppression du dossier "atmosphere/kip_patches" et "atmosphere\kips" dans le pack SDFilesSwitch car ils sont inutiles pour ce pack. Si vous n'utilisez pas le pack Atmosphere, ces dossiers peuvent être supprimés manuellement de la SD car le script ne le fera pas.</li>
+<li>Mise à jour du nom du dossier contenant les patches "ES". Le script gèrera ce changement lui-même sur la SD, les anciens dossiers seront supprimés (le dossier "atmosphere/exefs_patches" est réinitialisé à chaque mise à jour du pack SDFilesSwitch, RajNX ou Atmosphere).</li>
+<li>Mise à jour de 4NXCI en version 2.0.</li>
+<li>Mise à jour de SwitchIdent et de Zerotwoxci en dernières versions, compilés par moi-même.</li>
+</ul>
+<h2>V1.65 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour du Homebrew Loader dans les différents packs.</li>
+<li>Ajout des patches de signatures pour la version du firmware 6.1.0 dans les packs Atmosphere, RajNX et SDFilesSwitch.</li>
+<li>Mise à jour de SX OS en version 2.2.1 Beta.</li>
+<li>Les patches de signatur on maintenant les non des dossiers de SDFilesSwitch donc supprimer les dossiers "SUCCulent fake tickets" de la SD (dans le dossier "atmosphere/exefs_patches") car le script ne le fera pas.</li>
+</ul>
+<h2>V1.64 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Ajout du module SlideNX dans le pack SDFileSwitch et ajout d'un fichier de configuration approprié pour Hekate.</li>
+<li>Mise à jour de Checkpoint en version 3.5.0.</li>
+<li>Mise à jour du HBMenu en version 3.0.</li>
+<li>Mise à jour de Atmosphere (pack Atmosphere et pack SDFilesSwitch), d'EdiZon, de Tinfoil et du script python d'installation de NSP via USB de ce dernier en dernières versions, compilés par moi-même.</li>
+</ul>
+<h2>V1.63 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour du pack SDFilesSwitch vers la version 10.1, les configurations pour Hekate sont tout de même un peu différentes de la version officielle ainsi que l'emplacement de certains fichiers.</li>
+<li>Mise à jour de 4NXCI en version 1.36. Le script de conversion de XCI en NSP a été mis à jour pour supporter le paramètre permettant de passé la création et l'intégration du ticket et du certificat.</li>
+<li>Recompilation de GCDumpTool et de Kezplez-NX avec la version 1.5.0 de LibNX, permettant probablement de corriger certains bugs.</li>
+<li>Mise à jour du HBMenu, de EdiZon, de Tinfoil, de Atmosphere (pack SDFilesSwitch et Atmosphere), de Creport dans tout les packs et de SwitchIdent vers la dernière version, compilés par moi-même.</li>
+</ul>
+<h2>V1.62</h2>
+<ul>
+<li>Ajout d'un serveur français pour le netplay dans la liste des serveurs, merci à @alantya.</li>
+<li>Mise à jour du script python pour installer des jeux via USB et Tinfoil, le script a été récupéré à partir du Github de Tinfoil puis compilé via Pyinstaller.</li>
+<li>Mise à jour de Tinfoil, de Atmosphere, du HBMenu et de SwitchIdent en dernière version, compilés par moi-même.</li>
+</ul>
+<h2>V1.61</h2>
+<ul>
+<li>Mise à jour de Atmosphere en version 0.7.1 pour le pack Atmosphere et SDFilesSwitch.</li>
+<li>Mise à jour de switch-lan-play en version 0.0.5.</li>
+<li>Mise à jour du HBLoader en version 2.0.</li>
+<li>Mise à jour du HBMenu en dernière version, compilé par moi-même.</li>
+</ul>
+<h2>V1.60 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Correction d'un bug important dans la fonction de lancement de payloads qui empêchait le payload de se lancer.</li>
+<li>Prise en compte du fichier de la liste des serveurs du netplay dans la fonction de sauvegarde/restauration des fichiers importants du script.</li>
+<li>Amélioration du script du netplay, notemment au niveau du contrôle d'erreurs au niveau de la gestion de la liste de serveurs.</li>
+<li>Mise à jour du pack Atmosphere en version 0.7.0.</li>
+<li>Mise à jour du pack SDFilesSwitch pour utiliser les fichiers de la version 0.7.0 d'Atmosphere que j'ai compilé, uniquement pour la parti du lancement d'Atmosphere via Hekate, les autres configs n'ont pas été touchées et utilisent donc les anciennes versions.</li>
+<li>Mise à jour de Creport dans tous les packs (sauf SX OS).</li>
+<li>Mise à jour de SX OS en version 2.2 Beta.</li>
+<li>Mise à jour du HBMenu et de Tinfoil en dernière version, compilés par moi-même.</li>
+</ul>
+<h2>V1.59 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour du script d'installation de NSP via USB et Tinfoil.</li>
+<li>Quelques corrections mineurs sur différents scripts.</li>
+<li>Ajout de la possibilité de découper des XCI grâce à XCI Cutter.</li>
+<li>Ajout du nécessaire pour pouvoir jouer en réseau avec une Switch via la méthode alternative du lan play. Une liste de serveurs peut être gérée mais pour l'instant, il faut utiliser des caractères ne pouvant pas trop poser de problème au script, le contrôle d'erreurs est vraiment rudimentaire donc ne pas utiliser les caractères &, ", \, ;, |, (, ) et peut-être d'autres que j'aurais oublié.</li>
+<li>Mise à jour du HBMenu, de ReiNXToolkit et de Tinfoil en dernières versions, compilés par moi-même.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.58 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Tentative de corrections pour le script d'installation de NSP via Tinfoil et l'USB, vos retours seront apprécié, surtout pour les systèmes 32 bits.</li>
+<li>Mise à jour de Tinfoil avec une version supportant l'installation via USB.</li>
+<li>Ajout d'un script permettant de découper un NSP en plusieurs parties de moins de 4 GO grâce à SplitNSP.</li>
+</ul>
+<h2>V1.57</h2>
+<ul>
+<li>Mise à jour du HBMenu, de Tinfoil et du script d'installation de NSP via USB en dernières versions, compilés par moi-même.</li>
+</ul>
+<h2>V1.56 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Ajout d'un dossier "tools\drivers\manual_installation_usb_driver" permettant d'installer manuellement les drivers nécessaires via le gestionnaire de périphériques.</li>
+<li>Changement de la structure du dossier des drivers et changements répercutés dans le script approprié.</li>
+<li>Ajout de Zadig 1.4 pour pouvoir installer les drivers du mode USB de Tinfoil sans passer par le gestionnaire de périphériques.</li>
+<li>Ajout de nouvelles options dans le script d'installation des drivers.</li>
+<li>Ajout d'un script permettant d'installer des NSP via l'USB et Tinfoil (des drivers différents de ceux du RCM doivent être installés avant d'utiliser cette fonction) (fonction non testée, les retours sont les bienvenues).</li>
+<li>Mise à jour du pack Atmosphere, du pack SDFilesSwitch et de Tinfoil en dernière versions, compilés par moi-même.</li>
+<li>Ajout d'une section expliquant les différentes manières d'installer les différents drivers dans la documentation.</li>
+</ul>
+<h2>V1.55 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour du pack ReiNX incluant le dernier correctif de SDFilesSwitch sur le dossier "titles" du CFW.</li>
+<li>Mise à jour du pack SDFilesSwitch (fichier "bootloader/hekate.ini") pour qu'il utilise les dernières options implémentées. Les autres fichiers ini du dossier "bootloader/ini" ont également été mis à jour.</li>
+<li>Mise à jour du pack Atmosphere, de Hekate, de Appstore-NX (version 2.0) et de Tinfoil en dernière version, compilés par moi-même.</li>
+<li>Suppression de Retro-NX. La raison pour laquelle Retroarch ne le remplace pas est que cela donne une taille bien trop importante à mon script.</li>
+</ul>
+<h2>V1.54 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Attention, supprimez le dossier "atmosphere/exefs_patches" de votre SD s'il existe avant de mettre à jour les différents packs de CFW.</li>
+<li>Mise à jour du pack Atmosphere, du pack SDFilesSwitch (le fichier "exosphere.bin" et suppression du homebrew SDFilesUpdater), du pack ReiNX, de Appstore-NX et de Tinfoil en dernière version, compilés par moi-même.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.53 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Précision, la version précédente de mon script incluait déjà la version 1.7 de ReiNX.</li>
+<li>Mise à jour de FTPD en version 2.3. Le homebrew est également copié quelque soit le pack installé.</li>
+<li>Suppression de SDFilesUpdater du pack ReiNX.</li>
+<li>Mise à jour du pack SDFilesSwitch avec les fichiers de la version 9.0.4. Bien sûre, cette version de SDFilesSwitch n'inclue pas ReiNX car il y a un pack spécifique pour cela et les fichiers de configuration de Hekate ne sont pas tout à fait les mêmes que pour la version officielle (inclu le "nogc" patch comme alternative à chaque configuration par exemple)</li>
+<li>Mise à jour du pack Atmosphere, de EdiZon et de Tinfoil en dernière version, compilés par moi-même.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.52 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>SX OS 2.0 a été remplacée par la version 1.9 qui présente moins de bugs.</li>
+<li>Mise à jour de Hekate en version 4.2.</li>
+<li>Suppression de NSTool à cause de son incompatibilité avec Windows 7 donc rien ne sera créé autour de ce logiciel tant que ce problème ne sera pas réglé.</li>
+<li>Mise à jour de EdiZon et de Tinfoil en dernière version, compilés par moi-même.</li>
+</ul>
+<h2>V1.51</h2>
+<ul>
+<li>Mise en place de l'intégration de HacbrewPack et d'un script permettant de packer des homebrews au format NSP. Pour l'instant cette fonction n'est pas disponible car elle n'est pas terminée</li>
+<li>Ajout de NSTool dans les fichiers du script, bien que celui-ci ne soit pas encore utilisé.</li>
+<li>Ajout de NUT et de NUT_Batch_Cleaner dans les fichiers du script, bien que ceux-ci ne soient pas encore utilisés.</li>
+<li>Mise à jour de SX OS en version 2.0.</li>
+<li>Mise à jour de 4NXCI en version 1.35. Avec cette version, le ticket et le certificat ne sont plus créé par défaut par l'application pour laisser moins de traces sur la Switch lors de l'installation du NSP créé.</li>
+<li>Mise à jour de Appstore-NX et de Tinfoil en dernière version, compilés par moi-même.</li>
+</ul>
+<h2>V1.50</h2>
+<ul>
+<li>Mise à jour de JKSV en version 09/15/2018.</li>
+<li>Mise à jour de ReiNX en dernière version, compilé par moi-même.</li>
+<li>Mise à jour de Appstore-NX et de Tinfoil en dernière version, compilés par moi-même.</li>
+</ul>
+<h2>V1.49</h2>
+<ul>
+<li>Mise à jour du pack Atmosphere, du pack ReiNX et du pack SDFilesSwitch avec les dernières versions disponibles, parfois compilés par moi-même.</li>
+<li>Mise à jour de SDFilesUpdater en dernière version, compilé par moi-même.</li>
+<li>Mise à jour de Appstore-NX, de Kezplez-NX et de Tinfoil en dernière version, compilés par moi-même.</li>
+</ul>
+<h2>V1.48 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour de Hekate en version 4.1.</li>
+<li>Mise à jour de ReiNX et de ReiNXToolkit en dernière versions, compilés par moi-même.</li>
+<li>Mise à jour de Kezplez-NX vers la dernière version, compilé par moi-même. Maintenant, je n'ai plus besoin de modifier le code source car le logiciel détecte où se trouve le dump des fichiers faient via Hekate 4.0 ou supérieur.</li>
+<li>Séparation complète entre le pack SDFilesSwitch et le pack Atmosphere.</li>
+<li>Mise à jour de Creport en dernière version, compilé par moi-même.</li>
+<li>Suppression de certains fichiers des packs qui étaient devenus inutiles.</li>
+<li>Mise à jour de PSnes en version 2.1 et de PFBA en version 2.0.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.47 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Ajout de certains fichiers dans le pack Atmosphere (pack "SDFilesSwitch maintenant, voir la suite) corrigeant un bug initié dans la version 1.46 du script, empêchant le lancement du Homebrew Menu si le CFW était lancé via Hekate.</li>
+<li>Maintenant qu'il fonctionne, ajout d'un vrai pack Atmosphere ne contenant que le CFW, à lancer avec le payload Fusee-primary.</li>
+<li>Ajout du payload Fusee_primary d'Atmosphere dans les payloads du dossier "payloads" du script (il est nommé "Atmosphere_fusee-primary.bin").</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.46 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Ajout du fichier "update.bin" contenant la dernière version d'Hekate dans le pack Atmosphere, utile pour ceux ayant un dongle.</li>
+<li>Ajout du homebrew ZeroTwoXCI permettant d'installer les fichiers XCI comme s'ils étaient des NSP (nécessite le fichier "prod.keys" contenant les clés de déchiffrement des fichiers (keyset de Hactool, le fichier "keys.txt" généralement)) à la racine de la SD).</li>
+<li>Mise à jour de ReiNXToolkit vers la dernière version, compilé par moi-même. Le nom du dossier a également été changé.</li>
+<li>Le script de préparation d'une SD a été mis à jour pour supprimer le dossier "switch/ReiNX_Toolkit" de la SD (pendant la copie du pack ReiNX) s'il existe, évitant ainsi un doublon si la SD a été préparée via une ancienne version de mon script. Il supprime également certains dossiers inutiles s'il sont présents sur la SD et qu'un pack ne nécessitant plus ces dossiers est de nouveau copier dessus pour faire la mise à jour par exemple.</li>
+<li>Mise à jour de RajNX vers la version 0.7.5.1.</li>
+<li>Mise à jour de NX-Shell vers la version beta5.</li>
+<li>Mise à jour de certains fichiers de SDFilesSwitch (pack Atmosphere) vers la dernière version.</li>
+<li>Mise à jour d'AppstoreNX, de Hekate et d'Atmosphere vers la dernière version, compilés par moi-même.</li>
+<li>Mise à jour de Kezplez-nx vers la dernière version, modifié et compilé par moi-même.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.45</h2>
+<ul>
+<li>Mise à jour de XCI Explorer en version 1.4.3.</li>
+<li>Mise à jour de EdiZon en version 1.5.0.</li>
+<li>Mise à jour de Tinfoil, d'Appstore et de certains fichiers du pack Atmosphere vers les dernières versions, compilés par moi-même.</li>
+</ul>
+<h2>V1.44</h2>
+<ul>
+<li>Mise à jour de 4NXCI, Atmosphere (sig_patch ES 6.0.0 pour Hekate et "Fusee_primary.bin" et "Fusee_secondary.bin"), ReiNX, RajNX (sig_patches ES 6.0), Switchident et Tinfoil en dernières versions.</li>
+<li>Ajout du homebrew ReiNX_Toolkit (version nro) dans le pack ReiNX et mise à jour de la documentation en conséquence.</li>
+</ul>
+<h2>V1.43</h2>
+<ul>
+<li>Mise à jour de SX OS en version 1.9.</li>
+<li>Mise à jour de certains fichiers du pack Atmosphere (Fusee Primary, Fusee Secondary et la partie "modules/atmosphere" de SDFilesSwitch qui passe en dernière version compilée par moi-même).</li>
+</ul>
+<h2>V1.42 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Les menus du script ont été réorganisés.</li>
+<li>Correction d'un bug dans la préparation d'une SD qui faisait tourner le script en boucle si aucun périphérique compatible n'était détecté.</li>
+<li>La préparation d'une SD supprime certains fichiers qui pourraient se trouver sur la SD mais pouvant se trouver en double et n'étant donc plus utiles.</li>
+<li>Le homebrew "GagOrder" se trouve maintenant dans un dossier au lieu d'être dans le dossier "Switch".</li>
+<li>Ajout du homebrew de gestion de sauvegardes JKSV (packs Atmosphere, ReiNX SX OS et RajNX) et de l'homebrew du serveur FTP FTPD (packs Atmosphere, ReiNX et RajNX).</li>
+<li>Ajout de l'émulateur Gameboy/Gameboy Color Khedgb dans le pack d'émulateurs.</li>
+<li>Mise à jour de la documentation pour y ajouter les nouveaux homebrews des packs.</li>
+</ul>
+<h2>V1.41</h2>
+<ul>
+<li>Mise à jour de Checkpoint en version 3.4.2.</li>
+<li>Mise à jour de ReiNX et de RajNX (Hekate) vers la dernière version, compilé par moi-même.</li>
+<li>Mise à jour de certains fichiers du pack Atmosphere.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.40</h2>
+<ul>
+<li>Remise en place d'une ancienne version de Tinfoil car la version de la version 1.38 du script semble poser problème parfois.</li>
+</ul>
+<h2>V1.39</h2>
+<ul>
+<li>Ajout d'un nouveau script permettant de vérifier les NSP grâce à NSPVerify.</li>
+<li>Mise à jour de XCI Explorer en version 1.4.2.</li>
+</ul>
+<h2>V1.38 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Correction d'un dossier mal placé dans le pack ReiNX.</li>
+<li>Mise à jour de SX OS en version 1.8.</li>
+<li>Mise à jour de ReiNX et de Tinfoil en dernière version, compilés par moi-même.</li>
+</ul>
+<h2>V1.37 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Création d'un script permettant d'extraire le certificat au format "PFX" et "PEM" d'une console grâce au fichier "PRODINFO.bin" décrypté de celle-ci.</li>
+<li>Mise à jour de l'organisation de certains dossiers du script pour optimiser l'espace disque utilisé.</li>
+<li>Correction d'un problème avec le fichier "vcruntime140.dll" qui empêchait certaines fonctions de s'exécuter corectement sur les système 32 bits.</li>
+<li>Mise à jour de 4NXCI en version 1.21.</li>
+<li>Mise à jour de SX OS en version 1.7.</li>
+</ul>
+<h2>V1.36 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Le raccourci pour lancer le script a été remplacé par un script, se qui résou les problèmes lors du lancement de celui-ci en tant qu'administrateur.</li>
+<li>Mise à jour de SX OS en 1.6.</li>
+<li>Mise à jour de RetroNX vers la version 0.9.8. Veuillez supprimer votre répertoire "retroarch" se trouvant à la racine de la SD puis mettre à jour vers cette version.</li>
+</ul>
+<h2>V1.35</h2>
+<ul>
+<li>Correction de bugs importants initié par la version 1.34 dans la préparation d'une SD.</li>
+</ul>
+<h2>V1.34</h2>
+<ul>
+<li>Mise à jour de 4NXCI en version 1.10.</li>
+<li>Ajout de la possibilité de copier un pack d'émulateurs pendant la préparation d'une SD (PSnes, PFBA, LaiNes, VBA-Next et RetroNX (Retroarch)).</li>
+</ul>
+<h2>V1.33</h2>
+<ul>
+<li>Modification des fichiers de configurations de Hekate. Si vous avez utilisé la version 1.31 ou 1.32 du script pour installer Atmosphere sur votre SD, mettez à jour les fichiers de la SD.</li>
+</ul>
+<h2>V1.32</h2>
+<ul>
+<li>Réécriture de la documentation pour le pack Atmosphere pour correspondre à la nouvelle structure d dossiers/fichiers initialisée par la version 4 de Hekate.</li>
+</ul>
+<h2>V1.31 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Gros remaniement de la copie de fichiers sur la SD car la version 4 de Hekate CTCaer apporte beaucoup de nouveautés qui on rendu certaines choses inutiles. D'ailleurs, je conseil de remettre la SD à zéro (sauf le dossier "nintendo" et le dossier "Switch" (également ne pa supprimer le fichier "boot.dat" et "licence.dat" pour ceux utilisant SX OS)) pour éviter d'avoir des fichiers inutiles sur la SD.</li>
+<li>Ajout d'une fonction pour convertir une sauvegarde de Zeldda Breath OF The Wild Wii U vers Switch ou inversement grâce à BOTW_saveconv.</li>
+<li>Mise à jour de 4NXCI en version 1.0.</li>
+</ul>
+<h2>V1.30</h2>
+<ul>
+<li>Mise à jour d'EdiZon en version 1.4.0.</li>
+<li>Mise à jour de la partie Atmosphere de SDFilesSwitch (Exosphere) vers la dernière version, compilé par moi-même.</li>
+<li>Ajout d'une version légèrement modifiée du homebrew Kezplez-nx 1.1 qui permet de dumper les clés nécessaires à Hactool et autres dérivés de celui-ci, voir la partie expliquant le contenu des packs de la documentation pour en savoir plus sur son fonctionnement. Le code source se trouve dans le dossier "DOC\files\Kezplez_1.1_modified_src".</li>
+</ul>
+<h2>V1.29</h2>
+<ul>
+<li>Mise à jour de 4NXCI en version 0.9-beta.2.</li>
+<li>Mise à jour des fichiers d'Atmosphere (les autres fichiers de SDFilesSwitch n'ont pas été touchés).</li>
+</ul>
+<h2>V1.28 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour de Tinfoil vers la dernière version, compilé par moi-même.</li>
+<li>Mise à jour de CheckPoint en version 3.4.1.</li>
+<li>Mise à jour de 4NXCI en version 0.9-beta.1.</li>
+<li>Mise à jour de RajNX en version 0.7.4.</li>
+</ul>
+<h2>V1.27</h2>
+<ul>
+<li>Mise à jour de ReiNX, d'Atmosphere (partie Exosphere) et de Tinfoil vers la dernière version, compilés par moi-même.</li>
+<li>Modification du message pour la copie de ReiNX dans le script de préparation d'une SD.</li>
+</ul>
+<h2>V1.26</h2>
+<ul>
+<li>Mise à jour de Tinfoil en dernière version, compilé par moi-même. Normalement l'installation via le réseau devrait fonctionner maintenant et le script permettant d'installer les NSP a été également mis à jour.</li>
+<li>Correction d'un petit bug dans le script permettant d'injecter un payload.</li>
+<li>Suppression d'un fichier temporaire possiblement créé par le script permettant de créer un package de mise à jour.</li>
+</ul>
+<h2>V1.25</h2>
+<ul>
+<li>Ajout des dossiers "games", "nsp" et "xci" dans les dossiers "switch" et "sxos" pour le pack SX OS.</li>
+<li>Mise à jour de Tinfoil en dernière version, compilé par moi-même.</li>
+<li>Mise à jour de XCI Explorer en version 1.4.1.</li>
+<li>Mise à jour des éléments de SDFilesSwitch vers la version 7.3.1 (Atmosphere et ReiNX) ainsi que les homebrews EdiZon et Appstore.</li>
+</ul>
+<h2>V1.24 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour diverses des différents pack pour la préparation d'une SD.</li>
+<li>Suppression de SDFilesUpdater si plusieurs packs sont copiés en même temps pour éviter les conflits.</li>
+</ul>
+<h2>V1.23</h2>
+<ul>
+<li>Mise à jour du pack Atmosphere et ReiNX avec la dernière version de SDFilesSwitch.</li>
+<li>Mise à jour de SXOS en version 1.5.</li>
+</ul>
+<h2>V1.22</h2>
+<ul>
+<li>Mise à jour de 4NXCI vers la version 0.9-alpha.5.</li>
+<li>Mise à jour de Tinfoil vers la dernière version, compilé par moi-même.</li>
+</ul>
+<h2>V1.21</h2>
+<ul>
+<li>Mise à jour de 4NXCI vers la dernière version, compilé par moi-même.</li>
+</ul>
+<h2>V1.20 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Ajout de la fonction permettant de convertir les XCI au format NSP (très expérimentale). La version de 4NXCI utilisée est la dernière version compilée par moi-même.</li>
+<li>Ajout de la fonction permettant d'installer des NSP via Tinfoil et le réseau (très expérimentale).</li>
+<li>Ajout des fonctions de sauvegarde et de restauration des fichiers importants du script.</li>
+<li>Ajout d'une fonction permettant de restaurer le script à son état d'origine (seul les fichiers créés par le script seront supprimés sauf les packages de mises à jour et le dump des biskeys dans un fichier).</li>
+<li>Mise à jour des packs Atmosphere et ReiNX avec les fichiers de SDFilesSwitch v7.2.</li>
+<li>Mise à jour de Tinfoil vers la dernière version, compilé par moi-même.</li>
+</ul>
+<h2>V1.19 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour des différents packs utilisés pendant la préparation d'une SD (SDFilesSwitch v7.1 pour Atmosphere, ajout d'un dossier manquant pour ReiNX et le homebrew SDFilesUpdater est maintenant copié pour tous les packs) et mise à jour de la documentation en conséquence.</li>
+<li>Modification du fichier de configuration de SDFilesSwitch 7.1 pour le pack Atmosphere pour y intégrer le patch "nogc" ainsi que quelques ajouts de configurations.</li>
+</ul>
+<h2>V1.18</h2>
+<ul>
+<li>Ajout de la possibilité de copier sur la SD les payloads des CFWs choisis pour être copiés sur la SD pendant la préparation d'une SD.</li>
+<li>Mise à jour de ReiNX en version 1.2.</li>
+<li>Mise à jour de Tinfoil avec la dernière version, compilé par moi-même.</li>
+</ul>
+<h2>V1.17</h2>
+<ul>
+<li>Le script vérifie maintenant s'il a les droits nécessaires pour écrire dans son répertoire d'exécution. Si les droits ne sont pas suffisants, le script affiche une erreur et se ferme.</li>
+<li>Ajout de la possibilité de copier les fichiers de Memloader sur la SD pour pouvoir monter la SD, l'EMMC, la partition Boot0 ou la partition Boot1 sur un PC en utilisant simplement le payload de Memloader sans paramètre.</li>
+<li>Ajout du homebrew "SwitchIdent" (version console) dans les différents pack pour la préparation d'une SD, dernière version de la branche master compilée par moi-même. La documentation a été mise à jour en conséquence.</li>
+<li>Mise à jour du payload Memloader vers la version 2 et ajout du payload dans le répertoire "Payloads" du script.</li>
+<li>Mise à jour de ReiNX et de Tinfoil avec la dernière version, compilés par moi-même.</li>
+</ul>
+<h2>V1.16</h2>
+<ul>
+<li>Correction d'un bug.</li>
+<li>Mise à jour de ReiNX et de Tinfoil vers la dernière version, compilés par moi-même.</li>
+</ul>
+<h2>V1.15 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Suppression des différentes versions du HBMenu car fonction inutile en fait, un seul suffit.</li>
+<li>Ajout du CFW RajNX dans la préparation d'une SD et ajout du payload dans le dossier "Payloads".</li>
+<li>Mise à jour du payload Hekate CTKaer et de Tinfoil en dernière versions, compilés par moi-même.</li>
+<li>Mise à jour de XCI Explorer en version 1.4.0.</li>
+<li>Mise à jour de la documentation, particulièrement la partie décrivant les différents packs copiés pendant la préparation d'une SD.</li>
+</ul>
+<h2>V1.14 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>La version du fichier "hbmenu.nro" à copier peut maintenant être choisie dans la préparation d'une SD.</li>
+<li>Encore une correction pour le patch "nogc" de ReiNX qui devrait maintenant fonctionner.</li>
+<li>Mise à jour de GCDumptool en dernière version, compilé par moi-même.</li>
+<li>Mise à jour de Tinfoil en dernière version, compilé par moi-même.</li>
+</ul>
+<h2>V1.13</h2>
+<ul>
+<li>Le patch "nogc" pour ReiNX est maintenant complètement supporté.</li>
+<li>Correction d'un bug qui aurait pu se produire au lancement du script.</li>
+</ul>
+<h2>V1.12 (ne pas écraser une ancienne version car beaucoup de remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Mise à jour de Tinfoil vers la dernière version qui permet maintenant de faire la même chose que le DevMenu, compilé par moi-même.</li>
+<li>Mise à jour des différents modules d'Atmosphere vers la dernière version, compilé par moi-même. Seul le dossier "modules\atmosphere" du pack basé sur SDFilesSwitch 6.1 a été modifié.</li>
+<li>Réintégration et mise à jour de ReiNX vers la dernière version intégrant les patches "ES" (installation de fake tickets) et "FS" (équivalent de "nosigchk" et "nogc" (ce dernier est configurable), compilé par moi-même.</li>
+<li>Maintenant, chaque pack possède son propre fichier "hbmenu.nro". Cependant, si plusieurs packs sont copiés sur la SD, seul une seule  version sera utilisée, dans l'ordre celui d'Atmosphere puis celui de ReiNX et enfin celui de SXOS. Ce comportement sera probablement corrigé dans la prochaine version du script.</li>
+<li>Suppression de lignes de code inutile dans le script de préparation d'une SD.</li>
+</ul>
+<h2>V1.11</h2>
+<ul>
+<li>Légère modification du fichier de configuration d'Hekate copié durant la préparation d'une SD (pack Atmosphere), il est préférable de le mettre à jour si vous avez utilisé celui de la version 1.10.</li>
+</ul>
+<h2>V1.10 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Modification du fichier de configuration d'Hekate pour y intégrer de nouveau des configurations de lancement avec le patch "nogc" ("prevent GC access") désactivant le port cartouche mais permettant de ne pas mettre à jour le firmware de celui-ci pour les firmwares 4.0 et supérieur. Cette fonctionnalité est utile si vous avez mis à jour du firmware 3.0.2 ou inférieur grâce à ChoiDuJour et que vous souhaitez un jour revenir sur ces firmwares tout en concervant l'usage du port cartouche. Si un firmware suppérieur au 3.0.2 a un jour été lancé sans le patch "nogc", le firmware est mis à jour automatiquement et il ne sera plus possible d'utiliser le port cartouche sur les firmwares 3.0.2 et inférieur.</li>
+<li>Suppression de ReiNX car il ne présente pour l'instant plus aucun intérêt comparé à Hekate et Atmosphere. Pour l'instant les infos ne seront pas retirées de la documentation au cas où je trouve un jour un intérêt à le remettre.</li>
+</ul>
+<h2>V1.09</h2>
+<ul>
+<li>Nouvelle modification des packs copiés pendant la préparation d'une SD, ne pas écraser une ancienne version du script donc supprimer le dossier de l'ancienne version et extraire la nouvelle.</li>
+</ul>
+<h2>V1.08 (ne pas écraser une ancienne version car beaucoup de remaniements de dossiers/fichiers)</h2>
+<ul>
+<li>Changement du nom de l'application en Shadow256 Ultimate Switch Hack Script.</li>
+<li>Ajout du homebrew ChoiDuJourNX dans les homebrews copiés pendant la préparation d'une SD. Attention, bien se renseigner sur le fonctionnement de ce homebrew avant de l'utiliser.</li>
+<li>Ajout du homebrew RomMenu pour Atmosphere et ReiNX dans la préparation d'une SD.</li>
+<li>Mise à jour des différents fichiers basés sur la version SDFilesSwitch 6.1 de TumGER dans la préparation d'une SD, l'ancien fichier "Hekate.ini" que j'avais personnalisé a été remplacé (plus de support pour le patch "nogc" via Hekate pour l'instant). Pour accéder au homebrew loader sous Hekate et ReiNX, il faut maintenant rester appuyer sur "R" et cliquer sur l'album, comme pour SXOS.</li>
+<li>Ajout de plus de firmwares sur lesquels activer les sig_patches pour ReiNX dans la préparation d'une SD.</li>
+<li>Toujours dans la préparation d'une SD, retrait des fichiers de sig_patches pour Atmosphere car ceux-ci ne semblent plus nécessaire.</li>
+<li>Retrait de certains homebrew de certains packs copiés pendant la préparation d'une SD, de grosses modifications ont été faites.</li>
+<li>Mise à jour de la documentation, surtout la description des packs copiés pendant la préparation d'une SD.</li>
+</ul>
+<h2>V1.07</h2>
+<ul>
+<li>Mise à jour de la manière dont est stocké Tinfoil, il y a maintenant un dossier contenant les fichiers du Homebrew dans le dossier Switch. A cause de cette modification, il ne faut pas écraser une ancienne version du script avec celle-ci mais refaire l'extraction dans un dossier vierge. Cette modification n'a pas été testée, les retours seront appréciés.</li>
+<li>Ajout des sig_patches pour les firmwares 2.X, 3.X, 4.X et 5.X pour Atmosphere et ReiNX dans la préparation d'une SD.</li>
+<li>Ajout des dossiers dans lesquels placer les fichiers de partitions à restaurer avec Hekate (les dossiers sont vides) dans la préparation d'une SD.</li>
+<li>Mise à jour du homebrew Edizon.</li>
+<li>Légères optimisations du script de préparation d'une SD.</li>
+<li>Mise à jour des modules d'Atmosphere vers la dernière version, compilés par moi-même. Pour utiliser cette version il faut lancer Hekate puis booter sur l'entrée "Atmosphere" (avoir un dump complet de la nand au cas où si vous utilisez cette fonction), les autres entrées de CFW utilisent toujours la version de SDFilesSwitch de TumGER.</li>
+<li>Mise à jour de la documentation, notamment pour le contenu des packs copiés pendant la préparation d'une SD.</li>
+</ul>
+<h2>V1.06</h2>
+<ul>
+<li>Suppression de la possibilité de formater une SD en FAT32 avec des clusters de 64 KB car XCI Cutter supporte seulement les SD utilisant des clusters de 32 KB.</li>
+<li>Ajout de HacDiskMount et possibilité de lancer celui-ci à la fin du script permettant de monter une partition système (Boot0, Boot1 ou EMMC).</li>
+<li>Modification du fichier de configuration de Hekate, toutes les configurations pour lancer les CFWs (sauf Atmosphere) intègrent maintenant le patche automatique pour la désactivation de la vérification des signatures des fichiers NSP (voir les infos pour la nouvelle fonction de Hekate ci-dessous). De nouvelles configurations ont également été ajoutées, notamment le patche permettant de ne pas mettre à jour le firmware du port cartouche pour les firmwares 4.0 et supérieur (noté "+ Prevent GC Access"). Ces fonctions sont implémentées mais non testées, les retours seront les bienvenues).</li>
+<li>Mise à jour de XCI Explorer en version 1.3.0.</li>
+<li>Mise à jour d'Hekate CTCaer vers la dernière version à ce jour. C'est une version  incluant les patches à la volé du fichier "fs.kip" si l'instruction est présente dans le fichier de configuration. J'ai moi-même compilé cette version à partir des sources.</li>
+<li>Mise à jour de ReiNX vers la dernière version actuelle, compilé par moi-même à partir des sources.</li>
+<li>Mise à jour de Tinfoil vers la dernière version actuelle, compilé par moi-même à partir des sources.</li>
+<li>Légère mise à jour de la documentation.</li>
+</ul>
+<h2>V1.05</h2>
+<ul>
+<li>Le script est maintenant distribué avec un ensemble de payloads utiles, à lancer avec la fonction adéquat.</li>
+<li>Ajout de la possibilité de monter les partitions "boot0" et "boot1" dans le script permettant de monter les partitions via le mode RCM.</li>
+<li>Ajout d'un script permettant de créer des packages de mise à jour à l'aide de ChoiDuJour (tous les paramètres sont pris en compte).</li>
+<li>Ajout d'un script permettant la préparation d'une SD aux différentes solutions proposées pour la scène (excepté Linux).</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.04</h2>
+<ul>
+<li>Ajout d'un script permettant de monter la nand ou la carte SD comme périphérique de stockage USB.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.03</h2>
+<ul>
+<li>Ajout d'un script permettant d'installer les drivers du mode RCM de la Switch, merci @eliboa du forum de Logic-sunrise pour avoir trouvé ça.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
+<h2>V1.02</h2>
+<ul>
+<li>Modification de la structure des dossiers du dossier "tools", veuillez ne pas écraser les anciennes versions du script par celle-ci mais faire plutôt une nouvelle installation.</li>
+<li>Ajout du payload Biskeydump et de la possibilité de dumper les clés dans un fichier "biskey.txt" qui sera situé à la racine du script (les biskeys commencent à la ligne 7 du fichier).</li>
+<li>Ajout de la possibilité de télécharger/mettre à jour Shofel2.</li>
+<li>Changement du binaire de Wget vers la version 19.04.</li>
+<li>Ajout de la possibilité de choisir un kernel personnel lors du lancement de Linux.</li>
+<li>Ajout de quelques nouvelles vérifications et correction de bugs dans les différents scripts.</li>
+<li>Mise à jour de la documentation.</li>
+<li>Mise à jour de TegraRcmSmash en version 1.2.0.2.</li>
+</ul>
+<h2>V1.01</h2>
+<ul>
+<li>Correction de bugs.</li>
+</ul>
+<h2>V1.00</h2>
+<ul>
+<li>Première version</li>
+</ul>

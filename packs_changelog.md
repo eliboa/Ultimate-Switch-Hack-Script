@@ -1,0 +1,495 @@
+<h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
+&nbsp;
+<h2>V178</h2>
+<ul>
+<li>Mise à jour de SXDumper en version 2.0.4.</li>
+<li>Mise à jour du pack de cheats en version 19.</li>
+</ul>
+<h2>V177</h2>
+<ul>
+<li>Mise à jour de Lockpick-RCM en version 1.2.</li>
+</ul>
+<h2>V176 (à utiliser avec la version 2.10.79 au minimum du script)</h2>
+<ul>
+<li>Une petite adaptation pour la copie du payload de démarrage d'Atmosphere dans Hekate qui permet un suivi plus logique des choses.</li>
+</ul>
+<h2>V175</h2>
+<ul>
+<li>Mise à jour des fichiers de scripts de EdiZon.</li>
+<li>Mise à jour du pack de cheats en version 16.</li>
+</ul>
+<h2>V174</h2>
+<ul>
+<li>Mise à jour de NXSH en dernière version master du Github, compilé par moi-même. Ceci concerne le homebrew ainsi que le module système de celui-ci.</li>
+</ul>
+<h2>V173</h2>
+<ul>
+<li>Mise à jour de Atmosphere en version 0.8.10 et quelques corrections dans certains fichiers de Hekate.</li>
+</ul>
+<h2>V172</h2>
+<ul>
+<li>Mise à jour du payload Lockpick_RCM vers la dernière version Master du Github, compilé par moi-même.</li>
+<li>Ajout du module <a target="_blank" href="https://github.com/KranKRival/sys-audioplayer/releases">Sys-audioplayer</a>.</li>
+<li>Mise à jour de Nxsh vers la dernière version du Github, compilé par moi-même.</li>
+<li>Mise à jour du pack de cheats en version 16.</li>
+</ul>
+<h2>V171</h2>
+<ul>
+<li>Mise à jour de SX Dumper en version 2.0.3.</li>
+</ul>
+<h2>V170</h2>
+<ul>
+<li>Mise à jour du payload Lockpick_RCM vers la dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V169</h2>
+<ul>
+<li>Mise à jour de Sys-clk en version 0.12.3.</li>
+</ul>
+<h2>V168</h2>
+<ul>
+<li>Mise à jour de SX Dumper en version 2.0.2.</li>
+</ul>
+<h2>V167</h2>
+<ul>
+<li>Mise à jour du payload Lockpick_RCM vers la dernière version Master du Github, compilé par moi-même.</li>
+<li>Ajout de l'émulateur Reicast dans la liste des émulateurs.</li>
+</ul>
+<h2>V166</h2>
+<ul>
+<li>Mise à jour de AmiiSwap vers la dernière version Master du Github, compilé par moi-même.</li>
+<li>Mise à jour du payload Lockpick_RCM vers la dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V165 (à utiliser avec la version 2.10.67 au minimum du script)</h2>
+<ul>
+<li>Réorganisation du dossier de Nereba.</li>
+</ul>
+<h2>V164</h2>
+<ul>
+<li>Suppression de certains fichiers inutiles dans les dossiers de modules (non géré par le script mais ceci dit ces fichiers ne devraient pas être gênants sur la SD, pour infos se sont les fichiers "git.gud" donc si vous souhaitez les supprimer il faudra le faire manuellement).</li>
+</ul>
+<h2>V163</h2>
+<ul>
+<li>Mise à jour de AmiiSwap en version 0.2. Pour savoir comment configurer ce homebrew, veuillez consulter <a target="_blank" href="https://github.com/FuryBaguette/AmiiSwap">le readme du projet</a>.</li>
+</ul>
+<h2>V162</h2>
+<ul>
+<li>Mise à jour de Emuiibo en version 0.2.</li>
+</ul>
+<h2>V161</h2>
+<ul>
+<li>Mise à jour de Emuiibo et de AmiiSwap vers la dernière version Master du Github, compilés par moi-même.</li>
+</ul>
+<h2>V160</h2>
+<ul>
+<li>Mise à jour du payload de Retro_reloaded en dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V159</h2>
+<ul>
+<li>Mise à jour de SXDumper en version 2.0.1.</li>
+</ul>
+<h2>V158</h2>
+<ul>
+<li>Mise à jour de ReiNX Toolkit vers la dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V157</h2>
+<ul>
+<li>Mise à jour de SX OS en version 2.7.1.</li>
+<li>Mise à jour du payload de Retro_reloaded vers la dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V156</h2>
+<ul>
+<li>Mise à jour de SX OS en version 2.7.</li>
+<li>Mise à jour de GCDumpTool en version 1.0.8.</li>
+</ul>
+<h2>V155</h2>
+<ul>
+<li>Mise à jour des patches de ReiNX.</li>
+</ul>
+<h2>V154</h2>
+<ul>
+<li>Mise à jour de Payload_launcher en version 1.1.4.</li>
+<li>Mise à jour de Kosmos Toolbox.</li>
+</ul>
+<h2>V153</h2>
+<ul>
+<li>Mise à jour de ChoiDuJourNX en version 1.0.2.</li>
+</ul>
+<h2>V152</h2>
+<ul>
+<li>Mise à jour d'Atmosphere en version 0.8.9.</li>
+<li>Les cheats sont maintenant désactivés par défaut dans Atmosphere, comportement qui est moins surprenant pour l'utilisateur qui devra les activer lui-même si besoin est.</li>
+</li>
+<h2>V151</h2>
+<ul>
+<li>Mise à jour de ReiNX en version 2.2.1.</li>
+</ul>
+<h2>V150</h2>
+<ul>
+<li>Mise à jour de Payload Launcher en version 1.1.3.</li>
+<li>Mise à jour de Hid-mitm en version 0.1.1.</li>
+<li>Mise à jour du pack de cheats en version 14.</li>
+<li>Quelques autres changements.</li>
+</ul>
+<h2>V149</h2>
+<ul>
+<li>Mise à jour de ReiNX en version 2.2.</li>
+</ul>
+<h2>V148 (à utiliser avec la version 2.10.50 minimum du script)</h2>
+<ul>
+<li>Mise à jour de Hekate en version 4.10.1.</li>
+<li>Suppression du fichier "update.bin" du pack Atmosphere car il n'est plus utile.</li>
+</ul>
+<h2>V147</h2>
+<ul>
+<li>Mise à jour de GCDumpTool en version 1.0.6.</li>
+<li>Mise à jour de SXDumper en version 2.0.0.</li>
+<li>Mise à jour de Ldn_mitm vers la dernière version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V146</h2>
+<ul>
+<li>Mise à jour du module Ldn_mitm en version 1.2.2.</li>
+<li>Mise à jour du payload Retro_reloaded vers la dernière version du Github, compilé par moi-même.</li>
+</ul>
+<h2>V145</h2>
+<ul>
+<li>Mise à jour de Hekate en version 4.10.</li>
+<li>Mise à jour de certains fichiers du pack Atmosphere et ajout des ES_patches pour le firmware 8.0.0.</li>
+<li>Mise à jour du module Sys-clk en version 0.12.2.</li>
+<li>Mise à jour du module Ldn_mitm en version 1.2.1.</li>
+</ul>
+<h2>V144</h2>
+<ul>
+<li>Mise à jour de Atmosphere en version 0.8.8.</li>
+<li>Ajout du module <a target="_blank" href="https://github.com/XorTroll/emuiibo">Emuiibo</a> ainsi que du homebrew <a target="_blank" href="https://github.com/FuryBaguette/AmiiSwap">AmiiSwap</a> associé.</li>
+<li>Mise à jour de Lockpick-RCM en version 1.1.1.</li>
+<li>Mise à jour des fichiers de configurations et de scripts de EdiZon.</li>
+<li>Ajout de quelques petites choses qui seront probablement utilisées dans de futurs versions du script.</li>
+</ul>
+<h2>V143</h2>
+<ul>
+<li>Mise à jour de SX OS en version 2.6.2 Beta.</li>
+<li>Mise à jour de Lockpick en version 1.2.3.</li>
+<li>Mise à jour du module Sys-clk en version 0.12.1. Le fichier de configuration par défaut a également été renommé "config.ini.example" pour éviter d'effacer un éventuel fichier de config déjà existant.</li>
+<li>Mise à jour des fichiers de configurations et de scripts de EdiZon.</li>
+</ul>
+<h2>V142</h2>
+<ul>
+<li>Mise à jour du payload Hekate vers la dernière version du Github, compilé par moi-même.</li>
+</ul>
+<h2>V141</h2>
+<ul>
+<li>Mise à jour de Sys-clk en version 0.12.0.</li>
+<li>Mise à jour de Ldn_mitm et du homebrew Ldnmitm_config en version 1.2.0. Maintenant, ce module est configurable dans les profiles de modules optionnels et n'est plus disponible en tant que fichier kip.</li>
+</ul>
+<h2>V140  (à utiliser avec la version 2.10.42 minimum du script)</h2>
+<ul>
+<li>Mise à jour des fichiers de scripts de EdiZon.</li>
+<li>Ajout du homebrew Nxsh dans les homebrews ainsi que dans les modules.</li>
+</ul>
+<h2>V139</h2>
+<ul>
+<li>Remise en place du module Freebird dans les modules optionnels. Attention, il est déconseillé de l'utiliser en même temps que le module Sys-CLK.</li>
+</ul>
+<h2>V138</h2>
+<ul>
+<li>Mise à jour de Atmosphere en version 0.8.7.</li>
+</ul>
+<h2>V137</h2>
+<ul>
+<li>Mise à jour de Sys-FTPD vers la dernière version du Github, compilé par moi-même.</li>
+</ul>
+<h2>V136 (à utiliser avec la version 2.10.38 minimum du script)</h2>
+<ul>
+<li>Création d'un pack de modules, de fait les packs Atmosphere et ReiNX ont pas mal été modifiés.</li>
+<li>Mise à jour de certains fichiers du pack Atmosphere avec des fichiers de Kosmos V12.</li>
+<li>Mise à jour de DZ et de Lithium en version 1.55.</li>
+<li>Mise à jour de SlideNX en version 0.16.</li>
+<li>Mise à jour des fichiers de script de EdiZon.</li>
+</ul>
+<h2>V135</h2>
+<ul>
+<li>Dans le pack Atmosphere, Mise à jour de Kosmos Updater vers la dernière version Master du Github, compilé par moi-même. Le fichier "internal.db" a également été mis à jour avec la dernière version de le fichier du Github de Kosmos.</li>
+</ul>
+<h2>V134</h2>
+<ul>
+<li>Mise à jour de Pplay en version 2.1.</li>
+</ul>
+<h2>V133</h2>
+<ul>
+<li>Mise à jour de ReiNX en version 2.1.1. Avec cette mise à jour, veuillez vérifier que vous n'avez pas le fichier "ReiNX\titles\0100000000000036\exefs.nsp" sur votre SD et le cas échéant, supprimez-le car le script ne le fera pas.</li>
+</ul>
+<h2>V132</h2>
+<ul>
+<li>Mise à jour du payload de Retro_Reloaded.</li>
+<li>Mise à jour de DZ, de Lithium et de SX Installer en version 1.52.</li>
+<li>Mise à jour des cheats en version 12.</li>
+</ul>
+<h2>V131</h2>
+<ul>
+<li>Mise à jour des fichiers de scripts de EdiZon.</li>
+<li>Mise à jour des cheats en version 11.</li>
+</ul>
+<h2>V130 (à utiliser avec la version 2.10.35 minimum du script)</h2>
+<ul>
+<li>Le pack d'émulateurs a été réorganisé pour être compatible avec la gestion de profiles pour la copie de ceux-ci dans la préparation d'une SD de la version 2.10.35 du script.</li>
+<li>Suppression de fichiers inutiles dans les dossiers de certains émulateurs.</li>
+</ul>
+<h2>V129 (à utiliser avec la version 2.10.34 minimum du script)</h2>
+<ul>
+<li>Réorganisation des dossiers de Retro_Reloaded qui devrait éviter des bugs étranges avec celui-ci.</li>
+</ul>
+<h2>V128</h2>
+<ul>
+<li>Mise à jour de PFBA, de PNes et de PSnes en version 3.4.</li>
+</ul>
+<h2>V127</h2>
+<ul>
+<li>Mise à jour de Goldleaf en version 0.5.</li>
+</ul>
+<h2>V126</h2>
+<ul>
+<li>Mise à jour d'Atmosphere vers la dernière version "Master" du github, compilé par moi-même.</li>
+</ul>
+<h2>V125</h2>
+<ul>
+<li>Mise à jour d'Atmosphere en version 0.8.6.</li>
+<li>Mise à jour de Payload_Launcher vers la dernière version du Github, compilée par moi-même.</li>
+<li>Mise à jour de Sept avec la dernière version disponible dans Atmosphere 0.8.6 dans le pack ReiNX.</li>
+</ul>
+<h2>V124</h2>
+<ul>
+<li>Mise à jour de DZ et de Lithium en version 1.49.</li>
+</ul>
+<h2>V123 (à utiliser avec la version 2.10.32 minimum du script)</h2>
+<ul>
+<li>Le homebrew Payload_launcher est maintenant copié d'une manière un peu différente, du coup une grande partie des payloads qu'il contenait par défaut a été supprimée car la copie de ceux-ci se décidera selon les choix faient durant la préparation de la SD.</li>
+<li>Mise à jour d'Atmosphere vers la dernière version "Master" du github, compilé par moi-même.</li>
+</ul>
+<h2>V122</h2>
+<ul>
+<li>Mise à jour d'Atmosphere vers la dernière version "Master" du github, compilé par moi-même.</li>
+</ul>
+<h2>V121</h2>
+<ul>
+<li>Mise à jour de Payload_Launcher en version 1.1.1.</li>
+<li>Mise à jour du pack de cheats en version 10.</li>
+</ul>
+<h2>V120 (à utiliser avec la version 2.10.30 minimum du script)</h2>
+<ul>
+<li>Mise à jour de SX Installer en version 1.52.</li>
+<li>Mise à jour de Retro_reloaded en version 0.46.</li>
+<li>Mise à jour de DZ et de Lithium par les dernières versions incluses dans Retro_Reloaded 0.46.</li>
+</ul>
+<h2>V119 (à utiliser avec la version 2.10.29 minimum du script)</h2>
+<ul>
+<li>Ajout des configurations de Retro_reloaded dans les différents packs, permettant ainsi d'utiliser ce payload pour lancer les différents CFW, même en 7.0.X.</li>
+<li>Mise à jour d'Atmosphere vers la dernière version "Master" du github, compilé par moi-même.</li>
+<li>Mise à jour de EdiZon en dernière version "Master" du Github, compilé par moi-même.</li>
+<li>Suppression du module Sys-Netcheat du pack Atmosphere et ReiNX ainsi que de l'ancienne façon de lancer le module Sys-FTPD (via un fichier kip), maintenant le module se trouve dans le dossier "titles\420000000000000E" du CFW sur lequel il est utilisé (Atmosphere/ReiNX) et il est actif par défaut, faire le raccourci "touche +, touche - et X pour activer/désactiver le serveur".</li>
+</ul>
+<h2>V118 (à utiliser avec la version 2.10.28 minimum du script)</h2>
+<ul>
+<li>Dans le pack Atmosphere, mise à jour du fichier de configuration "atmosphere\loader.ini" avec de nouveaux paramètres, le comportement est maintenant le même que sous SX OS, c'est-à-dire que l'album lance le HBL mais il peut aussi être lancé en maintenant "R" sur n'importe quel jeu. Du coup certains dossiers ont été remaniés pour être compatible avec cette nouvelle modification.</li>
+<li>Mise à jour d'Atmosphere vers la dernière version "Master" du github, compilé par moi-même.</li>
+<li>Mise à jour du pack de cheats en version 9.</li>
+</ul>
+<h2>V117</h2>
+<ul>
+<li>Mise à jour de PFBA en version 3.3, de PNes et PSnes en version 3.1 dans les packs d'émulateurs.</li>
+</ul>
+<h2>V116 (veuillez mettre à jour le script en version 2.10.27 minimum)</h2>
+<ul>
+<li>Intégration du homebrew <a target="_blank" href="https://github.com/suchmememanyskill/Payload_Launcher/releases">Payload_Launcher</a> dans les homebrews optionnels, les autres homebrews permettant cette fonctionnalité on été retirés des packs spécifiques.</li>
+</ul>
+<h2>V115 (veuillez mettre à jour le script en version 2.10.26 minimum)</h2>
+<ul>
+<li>Ajout de SX Reboot dans le pack SX OS.</li>
+<li>Dans le pack ReiNX, retour à l'ancien format du HBL pour pouvoir continuer à lancer l'album en restant appuyé sur "R" car pour l'instant avec la nouvelle méthode l'album ne se lance pas. Attention, supprimez le fichier "hbl.nsp" du dossier ReiNX de la SD car sinon cela aura pour conséquence d'avoir un doublon indésirable pouvant provoquer des bugs.</li>
+</ul>
+<h2>V114</h2>
+<ul>
+<li>Mise à jour des cheats en version 8.</li>
+<li>Mise à jour des fichiers de script de EdiZon.</li>
+</ul>
+<h2>V113</h2>
+<ul>
+<li>Mise à jour et ajout de certains éléments dans le pack ReiNX.</li>
+</ul>
+<h2>V112</h2>
+<ul>
+<li>Mise à jour de SX OS en version 2.6.1 Beta.</li>
+</ul>
+<h2>V111 (à utiliser avec la version 2.10.23 du script pour lancer ReiNX)</h2>
+<ul>
+<li>Mise à jour de SX OS en version 2.6 Beta.</li>
+<li>Mise à jour de EdiZon en dernière version "Master" du Github, compilé par moi-même.</li>
+<li>Mise à jour de ReiNX Toolkit en dernière version "Master" du Github, compilé par moi-même.</li>
+<li>Mise à jour de ReiNX en version 2.1.</li>
+<li>Pour le pack Atmosphere/Kosmos, le homebrew menu peut maintenant être lancé en maintenant la touche "R" sur tous les titres/applications sans avoir à spécifier un titre en particulier pour le faire. L'avantage est donc de ne plus avoir à faire de configuration manuellement, l'inconvénient est que le maintien du bouton "R" doit aussi être fait sur l'album pour que le Homebrew Menu se lance via celui-ci mais perso je préfère ce type de configuration.</li>
+</ul>
+<h2>V110</h2>
+<ul>
+<li>Mise à jour de SlideNX en version 0.15.1 et ajout de celui-ci dans le pack ReiNX, dans les modules désactivés.</li>
+</ul>
+<h2>V109</h2>
+<ul>
+<li>Mise à jour de Atmosphere vers la dernière version "Master" du Github pour le pack Atmosphere.</li>
+<li>Mise à jour de la base de données des cheats et des cheats en version 7.</li>
+</ul>
+<h2>V108 (à utiliser avec la version 2.10.22 minimum du script)</h2>
+<ul>
+<li>Suppression de LaiNes.</li>
+<li>Mise à jour de Atmosphere vers la dernière version "Master" du Github pour le pack Atmosphere.</li>
+<li>Mise à jour de Psnes et PFBA en version 3.0.</li>
+<li>Ajout de Pnes.</li>
+</ul>
+<h2>V107</h2>
+<ul>
+<li>Mise à jour de Atmosphere vers la dernière version "Master" du Github pour le pack Atmosphere.</li>
+<li>Mise à jour de EdiZon en dernière version "Master" du Github, compilé par moi-même.</li>
+<li>Mise à jour de la base de données des cheats et des cheats en version 6.</li>
+</ul>
+<h2>V106</h2>
+<ul>
+<li>Mise à jour de Atmosphere vers la dernière version "Master" du Github pour le pack Atmosphere.</li>
+</ul>
+<h2>V105</h2>
+<ul>
+<li>Ajout de cheats et d'une base de données associée.</li>
+<li>Mise à jour de Atmosphere et de ReiNX vers la dernière version "Master" des Github associés, respectivement pour les pakcs Atmosphere et ReiNX.</li>
+<li>Mise à jour de la base de données des cheats et des cheats en version 5.</li>
+<li>Peut-être d'autres choses que j'ai oublié.</li>
+</ul>
+<h2>V103</h2>
+<ul>
+<li>Mise à jour de EdiZon en dernière version "Master" du Github, compilé par moi-même.</li>
+<li>Mise à jour des fichiers de scripts de EdiZon.</li>
+</ul>
+<h2>V102</h2>
+<ul>
+<li>Mise à jour de EdiZon en dernière version "Master" du Github, compilé par moi-même.</li>
+</ul>
+<h2>V102</h2>
+<ul>
+<li>Mise à jour de Hekate en version 4.9.1.</li>
+<li>Mise à jour des fichiers de configuration du pack Atmosphere si lancé avec Hekate, les nouveaux fichiers sont adaptés pour la version 4.9.1 de Hekate au minimum.</li>
+<li>Mise à jour de EdiZon en dernière version "Master" du Github, compilé par moi-même.</li>
+</ul>
+<h2>V101</h2>
+<ul>
+<li>Mise à jour de EdiZon en dernière version "Master" du Github, compilé par moi-même.</li>
+<li>Ajout d'un nouveau jeu dans les configuration de scripts de modification de sauvegardes de EdiZon.</li>
+</ul>
+<h2>V100 (mettre à jour le script en version 2.10.12 au minimum)</h2>
+<ul>
+<li>Fusion du pack Atmosphere et Kosmos en un seul pack. Pour l'instant, les anciennes configurations de Hekate ont été gardées et ont été renommé en "nom_du_fichier_de_configuration.ini.old", pour les restaurer il suffira de renommer le fichier en supprimant le ".old" à la fin.</li>
+<li>Mise à jour de Checkpoint en dernière version "Master" du Github, compilée par moi-même.</li>
+</ul>
+<h2>V99</h2>
+<ul>
+<li>Mise à jour de Atmosphere vers la dernière version "Master" du Github, compilé par moi-même, dans les packs Atmosphere et Kosmos.</li>
+<li>Mise à jour de DZ et de Lithium en dernière version "Master" du Github.</li>
+<li>Mise à jour de Hekate en version 4.9.</li>
+<li>Mise à jour de EdiZon en version 3.0.1.</li>
+</ul>
+<h2>V98</h2>
+<ul>
+<li>Mise à jour de Atmosphere en dernière version "Master" du Github, compilé par moi-même,  dans les packs Atmosphere et Kosmos.</li>
+<li>Mise à jour de EdiZon en version 3.0, veuillez supprimer le dossier "EdiZon" à la racine de la SD avant de réinstaller cette nouvelle version.</li>
+</ul>
+<h2>V97</h2>
+<ul>
+<li>Mise à jour de EdiZon en dernière version "Master" du Github, compilé par moi-même.</li>
+<li>Mise à jour de Atmosphere vers la dernière version "Master" du Github, compilé par moi-même et ajouté aux packs Atmosphere et Kosmos.</li>
+<li>Mise à jour de Lockpick en version 1.2.2.</li>
+</ul>
+<h2>V96</h2>
+<ul>
+<li>Ajout du payload Lockpick_rcm.</li>
+<li>Ajout des homebrews DZ, N1dusd et Lithium dans les homebrews optionnels.</li>
+<li>Dans les packs Atmosphere et Kosmos, le paramètre permettant aux homebrews d'utiliser l'USB 3.0 a été désactivé car cela pouvait poser des problèmes à certains utilisateurs.</li>
+<li>Mise à jour de EdiZon en dernière version "Master" du Github, compilé par moi-même.</li>
+<li>Mise à jour de Atmosphere vers la dernière version "Master" du Github, compilé par moi-même et ajouté aux packs Atmosphere et Kosmos.</li>
+<li>Mise à jour de Goldleaf en version 0.5 Beta.</li>
+</ul>
+<h2>V95</h2>
+<ul>
+<li>Suppression de "Sys-clk" et de "Freeset" des packs Atmosphere, Kosmos et ReiNX car cela semble poser des soucis de stabilité.</li>
+</ul>
+<h2>V94</h2>
+<ul>
+<li>Grosse mise à jour de la structure des packs, en conséquence cette nouvelle version ne peux pas être utilisée avec une version de mon script inférieur à la 2.10.00.</li>
+<li>Mise à jour de Lockpick en version 1.2.1.</li>
+<li>Quelques ajustements pour le pack Kosmos.</li>
+</ul>
+<h2>V93</h2>
+<ul>
+<li>Mise à jour de Incognito en version 1.3.</li>
+</ul>
+<h2>V92</h2>
+<ul>
+<li>Mise à jour de Atmosphere avec la dernière version "master" du Github dans les packs Atmosphere et Kosmos, compilé par moi-même.</li>
+</ul>
+<h2>V91</h2>
+<ul>
+<li>Mise à jour des fichiers de configurations de Hekate pour prendre en compte la nouvelle façon de gérer le patch "nogc" de Hekate 4.8 qui est maintenant gérée via un paramètre de configuration global. Attention donc, cette version du pack est à utiliser avec la version 2.00.18 de l'Ultimate Switch Hack Script.</li>
+</ul>
+<h2>V90</h2>
+<ul>
+<li>Mise à jour du pack Kosmos, celui-ci devrait maintenant fonctionner avec les firmwares 7.0.1 et inférieurs.</li>
+<li>Mise à jour de Incognito en version 1.2.</li>
+<li>Mise à jour de Hekate en version 4.8.</li>
+<li>Downgrade de Goldleaf en version 0.3 car beaucoup d'utilisateur semblent avoir des problèmes avec la version 0.4.</li>
+</ul>
+<h2>V89</h2>
+<ul>
+<li>ReiNX a été réimplémenté correctement avec une version fonctionnel pour les firmwares 6.2.0 et inférieur. Le HBL est maintenant géré via le fichier "hbl.nsp" plutôt que via le title id.</li>
+</ul>
+<h2>V87</h2>
+<ul>
+<li>Mise à jour du pack Atmosphere avec la dernière version "master" du Github, incluant tous les sig_patches pour les firmwares 7.0.0 et 7.0.1.</li>
+<li>Mise à jour du pack Kosmos avec la dernière version "master" du Github d'Atmosphere. Attention cependant, je ne sais pas du tout comment se comporte ce pack en version du firmware supérieur à 6.2.0, notamment au niveau du patch "nogc" qui pourrait ne pas fonctionner.</li>
+<li>Mise à jour du pack ReiNX avec la dernière version "master" du Github, compilé par moi-même.</li>
+<li>Mise à jour de SX Installer en version 1.5 pour le pack SX OS.</li>
+<li>Ajout du module Sys-clk dans toud les packs sauf SX OS et émulateurs.</li>
+<li>Ajout du homebrew Incognito pour tous les packs.</li>
+<li>Remise en place de Tinfoil de Adube suite à des retours problématiques avec Goldleaf, Goldleaf est cependant concervé.</li>
+<li>Mise à jour de Goldleaf avec la dernière version "master" du Github, compilé par moi-même.</li>
+</ul>
+<h2>V86</h2>
+<ul>
+<li>Mise à jour de Hekate en version 4.6_svc.</li>
+<li>Le fichier du payload à rebooter avec le homebrew Reboot_to_payload lié aux packs Kosmos et Atmosphere n'est plus inclu dans les packs, la version 2.00.13 du script copie Hekate directement en se basant sur la version incluse dans les packs, ceci permet d'éliminer des doublons inutiles de fichiers.</li>
+</ul>
+<h2>V85</h2>
+<ul>
+<li>Mise à jour de Goldleaf en version 0.4.</li>
+</ul>
+<h2>V84</h2>
+<ul>
+<li>Mise à jour des scripts et configurations de EdiZon.</li>
+</ul>
+<h2>V83</h2>
+<ul>
+<li>Mise à jour de Atmosphere vers la dernière version du Github dans les packs Atmosphere et Kosmos, compilé par moi-même. Attention, cette version d'Atmosphere ne supporte pas encore le firmware 7.0.0.</li>
+<li>Ajout du module Freebird (module permettant l'overclock de la Switch) pour tous les packs. Le homebrew de gestion de ce module, "Freeset", a également été ajouté.</li>
+<li>Mise à jour de EdiZon en version 2.2.0.</li>
+<li>Suppression du pack Kosmos spécifique au firmware 1.0.0 car le pack principal permettra maintenant de lancer ce pack également pour le firmware 1.0.0.</li>
+</ul>
+<h2>V82</h2>
+<ul>
+<li>Mise à jour de SX Installer en version 1.4.</li>
+</ul>
+<h2>V81</h2>
+<ul>
+<li>Mise à jour de Kip_Select en version 3.0.9.</li>
+</ul>
+<h2>V80</h2>
+<ul>
+<li>Mis à jour de SX OS en version 2.5.3.</li>
+<li>Mise à jour des patches "nogc" pour le pack Atmosphere (support du patch pour le firmware 7.0.0 mais le CFW ne supporte pas encore ce firmware de manière simple).</li>
+</ul>
+<h2>V79</h2>
+<ul>
+<li>Version initiale depuis la version 2.00.04 du script, voir le changelog général du script pour connaître les modifications précédentes.</li>
+</ul>
