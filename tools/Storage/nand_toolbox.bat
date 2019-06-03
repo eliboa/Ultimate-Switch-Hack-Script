@@ -112,7 +112,10 @@ IF "%input_path%"=="" (
 	echo.
 	goto:dump_nand
 )
-call :partition_select dump_nand
+set partition=
+call :get_type_nand "%input_path%"
+IF /i "%nand_type%"=="RAWNAND" call :partition_select dump_nand
+IF /i "%nand_type%"=="RAWNAND (splitted dump)" call :partition_select dump_nand
 echo.
 echo Vous allez devoir sélectionner le dossier vers lequel extraire le dump.
 pause
@@ -187,7 +190,10 @@ IF "%output_path%"=="" (
 	echo.
 	goto:restaure_nand
 )
-call :partition_select restaure_nand
+set partition=
+call :get_type_nand "%output_path%"
+IF /i "%nand_type%"=="RAWNAND" call :partition_select restaure_nand
+IF /i "%nand_type%"=="RAWNAND (splitted dump)" call :partition_select restaure_nand
 call :get_type_nand "%input_path%"
 set input_nand_type=%nand_type%
 IF "%input_nand_type%"=="UNKNOWN" (
