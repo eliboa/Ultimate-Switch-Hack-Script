@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.10.86 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Changements dans la préparation d'une SD pour correspondre aux modifications de DZ Tinfoil et de Lithium 1.61 ajoutée dans les packs en version 180.</li>
+<li>Hekate a été remplacé par la version présente sur <a target="_blank" href="https://github.com/Joonie86/hekate/releases/">ce fork de Hekate</a> qui est compatible avec DZ Tinfoil et Lithium. Attention, veuillez lire le changelog des packs pour la version 180 car il contient des informations sur les nouveautés apportées par cette nouvelle version de Hekate.</li>
+</ul>
 <h2>V2.10.85</h2>
 <ul>
 <li>Mise à jour de NSC_Builder en version 0.86B.</li>

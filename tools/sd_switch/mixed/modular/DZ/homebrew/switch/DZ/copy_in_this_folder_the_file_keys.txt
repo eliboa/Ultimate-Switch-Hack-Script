@@ -1,0 +1,1 @@
+Remember to copy in the /switch/tinfoil folder the file keys.txt
