@@ -374,26 +374,26 @@ IF NOT "%cancel_script%"=="" set cancel_script=%cancel_script:~0,1%
 IF /i "%cancel_script%"=="o" goto:end_script
 IF "%action_type%"=="1" (
 	echo Copie du firmware sur la SD dans le dossier "FW_%firmware_choice%" et copie du homebrew ChoiDuJour-NX...
-	%windir%\System32\Robocopy.exe "firmware_temp" %volume_letter%:\FW_%firmware_choice% /e
+	%windir%\System32\Robocopy.exe "firmware_temp" %volume_letter%:\FW_%firmware_choice% /e >nul
 	IF EXIST "%volume_letter%:\switch\ChoiDuJourNX.nro" del /q "%volume_letter%:\switch\ChoiDuJourNX.nro"
 	IF NOT EXIST "%volume_letter%:\switch" mkdir "%volume_letter%:\switch"
 	IF NOT EXIST "%volume_letter%:\switch\ChoiDuJourNX" mkdir "%volume_letter%:\switch\ChoiDuJourNX"
 	IF EXIST "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro" (
 		del /q "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
 	)
-	copy /V /B "tools\sd_switch\mixed\modular\ChoiDuJourNX\switch\ChoiDuJourNX\ChoiDuJourNX.nro" "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
+	copy /V /B "tools\sd_switch\mixed\modular\ChoiDuJourNX\switch\ChoiDuJourNX\ChoiDuJourNX.nro" "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro" >nul
 	echo Les fichiers ont été copiés.
 )
 IF "%action_type%"=="3" (
 	echo Copie du firmware sur la SD dans le dossier "FW_%firmware_choice%" et copie du homebrew ChoiDuJour-NX...
-	%windir%\System32\Robocopy.exe "firmware_temp" %volume_letter%:\FW_%firmware_choice% /e
+	%windir%\System32\Robocopy.exe "firmware_temp" %volume_letter%:\FW_%firmware_choice% /e >nul
 	IF EXIST "%volume_letter%:\switch\ChoiDuJourNX.nro" del /q "%volume_letter%:\switch\ChoiDuJourNX.nro"
 	IF NOT EXIST "%volume_letter%:\switch" mkdir "%volume_letter%:\switch"
 	IF NOT EXIST "%volume_letter%:\switch\ChoiDuJourNX" mkdir "%volume_letter%:\switch\ChoiDuJourNX"
 	IF EXIST "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro" (
 		del /q "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
 	)
-	copy /V /B "tools\sd_switch\mixed\modular\ChoiDuJourNX\switch\ChoiDuJourNX\ChoiDuJourNX.nro" "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
+	copy /V /B "tools\sd_switch\mixed\modular\ChoiDuJourNX\switch\ChoiDuJourNX\ChoiDuJourNX.nro" "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro" >nul
 	echo Les fichiers ont été copiés.
 	echo.
 	echo Maintenant, la préparation du package de mise à jour avec ChoiDuJour va être lancée et vous allez devoir régler ces options.
