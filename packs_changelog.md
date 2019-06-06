@@ -1,5 +1,11 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V181</h2>
+<ul>
+<li>Mise à jour de AmiiSwap en version 1.0.</li>
+<li>Mise à jour de GCDumpTool en version 1.1.0.</li>
+<li>Mise à jour des fichiers de configs de EdiZon.</li>
+</ul>
 <h2>V180 (à utiliser avec la version 2.10.86 au minimum du script</h2>
 <ul>
 <li>Hekate a été remplacé par la version présente sur <a target="_blank" href="https://github.com/Joonie86/hekate/releases/">ce fork de Hekate</a> qui est compatible avec DZ Tinfoil et Lithium. Ce changement permet également d'utiliser directement les patches "nocmac" jusqu'au firmware 6.2.0 via des instructions spécifiques dans le fichier de configuration de Hekate, ceci a été implémenté pour lancer le firmware original avec ces patches (attention, ne fonctionne qu'avec cette version spécifique de Hekate), pratique par exemple lors du premier lancement après une restauration manuelle d'un firmware via ChoiDuJour, Memloader, HacDiskMount  et Etcher, cette méthode spécifique est détaillée sur <a target="_blank" href="http://www.logic-sunrise.com/forums/topic/84655-tuto-avance-reinitialiser-completement-une-console-la-debricker-ou-installer-un-firmware-en-utilisant-choidujour/">cette page</a>..</li>
