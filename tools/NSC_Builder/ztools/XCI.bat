@@ -35,7 +35,7 @@ type nul>testfile>"%w_folder%\secure\0"
 :nodummy
 endlocal
 echo -------------------------------
-echo Repacking as xci
+echo Construction du fichier  xci.
 echo -------------------------------
 if exist "%w_folder%\secure\*.dat" del "%w_folder%\secure\*.dat" >NUL 2>&1
 if exist "%w_folder%\secure\*.xml" del "%w_folder%\secure\*.xml" >NUL 2>&1
@@ -92,7 +92,7 @@ del "!tfolder!\lc_list.txt"
 
 :sp_build
 echo -------------------------------
-echo Repacking as xci
+echo Construction du fichier  xci.
 echo -------------------------------
 if exist "!tfolder!\secure\*.dat" del "!tfolder!\secure\*.dat" >NUL 2>&1
 if exist "!tfolder!\secure\*.xml" del "!tfolder!\secure\*.xml" >NUL 2>&1

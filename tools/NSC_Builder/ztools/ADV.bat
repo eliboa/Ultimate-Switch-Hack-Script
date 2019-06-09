@@ -4,14 +4,14 @@ CD /d "%prog_dir%"
 
 REM //////////////////////////////////////////////////
 REM /////////////////////////////////////////////////
-REM ADVANCE MODE
+REM Mode avancé
 REM /////////////////////////////////////////////////
 REM ////////////////////////////////////////////////
 :normalmode
 cls
 call :program_logo
 echo -------------------------------------------------
-echo ADVANCE MODE ACTIVATED
+echo Mode avancé activé
 echo -------------------------------------------------
 if exist "advlist.txt" goto prevlist
 goto manual_INIT
@@ -28,45 +28,45 @@ if !conta! LEQ 0 ( del advlist.txt )
 endlocal
 if not exist "advlist.txt" goto manual_INIT
 ECHO .......................................................
-ECHO A PREVIOUS LIST WAS FOUND. WHAT DO YOU WANT TO DO?
+ECHO Une liste précédente à été trouvée. Que souhaitez-vous faire?
 :prevlist0
 ECHO .......................................................
-echo Input "1" to auto-start processing from the previous list
-echo Input "2" to erase list and make a new one.
-echo Input "3" to continue building the previous list
+echo Tapez "1" pour démarrer automatiquement le traitement de la liste précédente
+echo Tapez "2" pour effacer la liste et en créer une nouvelle.
+echo Tapez "3" pour continuer à construire la liste précédente
 echo .......................................................
-echo NOTE: By pressing 3 you'll see the previous list 
-echo before starting the processing the files and you will 
-echo be able to add and delete items from the list
+echo NOTE: En appuyant sur 3, vous verrez la liste précédente 
+echo avant de commencer le traitement des fichiers et vous pourrez 
+echo ajouter et supprimer des éléments de la liste
 echo.
 ECHO *************************************************
-echo Or Input "0" to return to the MODE SELECTION MENU
+echo Ou Tapez "0" pour revenir au menu du mode de sélection
 ECHO *************************************************
 echo.
-set /p bs="Enter your choice: "
+set /p bs="Faites votre choix: "
 set bs=%bs:"=%
 if /i "%bs%"=="3" goto showlist
 if /i "%bs%"=="2" goto delist
 if /i "%bs%"=="1" goto start_cleaning
 if /i "%bs%"=="0" exit /B
 echo.
-echo BAD CHOICE
+echo Choix inexistant.
 goto prevlist0
 :delist
 del advlist.txt
 cls
 call :program_logo
 echo -------------------------------------------------
-echo ADVANCE MODE ACTIVATED
+echo Mode avancé activé
 echo -------------------------------------------------
 echo ..................................
-echo YOU'VE DECIDED TO START A NEW LIST
+echo Vous avez décidé de commencer une nouvelle liste
 echo ..................................
 
 :manual_INIT
 endlocal
 ECHO ***********************************************
-echo Input "0" to return to the MODE SELECTION MENU
+echo Ou Tapez "0" pour revenir au menu du mode de sélection
 ECHO ***********************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%advlist.txt" -uin "%uinput%" -ff "uinput"
@@ -79,18 +79,18 @@ if /i "%eval%"=="0" exit /B
 goto checkagain
 echo.
 :checkagain
-echo WHAT DO YOU WANT TO DO?
+echo Que souhaitez-vous faire?
 echo ......................................................................
-echo "DRAG ANOTHER FILE OR FOLDER AND PRESS ENTER TO ADD ITEMS TO THE LIST"
+echo "Déposez un autre fichier ou dossier et appuyez sur enter pour ajouter des fichiers à la liste"
 echo.
-echo Input "1" to start processing
-echo Input "e" to exit
-echo Input "i" to see list of files to process
-echo Input "r" to remove some files (counting from bottom)
-echo Input "z" to remove the whole list
+echo Tapez "1" pour commencer le traitement
+echo Tapez "e" Pour sortir
+echo Tapez "i" pour voir la liste des fichiers à traiter
+echo Tapez "r" pour supprimer des fichiers (en partant du bas)
+echo Tapez "z" pour effacer toute la liste
 echo ......................................................................
 ECHO *************************************************
-echo Or Input "0" to return to the MODE SELECTION MENU
+echo Ou Tapez "0" pour revenir au menu du mode de sélection
 ECHO *************************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%advlist.txt" -uin "%uinput%" -ff "uinput"
@@ -110,7 +110,7 @@ if /i "%eval%"=="z" del advlist.txt
 goto checkagain
 
 :r_files
-set /p bs="Input the number of files you want to remove (from bottom): "
+set /p bs="Entrez le nombre de fichiers à supprimer de la liste en partant du bas: "
 set bs=%bs:"=%
 
 setlocal enabledelayedexpansion
@@ -143,10 +143,10 @@ endlocal
 cls
 call :program_logo
 echo -------------------------------------------------
-echo ADVANCE MODE ACTIVATED
+echo Mode avancé activé
 echo -------------------------------------------------
 ECHO -------------------------------------------------
-ECHO                 FILES TO PROCESS 
+ECHO                 Fichiers à traiter 
 ECHO -------------------------------------------------
 for /f "tokens=*" %%f in (advlist.txt) do (
 echo %%f
@@ -157,26 +157,26 @@ for /f "tokens=*" %%f in (advlist.txt) do (
 set /a conta=!conta! + 1
 )
 echo .................................................
-echo YOU'VE ADDED !conta! FILES TO PROCESS
+echo Vous avez ajouté !conta! fichiers à traiter
 echo .................................................
 endlocal
 
 goto exit /B
 
 :s_cl_wrongchoice
-echo wrong choice
+echo Choix inexistant
 echo ............
 :start_cleaning
 echo *******************************************************
-echo CHOOSE HOW TO PROCESS THE FILES
+echo CHOISISSEZ COMMENT TRAITER LES FICHIERS
 echo *******************************************************
-echo Input "1" to extract nca files
+echo Tapez "1" pour extraire les fichiers nca
 echo.
 ECHO ******************************************
-echo Or Input "b" to return to the list options
+echo Ou tapez "b" pour revenir aux options de la liste
 ECHO ******************************************
 echo.
-set /p bs="Enter your choice: "
+set /p bs="Faites votre choix: "
 set bs=%bs:"=%
 set vrepack=none
 if /i "%bs%"=="b" goto checkagain
@@ -197,21 +197,21 @@ move /y "advlist.txt.new" "advlist.txt" >nul
 call :contador_NF
 )
 ECHO ---------------------------------------------------
-ECHO *********** ALL FILES WERE PROCESSED! *************
+ECHO *********** Tous les fichiers ont été traités! *************
 ECHO ---------------------------------------------------
 goto s_exit_choice
 
 
 :s_exit_choice
 if exist advlist.txt del advlist.txt
-if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
+if /i "%va_exit%"=="true" echo Le programme va fermé maintenant
 if /i "%va_exit%"=="true" ( PING -n 2 127.0.0.1 >NUL 2>&1 )
 if /i "%va_exit%"=="true" goto salida
 echo.
-echo Input "0" to go back to the mode selection
-echo Input "1" to exit the program
+echo Tapez "0" pour revenir au mode de sélection
+echo Tapez "1" pour quitter le programme
 echo.
-set /p bs="Enter your choice: "
+set /p bs="Faites votre choix: "
 set bs=%bs:"=%
 if /i "%bs%"=="0" goto manual_Reentry
 if /i "%bs%"=="1" goto salida
@@ -224,7 +224,7 @@ for /f "tokens=*" %%f in (advlist.txt) do (
 set /a conta=!conta! + 1
 )
 echo ...................................................
-echo STILL !conta! FILES TO PROCESS
+echo Encore !conta! fichiers à traiter
 echo ...................................................
 PING -n 2 127.0.0.1 >NUL 2>&1
 set /a conta=0
@@ -288,11 +288,9 @@ echo (____@)  \
 echo (__o)_    \
 echo       \    \
 echo.
-echo HOPE YOU HAVE A FUN TIME
+echo Bon amusement
 exit /B
 
 
 :salida
 exit /B
-
-
