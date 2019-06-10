@@ -38,3 +38,6 @@ Changements:
 - La plupart des chemins de dossiers importants ont été remplacés par des variables, permettant une plus grande souplesse de programmation.
 - Le chemin de sortie est maintenant "snes_classic\game" si le script est exécuté en dehors de l'Ultimate Switch Hack Script.
 - Quelques optimisations et autres petites choses.
+
+0.9.6:
+- Corrections de bugs.
