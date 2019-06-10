@@ -108,7 +108,7 @@ IF %nb_games% NEQ !tmp_nb_games! (
 	echo     }>>"%target_path%\data.json"
 )
 
-"%script_base%\nconvert.exe" -out png -rmeta -resize 40 28 "%target_path%\images\%jpg%"
+"%script_base%\nconvert.exe" -out png -rmeta -resize 40 28 "%target_path%\images\%jpg%" >nul
 set thumb=%jpg:~0,-4%
 set "thumb1=%thumb:&=%"
 set thumb1=%thumb1:'=%
@@ -118,7 +118,7 @@ set thumb1=%thumb1: =%
 ren "%target_path%\images\%thumb%.png" %thumb1%.png
 move "%target_path%\images\%thumb1%.png" "%target_path%\thumbnail"
 
-"%script_base%\nconvert.exe" -out png -rmeta -resize 140 204 "%target_path%\images\%jpg%"
+"%script_base%\nconvert.exe" -out png -rmeta -resize 140 204 "%target_path%\images\%jpg%" >nul
 set box=%jpg:~0,-4%
 set "box1=%box:&=%"
 set box1=%box1:'=%
