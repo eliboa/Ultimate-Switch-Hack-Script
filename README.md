@@ -33,9 +33,11 @@ La licence GPL V3 s'applique sur les scripts batch se trouvant à la racine de c
 * Création et lancement d'un serveur personnel pour Switch-Lan-Play.
 * Lancement du compagnon pour le module HID_mitm.
 * Utilisation de NSZip pour compresser/décompresser des jeux.
+* Configuration des émulateurs Nes Classic Edition et Snes Classic Edition.
 
 ## Bugs connus:
 
+* Les scripts de configuration de Nes Classic Edition et de Snes Classic Edition affichent tous les jeux n'étant jouables qu'à un seul joueur, ceci doit être corrigé manuellement dans le fichier de configuration des jeux de l'émulateur pour l'instant.
 * L'utilisation de guillemets et de quelques autres signes dans les entrées utilisateurs fait planter le script.
 * Lorsqu'une sortie console faite par un "echo" est effectuée, cela produit une erreur dans le fichier log. L'encodage en UTF-8 semble être à l'origine de ce problème mais je n'ai pas trouvé comment le résoudre pour l'instant.
 * Le dump des biskey récupère également le résultat du programme TegraRcmSmash, les biskey commencent à partir de la ligne 7 du fichier.

@@ -581,12 +581,51 @@ IF /i NOT "%copy_emu%"=="o" (
 	IF EXIST "%volume_letter%:\switch\pfba\skin\config.cfg" move "%volume_letter%:\switch\pfba\skin\config.cfg" "%volume_letter%:\switch\pfba\skin\config.cfg.bak" >nul
 	IF EXIST "%volume_letter%:\switch\pnes\skin\config.cfg" move "%volume_letter%:\switch\pnes\skin\config.cfg" "%volume_letter%:\switch\pnes\skin\config.cfg.bak" >nul
 	IF EXIST "%volume_letter%:\switch\psnes\skin\config.cfg" move "%volume_letter%:\switch\psnes\skin\config.cfg" "%volume_letter%:\switch\psnes\skin\config.cfg.bak" >nul
-			tools\gnuwin32\bin\grep.exe -c "" <"%emu_profile_path%" > templogs\tempvar.txt
-set /p temp_count=<templogs\tempvar.txt
+	tools\gnuwin32\bin\grep.exe -c "" <"%emu_profile_path%" > templogs\tempvar.txt
+	set /p temp_count=<templogs\tempvar.txt
 	for /l %%i in (1,1,%temp_count%) do (
+		set temp_special_emulator=N
 		TOOLS\gnuwin32\bin\sed.exe -n %%ip <"%emu_profile_path%" >templogs\tempvar.txt
 		set /p temp_emulator=<templogs\tempvar.txt
-		%windir%\System32\Robocopy.exe tools\sd_switch\emulators\pack\!temp_emulator! %volume_letter%:\ /e >nul
+		IF "%temp_emulator%"=="Nes_Classic_Edition" (
+			IF NOT EXIST "tools\sd_switch\emulators\pack\Nes_Classic_Edition\switch\clover\user\data.json" (
+				echo Attention, il semble qu'aucune configuration de l'émulateur Nes Classic Edition n'ait eu lieu précédemment, celui-ci sera donc inutilisable en l'état.
+				echo Vous pouvez configurer l'émulateur via les "autres fonctions" du script puis refaire la préparation de la SD ou choisir de le configurer immédiatement.
+				set /p config_nes_classic=Souhaitez-vous lancer le script de configuration de l'émulateur? ^(O/n^): 
+				IF NOT "!config_nes_classic!"=="" set config_nes_classic=!config_nes_classic:~0,1!
+				IF /i "!config_nes_classic!"=="o" call tools\NES_Injector\NES_Injector.bat
+			)
+			IF NOT EXIST "tools\sd_switch\emulators\pack\Nes_Classic_Edition\switch\clover\user\data.json" (
+				echo Il semble que la configuration de l'émulateur ait échouée, il ne sera donc pas copié.
+				set temp_special_emulator=Y
+			)
+			IF NOT "!temp_special_emulator!"=="Y" (
+				IF EXIST "%volume_letter%:\switch\clover\user\boxart" rmdir /s /q "%volume_letter%:\switch\clover\user\boxart"
+				IF EXIST "%volume_letter%:\switch\clover\user\rom" rmdir /s /q "%volume_letter%:\switch\clover\user\rom"
+				IF EXIST "%volume_letter%:\switch\clover\user\thumbnail" rmdir /s /q "%volume_letter%:\switch\clover\user\thumbnail"
+				IF EXIST "%volume_letter%:\switch\clover\user\data.json" del /q "%volume_letter%:\switch\clover\user\data.json"
+			)
+		)
+		IF "%temp_emulator%"=="Snes_Classic_Edition" (
+			IF NOT EXIST "tools\sd_switch\emulators\pack\Snes_Classic_Edition\switch\snes_classic\game\database.json" (
+				echo Attention, il semble qu'aucune configuration de l'émulateur Snes Classic Edition n'ait eu lieu précédemment, celui-ci sera donc inutilisable en l'état.
+				echo Vous pouvez configurer l'émulateur via les "autres fonctions" du script puis refaire la préparation de la SD ou choisir de le configurer immédiatement.
+				set /p config_snes_classic=Souhaitez-vous lancer le script de configuration de l'émulateur? ^(O/n^): 
+				IF NOT "!config_snes_classic!"=="" set config_snes_classic=!config_snes_classic:~0,1!
+				IF /i "!config_snes_classic!"=="o" call tools\SNES_Injector\SNES_Injector.bat
+			)
+			IF NOT EXIST "tools\sd_switch\emulators\pack\Snes_Classic_Edition\switch\snes_classic\game\database.json" (
+				echo Il semble que la configuration de l'émulateur ait échouée, il ne sera donc pas copié.
+				set temp_special_emulator=Y
+			)
+			IF NOT "!temp_special_emulator!"=="Y" (
+				IF EXIST "%volume_letter%:\switch\snes_classic\game\boxart" rmdir /s /q "%volume_letter%:\switch\snes_classic\game\boxart"
+				IF EXIST "%volume_letter%:\switch\snes_classic\game\rom" rmdir /s /q "%volume_letter%:\switch\snes_classic\game\rom"
+				IF EXIST "%volume_letter%:\switch\snes_classic\game\thumbnail" rmdir /s /q "%volume_letter%:\switch\snes_classic\game\thumbnail"
+				IF EXIST "%volume_letter%:\switch\snes_classic\game\database.json" del /q "%volume_letter%:\switch\snes_classic\game\database.json"
+			)
+		)
+		IF NOT "!temp_special_emulator!"=="Y" %windir%\System32\Robocopy.exe tools\sd_switch\emulators\pack\!temp_emulator! %volume_letter%:\ /e >nul
 	)
 	IF /i "%keep_emu_configs%"=="o" (
 		del /q "%volume_letter%:\switch\pfba\skin\config.cfg" >nul

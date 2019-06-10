@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V182 (à utiliser avec la version 2.10.89 au minimum du script</h2>
+<ul>
+<li>Ajout des émulateurs Nes Classic Edition et Snes Classic Edition dans le pack d'émulateurs.</li>
+</ul>
 <h2>V181</h2>
 <ul>
 <li>Mise à jour de AmiiSwap en version 1.0.</li>
