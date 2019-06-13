@@ -495,6 +495,10 @@ for /l %%i in (1,1,%temp_count%) do (
 	set /p temp_module=<templogs\tempvar.txt
 	%windir%\System32\Robocopy.exe tools\sd_switch\modules\pack\!temp_module!\titles %temp_modules_copy_path%\titles /e >nul
 	%windir%\System32\Robocopy.exe tools\sd_switch\modules\pack\!temp_module!\others %volume_letter%:\ /e >nul
+	IF "%temp_module%"=="Slidenx" (
+		IF EXIST "%volume_letter%:\SlideNX\attach.mp3" del /q "%volume_letter%:\SlideNX\attach.mp3"
+		IF EXIST "%volume_letter%:\SlideNX\detach.mp3" del /q "%volume_letter%:\SlideNX\detach.mp3"
+	)
 )
 IF "%~1"=="reinx" (
 	for %%f in ("%temp_modules_copy_path%\titles") do (
