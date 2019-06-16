@@ -43,7 +43,7 @@ set /p launch_devices_manager=Souhaitez-vous lancer le gestionnaire de périphé
 echo.
 IF NOT "%launch_devices_manager%"=="" set launch_devices_manager=%launch_devices_manager:~0,1%
 IF /i "%launch_devices_manager%"=="o" start devmgmt.msc
-IF %disc_mounted% EQU 2 (
+IF %disc_mounted% EQU 1 (
 	set /p launch_hacdiskmount=Souhaitez-vous lancer HacDiskMount? (o/n^): 
 )
 	IF %disc_mounted% EQU 1 (
