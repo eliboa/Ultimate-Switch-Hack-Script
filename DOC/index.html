@@ -33,12 +33,13 @@ Notez que je ne pourrai être tenu responsable en cas de domages résultant de l
 <li>Vérification si une console est patchée, peut-être patchée ou non patchée.</li>
 <li>Montage de la partition Boot0, Boot1, EMMC ou de la carte SD comme périphérique de stockage USB sur le PC.</li>
 <li>Gestion de nand (fichier ou disque physique) permettant d'obtenir des infos sur la nand, de dumper la nand ou une partition spécifique de celle-ci ou de restaurer un dump de nand ou une partition dumpée. Notez que pour ces fonctionnalités utilisant un disque physique vous aurez besoin de monter la partie de la nand sur laquelle vous souhaitez travailler via Memloader, le script permettant de faire cela est intégré.</li>
+<li>Réunification des fichiers d'un dump de la nand effectué par Hekate ou SX OS sur une SD formatée en FAT32 ou sur une SD trop petite pour accueillir le dump en une seule fois dans un fichier "rawnand.bin" qui pourra ensuite être réutilisé pour restaurer la nand.</li>
+<li>Split d'un dump de la rawnand pour être utiliser par l'emunand de Atmosphere.</li>
 <li>Création de packages de mise à jour via ChoiDuJour avec tous les paramètres.</li>
 <li>Téléchargement d'un firmware et préparation de la SD avec celui-ci pour ChoiDuJourNX, le homebrew est également copié durant ce script. Ce script permet également d'éventuellement  créé le package de mise à jour via ChoiDuJour dans la foulée. Pour savoir comment utiliser ChoiDuJourNX, vous pouvez vous référer à <a href="files/choidujournx.html">cette page de la documentation</a>.</li>
 <li>Vérification d'un fichier de clés (fichier "prod.keys", "keys.txt", "keys.dat", etc...).</li>
 <li>Préparation d'une SD, du formatage (FAT32 ou EXFAT) à la mise en place de différentes solutions, voir <a href="files/sd_prepare.html">cette page</a> pour plus d'informations sur le contenu des packs.</li>
 <li>Lancement de NSC_Builder. Ce script est utile pour convertir des XCIs ou NSPs en XCIs ou NSPs. Les fichiers convertis via ce script sont nettoyé et rendus, en théorie, indétectable par Nintendo, surtout pour les NSPs. Enfin, ce script permet aussi de créé des NSPs ou XCIs contenant le jeu, ses mises à jour et DLCs dans un seul fichier. Pour plus d'infos, voir <a target="_new" href="https://github.com/julesontheroad/NSC_BUILDER">cette page</a>.</li>
-<li>Réunification des fichiers d'un dump de la nand effectué par Hekate ou SX OS sur une SD formatée en FAT32 ou sur une SD trop petite pour accueillir le dump en une seule fois dans un fichier "rawnand.bin" qui pourra ensuite être réutilisé pour restaurer la nand.</li>
 <li>Conversion de fichiers XCI en NSP.</li>
 <li>Installation de NSP via Goldleaf et le réseau.</li>
 <li>Sauvegarde, restauration et réinitialisation des fichiers importants utilisés par le script.</li>
@@ -115,7 +116,7 @@ Pour le changelog des packs copiés sur la SD pendant la préparation de celle-c
 <li>Curl for Windows: https://curl.haxx.se/windows/</li>
 <li>DD for Windows 0.6beta3: http://www.chrysocome.net/dd</li>
 <li>fat32format 1.08 (compiled and modified by myself): http://www.ridgecrop.demon.co.uk/index.htm?fat32format.htm</li>
-<li>GNU Win32 tools (Md5sum, Cut, DiffUtils, FindUtils, Grep, Head, Sed, Tail): http://gnuwin32.sourceforge.net/ (pour Sed, la version provient de l'adresse https://github.com/mbuilov/sed-windows/)</li>
+<li>GNU Win32 tools (Md5sum, Cut, DiffUtils, FindUtils, Grep, Head, Sed, split, Tail): http://gnuwin32.sourceforge.net/ (for Sed, see https://github.com/mbuilov/sed-windows/) (for Split, it comes from portable Git, see https://git-scm.com/download/win and also thanks to  MSYS devs for the GNU tools that they have ported to Windows)</li>
 <li>HacDiskMount 1.0.5-5: rajkosto</li>
 <li>Imx_load Windows binary: rajkosto</li>
 <li>Megatools 1.10.2: https://megatools.megous.com</li>

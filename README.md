@@ -16,11 +16,12 @@ La licence GPL V3 s'applique sur les scripts batch se trouvant à la racine de c
 * Vérification si une console est patchée, peut-être patchée ou non patchée (fonctionnalité imparfaite, peut donner des résultats erronés, la base de donnée nécessite encore des ajustements).
 * Montage de la partition Boot0, Boot1, EMMC ou de la carte SD comme périphérique de stockage USB sur le PC.
 * Dump/restauration de nand ou de partitions de la Rawnand, extraction de partition d'un fichier de dump de la Rawnand, obtention d'infos sur la nand ou sur un fichier de dump...
+* Réunification des fichiers d'un dump de la nand effectué par Hekate ou SX OS sur une SD formatée en FAT32 ou sur une SD trop petite pour accueillir le dump en une seule fois dans un fichier "rawnand.bin" qui pourra ensuite être réutilisé pour restaurer la nand.
+* Split d'un dump de la rawnand pour être utiliser par l'emunand de Atmosphere.
 * Création de packages de mise à jour via ChoiDuJour avec tous les paramètres.
 * Téléchargement d'un firmware et préparation de la SD avec celui-ci pour ChoiDuJourNX, le homebrew est également copié durant ce script. Ce script permet également d'éventuellement  créé le package de mise à jour via ChoiDuJour dans la foulée.
 * Préparation d'une SD, du formatage (FAT32 ou EXFAT) à la mise en place de différentes solutions, voir la documentation pour plus d'informations sur le contenu des packs.
 * Lancement de NSC_Builder. Ce script est utile pour convertir des XCIs ou NSPs en XCIs ou NSPs. Les fichiers convertis via ce script sont nettoyé et rendus, en théorie, indétectable par Nintendo, surtout pour les NSPs. Enfin, ce script permet aussi de créé des NSPs ou XCIs contenant le jeu, ses mises à jour et DLCs dans un seul fichier. Pour plus d'infos, voir [cette page](https://github.com/julesontheroad/NSC_BUILDER).
-* Réunification des fichiers d'un dump de la nand effectué par Hekate ou SX OS sur une SD formatée en FAT32 ou sur une SD trop petite pour accueillir le dump en une seule fois dans un fichier "rawnand.bin" qui pourra ensuite être réutilisé pour restaurer la nand.
 * Conversion de fichiers XCI en NSP.
 * Installation de NSP via Goldleaf et le réseau.
 * Sauvegarde, restauration et réinitialisation des fichiers importants utilisés par le script.

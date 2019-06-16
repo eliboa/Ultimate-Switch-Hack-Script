@@ -27,9 +27,10 @@ echo 1: obtenir des infos sur un fichier de dump ou sur une partie de la nand de
 echo 2: Dumper la nand ou une partition de la nand de la console, copier un fichier ou extraire une partition d'un fichier de dump?
 echo 3: Restaurer la nand ou une partition de la nand de la console sur la console ou dans un fichier de dump?
 echo 4: Activer/désactiver l'auto-RCM d'une partition BOOT0 ?
-echo 5: Joindre un dump fait en plusieurs parties, par exemple un dump fait via Hekate sur une SD formatée en FAT32.
-echo 6: Connaître le firmware ainsi que le status du driver EXFAT d'un dump de nand (dump splité non pris en charge)?
-echo 0: Charger une partie de la nand avec Memloader?
+echo 5: Joindre un dump de la rawnand fait en plusieurs parties, par exemple un dump fait via Hekate sur une SD formatée en FAT32?
+echo 6: Spliter un dump de la rawnand?
+echo 7: Connaître le firmware ainsi que le status du driver EXFAT d'un dump de nand (dump splité non pris en charge)?
+echo 0: Charger une partie de la nand d'une console via USB avec Memloader?
 echo N'importe quel autre choix: Revenir au menu précédent?
 echo.
 set action_choice=
@@ -44,6 +45,11 @@ IF "%action_choice%"=="5" (
 	goto:define_action_choice
 )
 IF "%action_choice%"=="6" (
+	cls
+	call tools\storage\nand_spliter.bat
+	goto:define_action_choice
+)
+IF "%action_choice%"=="7" (
 	cls
 	call tools\storage\nand_firmware_detect.bat
 	goto:define_action_choice
