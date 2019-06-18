@@ -404,6 +404,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 	copy /V /B TOOLS\sd_switch\payloads\Retro_reloaded.bin %volume_letter%:\bootloader\payloads\Retro_reloaded.bin >nul
 	del /Q /S "%volume_letter%:\atmosphere\.emptydir" >nul
 	del /Q /S "%volume_letter%:\bootloader\.emptydir" >nul
+	del /Q /S "%volume_letter%:\emummc\.emptydir" >nul
 	copy nul %volume_letter%:\atmosphere\prodinfo.ini >nul
 	echo [config]>>%volume_letter%:\atmosphere\prodinfo.ini
 	IF /i NOT "%atmosphere_enable_prodinfo_write%"=="o" (
@@ -667,6 +668,7 @@ exit /b
 IF EXIST "%volume_letter%:\atmosphere" rmdir /s /q "%volume_letter%:\atmosphere"
 IF EXIST "%volume_letter%:\bootloader" rmdir /s /q "%volume_letter%:\bootloader"
 IF EXIST "%volume_letter%:\config" rmdir /s /q "%volume_letter%:\config"
+IF EXIST "%volume_letter%:\emummc\emummc.ini" del /q "%volume_letter%:\emummc\emummc.ini"
 IF EXIST "%volume_letter%:\ftpd" rmdir /s /q "%volume_letter%:\ftpd"
 IF EXIST "%volume_letter%:\modules" rmdir /s /q "%volume_letter%:\modules"
 IF EXIST "%volume_letter%:\ReiNX" rmdir /s /q "%volume_letter%:\ReiNX"
@@ -771,6 +773,25 @@ echo.>>%volume_letter%:\atmosphere\loader.ini
 echo [default_config]>>%volume_letter%:\atmosphere\loader.ini
 echo override_key=%atmo_layeredfs_override_key%>>%volume_letter%:\atmosphere\loader.ini
 echo cheat_enable_key=%atmo_cheats_override_key%>>%volume_letter%:\atmosphere\loader.ini
+
+echo [emummc]>%volume_letter%:\emummc\emummc.ini
+IF /i "%emunand_enable%"=="o" (
+	echo emummc_enabled = ^1>>%volume_letter%:\emummc\emummc.ini
+) else (
+	echo emummc_enabled = ^0>>%volume_letter%:\emummc\emummc.ini
+)
+IF "%emummc_id%"=="" (
+	echo emummc_id = >>%volume_letter%:\emummc\emummc.ini
+) else (
+	echo emummc_id = 0x%emummc_id%>>%volume_letter%:\emummc\emummc.ini
+)
+IF "%emummc_sector%"=="" (
+	echo emummc_sector = >>%volume_letter%:\emummc\emummc.ini
+) else (
+	echo emummc_sector = 0x%emummc_sector%>>%volume_letter%:\emummc\emummc.ini
+)
+echo emummc_path = %emummc_path%>>%volume_letter%:\emummc\emummc.ini
+echo emummc_nintendo_path = %emummc_nintendo_path%>>%volume_letter%:\emummc\emummc.ini
 endlocal
 exit /b
 

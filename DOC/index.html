@@ -35,6 +35,7 @@ Notez que je ne pourrai être tenu responsable en cas de domages résultant de l
 <li>Gestion de nand (fichier ou disque physique) permettant d'obtenir des infos sur la nand, de dumper la nand ou une partition spécifique de celle-ci ou de restaurer un dump de nand ou une partition dumpée. Notez que pour ces fonctionnalités utilisant un disque physique vous aurez besoin de monter la partie de la nand sur laquelle vous souhaitez travailler via Memloader, le script permettant de faire cela est intégré.</li>
 <li>Réunification des fichiers d'un dump de la nand effectué par Hekate ou SX OS sur une SD formatée en FAT32 ou sur une SD trop petite pour accueillir le dump en une seule fois dans un fichier "rawnand.bin" qui pourra ensuite être réutilisé pour restaurer la nand.</li>
 <li>Split d'un dump de la rawnand pour être utiliser par l'emunand de Atmosphere.</li>
+<li>Création d'un fichier à partir d'un dump complet de la nand permettant de pouvoir ensuite préparer l'emunand sur une partition dédiée de la SD.</li>
 <li>Création de packages de mise à jour via ChoiDuJour avec tous les paramètres.</li>
 <li>Téléchargement d'un firmware et préparation de la SD avec celui-ci pour ChoiDuJourNX, le homebrew est également copié durant ce script. Ce script permet également d'éventuellement  créé le package de mise à jour via ChoiDuJour dans la foulée. Pour savoir comment utiliser ChoiDuJourNX, vous pouvez vous référer à <a href="files/choidujournx.html">cette page de la documentation</a>.</li>
 <li>Vérification d'un fichier de clés (fichier "prod.keys", "keys.txt", "keys.dat", etc...).</li>
@@ -67,9 +68,12 @@ Notez que je ne pourrai être tenu responsable en cas de domages résultant de l
 <h2>Fonctions à venir</h2>
 &nbsp;
 <ul>
+<li>Rendre plus souple la création d'un fichier de partition de l'emunand ainsi que le script permettant de joindre une rawnand splittée en déduisant le nombre de parties des dumps splittés plutôt que de le coder en dur comme cela est fait actuellement dans ces deux scripts.</li>
+<li>Mettre en place un script qui s'occupera du flash d'une partition de la SD avec le fichier de partition d'une Emunand et qui indiquera à l'utilisateur à quel secteur elle commence histoire qu'il puisse configurer ensuite facilement celle-ci dans Atmosphere.</li>
+<li>Créer de nouveaux scripts pour préparer et installer Linux ou Laka, les anciens scripts de préparation de Linux seront gardés mais seront nottés comme étant obsolètes.</li>
+<li>Implémenter la prise en charge de l'exploit Nereba.</li>
 <li>Affichage des versions des éléments lors de la gestion de ceux-ci (gestion des packs de cheats ou la version générale des packs).</li>
 <li>Mise en place du script utilisant Renxpack.</li>
-<li>Implémenter la prise en charge de l'exploit Nereba.</li>
 <li>Dans la gestion des cheats, certains jeux ne sont pas nommés, la base de données (fichier "tools\sd_switch\cheats\README.md") doit être mise à jour.</li>
 <li>Traduction de certains éléments de l'extraction d'un certificat, ceci est à faire dans le code source des scripts python de cette partie.</li>
 <li>Récupération des Biskeys directement dans un fichier texte grâce au payload Biskeydump (fonction présente mais pas parfaite pour l'instant).</li>
@@ -116,7 +120,7 @@ Pour le changelog des packs copiés sur la SD pendant la préparation de celle-c
 <li>Curl for Windows: https://curl.haxx.se/windows/</li>
 <li>DD for Windows 0.6beta3: http://www.chrysocome.net/dd</li>
 <li>fat32format 1.08 (compiled and modified by myself): http://www.ridgecrop.demon.co.uk/index.htm?fat32format.htm</li>
-<li>GNU Win32 tools (Md5sum, Cut, DiffUtils, FindUtils, Grep, Head, Sed, split, Tail): http://gnuwin32.sourceforge.net/ (for Sed, see https://github.com/mbuilov/sed-windows/) (for Split, it comes from portable Git, see https://git-scm.com/download/win and also thanks to  MSYS devs for the GNU tools that they have ported to Windows)</li>
+<li>GNU Win32 tools (Md5sum, Cut, DiffUtils, FindUtils, Grep, Head, Sed, split, Tail, dd, fdisk, ls): http://gnuwin32.sourceforge.net/ (for Sed, see https://github.com/mbuilov/sed-windows/) (for Split, dd and ls they come from portable Git, see https://git-scm.com/download/win and also thanks to  MSYS devs for the GNU tools that they have ported to Windows like fdisk)</li>
 <li>HacDiskMount 1.0.5-5: rajkosto</li>
 <li>Imx_load Windows binary: rajkosto</li>
 <li>Megatools 1.10.2: https://megatools.megous.com</li>

@@ -1,5 +1,11 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V185</h2>
+<ul>
+<li>Mise à jour de Lockpick en version 1.2.4.</li>
+<li>Mise à jour d'Atmosphere vers la dernière version master du Github, compilé par moi-même.</li>
+<li>Quelques changements mineurs dans le pack Atmosphere.</li>
+</ul>
 <h2>V184</h2>
 <ul>
 <li>Mise à jour de Atmosphere en version 0.9.0.</li>

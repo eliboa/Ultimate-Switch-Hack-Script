@@ -92,6 +92,31 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		) else (
 			echo Touche associée à l'activation de Layeredfs: %atmo_layeredfs_override_key%
 		)
+		IF /i "%emunand_enable%"=="o" (
+			echo Emunand activée avec les paramètres suivants:
+			IF "%emummc_id%"=="" (
+				echo ID de l'emunand par défaut.
+			) else (
+				echo ID de l'emunand: %emummc_id%
+			)
+			IF "%emummc_sector%"=="" (
+				echo Aucun secteur de démarrage configuré.
+			) else (
+				echo Secteur de démarrage de l'emunand: %emummc_sector%
+			)
+			IF "%emummc_path%"=="" (
+				echo Aucun chemin vers les fichiers de dump de la nand défini.
+			) else (
+				echo Chemin vers les fichiers de dump de la nand: %emummc_path%
+			)
+			IF "%emummc_nintendo_path%"=="" (
+				echo Chemin du dossier Nintendo de l'emunand par défaut.
+			) else (
+				echo Chemin du dossier Nintendo de l'emunand: %emummc_nintendo_path%
+			)
+		) else (
+			echo Emunand désactivée.
+		)
 	)
 	echo.
 )

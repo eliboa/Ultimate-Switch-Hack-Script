@@ -49,28 +49,45 @@ IF "%dump_output%"=="" (
 set dump_output=%dump_output:\\=\%
 :define_parts_number
 echo.
-echo Choisissez en combien de parties le dump sera découppé:
-echo 1: 8 parties (recommandé)?
-echo 2: 15 parties?
-echo 3: 30 parties?
-echo.
-set parts_number_choice=
-set /p parts_number_choice=Faites votre choix: 
-IF "%parts_number_choice%"=="1" (
-	set parts_number=8
-	goto:skip_define_parts_number
+set parts_number=
+set /p parts_number=Choisissez le nombre de partie que vous souhaitez avoir (de 8 jusqu'à 64): 
+IF "%parts_number%"=="" (
+	echo Le nombre de parties ne peut être vide.
+	goto:define_parts_number
 )
-IF "%parts_number_choice%"=="2" (
-	set parts_number=15
-	goto:skip_define_parts_number
+call TOOLS\Storage\functions\strlen.bat nb "%parts_number%"
+IF %nb% GTR 2 (
+	echo Une valeur incorrecte a été saisie pour le nombre de parties.
+	goto:define_parts_number
 )
-IF "%parts_number_choice%"=="3" (
-	set parts_number=30
-	goto:skip_define_parts_number
+IF "%parts_number:~0,1%"=="0" (
+	IF %nb% EQU 2 set parts_number=%parts_number:~1,1%
 )
-echo Choix Inexistant.
-goto:define_parts_number
+set i=0
+:check_chars_parts_number
+IF %i% LSS %nb% (
+	FOR %%z in (0 1 2 3 4 5 6 7 8 9) do (
+		IF "!parts_number:~%i%,1!"=="%%z" (
+			set /a i+=1
+			goto:check_chars_parts_number
+		)
+	)
+	echo Un caractère non autorisé a été saisie dans le choix du nombre de parties.
+	goto:define_parts_number
+)
+IF %parts_number% LSS 8 (
+	echo Le nombre de parties ne peut être inférieur à 8.
+	goto:define_parts_number
+)
+IF %parts_number% GTR 64 (
+	echo Le nombre de parties ne peut être supérieur à 64.
+	goto:define_parts_number
+)
 :skip_define_parts_number
+echo.
+set rename_files=
+set /p rename_files=Souhaitez-vous que les fichiers splittés soient renommés pour être compatible avec l'emunand de Atmosphere? (O/n): 
+IF NOT "%rename_files%"=="" set rename_files=%rename_files:~0,1%
 :verif_disk_free_space
 %windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\get_free_space_for_path.vbs" "%dump_output%"
 set /p free_space=<templogs\volume_free_space.txt
@@ -156,6 +173,15 @@ IF %errorlevel% NEQ 0 (
 cd /D "%this_script_dir%\..\.."
 IF "%copy_error%"=="Y" goto:end_script
 attrib +a "%dump_output%"
+IF /i "%rename_files%"=="o" (
+	for /l %%i in (0,1,%parts_number%-1) do (
+		IF %%i lss 10 (
+			ren "%dump_output%\%filename%.0%%i" 0%%i
+		) else (
+			ren "%dump_output%\%filename%.%%i" %%i
+		)
+	)
+)
 echo Copie terminée.
 goto:end_script
 

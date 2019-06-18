@@ -41,6 +41,8 @@ echo 12: Vérifier s'il existe une mise à jour du script?
 echo.
 echo 13: A propos du script?
 echo.
+echo 14: Ouvrir la page permettant de me faire une donation?
+echo.
 echo 0: Lancer la documentation (recommandé)?
 echo.
 echo N'importe quelle autre choix: Quitter sans rien faire?
@@ -61,6 +63,12 @@ IF "%action_choice%"=="10" goto:server_netplay
 IF "%action_choice%"=="11" goto:launch_linux
 IF "%action_choice%"=="12" goto:check_update
 IF "%action_choice%"=="13" goto:about
+IF "%action_choice%"=="14" (
+	set action_choice=
+	cls
+	start https://www.paypal.me/shadow256
+	goto:define_action_choice
+)
 goto:end_script
 :launch_payload
 set action_choice=

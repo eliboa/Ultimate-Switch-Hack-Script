@@ -29,7 +29,8 @@ echo 3: Restaurer la nand ou une partition de la nand de la console sur la conso
 echo 4: Activer/désactiver l'auto-RCM d'une partition BOOT0 ?
 echo 5: Joindre un dump de la rawnand fait en plusieurs parties, par exemple un dump fait via Hekate sur une SD formatée en FAT32?
 echo 6: Spliter un dump de la rawnand?
-echo 7: Connaître le firmware ainsi que le status du driver EXFAT d'un dump de nand (dump splité non pris en charge)?
+echo 7: Créer un fichier à partir d'un dump complet de la nand qui pourra ensuite être utilisé pour la création d'une Emunand via une partition dédiée de la SD?
+echo 8: Connaître le firmware ainsi que le status du driver EXFAT d'un dump de nand (dump splité non pris en charge)?
 echo 0: Charger une partie de la nand d'une console via USB avec Memloader?
 echo N'importe quel autre choix: Revenir au menu précédent?
 echo.
@@ -50,6 +51,11 @@ IF "%action_choice%"=="6" (
 	goto:define_action_choice
 )
 IF "%action_choice%"=="7" (
+	cls
+	call tools\storage\emunand_partition_file_create.bat
+	goto:define_action_choice
+)
+IF "%action_choice%"=="8" (
 	cls
 	call tools\storage\nand_firmware_detect.bat
 	goto:define_action_choice

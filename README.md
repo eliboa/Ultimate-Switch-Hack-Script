@@ -18,6 +18,7 @@ La licence GPL V3 s'applique sur les scripts batch se trouvant à la racine de c
 * Dump/restauration de nand ou de partitions de la Rawnand, extraction de partition d'un fichier de dump de la Rawnand, obtention d'infos sur la nand ou sur un fichier de dump...
 * Réunification des fichiers d'un dump de la nand effectué par Hekate ou SX OS sur une SD formatée en FAT32 ou sur une SD trop petite pour accueillir le dump en une seule fois dans un fichier "rawnand.bin" qui pourra ensuite être réutilisé pour restaurer la nand.
 * Split d'un dump de la rawnand pour être utiliser par l'emunand de Atmosphere.
+* Création d'un fichier à partir d'un dump complet de la nand permettant de pouvoir ensuite préparer l'emunand sur une partition dédiée de la SD.
 * Création de packages de mise à jour via ChoiDuJour avec tous les paramètres.
 * Téléchargement d'un firmware et préparation de la SD avec celui-ci pour ChoiDuJourNX, le homebrew est également copié durant ce script. Ce script permet également d'éventuellement  créé le package de mise à jour via ChoiDuJour dans la foulée.
 * Préparation d'une SD, du formatage (FAT32 ou EXFAT) à la mise en place de différentes solutions, voir la documentation pour plus d'informations sur le contenu des packs.

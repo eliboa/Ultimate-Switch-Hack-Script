@@ -443,7 +443,7 @@ IF NOT "%atmo_usb30_force_enabled%"=="" set atmo_usb30_force_enabled=%atmo_usb30
 set atmo_ease_nro_restriction=
 set /p atmo_ease_nro_restriction=Activer les restrictions NRO (non recommandé)? (O/n): 
 IF NOT "%atmo_ease_nro_restriction%"=="" set atmo_ease_nro_restriction=%atmo_ease_nro_restriction:~0,1%
-:set_atmo_fatal_auto_reboot_interval
+:define_atmo_fatal_auto_reboot_interval
 set atmo_fatal_auto_reboot_interval=
 set /p atmo_fatal_auto_reboot_interval=Temps à partir duquel la console redémarrera automatiquement en cas de crash (0 pour attendre indéfiniement jusqu'à l'appuie d'une touche par l'utilisateur) (temps en milisecondes): 
 IF "%atmo_fatal_auto_reboot_interval%"=="" set atmo_fatal_auto_reboot_interval=0
@@ -461,13 +461,15 @@ IF %i% NEQ %nb% (
 	)
 	IF "!check_chars!"=="0" (
 		echo Valeur incorrecte.
-		goto:set_atmo_fatal_auto_reboot_interval
+		goto:define_atmo_fatal_auto_reboot_interval
 	)
 )
+	IF %atmo_fatal_auto_reboot_interval% EQU 0 goto:skip_define_atmo_fatal_auto_reboot_interval
 IF %atmo_fatal_auto_reboot_interval% LSS 10 (
 	echo Cette valeur ne peut être inférieure à 10.
-	goto:set_atmo_fatal_auto_reboot_interval
+	goto:define_atmo_fatal_auto_reboot_interval
 )
+:skip_define_atmo_fatal_auto_reboot_interval
 :set_atmo_power_menu_reboot_function
 echo Comment doit redémarrer la console lorsque le bouton "Redémarrer" du menu de celle-ci est utilisé?
 echo 1: Redémarrer le payload "atmosphere/reboot_to_payload.bin" de la SD (recommandé).
@@ -641,6 +643,67 @@ IF "%check_chars%"=="0" (
 	goto:set_atmo_layeredfs_override_key
 )
 :skip_check_atmo_layeredfs_override_key
+
+:emunand_config
+echo.
+echo Configuration de l'emunand
+echo.
+set emunand_enable=
+set /p "emunand_enable=Souhaitez-vous activer l'emunand? (O/n): "
+IF NOT "%emunand_enable%"=="" set emunand_enable=%emunand_enable:~0,1%
+IF /i NOT "%emunand_enable%"=="o" goto:skip_emunand_config
+:define_emummc_id
+set emummc_id=
+set /p emummc_id=Définir l'ID de l'emunand (laisser vide pour utiliser l'ID par défaut) (ne pas noter le 0x de début) (4 caractères): 
+IF "%emummc_id%"=="" goto:skip_define_emummc_id
+call TOOLS\Storage\functions\strlen.bat nb "%emummc_id%"
+IF %nb% neq 4 (
+	echo L'ID de l'emunand doit comprendre 4 caractères hexadécimaux.
+	goto:define_emummc_id
+)
+call TOOLS\Storage\functions\CONV_VAR_to_MAJ.bat emummc_id
+set i=0
+:check_chars_emummc_id
+IF %i% LSS %nb% (
+	FOR %%z in (0 1 2 3 4 5 6 7 8 9 A B C D E F) do (
+		IF "!emummc_id:~%i%,1!"=="%%z" (
+			set /a i+=1
+			goto:check_chars_emummc_id
+		)
+	)
+	echo Un caractère non autorisé a été saisie dans l'ID de l'emunand.
+	goto:define_emummc_id
+)
+:skip_define_emummc_id
+:define_emummc_sector
+set emummc_sector=
+set /p emummc_sector=Définir le secteur de la partition démarrant l'emunand (si emunand via fichiers, laisser cette valeur vide) (ne pas noter le 0x de début): 
+IF "%emummc_sector%"=="" goto:skip_define_emummc_sector
+call TOOLS\Storage\functions\strlen.bat nb "%emummc_sector%"
+call TOOLS\Storage\functions\CONV_VAR_to_MAJ.bat emummc_sector
+set i=0
+:check_chars_emummc_sector
+IF %i% LSS %nb% (
+	FOR %%z in (0 1 2 3 4 5 6 7 8 9 A B C D E F) do (
+		IF "!emummc_sector:~%i%,1!"=="%%z" (
+			set /a i+=1
+			goto:check_chars_emummc_sector
+		)
+	)
+	echo Un caractère non autorisé a été saisie dans le secteur de démarrage de l'emunand.
+	goto:define_emummc_sector
+)
+:skip_define_emummc_sector
+set emummc_path=
+IF "%emummc_sector%"=="" set /p emummc_path=Définir le chemin vers le dossier contenant les fichiers permettant de booter l'emunand (si laisser vide, l'emunand sera désactivée): 
+IF "%emummc_path%"=="" (
+	echo Aucun secteur de démarrage ni chemin de dossier vers des fichiers d'un dump de nand défini, l'emunand va donc être désactivée.
+	set emunand_enable=n
+	goto:skip_emunand_config
+)
+set emummc_nintendo_path=
+set /p emummc_nintendo_path=Définir le chemin du dossier nintendo de l'emunand (laisser vide pour garder le chemin par défaut): 
+:skip_emunand_config
 exit /b
 
 :endscript
