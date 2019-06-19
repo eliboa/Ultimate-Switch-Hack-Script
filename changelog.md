@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.10.96 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Adaptation du script de préparation de la SD à la version de Sept intégrée à Atmosphere 0.9.1.</li>
+</ul>
 <h2>V2.10.95</h2>
 <ul>
 <li>Création d'une fonction dans la Nand Toolbox permettant d'extraire les différentes parties de la nand à partir d'un fichier de partition d'emunand, le script sera probablement amélioré surtout au niveau du contrôle d'erreurs qui me semble suffisant mais qui pourrait probablement être plus complet.</li>
