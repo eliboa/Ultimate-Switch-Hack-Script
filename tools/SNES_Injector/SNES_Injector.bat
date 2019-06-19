@@ -50,7 +50,7 @@ IF %nb_games% EQU 0 (
 	goto:end_script
 )
 for %%a in ("%target_path%\rom\*.sfc") do (
-	ren %%a %%ña.smc
+	ren %%a %%~na.smc
 )
 for %%a in ("%target_path%\rom\*.smc") do (
 	copy "%source_images%\%%~na.jpg" "%target_path%\images" >nul 2>&1

@@ -1,5 +1,11 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.10.95</h2>
+<ul>
+<li>Création d'une fonction dans la Nand Toolbox permettant d'extraire les différentes parties de la nand à partir d'un fichier de partition d'emunand, le script sera probablement amélioré surtout au niveau du contrôle d'erreurs qui me semble suffisant mais qui pourrait probablement être plus complet.</li>
+<li>Déplacement de la Nand Toolbox dans le menu principal du script car cette fonctionnalité commence, et va avoir, de plus en plus d'importance.</li>
+<li>Correction d'un bug dans le script de configuration de l'émulateur Snes Classic Edition.</li>
+</ul>
 <h2>V2.10.94</h2>
 <ul>
 <li>La manière de détecter le nombre de parties d'une rawnand splittée via Hekate dans le script permettant de joindre le dump d'une nand ainsi que dans le script permettant de créer un fichier d'emunand à utiliser avec une partition a été nettement optimisée et est beaucoup plus souple</li>

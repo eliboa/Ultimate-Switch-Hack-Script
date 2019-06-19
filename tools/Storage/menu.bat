@@ -23,25 +23,27 @@ echo 3: Monter la nand, la partition boot0, la partition boot1 ou la carte SD co
 echo.
 echo 4: Préparer une carte SD pour le hack Switch?
 echo.
-echo 5: Lancer NSC_Builder qui permet d'avoir des infos, de convertir et de nettoyer des NSPs et XCIs, voir la documentation pour plus d'infos?
+echo 5: Nand toolbox?
 echo.
-echo 6: Autres fonctions?
+echo 6: Lancer NSC_Builder qui permet d'avoir des infos, de convertir et de nettoyer des NSPs et XCIs, voir la documentation pour plus d'infos?
 echo.
-echo 7: Fonctions à utiliser occasionnellement?
+echo 7: Autres fonctions?
 echo.
-echo 8: Sauvegarde/restauration et paramètres du script?
+echo 8: Fonctions à utiliser occasionnellement?
 echo.
-echo 9: Lancer ou configurer le client pour pouvoir jouer en réseau (serveur Switch-Lan-Play)?
+echo 9: Sauvegarde/restauration et paramètres du script?
 echo.
-echo 10: Lancer un serveur pour le jeu en réseau (serveur Switch-Lan-Play)?
+echo 10: Lancer ou configurer le client pour pouvoir jouer en réseau (serveur Switch-Lan-Play)?
 echo.
-echo 11: Lancer Linux (fonctionnalité opsolète)?
+echo 11: Lancer un serveur pour le jeu en réseau (serveur Switch-Lan-Play)?
 echo.
-echo 12: Vérifier s'il existe une mise à jour du script?
+echo 12: Lancer Linux (fonctionnalité opsolète)?
 echo.
-echo 13: A propos du script?
+echo 13: Vérifier s'il existe une mise à jour du script?
 echo.
-echo 14: Ouvrir la page permettant de me faire une donation?
+echo 14: A propos du script?
+echo.
+echo 15: Ouvrir la page permettant de me faire une donation?
 echo.
 echo 0: Lancer la documentation (recommandé)?
 echo.
@@ -54,16 +56,17 @@ IF "%action_choice%"=="1" goto:launch_payload
 IF "%action_choice%"=="2" goto:launch_toolbox
 IF "%action_choice%"=="3" goto:mount_discs
 IF "%action_choice%"=="4" goto:prepare_sd
-IF "%action_choice%"=="5" goto:launch_NSC_Builder
-IF "%action_choice%"=="6" goto:others_functions
-IF "%action_choice%"=="7" goto:ocasional_functions
-IF "%action_choice%"=="8" goto:save_and_restaure
-IF "%action_choice%"=="9" goto:client_netplay
-IF "%action_choice%"=="10" goto:server_netplay
-IF "%action_choice%"=="11" goto:launch_linux
-IF "%action_choice%"=="12" goto:check_update
-IF "%action_choice%"=="13" goto:about
-IF "%action_choice%"=="14" (
+IF "%action_choice%"=="5" goto:nand_toolbox
+IF "%action_choice%"=="6" goto:launch_NSC_Builder
+IF "%action_choice%"=="7" goto:others_functions
+IF "%action_choice%"=="8" goto:ocasional_functions
+IF "%action_choice%"=="9" goto:save_and_restaure
+IF "%action_choice%"=="10" goto:client_netplay
+IF "%action_choice%"=="11" goto:server_netplay
+IF "%action_choice%"=="12" goto:launch_linux
+IF "%action_choice%"=="13" goto:check_update
+IF "%action_choice%"=="14" goto:about
+IF "%action_choice%"=="15" (
 	set action_choice=
 	cls
 	start https://www.paypal.me/shadow256
@@ -96,6 +99,13 @@ set action_choice=
 echo.
 cls
 call TOOLS\Storage\prepare_sd_switch.bat
+@echo off
+goto:define_action_choice
+:nand_toolbox
+set action_choice=
+echo.
+cls
+call TOOLS\Storage\nand_toolbox.bat
 @echo off
 goto:define_action_choice
 :launch_NSC_Builder

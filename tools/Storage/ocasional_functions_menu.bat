@@ -20,9 +20,7 @@ echo 5: Vérifier si des numéros de série de consoles sont patchées ou non?
 echo.
 echo 6: Vérifier un fichier de clés?
 echo.
-echo 7: Nand toolbox?
-echo.
-echo 8: Utiliser le compagnon pour Hid-mitm?
+echo 7: Utiliser le compagnon pour Hid-mitm?
 echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
@@ -34,8 +32,7 @@ IF "%action_choice%"=="3" goto:install_drivers
 IF "%action_choice%"=="4" goto:create_update
 IF "%action_choice%"=="5" goto:verif_serials
 IF "%action_choice%"=="6" goto:test_keys
-IF "%action_choice%"=="7" goto:nand_toolbox
-IF "%action_choice%"=="8" goto:hid-mitm_compagnon
+IF "%action_choice%"=="7" goto:hid-mitm_compagnon
 goto:end_script
 :biskey_dump
 set action_choice=
@@ -77,13 +74,6 @@ set action_choice=
 echo.
 cls
 call TOOLS\Storage\test_keys.bat
-@echo off
-goto:define_action_choice
-:nand_toolbox
-set action_choice=
-echo.
-cls
-call TOOLS\Storage\nand_toolbox.bat
 @echo off
 goto:define_action_choice
 :hid-mitm_compagnon
