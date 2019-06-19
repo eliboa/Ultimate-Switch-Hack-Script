@@ -368,6 +368,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 	IF EXIST "%volume_letter%:\atmosphere\kip_patches\fs_patches" rmdir /s /q "%volume_letter%:\atmosphere\kip_patches\fs_patches" >nul
 	IF EXIST "%volume_letter%:\atmosphere\exefs_patches" rmdir /s /q "%volume_letter%:\atmosphere\exefs_patches" >nul
 	IF EXIST "%volume_letter%:\sept\sept-secondary.enc" del /q "%volume_letter%:\sept\sept-secondary.enc"
+	IF EXIST "%volume_letter%:\sept\ams\sept-secondary.enc" del /q "%volume_letter%:\sept\ams\sept-secondary.enc"
 	%windir%\System32\Robocopy.exe TOOLS\sd_switch\atmosphere %volume_letter%:\ /e >nul
 	IF /i "%copy_payloads%"=="o" (
 		copy /V /B TOOLS\sd_switch\payloads\Atmosphere_fusee-primary.bin %volume_letter%:\Atmosphere_fusee-primary.bin >nul
@@ -421,6 +422,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 
 IF /i "%copy_reinx_pack%"=="o" (
 	IF EXIST "%volume_letter%:\sept\sept-secondary.enc" del /q "%volume_letter%:\sept\sept-secondary.enc"
+	IF EXIST "%volume_letter%:\sept\reinx\sept-secondary.enc" del /q "%volume_letter%:\sept\reinx\sept-secondary.enc"
 	%windir%\System32\Robocopy.exe TOOLS\sd_switch\reinx %volume_letter%:\ /e >nul
 	IF /i NOT "%reinx_enable_nogc_patch%"=="o" del /q %volume_letter%:\ReiNX\nogc >nul
 	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\ReiNX.bin >nul
