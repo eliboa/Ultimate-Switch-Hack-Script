@@ -83,6 +83,7 @@ IF %parts_number% GTR 64 (
 	echo Le nombre de parties ne peut être supérieur à 64.
 	goto:define_parts_number
 )
+set /a temp_parts_number=%parts_number%-1
 :skip_define_parts_number
 echo.
 set rename_files=
@@ -172,15 +173,16 @@ IF %errorlevel% NEQ 0 (
 )
 cd /D "%this_script_dir%\..\.."
 IF "%copy_error%"=="Y" goto:end_script
-attrib +a "%dump_output%"
 IF /i "%rename_files%"=="o" (
-	for /l %%i in (0,1,%parts_number%-1) do (
+	mkdir "%dump_output%\eMMC"
+	for /l %%i in (0,1,%temp_parts_number%) do (
 		IF %%i lss 10 (
-			ren "%dump_output%\%filename%.0%%i" 0%%i
+			move "%dump_output%\%filename%.0%%i" "%dump_output%\eMMC\0%%i"
 		) else (
-			ren "%dump_output%\%filename%.%%i" %%i
+			move "%dump_output%\%filename%.%%i" "%dump_output%\eMMC\%%i"
 		)
 	)
+	attrib +a "%dump_output%\eMMC"
 )
 echo Copie terminée.
 goto:end_script
