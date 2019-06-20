@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.10.98</h2>
+<ul>
+<li>Dans le script de préparation d'une SD, si le homebrew NXDumpTool est copié sur la SD, l'ancien projet GCDumpTool est retiré de la SD.</li>
+</ul>
 <h2>V2.10.97 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
 <ul>
 <li>Mise à jour des fichiers de configurations des profiles par défaut utilisé pendant la préparation d'une SD pour être compatibles avec le changement de nom du projet GCDumpTool en NXDumpTool.</li>

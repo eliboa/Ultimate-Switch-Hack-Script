@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V188</h2>
+<ul>
+<li>Ajout des FS patches pour le firmware 8.1.0 avec Atmosphere.</li>
+</ul>
 <h2>V187 (à utiliser avec la version 2.10.97 au minimum du script</h2>
 <ul>
 <li>Mise à jour de GCDumpTool, devenu NXDumpTool, en version 1.1.1.</li>

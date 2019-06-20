@@ -570,6 +570,10 @@ for /l %%i in (1,1,%temp_count%) do (
 		)
 	)
 	IF "!temp_special_homebrew!"=="N" %windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew! %volume_letter%:\ /e >nul
+	IF "!temp_homebrew!"=="Nxdumptool" (
+		IF EXIST "%volume_letter%:\switch\gcdumptool\*.*" rmdir /s /q "%volume_letter%:\switch\gcdumptool"
+		IF EXIST "%volume_letter%:\switch\gcdumptool.nro" del /q "%volume_letter%:\switch\gcdumptool.nro"
+	)
 	IF "!temp_homebrew!"=="Payload_Launcher" (
 		copy /V /B TOOLS\sd_switch\payloads\Lockpick_RCM.bin %volume_letter%:\payloads\Lockpick_RCM.bin >nul
 		copy /V /B TOOLS\sd_switch\payloads\Retro_reloaded.bin %volume_letter%:\payloads\Retro_reloaded.bin >nul
