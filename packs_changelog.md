@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V189 (à utiliser avec la version 2.10.99 au minimum du script</h2>
+<ul>
+<li>Mise à jour de ReiNX vers la version master du Github, compilé par moi-même (support du firmware 8.1.0).</li>
+</ul>
 <h2>V188</h2>
 <ul>
 <li>Ajout des FS patches pour le firmware 8.1.0 avec Atmosphere.</li>

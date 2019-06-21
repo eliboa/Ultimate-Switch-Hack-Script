@@ -508,14 +508,14 @@ for /l %%i in (1,1,%temp_count%) do (
 		IF EXIST "%volume_letter%:\SlideNX\detach.mp3" del /q "%volume_letter%:\SlideNX\detach.mp3"
 	)
 )
-IF "%~1"=="reinx" (
-	for %%f in ("%temp_modules_copy_path%\titles") do (
-		IF EXIST "%%f\flags\*.*" (
-			move %%f\flags\*.* %%f
-			rmdir /s /q %%f\flags
-		)
-	)
-)
+rem IF "%~1"=="reinx" (
+	rem for %%f in ("%temp_modules_copy_path%\titles") do (
+		rem IF EXIST "%%f\flags\*.*" (
+			rem move %%f\flags\*.* %%f
+			rem rmdir /s /q %%f\flags
+		rem )
+	rem )
+rem )
 :skip_copy_modules_pack
 exit /b
 

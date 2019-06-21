@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.10.99</h2>
+<ul>
+<li>Mise à jour de FVI, détecte le firmware 8.1.0.</li>
+<li>Dans la préparation d'une SD, le traitement spécial pour les modules de ReiNX a été supprimé car normalement plus nécessaire.</li>
+</ul>
 <h2>V2.10.98</h2>
 <ul>
 <li>Dans le script de préparation d'une SD, si le homebrew NXDumpTool est copié sur la SD, l'ancien projet GCDumpTool est retiré de la SD.</li>
