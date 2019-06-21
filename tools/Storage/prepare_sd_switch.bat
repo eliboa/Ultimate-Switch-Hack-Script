@@ -423,6 +423,8 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 IF /i "%copy_reinx_pack%"=="o" (
 	IF EXIST "%volume_letter%:\sept\sept-secondary.enc" del /q "%volume_letter%:\sept\sept-secondary.enc"
 	IF EXIST "%volume_letter%:\sept\reinx\sept-secondary.enc" del /q "%volume_letter%:\sept\reinx\sept-secondary.enc"
+	IF EXIST "%volume_letter%:\ReiNX\warmboot.bin" del /q "%volume_letter%:\ReiNX\warmboot.bin"
+	IF EXIST "%volume_letter%:\ReiNX\titles\010000000000100D\*.*" rmdir /s /q ""%volume_letter%:\ReiNX\titles\010000000000100D"
 	%windir%\System32\Robocopy.exe TOOLS\sd_switch\reinx %volume_letter%:\ /e >nul
 	IF /i NOT "%reinx_enable_nogc_patch%"=="o" del /q %volume_letter%:\ReiNX\nogc >nul
 	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\ReiNX.bin >nul
