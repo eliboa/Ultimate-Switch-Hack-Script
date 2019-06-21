@@ -2,7 +2,7 @@
 &nbsp;
 <h2>V189 (à utiliser avec la version 2.10.99 au minimum du script</h2>
 <ul>
-<li>Mise à jour de ReiNX vers la version master du Github, compilé par moi-même (support du firmware 8.1.0).</li>
+<li>Mise à jour de ReiNX vers la version 2.4.</li>
 </ul>
 <h2>V188</h2>
 <ul>
