@@ -2,6 +2,7 @@
 &nbsp;
 <h2>V2.11.00</h2>
 <ul>
+<li>Support du téléchargement et de la mise en place sur la SD pour ChoiDuJourNX du firmware 8.1.0.</li>
 <li>Mise à jour de NSC_Builder en version 0.86E traduite en français.</li>
 </ul>
 <h2>V2.10.99 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
