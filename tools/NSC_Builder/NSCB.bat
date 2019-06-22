@@ -1,12 +1,12 @@
 @ECHO OFF
 chcp 65001 >nul
-set "program_version=0.86C"
+set "program_version=0.86e"
 
 :TOP_INIT
 set "prog_dir=%~dp0"
 set "bat_name=%~n0"
 set "ofile_name=%bat_name%_options.cmd"
-Title NSC_Builder v0.86.c -- Profile: %ofile_name% -- by JulesOnTheRoad
+Title NSC_Builder v0.86.e -- Profile: %ofile_name% -- by JulesOnTheRoad
 set "list_folder=%prog_dir%lists"
 ::-----------------------------------------------------
 ::EDIT THIS VARIABLE TO LINK OTHER OPTION FILE
@@ -911,7 +911,8 @@ echo Tapez "4" pour changer la keygeneration à 4 (FW 4.0.0-4.1.0)
 echo Tapez "5" pour changer la keygeneration à 5 (FW 5.0.0-5.1.0)
 echo Tapez "6" pour changer la keygeneration à 6 (FW 6.0.0-6.1.0)
 echo Tapez "7" pour changer la keygeneration à 7 (FW 6.2.0)
-echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-7.0.1)
+echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-8.0.1)
+echo Tapez "9" pour changer la keygeneration à 9 (FW 8.1.0)
 echo.
 ECHO ******************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
@@ -940,6 +941,8 @@ if /i "%bs%"=="7" set "vkey=-kp 7"
 if /i "%bs%"=="7" set "capRSV=--RSVcap 404750336"
 if /i "%bs%"=="8" set "vkey=-kp 8"
 if /i "%bs%"=="8" set "capRSV=--RSVcap 469762048"
+if /i "%bs%"=="9" set "vkey=-kp 9"
+if /i "%bs%"=="9" set "capRSV=--RSVcap 537919488"
 if /i "%vkey%"=="none" echo Choix inexistant.
 if /i "%vkey%"=="none" goto s_KeyChange_wrongchoice
 goto s_KeyChange_skip
@@ -1055,7 +1058,7 @@ echo.
 echo *******************************************************
 echo Ajouter un numéro de version
 echo *******************************************************
-echo Ajoute le numéro de version du contenu au nom du fichier
+echo Ajouter le numéro de version du contenu au nom du fichier
 echo.
 echo Tapez "1" pour ajouter le numéro de version
 echo Tapez "2" pour ne pas ajouter le numéro de version
@@ -1601,7 +1604,8 @@ echo Tapez "4" pour changer la keygeneration à 4 (FW 4.0.0-4.1.0)
 echo Tapez "5" pour changer la keygeneration à 5 (FW 5.0.0-5.1.0)
 echo Tapez "6" pour changer la keygeneration à 6 (FW 6.0.0-6.1.0)
 echo Tapez "7" pour changer la keygeneration à 7 (FW 6.2.0)
-echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-7.0.1)
+echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-8.0.1)
+echo Tapez "9" pour changer la keygeneration à 9 (FW 8.1.0)
 echo.
 ECHO ******************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
@@ -1630,6 +1634,8 @@ if /i "%bs%"=="7" set "vkey=-kp 7"
 if /i "%bs%"=="7" set "capRSV=--RSVcap 404750336"
 if /i "%bs%"=="8" set "vkey=-kp 8"
 if /i "%bs%"=="8" set "capRSV=--RSVcap 469762048"
+if /i "%bs%"=="9" set "vkey=-kp 9"
+if /i "%bs%"=="9" set "capRSV=--RSVcap 537919488"
 if /i "%vkey%"=="none" echo Choix inexistant.
 if /i "%vkey%"=="none" goto m_KeyChange_wrongchoice
 
@@ -2698,6 +2704,7 @@ echo (__o)_    \
 echo       \    \
 echo.
 echo Amusez-vous bien.
+echo.
 exit /B
 
 :getname
