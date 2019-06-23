@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.11.01</h2>
+<ul>
+<li>Mise à jour de BiskeyDump en version 9, supporte maintenant le firmware 8.1.0.</li>
+</ul>
 <h2>V2.11.00</h2>
 <ul>
 <li>Support du téléchargement et de la mise en place sur la SD pour ChoiDuJourNX du firmware 8.1.0.</li>
