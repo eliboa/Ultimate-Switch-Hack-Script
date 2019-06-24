@@ -30,7 +30,8 @@ echo Si tout est bon, le script devrait fonctionner correctement.
 echo Si le script se ferme immédiatement après ceci, cela veut dire que la police que vous avez sélectionné n'est pas compatible avec l'encodage de caractères UTF-8.
 pause
 cls
-TOOLS\Storage\verif_update.bat
+call tools\Storage\functions\update_manager.bat
+tools\Storage\verif_update.bat
 :end_script
 pause
 exit

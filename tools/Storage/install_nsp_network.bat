@@ -50,7 +50,7 @@ IF "%install_type%"=="1" (
 )
 set filepath=%filepath:\\=\%
 IF "%install_type%"=="1" (
-	TOOLS\python3_scripts\remote_NSP.exe %custom_ip% "%filepath%"
+	TOOLS\python3_scripts\remote_NSP\remote_NSP.exe %custom_ip% "%filepath%"
 	IF !errorlevel! NEQ 0 (
 		echo Une erreur s'est produite pendant l'installation.
 		goto:endscript
@@ -60,7 +60,7 @@ IF "%install_type%"=="2" (
 	%filepath:~0,1%:
 	cd "%filepath%"
 	FOR %%f in (*.nsp) do (
-		"%script_path%\..\python3_scripts\remote_NSP.exe" %custom_ip% "%filepath%\%%f"
+		"%script_path%\..\python3_scripts\remote_NSP\remote_NSP.exe" %custom_ip% "%filepath%\%%f"
 		IF !errorlevel! NEQ 0 (
 			echo Erreur d'installation pour le fichier %filepath%\%%f
 			echo.
@@ -86,7 +86,7 @@ IF "%install_type%"=="3" (
 	)
 	"%script_path%\..\gnuwin32\bin\head.exe" -!tempcount! <"%script_path%\..\..\templogs\nsp_list.txt" | "%script_path%\..\gnuwin32\bin\tail.exe" -1>"%script_path%\..\..\templogs\nsp_list2.txt"
 	set /p temp_nsp=<"%script_path%\..\..\templogs\nsp_list2.txt"
-	"%script_path%\..\python3_scripts\remote_NSP.exe" %custom_ip% "%filepath%\!temp_nsp!"
+	"%script_path%\..\python3_scripts\remote_NSP\remote_NSP.exe" %custom_ip% "%filepath%\!temp_nsp!"
 	IF !errorlevel! NEQ 0 (
 		echo Erreur d'installation pour le fichier %filepath%\!temp_nsp!
 		echo.

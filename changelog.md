@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.11.04 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Début de l'implémentation d'une gestion de mises à jour des éléments, non utilisé par le script pour l'instant.</li>
+<li>Mise à jour de l'arborescence de certains dossiers et mise à jour des scripts liés à ces modifications.</li>
+</ul>
 <h2>V2.11.03</h2>
 <ul>
 <li>Mise à jour de NXNandManager en version 1.1.2.</li>

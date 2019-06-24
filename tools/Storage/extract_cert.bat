@@ -66,12 +66,12 @@ IF %ERRORLEVEL% NEQ 0 (ECHO: && cd .. && rmdir /s /q "Certificat" && goto:end_sc
 
 REM Exécution du Script #1
 chcp 1250 >nul
-..\TOOLS\python2_scripts\CertNXtractionPack.exe
+..\TOOLS\python2_scripts\CertNXtractionPack\CertNXtractionPack.exe
 chcp 65001 >nul
 IF %ERRORLEVEL% NEQ 0 (ECHO: && cd .. && rmdir /s /q "Certificat" && goto:end_script)
 
 REM Exécution du Script #2
-..\TOOLS\python3_scripts\Convert_to_der.exe
+..\TOOLS\python3_scripts\Cert_extraction\Convert_to_der.exe
 IF %ERRORLEVEL% NEQ 0 (ECHO: && cd .. && rmdir /s /q "Certificat" && goto:end_script)
 
 REM Création du fichier de certificat au format "PFX"
@@ -94,7 +94,7 @@ ECHO Mot de passe = switch
 ECHO:
 
 REM Convertion du fichier "PFX" au format "PEM"
-..\TOOLS\python3_scripts\pfx_to_pem.exe nx_tls_client_cert.pfx
+..\TOOLS\python3_scripts\Cert_extraction\pfx_to_pem.exe nx_tls_client_cert.pfx
 IF %ERRORLEVEL% NEQ 0 (ECHO: && cd .. && goto:end_script)
 
 ECHO:
