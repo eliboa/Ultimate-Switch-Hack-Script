@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V196 (à utiliser avec la version 2.11.06 au minimum du script</h2>
+<ul>
+<li>Mise à jour de Cafeine pour que le payload sur lequel il redémarre soit "nereba\nereba.bin" de la SD, rendant son fonctionnement indépendant de Atmosphere. Pour cela il a fallut que je recompile le module en incluant uniquement cette modification.</li>
+</ul>
 <h2>V195 (à utiliser avec la version 2.11.05 au minimum du script</h2>
 <ul>
 <li>Mise à jour de certains fichiers pour l'exploit Nereba.</li>

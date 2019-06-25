@@ -157,8 +157,6 @@ set payload_path=%payload_path:~1,-1%
 copy /v "tools\sd_switch\nereba\nereba.nsp" %volume_letter%:\
 mkdir "%volume_letter%:\nereba" >nul
 copy /v "%payload_path%" "%volume_letter%:\nereba\nereba.bin"
-::mkdir "%volume_letter%:\atmosphere" >nul
-::copy /v "%payload_path%" "%volume_letter%:\atmosphere\reboot_payload.bin"
 mkdir "%volume_letter%:\pegascape" >nul
 copy /v "tools\sd_switch\pegascape\caffeine.nsp" "%volume_letter%:\pegascape"
 echo Préparation de la SD terminée.
