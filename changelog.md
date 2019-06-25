@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.11.08</h2>
+<ul>
+<li>Ajout du homebrew Fakenews-injector dans les homebrews copiés par défaut dans les profiles généraux ainsi que dans le profile contenant tous les homebrews.</li>
+</ul>
 <h2>V2.11.07</h2>
 <ul>
 <li>Ajout du support du lancement de PegaSwitch en mode Webapplet, utile pour le firmware 1.0.0 avec la version japonaise de Puyo Puyo Tetris ou via l'utilisation du point d'entrée Fake News.</li>
