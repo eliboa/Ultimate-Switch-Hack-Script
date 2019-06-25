@@ -164,14 +164,28 @@ pause
 exit /b
 
 :launch_server
+echo Comment souhaitez-vous utiliser PegaSwitch?
+echo.
+echo 1: Via le test de connexion Wifi (firmware 2.0.0 et supérieur)?
+echo 2: Via la webapplet (firmware 1.0.0 et la version japonaise de Puyo Puyo Tetris ou si vous utiliser le point d'entrée Fake News)?
+echo N'importe quel autre choix: Ne pas lancer le serveur et revenir au menu précédent.
+echo.
+set pegaswitch_launch_mode=
+set /p pegaswitch_launch_mode=Faites votre choix: 
+IF "%pegaswitch_launch_mode%"=="1" goto:continue_launch_server
+IF "%pegaswitch_launch_mode%"=="2" goto:continue_launch_server
+exit /b
+:continue_launch_server
+echo.
 echo Préparation et lancement du serveur...
 call :write_begin_node.js_launch_file
-echo cd Pegaswitch >>tools\Node.js_programs\App\Server.cmd
-echo npm.cmd install >>tools\Node.js_programs\App\Server.cmd
+echo cd Pegaswitch>>tools\Node.js_programs\App\Server.cmd
+echo npm.cmd install>>tools\Node.js_programs\App\Server.cmd
 tools\Node.js_programs\NodeJSPortable.exe
 call :write_begin_node.js_launch_file
-echo cd Pegaswitch >>tools\Node.js_programs\App\Server.cmd
-echo npm.cmd start >>tools\Node.js_programs\App\Server.cmd
+echo cd Pegaswitch>>tools\Node.js_programs\App\Server.cmd
+IF "%pegaswitch_launch_mode%"=="1" echo npm.cmd start>>tools\Node.js_programs\App\Server.cmd
+IF "%pegaswitch_launch_mode%"=="2" echo npm.cmd start --webapplet>>tools\Node.js_programs\App\Server.cmd
 start tools\Node.js_programs\NodeJSPortable.exe
 echo Le serveur pour Pegaswitch devrait être lancé. Pour le fermer, tapper la commande "exit" sans les guillemets dans la fenêtre du serveur.
 pause
