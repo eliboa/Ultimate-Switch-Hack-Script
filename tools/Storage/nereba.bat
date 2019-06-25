@@ -7,7 +7,7 @@ IF EXIST templogs (
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-echo Ce script va permettre de préparer le nécessaire pour utiliser l'exploit Nereba.
+echo Ce script va permettre de préparer le nécessaire pour utiliser l'exploit Nereba et Cafeine.
 echo Pour utiliser un CFW ou plus généralement préparer correctement une SD, veuillez en premier lieu préparer une SD via le script approprié (ce choix sera proposé dans la suite de ce script).
 pause
 :set_nereba_choice
@@ -154,9 +154,13 @@ IF "%payload_path%"=="" (
 )
 set payload_path=%payload_path:~1,-1%
 :copy_nereba
-copy /v tools\sd_switch\nereba\nereba.nsp %volume_letter%:\
-mkdir %volume_letter%:\nereba >nul
-copy /v %payload_path% %volume_letter%:\nereba\nereba.bin
+copy /v "tools\sd_switch\nereba\nereba.nsp" %volume_letter%:\
+mkdir "%volume_letter%:\nereba" >nul
+copy /v "%payload_path%" "%volume_letter%:\nereba\nereba.bin"
+::mkdir "%volume_letter%:\atmosphere" >nul
+::copy /v "%payload_path%" "%volume_letter%:\atmosphere\reboot_payload.bin"
+mkdir "%volume_letter%:\pegascape" >nul
+copy /v "tools\sd_switch\pegascape\caffeine.nsp" "%volume_letter%:\pegascape"
 echo Préparation de la SD terminée.
 pause
 exit /b
