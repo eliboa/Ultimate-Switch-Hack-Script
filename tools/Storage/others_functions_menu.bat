@@ -28,11 +28,9 @@ echo 9: Joindre les différentes parties d'un dump de la nand effectué par Heka
 echo.
 echo 10: Compresser/décompresser un jeu grâce à nsZip?
 echo.
-echo 11: Préparer le nécessaire pour utiliser l'exploit Nereba?
+echo 11: Configurer l'émulateur Nes Classic Edition?
 echo.
-echo 12: Configurer l'émulateur Nes Classic Edition?
-echo.
-echo 13: Configurer l'émulateur Snes Classic Edition?
+echo 12: Configurer l'émulateur Snes Classic Edition?
 echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
@@ -48,9 +46,8 @@ IF "%action_choice%"=="7" goto:verify_nsp
 IF "%action_choice%"=="8" goto:split_games
 IF "%action_choice%"=="9" goto:nand_joiner
 IF "%action_choice%"=="10" goto:nsZip
-IF "%action_choice%"=="11" goto:nereba
-IF "%action_choice%"=="12" goto:config_nes_classic
-IF "%action_choice%"=="13" goto:config_snes_classic
+IF "%action_choice%"=="11" goto:config_nes_classic
+IF "%action_choice%"=="12" goto:config_snes_classic
 goto:end_script
 :update_on_sd
 set action_choice=
@@ -120,13 +117,6 @@ set action_choice=
 echo.
 cls
 call TOOLS\Storage\nsZip.bat
-@echo off
-goto:define_action_choice
-:nereba
-set action_choice=
-echo.
-cls
-call TOOLS\Storage\nereba.bat
 @echo off
 goto:define_action_choice
 :config_nes_classic

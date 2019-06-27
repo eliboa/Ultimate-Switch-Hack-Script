@@ -15,9 +15,9 @@ echo Menu principal
 echo.
 echo Que souhaitez-vous faire?
 echo.
-echo 1: Lancer un payload?
+echo 1: Lancer un payload via le mode RCM?
 echo.
-echo 2: Lancer ou configurer la boîte à outils?
+echo 2: Lancer un payload via PegaScape/PegaSwitch et/ou préparer le nécessaire sur la SD pour que cela fonctionne?
 echo.
 echo 3: Monter la nand, la partition boot0, la partition boot1 ou la carte SD comme un disque dur sur votre système d'exploitation?
 echo.
@@ -27,23 +27,25 @@ echo 5: Nand toolbox?
 echo.
 echo 6: Lancer NSC_Builder qui permet d'avoir des infos, de convertir et de nettoyer des NSPs et XCIs, voir la documentation pour plus d'infos?
 echo.
-echo 7: Autres fonctions?
+echo 7: Lancer ou configurer la boîte à outils?
 echo.
-echo 8: Fonctions à utiliser occasionnellement?
+echo 8: Autres fonctions?
 echo.
-echo 9: Sauvegarde/restauration et paramètres du script?
+echo 9: Fonctions à utiliser occasionnellement?
 echo.
-echo 10: Lancer ou configurer le client pour pouvoir jouer en réseau (serveur Switch-Lan-Play)?
+echo 10: Sauvegarde/restauration et paramètres du script?
 echo.
-echo 11: Lancer un serveur pour le jeu en réseau (serveur Switch-Lan-Play)?
+echo 11: Lancer ou configurer le client pour pouvoir jouer en réseau (serveur Switch-Lan-Play)?
 echo.
-echo 12: Lancer Linux (fonctionnalité opsolète)?
+echo 12: Lancer un serveur pour le jeu en réseau (serveur Switch-Lan-Play)?
 echo.
-echo 13: Vérifier s'il existe une mise à jour du script?
+echo 13: Lancer Linux (fonctionnalité opsolète)?
 echo.
-echo 14: A propos du script?
+echo 14: Vérifier s'il existe une mise à jour du script?
 echo.
-echo 15: Ouvrir la page permettant de me faire une donation?
+echo 15: A propos du script?
+echo.
+echo 16: Ouvrir la page permettant de me faire une donation?
 echo.
 echo 0: Lancer la documentation (recommandé)?
 echo.
@@ -53,20 +55,21 @@ echo.
 set /p action_choice=Entrez le numéro correspondant à l'action à faire: 
 IF "%action_choice%"=="0" goto:launch_doc
 IF "%action_choice%"=="1" goto:launch_payload
-IF "%action_choice%"=="2" goto:launch_toolbox
+IF "%action_choice%"=="2" goto:pegaswitch
 IF "%action_choice%"=="3" goto:mount_discs
 IF "%action_choice%"=="4" goto:prepare_sd
 IF "%action_choice%"=="5" goto:nand_toolbox
 IF "%action_choice%"=="6" goto:launch_NSC_Builder
-IF "%action_choice%"=="7" goto:others_functions
-IF "%action_choice%"=="8" goto:ocasional_functions
-IF "%action_choice%"=="9" goto:save_and_restaure
-IF "%action_choice%"=="10" goto:client_netplay
-IF "%action_choice%"=="11" goto:server_netplay
-IF "%action_choice%"=="12" goto:launch_linux
-IF "%action_choice%"=="13" goto:check_update
-IF "%action_choice%"=="14" goto:about
-IF "%action_choice%"=="15" (
+IF "%action_choice%"=="7" goto:launch_toolbox
+IF "%action_choice%"=="8" goto:others_functions
+IF "%action_choice%"=="9" goto:ocasional_functions
+IF "%action_choice%"=="10" goto:save_and_restaure
+IF "%action_choice%"=="11" goto:client_netplay
+IF "%action_choice%"=="12" goto:server_netplay
+IF "%action_choice%"=="13" goto:launch_linux
+IF "%action_choice%"=="14" goto:check_update
+IF "%action_choice%"=="15" goto:about
+IF "%action_choice%"=="16" (
 	set action_choice=
 	cls
 	start https://www.paypal.me/shadow256
@@ -80,11 +83,11 @@ cls
 call TOOLS\Storage\launch_payload.bat > log.txt 2>&1
 @echo off
 goto:define_action_choice
-:launch_toolbox
+:pegaswitch
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\toolbox.bat
+call TOOLS\Storage\nereba.bat
 @echo off
 goto:define_action_choice
 :mount_discs
@@ -114,6 +117,13 @@ echo.
 cls
 call TOOLS\Storage\preload_NSC_Builder.bat
 endlocal
+@echo off
+goto:define_action_choice
+:launch_toolbox
+set action_choice=
+echo.
+cls
+call TOOLS\Storage\toolbox.bat
 @echo off
 goto:define_action_choice
 :others_functions

@@ -101,7 +101,8 @@ IF "%input_path%"=="" (
 )
 tools\NxNandManager\NxNandManager.exe --info -i "%input_path%"
 echo.
-goto:info_nand
+pause
+goto:define_action_choice
 
 :dump_nand
 set input_path=
@@ -171,7 +172,8 @@ call :set_NNM_params
 ::echo -i "%input_path%" -o "%output_path%" %params%%lflags%
 tools\NxNandManager\NxNandManager.exe -i "%input_path%" -o "%output_path%" %params%%lflags%
 echo.
-goto:dump_nand
+pause
+goto:define_action_choice
 
 :restaure_nand
 set input_path=
@@ -251,7 +253,8 @@ call :set_NNM_params
 ::echo -i "%input_path%" -o "%output_path%" %params%%lflags%
 tools\NxNandManager\NxNandManager.exe -i "%input_path%" -o "%output_path%" %params%%lflags%
 echo.
-goto:restaure_nand
+pause
+goto:define_action_choice
 
 :autorcm_management
 set input_path=
@@ -309,9 +312,9 @@ IF %errorlevel% NEQ 0 (
 	IF "%action_choice%" == "1" echo Auto-RCM activé.
 IF "%action_choice%" == "2" echo Auto-RCM désactivé.
 )
-pause
 echo.
-goto:autorcm_management
+pause
+goto:define_action_choice
 
 :get_type_nand
 set nand_type=

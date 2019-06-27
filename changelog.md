@@ -1,5 +1,12 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.11.09 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Mise en place de la solution PegaScape en plus de la solution PegaSwitch, l'utilisateur aura maintenant le choix de lancer l'un ou l'autre.</li>
+<li>Déplacement du script de Nereba dans le menu principal et celui-ci sera indiqué plus clairement en expliquant se que l'on peut faire avec. Le script est également renommé en "pegaswitch.bat" car finalement c'est le programme principal qui est utilisé par celui-ci.</li>
+<li>Correction de bugs dans le script de PegaSwitch et changement de la méthode de copie des fichiers sur la SD.</li>
+<li>Dans la Nand Toolbox, une fois qu'une opération est terminé le programme revient à la sélection des actions principales plutôt que de revenir sur l'action en cours, ceci permet de clarifier implicitement le fonctionnement et de le rendre bien plus cohérent.</li>
+</ul>
 <h2>V2.11.08</h2>
 <ul>
 <li>Ajout du homebrew Fakenews-injector dans les homebrews copiés par défaut dans les profiles généraux ainsi que dans le profile contenant tous les homebrews.</li>

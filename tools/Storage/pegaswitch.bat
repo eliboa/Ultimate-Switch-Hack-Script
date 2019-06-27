@@ -7,14 +7,14 @@ IF EXIST templogs (
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-echo Ce script va permettre de préparer le nécessaire pour utiliser l'exploit Nereba et Cafeine.
+echo Ce script va permettre de préparer le nécessaire pour utiliser l'exploit Nereba et Cafeine ou plus exactement d'utiliser PegaSwitch ou PegaScape via un serveur local.
 echo Pour utiliser un CFW ou plus généralement préparer correctement une SD, veuillez en premier lieu préparer une SD via le script approprié (ce choix sera proposé dans la suite de ce script).
 pause
 :set_nereba_choice
 echo.
 echo Que souhaitez-vous faire?
 echo 1: Préparer la SD avec l'exploit.
-echo 2: Lancer le serveur Pegaswitch.
+echo 2: Lancer le serveur Pegaswitch ou PegaScape.
 echo 3: Préparer la SD avec l'exploit puis lancer le serveur.
 echo 0: Lancer le script de préparation d'une SD pour, entre autres, installer un CFW sur celle-ci.
 echo Tout autre choix: Revenir au menu précédent.
@@ -103,7 +103,7 @@ IF NOT "%volume_letter%"=="%temp_volume_letter%" (
 )
 :list_payloads
 echo.
-echo Sélectionnez le payload qui sera lancé par l'exploit Nereba:
+echo Sélectionnez le payload qui sera lancé par l'exploit Cafeine/Nereba:
 copy nul templogs\payload_list.txt
 set max_payload=1
 cd Payloads
@@ -154,17 +154,27 @@ IF "%payload_path%"=="" (
 )
 set payload_path=%payload_path:~1,-1%
 :copy_nereba
-copy /v "tools\sd_switch\nereba\nereba.nsp" %volume_letter%:\
+"%windir%\system32\robocopy.exe" tools\sd_switch\pegaswitch %volume_letter%:\ /e >nul
 mkdir "%volume_letter%:\nereba" >nul
-copy /v "%payload_path%" "%volume_letter%:\nereba\nereba.bin"
-mkdir "%volume_letter%:\pegascape" >nul
-copy /v "tools\sd_switch\pegascape\caffeine.nsp" "%volume_letter%:\pegascape"
+copy /v "%payload_path%" "%volume_letter%:\nereba\nereba.bin" >nul
 echo Préparation de la SD terminée.
 pause
 exit /b
 
 :launch_server
-echo Comment souhaitez-vous utiliser PegaSwitch?
+echo Quel serveur souhaitez-vous utiliser?
+echo
+echo 1: PegaScape (recommandé)?
+echo 2: PegaSwitch?
+echo N'importe quel autre choix: Ne pas lancer le serveur et revenir au menu précédent.
+echo.
+set pegaswitch_server_type=
+set /p pegaswitch_server_type=Faites votre choix: 
+IF "%pegaswitch_server_type%"=="1" goto:define_pegaswitch_launch_mode
+IF "%pegaswitch_server_type%"=="2" goto:define_pegaswitch_launch_mode
+exit /b
+:define_pegaswitch_launch_mode
+echo Comment souhaitez-vous utiliser PegaSwitch/PegaScape?
 echo.
 echo 1: Via le test de connexion Wifi (firmware 2.0.0 et supérieur)?
 echo 2: Via la webapplet (firmware 1.0.0 et la version japonaise de Puyo Puyo Tetris ou si vous utiliser le point d'entrée Fake News)?
@@ -176,14 +186,18 @@ IF "%pegaswitch_launch_mode%"=="1" goto:continue_launch_server
 IF "%pegaswitch_launch_mode%"=="2" goto:continue_launch_server
 exit /b
 :continue_launch_server
+echo Vous aurez besoin de connaître l'IP de votre PC et de la recopier dans les DNS de la console pour accéder au serveur.
+echo La console et le PC doivent se trouver sur le même réseau.
 echo.
 echo Préparation et lancement du serveur...
 call :write_begin_node.js_launch_file
-echo cd Pegaswitch>>tools\Node.js_programs\App\Server.cmd
+IF "%pegaswitch_server_type%"=="1" echo cd Pegascape>>tools\Node.js_programs\App\Server.cmd
+IF "%pegaswitch_server_type%"=="2" echo cd Pegaswitch>>tools\Node.js_programs\App\Server.cmd
 echo npm.cmd install>>tools\Node.js_programs\App\Server.cmd
 tools\Node.js_programs\NodeJSPortable.exe
 call :write_begin_node.js_launch_file
-echo cd Pegaswitch>>tools\Node.js_programs\App\Server.cmd
+IF "%pegaswitch_server_type%"=="1" echo cd Pegascape>>tools\Node.js_programs\App\Server.cmd
+IF "%pegaswitch_server_type%"=="2" echo cd Pegaswitch>>tools\Node.js_programs\App\Server.cmd
 IF "%pegaswitch_launch_mode%"=="1" echo npm.cmd start>>tools\Node.js_programs\App\Server.cmd
 IF "%pegaswitch_launch_mode%"=="2" echo npm.cmd start --webapplet>>tools\Node.js_programs\App\Server.cmd
 start tools\Node.js_programs\NodeJSPortable.exe
