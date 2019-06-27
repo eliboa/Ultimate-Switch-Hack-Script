@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.11.10</h2>
+<ul>
+<li>Mise à jour de PegaScape vers la version master du Github.</li>
+</ul>
 <h2>V2.11.09 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
 <ul>
 <li>Mise en place de la solution PegaScape en plus de la solution PegaSwitch, l'utilisateur aura maintenant le choix de lancer l'un ou l'autre.</li>
