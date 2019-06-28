@@ -1,5 +1,11 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.11.11 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Suppression d'un fichier inutile dans le pack servant à PegaScape/PegaSwitch pour Caffeine/Nereba.</li>
+<li>Copie des fichiers nécessaires au lancement du HBL via PegaScape/PegaSwitch.</li>
+<li>Révision des scripts de PegaScape/PegaSwitch permettant de lancer le HBL, le fichier "hbl.nsp" ne sera plus cherché dans le dossier "atmosphere" de la SD mais plutôt dans le dossier "pegascape", ceci me semblant plus cohérent. Ceci dit, pour des raisons pratiques, le fichier sera aussi copié dans le dossier "atmosphere" de la SD par la fonction de préparation de la SD du script de PegaSwitch histoire d'assurer la compatibilité avec le portail PegaScape officiel de la team Atlas.</li>
+</ul>
 <h2>V2.11.10</h2>
 <ul>
 <li>Mise à jour de PegaScape vers la version master du Github.</li>
@@ -21,11 +27,11 @@
 </ul>
 <h2>V2.11.06 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
 <ul>
-<li>Mise à jour du script de Nereba pour que le payload à lancer se trouve dans le dossier "nereba\nereba.bin" de la SD, je préfère ce fonctionnement car cela le rend indépendant d'Atmosphere. Pour cela, j'ai recompilé Cafeine en incluant cette modification, le reste du code n'a pas changé du tout.</li>
+<li>Mise à jour du script de Nereba pour que le payload à lancer se trouve dans le dossier "nereba\nereba.bin" de la SD, je préfère ce fonctionnement car cela le rend indépendant d'Atmosphere. Pour cela, j'ai recompilé Caffeine en incluant cette modification, le reste du code n'a pas changé du tout.</li>
 </ul>
 <h2>V2.11.05 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
 <ul>
-<li>Le script utilisant l'exploit Nereba a été mis à jour pour également utiliser Cafeine pour lancer un payload pour les firmwares 4.1.0, voir <a target="_blank" href="https://gbatemp.net/threads/caffeine-updated-to-support-fw-4-1-0-works-on-patched-switches.541826/">ces infos</a> pour comprendre un peu mieux comment cela fonctionne. PegaSwitch a également été mis à jour pour supporter tout cela. Cette fonctionnalité n'a pas été testée, vous pouvez me faire des retours sur son bon fonctionnement ou non sur le sujet dédié à mon script.</li>
+<li>Le script utilisant l'exploit Nereba a été mis à jour pour également utiliser Caffeine pour lancer un payload pour les firmwares 4.1.0, voir <a target="_blank" href="https://gbatemp.net/threads/caffeine-updated-to-support-fw-4-1-0-works-on-patched-switches.541826/">ces infos</a> pour comprendre un peu mieux comment cela fonctionne. PegaSwitch a également été mis à jour pour supporter tout cela. Cette fonctionnalité n'a pas été testée, vous pouvez me faire des retours sur son bon fonctionnement ou non sur le sujet dédié à mon script.</li>
 </ul>
 <h2>V2.11.04 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
 <ul>

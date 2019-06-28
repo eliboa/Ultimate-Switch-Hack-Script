@@ -155,8 +155,12 @@ IF "%payload_path%"=="" (
 set payload_path=%payload_path:~1,-1%
 :copy_nereba
 "%windir%\system32\robocopy.exe" tools\sd_switch\pegaswitch %volume_letter%:\ /e >nul
-mkdir "%volume_letter%:\nereba" >nul
+IF NOT EXIST "%volume_letter%:\nereba\*.*" mkdir "%volume_letter%:\nereba" >nul
 copy /v "%payload_path%" "%volume_letter%:\nereba\nereba.bin" >nul
+copy /v "tools\sd_switch\mixed\base\hbmenu.nro" %volume_letter%:\ >nul
+copy /v "tools\sd_switch\atmosphere\atmosphere\hbl.nsp" "%volume_letter%:\pegascape"
+IF NOT EXIST "%volume_letter%:\atmosphere\*.*" mkdir "%volume_letter%:\atmosphere" >nul
+copy /v "tools\sd_switch\atmosphere\atmosphere\hbl.nsp" "%volume_letter%:\atmosphere"
 echo Préparation de la SD terminée.
 pause
 exit /b

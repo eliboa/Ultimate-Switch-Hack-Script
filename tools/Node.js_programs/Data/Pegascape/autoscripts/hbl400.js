@@ -35,7 +35,7 @@ if (!sc.did_init) {
         
             sc.ipcMsg(0).datau32(3).sendTo(sc.lrHnd).asResult().andThen(res => {
             sc.withHandle(res.movedHandles[0], function(hnd) {
-                var path = '@Sdcard://atmosphere/hbl.nsp';
+                var path = '@Sdcard://pegascape/hbl.nsp';
                 var pbuf = utils.str2ab(path + '\x00')
                 sc.ipcMsg(1).datau64(utils.parseAddr('010000000000100D')).xDescriptor(pbuf, pbuf.byteLength).sendTo(hnd).assertOk().show();
                 sc.nv.prepare_close();

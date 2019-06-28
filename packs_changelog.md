@@ -1,8 +1,13 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V199 (à utiliser avec la version 2.11.11 au minimum du script</h2>
+<ul>
+<li>Suppression d'un fichier inutile dans le pack servant à PegaScape/PegaSwitch pour Caffeine/Nereba.</li>
+<li>Mise à jour de Caffeine vers la version master du Github, compilé par moi-même.</li>
+</ul>
 <h2>V198 (à utiliser avec la version 2.11.09 au minimum du script</h2>
 <ul>
-<li>Mise à jour des fichiers de Cafeine/Nereba/pegaScape pour être utilisé avec un maximum de configurations. Le dossier "nereba" qui contenait ces fichiers a également été renommé "pegaswitch".</li>
+<li>Mise à jour des fichiers de Caffeine/Nereba/pegaScape pour être utilisé avec un maximum de configurations. Le dossier "nereba" qui contenait ces fichiers a également été renommé "pegaswitch".</li>
 </ul>
 <h2>V197 (à utiliser avec la version 2.11.08 au minimum du script</h2>
 <ul>
@@ -10,7 +15,7 @@
 </ul>
 <h2>V196 (à utiliser avec la version 2.11.06 au minimum du script</h2>
 <ul>
-<li>Mise à jour de Cafeine pour que le payload sur lequel il redémarre soit "nereba\nereba.bin" de la SD, rendant son fonctionnement indépendant de Atmosphere. Pour cela il a fallut que je recompile le module en incluant uniquement cette modification.</li>
+<li>Mise à jour de Caffeine pour que le payload sur lequel il redémarre soit "nereba\nereba.bin" de la SD, rendant son fonctionnement indépendant de Atmosphere. Pour cela il a fallut que je recompile le module en incluant uniquement cette modification.</li>
 </ul>
 <h2>V195 (à utiliser avec la version 2.11.05 au minimum du script</h2>
 <ul>
