@@ -54,7 +54,43 @@ call :verif_file_version "Ultimate Switch Hack Script.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_file_version "tools\storage\about.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_file_version "tools\storage\launch_payload.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
 call :verif_file_version "tools\storage\menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_file_version "tools\storage\ocasional_functions_menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_file_version "tools\storage\others_functions_menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_file_version "tools\storage\pegaswitch.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_file_version "tools\storage\restore_configs.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_file_version "tools\storage\restore_default.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_file_version "tools\storage\save_and_restaure_menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_file_version "tools\storage\save_configs.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
@@ -66,6 +102,10 @@ call :verif_folder_version "tools\7zip"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
+call :verif_folder_version "tools\default_configs"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 call :verif_folder_version "tools\gitget"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -74,7 +114,15 @@ call :verif_folder_version "tools\gnuwin32"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
+call :verif_folder_version "tools\megatools"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 call :verif_folder_version "tools\Node.js_programs"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\sd_switch\pegaswitch"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
@@ -82,13 +130,15 @@ call :verif_folder_version "tools\storage\functions"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
+call :verif_folder_version "tools\TegraRcmSmash"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 echo Mise à jour des éléments généraux terminée.
 :skip_general_content_update
-IF "%~1"=="" (
-	goto:end_script
-) else (
-	goto:%~1
-)
+goto:%~1
+
+
 
 rem Specific scripts instructions must be added here
 
