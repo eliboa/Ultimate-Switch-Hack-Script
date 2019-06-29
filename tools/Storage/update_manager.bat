@@ -136,7 +136,11 @@ IF %errorlevel% EQU 1 (
 )
 echo Mise à jour des éléments généraux terminée.
 :skip_general_content_update
-goto:%~1
+	IF "%~1"=="" (
+		goto:end_script
+	) else (
+	goto:%~1
+)
 
 
 
@@ -152,7 +156,8 @@ IF %errorlevel% NEQ 0 (
 )
 call :test_write_access file "%~1"
 set /p script_version=<"%~1.version"
-"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path%.version
+"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path%.version >nul
+title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p script_version_verif=<"templogs\version.txt"
 call :compare_version
 exit /b %errorlevel%
@@ -167,7 +172,8 @@ IF %errorlevel% NEQ 0 (
 )
 call :test_write_access folder "%~1"
 set /p script_version=<"%~1\folder_version.txt"
-"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_folder_slash_path%/folder_version.txt
+"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_folder_slash_path%/folder_version.txt >nul
+title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p script_version_verif=<"templogs\version.txt"
 call :compare_version
 exit /b %errorlevel%
@@ -179,7 +185,7 @@ IF %errorlevel% NEQ 0 (
 	exit /b 404
 )
 echo %temp_file_path%>"failed_updates\%temp_file_path:\=;%.file.failed"
-"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%" %files_url_project_base%/%temp_file_slash_path%
+"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%" %files_url_project_base%/%temp_file_slash_path% >nul
 IF %errorlevel% NEQ 0 (
 	echo Erreur lors de la mise à jour du fichier "%temp_file_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
 	IF EXIST templogs (
@@ -188,7 +194,7 @@ IF %errorlevel% NEQ 0 (
 	pause
 	exit
 )
-"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%.version" %files_url_project_base%/%temp_file_slash_path%.version
+"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%.version" %files_url_project_base%/%temp_file_slash_path%.version >nul
 IF %errorlevel% NEQ 0 (
 	echo Erreur lors de la mise à jour du fichier "%temp_file_path%.version", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
 	IF EXIST templogs (
@@ -197,6 +203,7 @@ IF %errorlevel% NEQ 0 (
 	pause
 	exit
 )
+title Shadow256 Ultimate Switch Hack Script %ushs_version%
 del /q "failed_updates\%temp_file_path:\=;%.file.failed"
 exit /b
 
@@ -208,7 +215,7 @@ IF %errorlevel% NEQ 0 (
 )
 echo %temp_folder_path%>"failed_updates\%temp_folder_path:\=;%.fold.failed"
 IF "%temp_folder_path%"=="tools\gitget" (
-	"tools\gitget\SVN\svn.exe" export %folder_url_project_base%/%temp_folder_slash_path% "templogs\gitget" --force
+	"tools\gitget\SVN\svn.exe" export %folder_url_project_base%/%temp_folder_slash_path% "templogs\gitget" --force >nul
 	IF !errorlevel! NEQ 0 (
 		echo Erreur lors de la mise à jour du dossier "%temp_folder_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
 		IF EXIST templogs (
@@ -224,7 +231,7 @@ IF "%temp_folder_path%"=="tools\gitget" (
 	)
 )
 rmdir /s /q "%temp_folder_path%"
-"tools\gitget\SVN\svn.exe" export %folder_url_project_base%/%temp_folder_slash_path% "%temp_folder_path%" --force
+"tools\gitget\SVN\svn.exe" export %folder_url_project_base%/%temp_folder_slash_path% "%temp_folder_path%" --force >nul
 IF %errorlevel% NEQ 0 (
 	echo Erreur lors de la mise à jour du dossier "%temp_folder_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
 	IF EXIST templogs (
@@ -325,7 +332,7 @@ echo 	pause>>update_manager_tmp.bat
 echo 	exit>>update_manager_tmp.bat
 echo )>>update_manager_tmp.bat
 echo echo ^%temp_file_path^%^>"failed_updates\^%temp_file_path:\=;^%.file.failed">>update_manager_tmp.bat
-echo "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "^%temp_file_path^%" ^%files_url_project_base^%/^%temp_file_slash_path^%>>update_manager_tmp.bat
+echo "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "^%temp_file_path^%" ^%files_url_project_base^%/^%temp_file_slash_path^% ^>nul>>update_manager_tmp.bat
 echo IF ^%errorlevel^% NEQ 0 (>>update_manager_tmp.bat
 echo 	echo Erreur lors de la mise à jour du fichier "^%temp_file_path^%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.>>update_manager_tmp.bat
 echo 	IF EXIST templogs (>>update_manager_tmp.bat
@@ -334,7 +341,7 @@ echo 	)>>update_manager_tmp.bat
 echo 	pause>>update_manager_tmp.bat
 echo 	exit>>update_manager_tmp.bat
 echo )>>update_manager_tmp.bat
-echo "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "^%temp_file_path^%.version" ^%files_url_project_base^%/^%temp_file_slash_path^%.version>>update_manager_tmp.bat
+echo "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "^%temp_file_path^%.version" ^%files_url_project_base^%/^%temp_file_slash_path^%.version ^>nul>>update_manager_tmp.bat
 echo IF ^%errorlevel^% NEQ 0 (>>update_manager_tmp.bat
 echo 	echo Erreur lors de la mise à jour du fichier "^%temp_file_path^%.version", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.>>update_manager_tmp.bat
 echo 	IF EXIST templogs (>>update_manager_tmp.bat
@@ -350,6 +357,7 @@ echo )>>update_manager_tmp.bat
 echo IF NOT EXIST "failed_updates\*.failed" (>>update_manager_tmp.bat
 echo 	rmdir /s /q failed_updates>>update_manager_tmp.bat
 echo )>>update_manager_tmp.bat
+echo start "Ultimate Switch Hack Script.bat">>update_manager_tmp.bat
 echo exit>>update_manager_tmp.bat
 cd ..\..
 IF EXIST templogs (
