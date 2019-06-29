@@ -476,6 +476,8 @@ del /Q /S "%volume_letter%:\Backup\.emptydir" >nul
 del /Q /S "%volume_letter%:\pk1decryptor\.emptydir" >nul
 del /Q /S "%volume_letter%:\rr\payloads\.emptydir" >nul 2>&1
 IF EXIST "%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul 2>&1
+IF EXIST "%volume_letter%:\folder_version.txt" del /q "%volume_letter%:\folder_version.txt"
+IF EXIST "%volume_letter%:\switch\folder_version.txt" del /q "%volume_letter%:\switch\folder_version.txt"
 echo Copie terminée.
 goto:endscript
 

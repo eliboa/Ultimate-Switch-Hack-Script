@@ -10,42 +10,38 @@ echo Que souhaitez-vous faire?
 echo.
 echo 1: Récupérer les Biskey dans un fichier texte?
 echo.
-echo 2: Mettre à jour Shofel2?
+echo 2: Installer les drivers pour la Switch?
 echo.
-echo 3: Installer les drivers pour la Switch?
+echo 3: Créer un package de mise à jour de la Switch via ChoiDuJour via un fichier ou un dossier déjà téléchargé??
 echo.
-echo 4: Créer un package de mise à jour de la Switch via ChoiDuJour via un fichier ou un dossier déjà téléchargé??
+echo 4: Vérifier si des numéros de série de consoles sont patchées ou non?
 echo.
-echo 5: Vérifier si des numéros de série de consoles sont patchées ou non?
+echo 5: Vérifier un fichier de clés?
 echo.
-echo 6: Vérifier un fichier de clés?
+echo 6: Utiliser le compagnon pour Hid-mitm?
 echo.
-echo 7: Utiliser le compagnon pour Hid-mitm?
+echo 7: Lancer Linux (fonctionnalité opsolète)?
+echo.
+echo 8: Mettre à jour Shofel2 (fonctionnalité opsolète)?
 echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
 echo.
 set /p action_choice=Entrez le numéro correspondant à l'action à faire: 
 IF "%action_choice%"=="1" goto:biskey_dump
-IF "%action_choice%"=="2" goto:update_shofel2
-IF "%action_choice%"=="3" goto:install_drivers
-IF "%action_choice%"=="4" goto:create_update
-IF "%action_choice%"=="5" goto:verif_serials
-IF "%action_choice%"=="6" goto:test_keys
-IF "%action_choice%"=="7" goto:hid-mitm_compagnon
+IF "%action_choice%"=="2" goto:install_drivers
+IF "%action_choice%"=="3" goto:create_update
+IF "%action_choice%"=="4" goto:verif_serials
+IF "%action_choice%"=="5" goto:test_keys
+IF "%action_choice%"=="6" goto:hid-mitm_compagnon
+IF "%action_choice%"=="7" goto:launch_linux
+IF "%action_choice%"=="8" goto:update_shofel2
 goto:end_script
 :biskey_dump
 set action_choice=
 echo.
 cls
 call TOOLS\Storage\biskey_dump.bat
-@echo off
-goto:define_action_choice
-:update_shofel2
-set action_choice=
-echo.
-cls
-call TOOLS\Storage\update_shofel2.bat
 @echo off
 goto:define_action_choice
 :install_drivers
@@ -81,6 +77,20 @@ set action_choice=
 echo.
 cls
 call tools\Hid-mitm_compagnon\start.bat
+@echo off
+goto:define_action_choice
+:launch_linux
+set action_choice=
+echo.
+cls
+call TOOLS\Storage\launch_linux.bat
+@echo off
+goto:define_action_choice
+:update_shofel2
+set action_choice=
+echo.
+cls
+call TOOLS\Storage\update_shofel2.bat
 @echo off
 goto:define_action_choice
 :end_script
