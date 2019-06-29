@@ -3,8 +3,9 @@ Setlocal enabledelayedexpansion
 @echo off
 chcp 65001 >nul
 echo é >nul
+IF "%~1"=="" goto:end_script
 rem IF "%~2"=="forced" set verif_update=Y
-set base_script_path="%~dp0\..\..\.."
+set base_script_path="%~dp0\..\.."
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
 set files_url_project_base=https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master
 IF NOT "%~nx0"=="update_manager_tmp.bat" (
@@ -25,13 +26,59 @@ mkdir failed_updates
 :failed_updates_verification
 IF NOT EXIST "failed_updates\*.failed" goto:skip_failed_updates_verification
 cd "failed_updates"
+IF EXIST "update_manager.bat.file.failed" (
+	echo Le gestionnaire de mises à jour doit se mettre à jour lui-même avant de pouvoir continuer car sa mise à jour précédente semble avoir échouée.
+	echo Pour se faire, le script va lancer un autre script puis se fermer pour que la mise à jour puisse s'effectuer correctement.
+	echo Une fois la mise à jour effectuée, vous devrez relancer le script.
+	pause
+	call :update_manager_update_special_script
+)
 for %%f in (*.failed) do (
 	call :update_failed_content "%%f"
 )
 cd ..
 :skip_failed_updates_verification
+:update_manager_update
+call :verif_file_version "tools\storage\update_manager.bat"
+IF %errorlevel% EQU 1 (
+	echo Le gestionnaire de mises à jour doit se mettre à jour lui-même avant de pouvoir continuer.
+	echo Pour se faire, le script va lancer un autre script puis se fermer pour que la mise à jour puisse s'effectuer correctement.
+	echo Une fois la mise à jour effectuée, vous devrez relancer le script.
+	pause
+	call :update_manager_update_special_script
+)
 :general_content_update
-
+IF "%~2"=="skip_general_update" goto:skip_general_content_update
+echo Mise à jour des éléments généraux du script
+call :verif_file_version "Ultimate Switch Hack Script.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_file_version "tools\storage\menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\7zip"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\gitget"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\gnuwin32"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\Node.js_programs"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\storage\functions"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+echo Mise à jour des éléments généraux terminée.
 :skip_general_content_update
 IF "%~1"=="" (
 	goto:end_script
@@ -174,6 +221,66 @@ IF "%temp_failed_file:~-11,4%"=="fold" (
 	call :update_folder
 )
 exit /b
+
+:update_manager_update_special_script
+cd /d "%~dp0"
+echo @echo off>update_manager_tmp.bat
+echo chcp 65001 ^>nul>>update_manager_tmp.bat
+echo cd /d "^%~dp0\..\..\..">>update_manager_tmp.bat
+echo IF EXIST templogs (>>update_manager_tmp.bat
+echo 	rmdir /s /q templogs>>update_manager_tmp.bat
+echo )>>update_manager_tmp.bat
+echo mkdir "templogs">>update_manager_tmp.bat
+echo IF NOT EXIST "failed_updates\*.failed" (>>update_manager_tmp.bat
+echo 	rmdir /s /q failed_updates>>update_manager_tmp.bat
+echo )>>update_manager_tmp.bat
+echo mkdir "failed_update">>update_manager_tmp.bat
+echo set temp_file_path=tools\storage\update_manager.bat>>update_manager_tmp.bat
+echo set temp_file_slash_path=^%temp_file_path:\=/^%>>update_manager_tmp.bat
+echo set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk>>update_manager_tmp.bat
+echo set files_url_project_base=https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master>>update_manager_tmp.bat
+echo ping /n 2 www.google.com ^>nul 2^>&^1>>update_manager_tmp.bat
+echo IF ^%errorlevel^% NEQ 0 (>>update_manager_tmp.bat
+echo 	echo Aucune connexion internet vérifiable, la mise à jour du fichier "^%temp_file_path^%" n'aura pas lieu.>>update_manager_tmp.bat
+echo 	pause>>update_manager_tmp.bat
+echo 	exit>>update_manager_tmp.bat
+echo )>>update_manager_tmp.bat
+echo echo ^%temp_file_path^%^>"failed_updates\^%temp_file_path:\=;^%.file.failed">>update_manager_tmp.bat
+echo "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "^%temp_file_path^%" ^%files_url_project_base^%/^%temp_file_slash_path^%>>update_manager_tmp.bat
+echo IF ^%errorlevel^% NEQ 0 (>>update_manager_tmp.bat
+echo 	echo Erreur lors de la mise à jour du fichier "^%temp_file_path^%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.>>update_manager_tmp.bat
+echo 	IF EXIST templogs (>>update_manager_tmp.bat
+echo 		rmdir /s /q templogs>>update_manager_tmp.bat
+echo 	)>>update_manager_tmp.bat
+echo 	pause>>update_manager_tmp.bat
+echo 	exit>>update_manager_tmp.bat
+echo )>>update_manager_tmp.bat
+echo "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "^%temp_file_path^%.version" ^%files_url_project_base^%/^%temp_file_slash_path^%.version>>update_manager_tmp.bat
+echo IF ^%errorlevel^% NEQ 0 (>>update_manager_tmp.bat
+echo 	echo Erreur lors de la mise à jour du fichier "^%temp_file_path^%.version", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.>>update_manager_tmp.bat
+echo 	IF EXIST templogs (>>update_manager_tmp.bat
+echo 		rmdir /s /q templogs>>update_manager_tmp.bat
+echo 	)>>update_manager_tmp.bat
+echo 	pause>>update_manager_tmp.bat
+echo 	exit>>update_manager_tmp.bat
+echo )>>update_manager_tmp.bat
+echo del /q "failed_updates\^%temp_file_path:\=;^%.file.failed">>update_manager_tmp.bat
+echo IF EXIST templogs (>>update_manager_tmp.bat
+echo 	rmdir /s /q templogs>>update_manager_tmp.bat
+echo )>>update_manager_tmp.bat
+echo IF NOT EXIST "failed_updates\*.failed" (>>update_manager_tmp.bat
+echo 	rmdir /s /q failed_updates>>update_manager_tmp.bat
+echo )>>update_manager_tmp.bat
+echo exit>>update_manager_tmp.bat
+cd ..\..
+IF EXIST templogs (
+	rmdir /s /q templogs
+)
+IF NOT EXIST "failed_updates\*.failed" (
+	rmdir /s /q failed_updates
+)
+start "tools\storage\update_manager_tmp.bat"
+exit
 
 :end_script
 IF EXIST templogs (
