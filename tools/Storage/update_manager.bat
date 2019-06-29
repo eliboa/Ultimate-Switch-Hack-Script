@@ -157,6 +157,22 @@ IF %errorlevel% NEQ 0 (
 	exit /b 404
 )
 echo %temp_folder_path%>"failed_updates\%temp_folder_path:\=;%.fold.failed"
+IF "%temp_folder_path%"=="tools\gitget" (
+	"tools\gitget\SVN\svn.exe" export %folder_url_project_base%/%temp_folder_slash_path% "templogs\gitget" --force
+	IF !errorlevel! NEQ 0 (
+		echo Erreur lors de la mise à jour du dossier "%temp_folder_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
+		IF EXIST templogs (
+			rmdir /s /q templogs
+		)
+		pause
+		exit
+	) else (
+		rmdir /s /q "%temp_folder_path%"
+		move "templogs\gitget" "%temp_folder_path%"
+		del /q "failed_updates\%temp_folder_path:\=;%.folder.failed"
+		exit /b
+	)
+)
 rmdir /s /q "%temp_folder_path%"
 "tools\gitget\SVN\svn.exe" export %folder_url_project_base%/%temp_folder_slash_path% "%temp_folder_path%" --force
 IF %errorlevel% NEQ 0 (
@@ -172,6 +188,15 @@ exit /b
 
 :compare_version
 set update_finded=
+IF "%script_version_verif%"=="" exit /b 0
+IF "%script_version%"=="" (
+	IF NOT "%script_version_verif%"=="" (
+		set update_finded=O
+		exit /b 1
+	) else (
+		exit /b 0
+	)
+)
 IF %script_version_verif:~0,1% GTR %script_version:~0,1% (
 	set update_finded=O
 	exit /b 1
