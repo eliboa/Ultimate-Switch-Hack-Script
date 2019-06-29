@@ -58,6 +58,10 @@ call :verif_file_version "tools\storage\menu.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "DOC"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 call :verif_folder_version "tools\7zip"
 IF %errorlevel% EQU 1 (
 	call :update_folder
