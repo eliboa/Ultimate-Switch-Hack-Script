@@ -7,7 +7,7 @@ IF "%~1"=="" goto:end_script
 rem IF "%~2"=="forced" set verif_update=Y
 set base_script_path="%~dp0\..\.."
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
-set files_url_project_base=https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master
+set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
 IF NOT "%~nx0"=="update_manager_tmp.bat" (
 	IF EXIST "%~dp0\%~n0_tmp.bat" del /q "%~dp0\%~n0_tmp.bat"
 ) else (
@@ -39,7 +39,7 @@ for %%f in (*.failed) do (
 cd ..
 :skip_failed_updates_verification
 :update_manager_update
-call :verif_file_version "tools\storage\update_manager.bat"
+call :verif_file_version "tools\Storage\update_manager.bat"
 IF %errorlevel% EQU 1 (
 	echo Le gestionnaire de mises à jour doit se mettre à jour lui-même avant de pouvoir continuer.
 	echo Pour se faire, le script va lancer un autre script puis se fermer pour que la mise à jour puisse s'effectuer correctement.
@@ -50,47 +50,47 @@ IF %errorlevel% EQU 1 (
 :general_content_update
 IF "%~2"=="skip_general_update" goto:skip_general_content_update
 echo Mise à jour des éléments généraux du script
-call :verif_file_version "Ultimate Switch Hack Script.bat"
+call :verif_file_version "Ultimate-Switch-Hack-Script.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_file_version "tools\storage\about.bat"
+call :verif_file_version "tools\Storage\about.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_file_version "tools\storage\launch_payload.bat"
+call :verif_file_version "tools\Storage\launch_payload.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_file_version "tools\storage\menu.bat"
+call :verif_file_version "tools\Storage\menu.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_file_version "tools\storage\ocasional_functions_menu.bat"
+call :verif_file_version "tools\Storage\ocasional_functions_menu.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_file_version "tools\storage\others_functions_menu.bat"
+call :verif_file_version "tools\Storage\others_functions_menu.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_file_version "tools\storage\pegaswitch.bat"
+call :verif_file_version "tools\Storage\pegaswitch.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_file_version "tools\storage\restore_configs.bat"
+call :verif_file_version "tools\Storage\restore_configs.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_file_version "tools\storage\restore_default.bat"
+call :verif_file_version "tools\Storage\restore_default.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_file_version "tools\storage\save_and_restaure_menu.bat"
+call :verif_file_version "tools\Storage\save_and_restaure_menu.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_file_version "tools\storage\save_configs.bat"
+call :verif_file_version "tools\Storage\save_configs.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
@@ -126,7 +126,7 @@ call :verif_folder_version "tools\sd_switch\pegaswitch"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
-call :verif_folder_version "tools\storage\functions"
+call :verif_folder_version "tools\Storage\functions"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
@@ -156,9 +156,12 @@ IF %errorlevel% NEQ 0 (
 )
 call :test_write_access file "%~1"
 set /p script_version=<"%~1.version"
-"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path%.version >nul
+"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path%.version 2>nul
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p script_version_verif=<"templogs\version.txt"
+rem echo %temp_file_path% : va=%script_version%, vm=%script_version_verif%
+rem echo %temp_file_slash_path%
+rem pause
 call :compare_version
 exit /b %errorlevel%
 
@@ -172,9 +175,12 @@ IF %errorlevel% NEQ 0 (
 )
 call :test_write_access folder "%~1"
 set /p script_version=<"%~1\folder_version.txt"
-"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_folder_slash_path%/folder_version.txt >nul
+"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_folder_slash_path%/folder_version.txt 2>nul
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p script_version_verif=<"templogs\version.txt"
+rem echo %temp_file_path% : va=%script_version%, vm=%script_version_verif%
+rem echo %temp_file_slash_path%
+rem pause
 call :compare_version
 exit /b %errorlevel%
 
@@ -185,7 +191,7 @@ IF %errorlevel% NEQ 0 (
 	exit /b 404
 )
 echo %temp_file_path%>"failed_updates\%temp_file_path:\=;%.file.failed"
-"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%" %files_url_project_base%/%temp_file_slash_path% >nul
+"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%" %files_url_project_base%/%temp_file_slash_path% 2>nul
 IF %errorlevel% NEQ 0 (
 	echo Erreur lors de la mise à jour du fichier "%temp_file_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
 	IF EXIST templogs (
@@ -194,7 +200,7 @@ IF %errorlevel% NEQ 0 (
 	pause
 	exit
 )
-"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%.version" %files_url_project_base%/%temp_file_slash_path%.version >nul
+"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%.version" %files_url_project_base%/%temp_file_slash_path%.version 2>nul
 IF %errorlevel% NEQ 0 (
 	echo Erreur lors de la mise à jour du fichier "%temp_file_path%.version", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
 	IF EXIST templogs (
@@ -215,7 +221,7 @@ IF %errorlevel% NEQ 0 (
 )
 echo %temp_folder_path%>"failed_updates\%temp_folder_path:\=;%.fold.failed"
 IF "%temp_folder_path%"=="tools\gitget" (
-	"tools\gitget\SVN\svn.exe" export %folder_url_project_base%/%temp_folder_slash_path% "templogs\gitget" --force >nul
+	"tools\gitget\SVN\svn.exe" export %folder_url_project_base%/%temp_folder_slash_path% templogs\gitget --force >nul
 	IF !errorlevel! NEQ 0 (
 		echo Erreur lors de la mise à jour du dossier "%temp_folder_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
 		IF EXIST templogs (
@@ -231,7 +237,7 @@ IF "%temp_folder_path%"=="tools\gitget" (
 	)
 )
 rmdir /s /q "%temp_folder_path%"
-"tools\gitget\SVN\svn.exe" export %folder_url_project_base%/%temp_folder_slash_path% "%temp_folder_path%" --force >nul
+"tools\gitget\SVN\svn.exe" export %folder_url_project_base%/%temp_folder_slash_path% %temp_folder_path% --force >nul
 IF %errorlevel% NEQ 0 (
 	echo Erreur lors de la mise à jour du dossier "%temp_folder_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
 	IF EXIST templogs (
@@ -321,7 +327,7 @@ echo IF NOT EXIST "failed_updates\*.failed" (>>update_manager_tmp.bat
 echo 	rmdir /s /q failed_updates>>update_manager_tmp.bat
 echo )>>update_manager_tmp.bat
 echo mkdir "failed_update">>update_manager_tmp.bat
-echo set temp_file_path=tools\storage\update_manager.bat>>update_manager_tmp.bat
+echo set temp_file_path=tools\Storage\update_manager.bat>>update_manager_tmp.bat
 echo set temp_file_slash_path=^%temp_file_path:\=/^%>>update_manager_tmp.bat
 echo set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk>>update_manager_tmp.bat
 echo set files_url_project_base=https://raw.githubusercontent.com/shadow2560/Ultimate-Switch-Hack-Script/master>>update_manager_tmp.bat
@@ -366,7 +372,7 @@ IF EXIST templogs (
 IF NOT EXIST "failed_updates\*.failed" (
 	rmdir /s /q failed_updates
 )
-start "tools\storage\update_manager_tmp.bat"
+start "tools\Storage\update_manager_tmp.bat"
 exit
 
 :end_script
