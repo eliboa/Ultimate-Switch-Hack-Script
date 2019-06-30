@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.11.14</h2>
+<ul>
+<li>Mise à jour du payload de démarrage d'Atmosphere en version 0.9.2.</li>
+<li>Mise à jour du payload Hekate en version 5.0.0.</li>
+</ul>
 <h2>V2.11.13 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
 <ul>
 <li>Supression des espaces dans le nom du fichier du script de démarrage pour simplifier le processus des futurs mises à jour.</li>

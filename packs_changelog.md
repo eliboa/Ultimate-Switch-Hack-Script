@@ -1,5 +1,10 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V201</h2>
+<ul>
+<li>Mise à jour d'Atmosphere en version 0.9.2.</li>
+<li>Mise à jour de Hekate en version 5.0.0.</li>
+</ul>
 <h2>V200 (à utiliser avec la version 2.11.12 au minimum du script</h2>
 <ul>
 <li>Mise à jour du pack de cheats en version 21.</li>
