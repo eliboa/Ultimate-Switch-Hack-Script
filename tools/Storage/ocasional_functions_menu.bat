@@ -76,7 +76,7 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
-call tools\Hid-mitm_compagnon\start.bat
+call tools\Storage\launch_hid-mitm_compagnon.bat
 @echo off
 goto:define_action_choice
 :launch_linux

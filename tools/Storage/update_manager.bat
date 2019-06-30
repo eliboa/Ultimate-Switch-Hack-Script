@@ -3,7 +3,7 @@ Setlocal enabledelayedexpansion
 @echo off
 chcp 65001 >nul
 echo é >nul
-IF "%~1"=="" goto:end_script
+rem IF "%~1"=="" goto:end_script
 rem IF "%~2"=="forced" set verif_update=Y
 ping /n 2 www.google.com >nul 2>&1
 IF %errorlevel% NEQ 0 (
@@ -132,12 +132,20 @@ call :verif_file_version "tools\Storage\cheats_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\sd_switch\cheats"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_convert_BOTW.bat
 call :verif_file_version "tools\Storage\convert_BOTW.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+call :verif_folder_version "tools\BOTW_saveconv"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 exit /b
 
@@ -146,6 +154,10 @@ call :verif_file_version "tools\Storage\convert_game_to_nsp.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\Hactool_based_programs"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_create_update.bat
@@ -153,12 +165,26 @@ call :verif_file_version "tools\Storage\create_update.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\Hactool_based_programs"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\python3_scripts\Keys_management"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_emulators_pack_profiles_management.bat
 call :verif_file_version "tools\Storage\emulators_pack_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+for /d %%f in ("tools\sd_switch\emulators\pack\*") do (
+	call :verif_folder_version "%%f"
+	IF !errorlevel! EQU 1 (
+		call :update_folder
+	)
 )
 exit /b
 
@@ -173,6 +199,18 @@ exit /b
 call :verif_file_version "tools\Storage\extract_cert.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+call :verif_folder_version "tools\openssl"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\python2_scripts\CertNXtractionPack"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\python3_scripts\Cert_extraction"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 exit /b
 
@@ -203,12 +241,31 @@ call :verif_file_version "tools\Storage\install_nsp_network.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\python3_scripts\remote_NSP"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_install_nsp_USB.bat
 call :verif_file_version "tools\Storage\install_nsp_USB.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+call :verif_folder_version "tools\Goldtree"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:update_launch_hid-mitm_compagnon.bat
+call :verif_file_version "tools\Storage\launch_hid-mitm_compagnon.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\Hid-mitm_compagnon"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 exit /b
 
@@ -236,7 +293,10 @@ call :verif_file_version "tools\Storage\launch_payload.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-
+call :verif_folder_version "Payloads"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 call :verif_folder_version "tools\TegraRcmSmash"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -266,6 +326,16 @@ call :verif_file_version "tools\Storage\mixed_pack_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\sd_switch\mixed\base"
+IF !errorlevel! EQU 1 (
+	call :update_folder
+)
+for /d %%f in ("tools\sd_switch\mixed\modular\*") do (
+	call :verif_folder_version "%%f"
+	IF !errorlevel! EQU 1 (
+		call :update_folder
+	)
+)
 exit /b
 
 :update_modules_profiles_management.bat
@@ -273,12 +343,26 @@ call :verif_file_version "tools\Storage\modules_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+for /d %%f in ("tools\sd_switch\modules\pack\*") do (
+	call :verif_folder_version "%%f"
+	IF !errorlevel! EQU 1 (
+		call :update_folder
+	)
+)
 exit /b
 
 :update_mount_discs.bat
 call :verif_file_version "tools\Storage\mount_discs.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+call :verif_folder_version "tools\HacDiskMount"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\memloader"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 call :verif_folder_version "tools\TegraRcmSmash"
 IF %errorlevel% EQU 1 (
@@ -290,6 +374,10 @@ exit /b
 call :verif_file_version "tools\Storage\nand_firmware_detect.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+call :verif_folder_version "tools\python3_scripts\FVI"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 exit /b
 
@@ -312,6 +400,16 @@ call :verif_file_version "tools\Storage\nand_toolbox.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\NxNandManager"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :update_emunand_partition_file_create.bat
+call :update_extract_nand_files_from_emunand_partition_file.bat
+call :update_mount_discs.bat
+call :update_nand_firmware_detect.bat
+call :update_nand_joiner.bat
+call :update_nand_spliter.bat
 exit /b
 
 :update_netplay.bat
@@ -319,12 +417,20 @@ call :verif_file_version "tools\Storage\netplay.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\netplay"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_nsZip.bat
 call :verif_file_version "tools\Storage\nsZip.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+call :verif_folder_version "tools\nsZip"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 exit /b
 
@@ -362,6 +468,10 @@ call :verif_file_version "tools\Storage\preload_NSC_Builder.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\NSC_Builder"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_prepare_sd_switch.bat
@@ -369,6 +479,17 @@ call :verif_file_version "tools\Storage\prepare_sd_switch.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\fat32format"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :update_cheats_profiles_management.bat
+call :update_emulators_pack_profiles_management.bat
+call :update_mixed_pack_profiles_management.bat
+call :update_modules_profiles_management.bat
+call :update_prepare_sd_switch_files_questions.bat
+call :update_prepare_sd_switch_infos.bat
+call :update_prepare_sd_switch_profiles_management.bat
 exit /b
 
 :update_prepare_sd_switch_files_questions.bat
@@ -390,6 +511,26 @@ call :verif_file_version "tools\Storage\prepare_sd_switch_profiles_management.ba
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\sd_switch\atmosphere"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\sd_switch\atmosphere_patches_nogc"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\sd_switch\payloads"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\sd_switch\reinx"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\sd_switch\sxos"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_prepare_update_on_sd.bat
@@ -397,6 +538,11 @@ call :verif_file_version "tools\Storage\prepare_update_on_sd.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\sd_switch\mixed\modular\ChoiDuJourNX"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :update_create_update.bat
 exit /b
 
 :update_restore_configs.bat
@@ -432,12 +578,24 @@ call :verif_file_version "tools\Storage\serial_checker.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\python3_scripts\ssnc"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_split_games.bat
 call :verif_file_version "tools\Storage\split_games.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+call :verif_folder_version "tools\python3_scripts\splitNSP"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\XCI-Cutter"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 exit /b
 
@@ -446,12 +604,44 @@ call :verif_file_version "tools\Storage\test_keys.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+call :verif_folder_version "tools\python3_scripts\Keys_management"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_toolbox.bat
 call :verif_file_version "tools\Storage\toolbox.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+call :verif_folder_version "tools\toolbox"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\Goldtree"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\GuiFormat"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\HacDiskMount"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\Hactool_based_programs"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\H2testw"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\XCI-Cutter"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 exit /b
 
@@ -470,6 +660,10 @@ exit /b
 call :verif_file_version "tools\Storage\verify_nsp.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+call :verif_folder_version "tools\Hactool_based_programs"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 exit /b
 
@@ -624,9 +818,48 @@ IF "%temp_folder_path%"=="tools\gitget" (
 		exit /b
 	)
 )
+IF "%temp_folder_path%"=="tools\Hactool_based_programs" (
+	mkdir templogs\tempsave
+	copy /V "tools\Hactool_based_programs\keys.txt" "templogs\tempsave\keys.txt" >nul 2>&1
+copy /V "tools\Hactool_based_programs\keys.dat" "templogs\tempsave\keys.dat" >nul 2>&1
+)
+IF "%temp_folder_path%"=="tools\megatools" (
+	mkdir templogs\tempsave
+	copy /V "tools\megatools\mega.ini" "templogs\tempsave\mega.ini" >nul 2>&1
+)
+IF "%temp_folder_path%"=="tools\netplay" (
+	mkdir templogs\tempsave
+	copy /v "tools\netplay\servers_list.txt" "templogs\tempsave\servers_list.txt" >nul 2>&1
+)
+IF "%temp_folder_path%"=="tools\NSC_Builder" (
+	mkdir templogs\tempsave
+	copy /V "tools\NSC_Builder\keys.txt" "templogs\tempsave\keys.txt" >nul 2>&1
+)
+IF "%temp_folder_path%"=="tools\toolbox" (
+	mkdir templogs\tempsave
+	%windir%\System32\Robocopy.exe tools\toolbox templogs\tempsave /e >nul 2>&1
+	del /q templogs\tempsave\default_tools.txt
+	del /q templogs\tempsave\folder_version.txt
+)
 rmdir /s /q "%temp_folder_path%"
 "tools\gitget\SVN\svn.exe" export %folders_url_project_base%/%temp_folder_slash_path% %temp_folder_path% --force
-IF %errorlevel% NEQ 0 (
+set temp_folder_download_error=%errorlevel%
+IF "%temp_folder_path%"=="tools\Hactool_based_programs" (
+		move "templogs\tempsave" "%temp_folder_path%"
+)
+IF "%temp_folder_path%"=="tools\megatools" (
+		move "templogs\tempsave" "%temp_folder_path%"
+)
+IF "%temp_folder_path%"=="tools\netplay" (
+		move "templogs\tempsave" "%temp_folder_path%"
+)
+IF "%temp_folder_path%"=="tools\NSC_Builder" (
+		move "templogs\tempsave" "%temp_folder_path%"
+)
+IF "%temp_folder_path%"=="tools\toolbox" (
+		move "templogs\tempsave" "%temp_folder_path%"
+)
+IF %temp_folder_download_error% NEQ 0 (
 	echo Erreur lors de la mise à jour du dossier "%temp_folder_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
 	IF EXIST templogs (
 		rmdir /s /q templogs
