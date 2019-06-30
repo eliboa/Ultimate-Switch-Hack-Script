@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V202</h2>
+<ul>
+<li>Mise à jour des fichiers de configurations de Hekate pour y ajouter des configurations forçant la désactivation de l'Emunand.</li>
+</ul>
 <h2>V201 (à utiliser avec la version 2.11.15 au minimum du script</h2>
 <ul>
 <li>Mise à jour d'Atmosphere en version 0.9.2.</li>
