@@ -60,21 +60,439 @@ IF !errorlevel! EQU 1 (
 	pause
 	call :update_manager_update_special_script
 )
-:general_content_update
-IF "%~2"=="skip_general_update" goto:skip_general_content_update
-echo Vérification et mise à jour des éléments généraux du script
+
+IF NOT "%~2"=="skip_general_update" call ::general_content_update
+	IF "%~1"=="" (
+		goto:end_script
+	) else (
+	call :%~1
+)
+
+rem Specific scripts instructions must be added here
+
+:update_all
+call ::general_content_update
+call :update_about.bat
+call :update_biskey_dump.bat
+call :update_convert_BOTW.bat
+call :update_convert_game_to_nsp.bat
+call :update_extract_cert.bat
+call :update_install_drivers.bat
+call :update_install_nsp_network.bat
+call :update_install_nsp_USB.bat
+call :update_launch_linux.bat
+call :update_launch_payload.bat
+call :update_launch_switch_lan_play_server.bat
+call :update_nand_toolbox.bat
+call :update_netplay.bat
+call :update_nsZip.bat
+call :update_pegaswitch.bat
+call :update_preload_NSC_Builder.bat
+call :update_prepare_sd_switch.bat
+call :update_prepare_update_on_sd.bat
+call :update_serial_checker.bat
+call :update_split_games.bat
+call :update_test_keys.bat
+call :update_toolbox.bat
+call :update_update_shofel2.bat
+call :update_verify_nsp.bat
+call :update_NES_Injector
+call :update_SNES_Injector
+exit /b
+
+:update_starting_script
 call :verif_file_version "Ultimate-Switch-Hack-Script.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+exit /b
+
+:update_about.bat
 call :verif_file_version "tools\Storage\about.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+exit /b
+
+:update_biskey_dump.bat
+call :verif_file_version "tools\Storage\biskey_dump.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\biskeydump"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\TegraRcmSmash"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:update_cheats_profiles_management.bat
+call :verif_file_version "tools\Storage\cheats_profiles_management.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_convert_BOTW.bat
+call :verif_file_version "tools\Storage\convert_BOTW.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_convert_game_to_nsp.bat
+call :verif_file_version "tools\Storage\convert_game_to_nsp.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_create_update.bat
+call :verif_file_version "tools\Storage\create_update.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_emulators_pack_profiles_management.bat
+call :verif_file_version "tools\Storage\emulators_pack_profiles_management.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_emunand_partition_file_create.bat
+call :verif_file_version "tools\Storage\emunand_partition_file_create.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_extract_cert.bat
+call :verif_file_version "tools\Storage\extract_cert.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_extract_nand_files_from_emunand_partition_file.bat
+call :verif_file_version "tools\Storage\extract_nand_files_from_emunand_partition_file.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_install_drivers.bat
+call :verif_file_version "tools\Storage\install_drivers.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\drivers"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\TegraRcmSmash"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:update_install_nsp_network.bat
+call :verif_file_version "tools\Storage\install_nsp_network.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_install_nsp_USB.bat
+call :verif_file_version "tools\Storage\install_nsp_USB.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_launch_linux.bat
+call :verif_file_version "tools\Storage\launch_linux.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\linux_kernels"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\shofel2"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\TegraRcmSmash"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:update_launch_payload.bat
 call :verif_file_version "tools\Storage\launch_payload.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+
+call :verif_folder_version "tools\TegraRcmSmash"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:update_launch_switch_lan_play_server.bat
+call :verif_file_version "tools\Storage\launch_switch_lan_play_server.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\Node.js_programs"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:update_menu.bat
+call :verif_file_version "tools\Storage\menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_mixed_pack_profiles_management.bat
+call :verif_file_version "tools\Storage\mixed_pack_profiles_management.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_modules_profiles_management.bat
+call :verif_file_version "tools\Storage\modules_profiles_management.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_mount_discs.bat
+call :verif_file_version "tools\Storage\mount_discs.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\TegraRcmSmash"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:update_nand_firmware_detect.bat
+call :verif_file_version "tools\Storage\nand_firmware_detect.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_nand_joiner.bat
+call :verif_file_version "tools\Storage\nand_joiner.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_nand_spliter.bat
+call :verif_file_version "tools\Storage\nand_spliter.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_nand_toolbox.bat
+call :verif_file_version "tools\Storage\nand_toolbox.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_netplay.bat
+call :verif_file_version "tools\Storage\netplay.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_nsZip.bat
+call :verif_file_version "tools\Storage\nsZip.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_ocasional_functions_menu.bat
+call :verif_file_version "tools\Storage\ocasional_functions_menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_others_functions_menu.bat
+call :verif_file_version "tools\Storage\others_functions_menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_pegaswitch.bat
+call :verif_file_version "tools\Storage\pegaswitch.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\sd_switch\pegaswitch"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\Node.js_programs"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:update_preload_NSC_Builder.bat
+call :verif_file_version "tools\Storage\preload_NSC_Builder.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_prepare_sd_switch.bat
+call :verif_file_version "tools\Storage\prepare_sd_switch.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_prepare_sd_switch_files_questions.bat
+call :verif_file_version "tools\Storage\prepare_sd_switch_files_questions.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_prepare_sd_switch_infos.bat
+call :verif_file_version "tools\Storage\prepare_sd_switch_infos.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_prepare_sd_switch_profiles_management.bat
+call :verif_file_version "tools\Storage\prepare_sd_switch_profiles_management.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_prepare_update_on_sd.bat
+call :verif_file_version "tools\Storage\prepare_update_on_sd.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_restore_configs.bat
+call :verif_file_version "tools\Storage\restore_configs.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_restore_default.bat
+call :verif_file_version "tools\Storage\restore_default.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_save_and_restaure_menu.bat
+call :verif_file_version "tools\Storage\save_and_restaure_menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_save_configs.bat
+call :verif_file_version "tools\Storage\save_configs.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_serial_checker.bat
+call :verif_file_version "tools\Storage\serial_checker.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_split_games.bat
+call :verif_file_version "tools\Storage\split_games.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_test_keys.bat
+call :verif_file_version "tools\Storage\test_keys.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_toolbox.bat
+call :verif_file_version "tools\Storage\toolbox.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_update_shofel2.bat
+call :verif_file_version "tools\Storage\update_shofel2.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\shofel2"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:update_verify_nsp.bat
+call :verif_file_version "tools\Storage\verify_nsp.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_NES_Injector
+call :verif_folder_version "tools\NES_Injector"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:update_SNES_Injector
+call :verif_folder_version "tools\SNES_Injector"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+exit /b
+
+:general_content_update
+echo Vérification et mise à jour des éléments généraux du script
+call :update_starting_script
+call :update_about.bat
 call :verif_file_version "tools\Storage\menu.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
@@ -84,10 +502,6 @@ IF %errorlevel% EQU 1 (
 	call :update_file
 )
 call :verif_file_version "tools\Storage\others_functions_menu.bat"
-IF %errorlevel% EQU 1 (
-	call :update_file
-)
-call :verif_file_version "tools\Storage\pegaswitch.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
@@ -106,10 +520,6 @@ IF %errorlevel% EQU 1 (
 call :verif_file_version "tools\Storage\save_configs.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
-)
-call :verif_folder_version "DOC"
-IF %errorlevel% EQU 1 (
-	call :update_folder
 )
 call :verif_folder_version "tools\7zip"
 IF %errorlevel% EQU 1 (
@@ -131,33 +541,18 @@ call :verif_folder_version "tools\megatools"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
-call :verif_folder_version "tools\Node.js_programs"
-IF %errorlevel% EQU 1 (
-	call :update_folder
-)
-call :verif_folder_version "tools\sd_switch\pegaswitch"
-IF %errorlevel% EQU 1 (
-	call :update_folder
-)
 call :verif_folder_version "tools\Storage\functions"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
-call :verif_folder_version "tools\TegraRcmSmash"
+call :verif_folder_version "DOC"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
 echo Mise à jour des éléments généraux terminée.
-:skip_general_content_update
-	IF "%~1"=="" (
-		goto:end_script
-	) else (
-	goto:%~1
-)
+exit /b
 
-
-
-rem Specific scripts instructions must be added here
+rem End of specific scripts instructions
 
 :verif_file_version
 set temp_file_path=%~1
