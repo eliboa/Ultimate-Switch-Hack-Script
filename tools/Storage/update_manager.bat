@@ -493,34 +493,13 @@ exit /b
 echo Vérification et mise à jour des éléments généraux du script
 call :update_starting_script
 call :update_about.bat
-call :verif_file_version "tools\Storage\menu.bat"
-IF %errorlevel% EQU 1 (
-	call :update_file
-)
-call :verif_file_version "tools\Storage\ocasional_functions_menu.bat"
-IF %errorlevel% EQU 1 (
-	call :update_file
-)
-call :verif_file_version "tools\Storage\others_functions_menu.bat"
-IF %errorlevel% EQU 1 (
-	call :update_file
-)
-call :verif_file_version "tools\Storage\restore_configs.bat"
-IF %errorlevel% EQU 1 (
-	call :update_file
-)
-call :verif_file_version "tools\Storage\restore_default.bat"
-IF %errorlevel% EQU 1 (
-	call :update_file
-)
-call :verif_file_version "tools\Storage\save_and_restaure_menu.bat"
-IF %errorlevel% EQU 1 (
-	call :update_file
-)
-call :verif_file_version "tools\Storage\save_configs.bat"
-IF %errorlevel% EQU 1 (
-	call :update_file
-)
+call :update_menu.bat
+call :update_ocasional_functions_menu.bat
+call :update_others_functions_menu.bat
+call :update_restore_configs.bat
+call :update_restore_default.bat
+call :update_save_and_restaure_menu.bat
+call :update_save_configs.bat
 call :verif_folder_version "tools\7zip"
 IF %errorlevel% EQU 1 (
 	call :update_folder
