@@ -5,6 +5,11 @@ chcp 65001 >nul
 echo é >nul
 IF "%~1"=="" goto:end_script
 rem IF "%~2"=="forced" set verif_update=Y
+ping /n 2 www.google.com >nul 2>&1
+IF %errorlevel% NEQ 0 (
+	echo Aucune connexion internet vérifiable, la mise à jour du dossier "%temp_folder_path%" n'aura pas lieu.
+	goto:end_script
+)
 set base_script_path="%~dp0\..\.."
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
 set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
@@ -57,7 +62,7 @@ IF !errorlevel! EQU 1 (
 )
 :general_content_update
 IF "%~2"=="skip_general_update" goto:skip_general_content_update
-echo Mise à jour des éléments généraux du script
+echo Vérification et mise à jour des éléments généraux du script
 call :verif_file_version "Ultimate-Switch-Hack-Script.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
@@ -157,11 +162,11 @@ rem Specific scripts instructions must be added here
 :verif_file_version
 set temp_file_path=%~1
 set temp_file_slash_path=%temp_file_path:\=/%
-ping /n 2 www.google.com >nul 2>&1
-IF %errorlevel% NEQ 0 (
-	echo Aucune connexion internet vérifiable, la vérification de version du fichier "%temp_file_path%" n'aura pas lieu.
-	exit /b 0
-)
+rem ping /n 2 www.google.com >nul 2>&1
+rem IF %errorlevel% NEQ 0 (
+rem 	echo Aucune connexion internet vérifiable, la vérification de version du fichier "%temp_file_path%" n'aura pas lieu.
+rem 	exit /b 0
+rem )
 call :test_write_access file "%~1"
 set script_version=0.00.00
 IF EXIST "%~1.version" set /p script_version=<"%~1.version"
@@ -177,11 +182,11 @@ exit /b %errorlevel%
 :verif_folder_version
 set temp_folder_path=%~1
 set temp_folder_slash_path=%temp_folder_path:\=/%
-ping /n 2 www.google.com >nul 2>&1
-IF %errorlevel% NEQ 0 (
-	echo Aucune connexion internet vérifiable, la vérification de version du dossier "%temp_folder_path%" n'aura pas lieu.
-	exit /b 0
-)
+rem ping /n 2 www.google.com >nul 2>&1
+rem IF %errorlevel% NEQ 0 (
+rem 	echo Aucune connexion internet vérifiable, la vérification de version du dossier "%temp_folder_path%" n'aura pas lieu.
+rem 	exit /b 0
+rem )
 call :test_write_access folder "%~1"
 set script_version=0.00.00
 IF EXIST "%~1\folder_version.txt" set /p script_version=<"%~1\folder_version.txt"
@@ -195,11 +200,11 @@ call :compare_version
 exit /b %errorlevel%
 
 :update_file
-ping /n 2 www.google.com >nul 2>&1
-IF %errorlevel% NEQ 0 (
-	echo Aucune connexion internet vérifiable, la mise à jour du fichier "%temp_file_path%" n'aura pas lieu.
-	exit /b 404
-)
+rem ping /n 2 www.google.com >nul 2>&1
+rem IF %errorlevel% NEQ 0 (
+rem 	echo Aucune connexion internet vérifiable, la mise à jour du fichier "%temp_file_path%" n'aura pas lieu.
+rem 	exit /b 404
+rem )
 echo %temp_file_path%>"failed_updates\%temp_file_path:\=;%.file.failed"
 "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%" %files_url_project_base%/%temp_file_slash_path% 2>nul
 IF %errorlevel% NEQ 0 (
@@ -221,14 +226,15 @@ IF %errorlevel% NEQ 0 (
 )
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 del /q "failed_updates\%temp_file_path:\=;%.file.failed"
+echo Mise à jour de "%temp_file_path%" effectuée.
 exit /b
 
 :update_folder
-ping /n 2 www.google.com >nul 2>&1
-IF %errorlevel% NEQ 0 (
-	echo Aucune connexion internet vérifiable, la mise à jour du dossier "%temp_folder_path%" n'aura pas lieu.
-	exit /b 404
-)
+rem ping /n 2 www.google.com >nul 2>&1
+rem IF %errorlevel% NEQ 0 (
+rem 	echo Aucune connexion internet vérifiable, la mise à jour du dossier "%temp_folder_path%" n'aura pas lieu.
+rem 	exit /b 404
+rem )
 echo %temp_folder_path%>"failed_updates\%temp_folder_path:\=;%.fold.failed"
 IF "%temp_folder_path%"=="tools\gitget" (
 	"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/%temp_folder_slash_path% templogs\gitget --force >nul
@@ -257,6 +263,7 @@ IF %errorlevel% NEQ 0 (
 	exit
 )
 del /q "failed_updates\%temp_folder_path:\=;%.fold.failed"
+echo Mise à jour de "%temp_folder_path%" effectuée.
 exit /b
 
 :compare_version
