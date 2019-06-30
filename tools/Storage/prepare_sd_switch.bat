@@ -788,22 +788,22 @@ echo cheat_enable_key=%atmo_cheats_override_key%>>%volume_letter%:\atmosphere\lo
 
 echo [emummc]>%volume_letter%:\emummc\emummc.ini
 IF /i "%emunand_enable%"=="o" (
-	echo emummc_enabled = ^1>>%volume_letter%:\emummc\emummc.ini
+	echo enabled = ^1>>%volume_letter%:\emummc\emummc.ini
 ) else (
-	echo emummc_enabled = ^0>>%volume_letter%:\emummc\emummc.ini
+	echo enabled = ^0>>%volume_letter%:\emummc\emummc.ini
 )
 IF "%emummc_id%"=="" (
-	echo emummc_id = >>%volume_letter%:\emummc\emummc.ini
+	echo id = >>%volume_letter%:\emummc\emummc.ini
 ) else (
-	echo emummc_id = 0x%emummc_id%>>%volume_letter%:\emummc\emummc.ini
+	echo id = 0x%emummc_id%>>%volume_letter%:\emummc\emummc.ini
 )
 IF "%emummc_sector%"=="" (
-	echo emummc_sector = >>%volume_letter%:\emummc\emummc.ini
+	echo sector = >>%volume_letter%:\emummc\emummc.ini
 ) else (
-	echo emummc_sector = 0x%emummc_sector%>>%volume_letter%:\emummc\emummc.ini
+	echo sector = 0x%emummc_sector%>>%volume_letter%:\emummc\emummc.ini
 )
-echo emummc_path = %emummc_path%>>%volume_letter%:\emummc\emummc.ini
-echo emummc_nintendo_path = %emummc_nintendo_path%>>%volume_letter%:\emummc\emummc.ini
+echo path = %emummc_path%>>%volume_letter%:\emummc\emummc.ini
+echo nintendo_path = %emummc_nintendo_path%>>%volume_letter%:\emummc\emummc.ini
 endlocal
 exit /b
 
