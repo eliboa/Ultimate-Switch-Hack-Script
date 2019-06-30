@@ -30,8 +30,7 @@ IF EXIST "failed_updates" (
 mkdir "failed_updates"
 :failed_updates_verification
 IF NOT EXIST "failed_updates\*.failed" goto:skip_failed_updates_verification
-cd "failed_updates"
-IF EXIST "update_manager.bat.file.failed" (
+IF EXIST "failed_updates\update_manager.bat.file.failed" (
 		call :verif_file_version "tools\Storage\update_manager_updater.bat"
 IF !errorlevel! EQU 1 (
 	call :update_file
@@ -42,10 +41,9 @@ IF !errorlevel! EQU 1 (
 	pause
 	call :update_manager_update_special_script
 )
-for %%f in (*.failed) do (
+for %%f in (failed_updates\*.failed) do (
 	call :update_failed_content "%%f"
 )
-cd ..
 :skip_failed_updates_verification
 :update_manager_update
 call :verif_file_version "tools\Storage\update_manager.bat"
