@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.11.17</h2>
+<ul>
+<li>Quelques changements dans les menus, le plus important étant que la mise à jour forcée du script se trouve maintenant dans le menu "A propos" plutôt que sur le menu principal.</li>
+<li>Quelques autres changements préparant la grande nouveauté à venir.</li>
+</ul>
 <h2>V2.11.16 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
 <ul>
 <li>Modification de la méthode de lancement de HID-mitm_compagnon.</li>

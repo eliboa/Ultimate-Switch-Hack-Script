@@ -8,13 +8,20 @@ IF EXIST "templogs" (
 mkdir "templogs"
 IF EXIST "failed_updates" (
 	del /q "failed_updates" 2>nul
-	rmdir /s /q "failed_updates" 2>nul
+	IF NOT EXIST "failed_updates\*.failed" rmdir /s /q "failed_updates" 2>nul
+) else (
+	mkdir "failed_updates"
 )
-mkdir "failed_updates"
 set temp_file_path=tools\Storage\update_manager.bat
 set temp_file_slash_path=%temp_file_path:\=/%
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
 set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
+set /p ushs_version=<DOC\folder_version.txt
+title Shadow256 Ultimate Switch Hack Script %ushs_version%
+echo :::::::::::::::::::::::::::::::::::::
+echo ::Shadow256 Ultimate Switch Hack Script %ushs_version%::
+echo.
+echo Mise à jour du gestionnaire de mises à jour du script en cours...
 ping /n 2 www.google.com >nul 2>&1
 IF %errorlevel% NEQ 0 (
 	echo Aucune connexion internet vérifiable, la mise à jour du fichier "%temp_file_path%" n'aura pas lieu.
@@ -47,5 +54,7 @@ IF EXIST "templogs" (
 IF NOT EXIST "failed_updates\*.failed" (
 	rmdir /s /q "failed_updates"
 )
+echo Mise à jour du gestionnaire de mises à jour du script terminée.
+pause
 start "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"Ultimate-Switch-Hack-Script.bat^""
 exit

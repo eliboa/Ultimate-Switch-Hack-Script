@@ -36,7 +36,7 @@ IF NOT EXIST "tools\Storage\update_manager.bat" (
 IF EXIST "failed_updates\tools;Storage;update_manager.bat.file.failed" (
 	call tools\Storage\update_manager_updater.bat
 )
-	call tools\Storage\update_manager.bat
+	call tools\Storage\update_manager.bat "general_content_update"
 tools\Storage\verif_update.bat
 :end_script
 pause

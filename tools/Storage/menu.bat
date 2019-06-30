@@ -39,11 +39,9 @@ echo 11: Lancer ou configurer le client pour pouvoir jouer en réseau (serveur S
 echo.
 echo 12: Lancer un serveur pour le jeu en réseau (serveur Switch-Lan-Play)?
 echo.
-echo 13: Vérifier s'il existe une mise à jour du script?
+echo 13: A propos du script?
 echo.
-echo 14: A propos du script?
-echo.
-echo 15: Ouvrir la page permettant de me faire une donation?
+echo 14: Ouvrir la page permettant de me faire une donation?
 echo.
 echo 0: Lancer la documentation (recommandé)?
 echo.
@@ -64,9 +62,8 @@ IF "%action_choice%"=="9" goto:ocasional_functions
 IF "%action_choice%"=="10" goto:save_and_restaure
 IF "%action_choice%"=="11" goto:client_netplay
 IF "%action_choice%"=="12" goto:server_netplay
-IF "%action_choice%"=="13" goto:check_update
-IF "%action_choice%"=="14" goto:about
-IF "%action_choice%"=="15" (
+IF "%action_choice%"=="13" goto:about
+IF "%action_choice%"=="14" (
 	set action_choice=
 	cls
 	start https://www.paypal.me/shadow256
@@ -156,15 +153,6 @@ set action_choice=
 echo.
 cls
 call TOOLS\Storage\launch_switch_lan_play_server.bat
-@echo off
-goto:define_action_choice
-:check_update
-set action_choice=
-echo.
-set force_update=1
-cls
-call TOOLS\Storage\verif_update.bat
-set force_update=
 @echo off
 goto:define_action_choice
 :launch_doc

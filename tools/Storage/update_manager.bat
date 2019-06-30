@@ -3,21 +3,51 @@ Setlocal enabledelayedexpansion
 @echo off
 chcp 65001 >nul
 echo é >nul
-rem IF "%~1"=="" goto:end_script
-rem IF "%~2"=="forced" set verif_update=Y
+IF "%~1"=="" goto:end_script
+title Shadow256 Ultimate Switch Hack Script %ushs_version%
+echo :::::::::::::::::::::::::::::::::::::
+echo ::Shadow256 Ultimate Switch Hack Script %ushs_version% updater::
+echo.
+:new_script_install
+IF "%~1"=="update_all" goto:skip_new_script_install
+IF "%~1"=="general_content_update" goto:skip_new_script_install
+IF "%~2"=="force" (
+	call :verif_file_version "tools\Storage\update_manager.bat"
+	IF !errorlevel! EQU 1 (
+		call :verif_file_version "tools\Storage\update_manager_updater.bat"
+		IF !errorlevel! EQU 1 (
+			call :update_file
+		)
+		echo Le gestionnaire de mises à jour doit se mettre à jour lui-même avant de pouvoir continuer.
+		echo Pour se faire, le script va lancer un autre script puis se fermer pour que la mise à jour puisse s'effectuer correctement.
+		echo Une fois la mise à jour effectuée, le script va redémarrer.
+		pause
+		call :update_manager_update_special_script
+	)
+	echo Attention, il semble que vous souhaitiez utiliser une fonctionnalité non installée.
+	echo De fait, l'installation de celle-ci va être forcée si vous choisissez d'accepter cette installation, une connexion internet est nécessaire.
+	echo Si vous ne pouvez pas utiliser internet, la fonctionnalité ne se lancera pas après cette tentative d'installation et des bugs pourraienent se produire donc dans ce cas il est fortement conseillé de refuser le choix qui va suivre et le script se fermera pour plus de sécurité.
+	set new_install_choice=
+	set /p new_install_choice=Souhaitez-vous lancer l'installation? ^(O/n^): 
+	IF NOT "!new_install_choice!"=="" set new_install_choice=!new_install_choice:~0,1!
+	IF /i NOT "!new_install_choice!"=="o" (
+		exit
+	)
+)
+:skip_new_script_install
 ping /n 2 www.google.com >nul 2>&1
 IF %errorlevel% NEQ 0 (
-	echo Aucune connexion internet vérifiable, la mise à jour du dossier "%temp_folder_path%" n'aura pas lieu.
+	echo Aucune connexion internet vérifiable, tentative de mise à jour arrêtée.
+	IF /i "%new_install_choice%"=="o" (
+		echo De plus, ceci était une tentative d'installation d'une nouvelle fonctionnalité, le script va donc se fermer pour plus de sécurité.
+		pause
+		exit
+	)
 	goto:end_script
 )
 set base_script_path="%~dp0\..\.."
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
 set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
-IF NOT "%~nx0"=="update_manager_tmp.bat" (
-	IF EXIST "%~dp0\%~n0_tmp.bat" del /q "%~dp0\%~n0_tmp.bat"
-) else (
-	cd /d "%base_script_path%"
-)
 IF EXIST "templogs" (
 	del /q "templogs" 2>nul
 	rmdir /s /q "templogs" 2>nul
@@ -25,9 +55,10 @@ IF EXIST "templogs" (
 mkdir "templogs"
 IF EXIST "failed_updates" (
 	del /q "failed_updates" 2>nul
-	rmdir /s /q "failed_updates" 2>nul
+	IF NOT EXIST "failed_updates\*.failed" rmdir /s /q "failed_updates" 2>nul
+) else (
+	mkdir "failed_updates"
 )
-mkdir "failed_updates"
 :failed_updates_verification
 IF NOT EXIST "failed_updates\*.failed" goto:skip_failed_updates_verification
 IF EXIST "failed_updates\update_manager.bat.file.failed" (
@@ -45,6 +76,64 @@ for %%f in (failed_updates\*.failed) do (
 	call :update_failed_content "%%f"
 )
 :skip_failed_updates_verification
+IF "%~2"=="force" goto:start_verif_update
+:verif_auto_update_ini
+IF EXIST tools\Storage\verif_update.ini\*.* (
+	rmdir /s /q tools\Storage\verif_update.ini
+)
+IF not EXIST tools\Storage\verif_update.ini copy nul tools\Storage\verif_update.ini
+tools\gnuwin32\bin\grep.exe -m 1 "auto_update" <tools\Storage\verif_update.ini | tools\gnuwin32\bin\cut.exe -d = -f 2 >templogs\tempvar.txt
+set /p ini_auto_update=<templogs\tempvar.txt
+:initialize_auto_update
+IF "%ini_auto_update%"=="" (
+	echo Réglage de la mise à jour automatique:
+	echo.
+	echo La mise à jour automatique intervient lors du démarrage des différentes fonctionnalités ou grands groupes de fonctionnalités du script. Si vous tentez de mettre à jour une fonctionnalité qui n'est pas encore installée, son installation sera forcée même en cas de désactivation de la mise à jour automatique.
+	echo Dans les choix qui vont suivre, si vous ne faites pas un choix définitif, cette question sera donc souvent posée.
+	echo Si vous choisissez de toujours vérifier les mises à jour, certaines fonctionnalités mettront un peu de temps à se lancer, notemment le démarrage du menu principal ou encore la préparation d'une SD ou la Nand Toolbox car ces fonctionnalités ont beaucoup de dépendances mais vous aurez toujours les dernières versions des fonctionnalités que vous utilisez et le reste ne bougera pas tant que vous ne l'aurez pas utilisé au moins une fois.
+	echo Au contraire, si vous choisissez de ne jamais mettre à jour, vous ne pourrez que faire la mise à jour de tous les éléments du script d'un coup via le menu "A propos" mais le lancement des fonctionnalités sera bien plus rapide.
+	echo Notez que vous pouvez toujours réinitialiser cette valeur en passant par le menu des paramètres du script.
+	echo Notez également que même en cas de désactivation de la mise à jour automatique et si vous faites une mise à jour manuelle qui a échouée, celle-ci sera reprise automatiquement pour éviter des bugs dans le script.
+	echo.
+	echo Que souhaitez-vous faire?
+	echo O: Vérifier les mises à jour cette fois-ci.
+	echo N: Ne pas vérifier les mises à jour cette fois-ci.
+	echo T: Toujours vérifier les mises à jour.
+	echo J: Ne jamais vérifier les mises à jour.
+	echo.
+	set /p auto_update=Souhaitez-vous activer la mise à jour automatique? (O/N/T/J^): >con
+) else IF /i "%ini_auto_update%"=="O" (
+	set auto_update=O
+) else IF /i "%ini_auto_update%"=="N" (
+	set auto_update=N
+) else (
+	echo Mauvaise valeur configurée, le paramètre va être réinitialisé.
+	del /q tools\Storage\verif_update.ini
+	goto:verif_auto_update_ini
+)
+IF NOT "%auto_update%"=="" (
+	set auto_update=%auto_update:~0,1%
+) else (
+	echo Cette valeur ne peut être vide.
+	goto:initialize_auto_update
+)
+IF /i "%auto_update%"=="J" (
+	echo auto_update=N>>tools\Storage\verif_update.ini
+	set auto_update=N
+)
+IF /i "%auto_update%"=="T" (
+	echo auto_update=O>>tools\Storage\verif_update.ini
+	set auto_update=O
+)
+IF /i "%auto_update%"=="N" (
+	goto:end_script
+) else IF /i "%auto_update%"=="O" (
+	goto:start_verif_update
+) else (
+	echo Choix inexistant.
+	goto:initialize_auto_update
+)
+:start_verif_update
 :update_manager_update
 call :verif_file_version "tools\Storage\update_manager.bat"
 IF %errorlevel% EQU 1 (
@@ -58,18 +147,17 @@ IF !errorlevel! EQU 1 (
 	pause
 	call :update_manager_update_special_script
 )
-
-IF NOT "%~2"=="skip_general_update" call ::general_content_update
-	IF "%~1"=="" (
+IF "%~1"=="" (
 		goto:end_script
 	) else (
 	call :%~1
 )
+goto:end_script
 
 rem Specific scripts instructions must be added here
 
 :update_all
-call ::general_content_update
+call :general_content_update
 call :update_about.bat
 call :update_biskey_dump.bat
 call :update_convert_BOTW.bat
@@ -490,6 +578,9 @@ call :update_modules_profiles_management.bat
 call :update_prepare_sd_switch_files_questions.bat
 call :update_prepare_sd_switch_infos.bat
 call :update_prepare_sd_switch_profiles_management.bat
+call :verif_file_version "tools\sd_switch\version.txt"
+	call :update_file
+)
 exit /b
 
 :update_prepare_sd_switch_files_questions.bat

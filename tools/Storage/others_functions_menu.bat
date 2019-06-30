@@ -24,13 +24,11 @@ echo 7: Vérifier des fichiers NSP?
 echo.
 echo 8: Découper un fichier NSP ou XCI en fichiers de 4 GO?
 echo.
-echo 9: Joindre les différentes parties d'un dump de la nand effectué par Hekate si cette fonctionnalité s'est activée dans celui-ci (le dump de la nand de SX OS est également supportée)?
+echo 9: Compresser/décompresser un jeu grâce à nsZip?
 echo.
-echo 10: Compresser/décompresser un jeu grâce à nsZip?
+echo 10: Configurer l'émulateur Nes Classic Edition?
 echo.
-echo 11: Configurer l'émulateur Nes Classic Edition?
-echo.
-echo 12: Configurer l'émulateur Snes Classic Edition?
+echo 11: Configurer l'émulateur Snes Classic Edition?
 echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
@@ -44,10 +42,9 @@ IF "%action_choice%"=="5" goto:convert_BOTW
 IF "%action_choice%"=="6" goto:extract_cert
 IF "%action_choice%"=="7" goto:verify_nsp
 IF "%action_choice%"=="8" goto:split_games
-IF "%action_choice%"=="9" goto:nand_joiner
-IF "%action_choice%"=="10" goto:nsZip
-IF "%action_choice%"=="11" goto:config_nes_classic
-IF "%action_choice%"=="12" goto:config_snes_classic
+IF "%action_choice%"=="9" goto:nsZip
+IF "%action_choice%"=="10" goto:config_nes_classic
+IF "%action_choice%"=="11" goto:config_snes_classic
 goto:end_script
 :update_on_sd
 set action_choice=
@@ -103,13 +100,6 @@ set action_choice=
 echo.
 cls
 call TOOLS\Storage\split_games.bat
-@echo off
-goto:define_action_choice
-:nand_joiner
-set action_choice=
-echo.
-cls
-call TOOLS\Storage\nand_joiner.bat
 @echo off
 goto:define_action_choice
 :nsZip
