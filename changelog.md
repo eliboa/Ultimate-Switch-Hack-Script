@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V2.11.16 (ne pas écraser une ancienne version car certains remaniements de fichiers/dossiers)</h2>
+<ul>
+<li>Modification de la méthode de lancement de HID-mitm_compagnon.</li>
+</ul>
 <h2>V2.11.15</h2>
 <ul>
 <li>Mise à jour de la préparation d'une SD pour utiliser la nouvelle configuration de l'emunand d'Atmosphere 0.9.2, l'ancien fichier ne fonctionnera plus.</li>
