@@ -50,6 +50,11 @@ goto:end_script
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\prepare_update_on_sd.bat" (
+	call tools\Storage\update_manager.bat "update_prepare_update_on_sd.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_prepare_update_on_sd.bat" "force"
+)
 call TOOLS\Storage\prepare_update_on_sd.bat
 @echo off
 goto:define_action_choice
@@ -57,6 +62,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\convert_game_to_nsp.bat" (
+	call tools\Storage\update_manager.bat "update_convert_game_to_nsp.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_convert_game_to_nsp.bat" "force"
+)
 call TOOLS\Storage\convert_game_to_nsp.bat
 @echo off
 goto:define_action_choice
@@ -64,6 +74,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\install_nsp_network.bat" (
+	call tools\Storage\update_manager.bat "update_install_nsp_network.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_install_nsp_network.bat" "force"
+)
 call TOOLS\Storage\install_nsp_network.bat
 @echo off
 goto:define_action_choice
@@ -71,6 +86,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\install_nsp_usb.bat" (
+	call tools\Storage\update_manager.bat "update_install_nsp_usb.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_install_nsp_usb.bat" "force"
+)
 call TOOLS\Storage\install_nsp_usb.bat
 @echo off
 goto:define_action_choice
@@ -78,6 +98,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\convert_BOTW.bat" (
+	call tools\Storage\update_manager.bat "update_convert_BOTW.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_convert_BOTW.bat" "force"
+)
 call TOOLS\Storage\convert_BOTW.bat
 @echo off
 goto:define_action_choice
@@ -85,6 +110,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\extract_cert.bat" (
+	call tools\Storage\update_manager.bat "update_extract_cert.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_extract_cert.bat" "force"
+)
 call TOOLS\Storage\extract_cert.bat
 @echo off
 goto:define_action_choice
@@ -92,6 +122,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\verify_nsp.bat" (
+	call tools\Storage\update_manager.bat "update_verify_nsp.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_verify_nsp.bat" "force"
+)
 call TOOLS\Storage\verify_nsp.bat
 @echo off
 goto:define_action_choice
@@ -99,6 +134,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\split_games.bat" (
+	call tools\Storage\update_manager.bat "update_split_games.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_split_games.bat" "force"
+)
 call TOOLS\Storage\split_games.bat
 @echo off
 goto:define_action_choice
@@ -106,6 +146,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\nsZip.bat" (
+	call tools\Storage\update_manager.bat "update_nsZip.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_nsZip.bat" "force"
+)
 call TOOLS\Storage\nsZip.bat
 @echo off
 goto:define_action_choice
@@ -113,6 +158,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\NES_Injector\*.*" (
+	call tools\Storage\update_manager.bat "update_NES_Injector"
+) else (
+	call tools\Storage\update_manager.bat "update_NES_Injector" "force"
+)
 call TOOLS\NES_Injector\NES_Injector.bat
 @echo off
 goto:define_action_choice
@@ -120,6 +170,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\SNES_Injector\*.*" (
+	call tools\Storage\update_manager.bat "update_SNES_Injector"
+) else (
+	call tools\Storage\update_manager.bat "update_SNES_Injector" "force"
+)
 call TOOLS\SNES_Injector\SNES_Injector.bat
 @echo off
 goto:define_action_choice

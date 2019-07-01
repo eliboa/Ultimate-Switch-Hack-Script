@@ -77,6 +77,7 @@ for %%f in (failed_updates\*.failed) do (
 )
 :skip_failed_updates_verification
 IF "%~2"=="force" goto:start_verif_update
+IF /i "%new_install_choice%"=="o" goto:start_verif_update
 :verif_auto_update_ini
 IF EXIST tools\Storage\verif_update.ini\*.* (
 	rmdir /s /q tools\Storage\verif_update.ini
@@ -549,6 +550,10 @@ call :verif_folder_version "tools\Node.js_programs"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
+call :verif_folder_version "Payloads"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_preload_NSC_Builder.bat
@@ -571,12 +576,34 @@ call :verif_folder_version "tools\fat32format"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
+call :verif_folder_version "tools\sd_switch\atmosphere"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\sd_switch\atmosphere_patches_nogc"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\sd_switch\payloads"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\sd_switch\reinx"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\sd_switch\sxos"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "Payloads"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 call :update_cheats_profiles_management.bat
 call :update_emulators_pack_profiles_management.bat
 call :update_mixed_pack_profiles_management.bat
 call :update_modules_profiles_management.bat
-call :update_prepare_sd_switch_files_questions.bat
-call :update_prepare_sd_switch_infos.bat
 call :update_prepare_sd_switch_profiles_management.bat
 call :verif_file_version "tools\sd_switch\version.txt"
 	call :update_file
@@ -602,26 +629,8 @@ call :verif_file_version "tools\Storage\prepare_sd_switch_profiles_management.ba
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-call :verif_folder_version "tools\sd_switch\atmosphere"
-IF %errorlevel% EQU 1 (
-	call :update_folder
-)
-call :verif_folder_version "tools\sd_switch\atmosphere_patches_nogc"
-IF %errorlevel% EQU 1 (
-	call :update_folder
-)
-call :verif_folder_version "tools\sd_switch\payloads"
-IF %errorlevel% EQU 1 (
-	call :update_folder
-)
-call :verif_folder_version "tools\sd_switch\reinx"
-IF %errorlevel% EQU 1 (
-	call :update_folder
-)
-call :verif_folder_version "tools\sd_switch\sxos"
-IF %errorlevel% EQU 1 (
-	call :update_folder
-)
+call :update_prepare_sd_switch_files_questions.bat
+call :update_prepare_sd_switch_infos.bat
 exit /b
 
 :update_prepare_update_on_sd.bat
@@ -650,8 +659,8 @@ IF %errorlevel% EQU 1 (
 )
 exit /b
 
-:update_save_and_restaure_menu.bat
-call :verif_file_version "tools\Storage\save_and_restaure_menu.bat"
+:update_settings_menu.bat
+call :verif_file_version "tools\Storage\settings_menu.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
@@ -779,9 +788,9 @@ call :update_about.bat
 call :update_menu.bat
 call :update_ocasional_functions_menu.bat
 call :update_others_functions_menu.bat
+call :update_settings_menu.bat
 call :update_restore_configs.bat
 call :update_restore_default.bat
-call :update_save_and_restaure_menu.bat
 call :update_save_configs.bat
 call :verif_folder_version "tools\7zip"
 IF %errorlevel% EQU 1 (

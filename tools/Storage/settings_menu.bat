@@ -116,6 +116,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\prepare_sd_switch_profiles_management.bat" (
+	call tools\Storage\update_manager.bat "update_prepare_sd_switch_profiles_management.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_prepare_sd_switch_profiles_management.bat" "force"
+)
 call TOOLS\Storage\prepare_sd_switch_profiles_management.bat
 rmdir /s /q templogs
 @echo off
@@ -124,6 +129,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\mixed_pack_profiles_management.bat" (
+	call tools\Storage\update_manager.bat "update_mixed_pack_profiles_management.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_mixed_pack_profiles_management.bat" "force"
+)
 call TOOLS\Storage\mixed_pack_profiles_management.bat
 rmdir /s /q templogs
 @echo off
@@ -132,6 +142,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\cheats_profiles_management.bat" (
+	call tools\Storage\update_manager.bat "update_cheats_profiles_management.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_cheats_profiles_management.bat" "force"
+)
 call TOOLS\Storage\cheats_profiles_management.bat
 rmdir /s /q templogs
 @echo off
@@ -140,6 +155,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\emulators_pack_profiles_management.bat" (
+	call tools\Storage\update_manager.bat "update_emulators_pack_profiles_management.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_emulators_pack_profiles_management.bat" "force"
+)
 call TOOLS\Storage\emulators_pack_profiles_management.bat
 rmdir /s /q templogs
 @echo off
@@ -148,6 +168,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\modules_profiles_management.bat" (
+	call tools\Storage\update_manager.bat "update_modules_profiles_management.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_modules_profiles_management.bat" "force"
+)
 call TOOLS\Storage\modules_profiles_management.bat
 rmdir /s /q templogs
 @echo off

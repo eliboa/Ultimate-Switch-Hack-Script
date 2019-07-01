@@ -41,6 +41,11 @@ goto:end_script
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\biskey_dump.bat" (
+	call tools\Storage\update_manager.bat "update_biskey_dump.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_biskey_dump.bat" "force"
+)
 call TOOLS\Storage\biskey_dump.bat
 @echo off
 goto:define_action_choice
@@ -48,6 +53,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\install_drivers.bat" (
+	call tools\Storage\update_manager.bat "update_install_drivers.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_install_drivers.bat" "force"
+)
 call TOOLS\Storage\install_drivers.bat
 @echo off
 goto:define_action_choice
@@ -55,6 +65,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\create_update.bat" (
+	call tools\Storage\update_manager.bat "update_create_update.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_create_update.bat" "force"
+)
 call TOOLS\Storage\create_update.bat
 @echo off
 goto:define_action_choice
@@ -62,6 +77,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\serial_checker.bat" (
+	call tools\Storage\update_manager.bat "update_serial_checker.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_serial_checker.bat" "force"
+)
 call TOOLS\Storage\serial_checker.bat
 @echo off
 goto:define_action_choice
@@ -69,6 +89,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\test_keys.bat" (
+	call tools\Storage\update_manager.bat "update_test_keys.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_test_keys.bat" "force"
+)
 call TOOLS\Storage\test_keys.bat
 @echo off
 goto:define_action_choice
@@ -76,6 +101,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\launch_hid-mitm_compagnon.bat" (
+	call tools\Storage\update_manager.bat "update_launch_hid-mitm_compagnon.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_launch_hid-mitm_compagnon.bat" "force"
+)
 call tools\Storage\launch_hid-mitm_compagnon.bat
 @echo off
 goto:define_action_choice
@@ -83,6 +113,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\launch_linux.bat" (
+	call tools\Storage\update_manager.bat "update_launch_linux.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_launch_linux.bat" "force"
+)
 call TOOLS\Storage\launch_linux.bat
 @echo off
 goto:define_action_choice
@@ -90,6 +125,11 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
+IF EXIST "tools\Storage\update_shofel2.bat" (
+	call tools\Storage\update_manager.bat "update_update_shofel2.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_update_shofel2.bat" "force"
+)
 call TOOLS\Storage\update_shofel2.bat
 @echo off
 goto:define_action_choice

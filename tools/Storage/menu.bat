@@ -59,7 +59,7 @@ IF "%action_choice%"=="6" goto:launch_NSC_Builder
 IF "%action_choice%"=="7" goto:launch_toolbox
 IF "%action_choice%"=="8" goto:others_functions
 IF "%action_choice%"=="9" goto:ocasional_functions
-IF "%action_choice%"=="10" goto:save_and_restaure
+IF "%action_choice%"=="10" goto:settings
 IF "%action_choice%"=="11" goto:client_netplay
 IF "%action_choice%"=="12" goto:server_netplay
 IF "%action_choice%"=="13" goto:about
@@ -74,85 +74,129 @@ goto:end_script
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\launch_payload.bat > log.txt 2>&1
+IF EXIST "tools\Storage\launch_payload.bat" (
+	call tools\Storage\update_manager.bat "update_launch_payload.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_launch_payload.bat" "force"
+)
+call tools\Storage\launch_payload.bat > log.txt 2>&1
 @echo off
 goto:define_action_choice
 :pegaswitch
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\nereba.bat
+IF EXIST "tools\Storage\pegaswitch.bat" (
+	call tools\Storage\update_manager.bat "update_pegaswitch.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_pegaswitch.bat" "force"
+)
+call tools\Storage\pegaswitch.bat
 @echo off
 goto:define_action_choice
 :mount_discs
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\mount_discs.bat
+IF EXIST "tools\Storage\mount_discs.bat" (
+	call tools\Storage\update_manager.bat "update_mount_discs.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_mount_discs.bat" "force"
+)
+call tools\Storage\mount_discs.bat
 @echo off
 goto:define_action_choice
 :prepare_sd
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\prepare_sd_switch.bat
+IF EXIST "tools\Storage\prepare_sd_switch.bat" (
+	call tools\Storage\update_manager.bat "update_prepare_sd_switch.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_prepare_sd_switch.bat" "force"
+)
+call tools\Storage\prepare_sd_switch.bat
 @echo off
 goto:define_action_choice
 :nand_toolbox
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\nand_toolbox.bat
+IF EXIST "tools\Storage\nand_toolbox.bat" (
+	call tools\Storage\update_manager.bat "update_nand_toolbox.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_nand_toolbox.bat" "force"
+)
+call tools\Storage\nand_toolbox.bat
 @echo off
 goto:define_action_choice
 :launch_NSC_Builder
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\preload_NSC_Builder.bat
-endlocal
+IF EXIST "tools\Storage\preload_NSC_Builder.bat" (
+	call tools\Storage\update_manager.bat "update_preload_NSC_Builder.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_preload_NSC_Builder.bat" "force"
+)
+call tools\Storage\preload_NSC_Builder.bat
 @echo off
 goto:define_action_choice
 :launch_toolbox
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\toolbox.bat
+IF EXIST "tools\Storage\toolbox.bat" (
+	call tools\Storage\update_manager.bat "update_toolbox.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_toolbox.bat" "force"
+)
+call tools\Storage\toolbox.bat
 @echo off
 goto:define_action_choice
 :others_functions
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\others_functions_menu.bat
+call tools\Storage\others_functions_menu.bat
 @echo off
 goto:define_action_choice
 :ocasional_functions
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\ocasional_functions_menu.bat
+call tools\Storage\ocasional_functions_menu.bat
 @echo off
 goto:define_action_choice
-:save_and_restaure
+:settings
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\save_and_restaure_menu.bat
+call tools\Storage\settings_menu.bat
 @echo off
 goto:define_action_choice
 :client_netplay
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\netplay.bat
+IF EXIST "tools\Storage\netplay.bat" (
+	call tools\Storage\update_manager.bat "update_netplay.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_netplay.bat" "force"
+)
+call tools\Storage\netplay.bat
 @echo off
 goto:define_action_choice
 :server_netplay
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\launch_switch_lan_play_server.bat
+IF EXIST "tools\Storage\launch_switch_lan_play_server.bat" (
+	call tools\Storage\update_manager.bat "update_launch_switch_lan_play_server.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_launch_switch_lan_play_server.bat" "force"
+)
+call tools\Storage\launch_switch_lan_play_server.bat
 @echo off
 goto:define_action_choice
 :launch_doc
@@ -165,7 +209,7 @@ goto:define_action_choice
 set action_choice=
 echo.
 cls
-call TOOLS\Storage\about.bat
+call tools\Storage\about.bat
 @echo off
 goto:define_action_choice
 :end_script
