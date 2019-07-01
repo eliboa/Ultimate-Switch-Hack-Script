@@ -2,6 +2,10 @@
 &nbsp;
 <h2>V3.00.03</h2>
 <ul>
+<li>Retour à la version de Hekate normale.</li>
+</ul>
+<h2>V3.00.03</h2>
+<ul>
 <li>Mise à jour du payload de lancement de Atmosphere (Fusee-primary) vers la version master du Github, compilé par moi-même.</li>
 </ul>
 <h2>V3.00.02</h2>

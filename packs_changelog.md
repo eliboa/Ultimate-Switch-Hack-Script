@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V207</h2>
+<ul>
+<li>Retour à la version normale de Hekate et mise à jour du fichier des patches, voir <a target="_blank" href="https://gbatemp.net/threads/kosmos-patches-es-fs.542455/">cette page</a> pour plus d'infos.</li>
+</ul>
 <h2>V206</h2>
 <ul>
 <li>Mise à jour d'Atmosphere vers la version master du Github, compilé par moi-même. Cette version corrige un bug de démarrage pour les firmwares 4.X.X ainsi que quelques autres bugs.</li>
