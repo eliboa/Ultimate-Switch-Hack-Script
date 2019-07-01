@@ -1,6 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
-<h2>V3.00.03</h2>
+<h2>V3.00.05</h2>
+<ul>
+<li>Mise à jour du payload de lancement de Atmosphere (Fusee-primary) vers la version master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V3.00.04</h2>
 <ul>
 <li>Retour à la version de Hekate normale.</li>
 </ul>
