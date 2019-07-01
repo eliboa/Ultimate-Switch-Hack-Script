@@ -162,13 +162,17 @@ IF !errorlevel! EQU 1 (
 IF "%~1"=="" (
 		goto:end_script
 	) else (
+	echo Vérifications et mises à jour en cours...
 	call :%~1
 )
+echo Vérifications et mises à jour terminées.
+pause
 goto:end_script
 
 rem Specific scripts instructions must be added here
 
 :update_all
+echo Mise à jour intégrale du script en cours...
 call :general_content_update
 call :update_about.bat
 call :update_biskey_dump.bat
@@ -196,6 +200,7 @@ call :update_update_shofel2.bat
 call :update_verify_nsp.bat
 call :update_NES_Injector
 call :update_SNES_Injector
+echo Mise à jour intégrale du script terminée.
 exit /b
 
 :update_starting_script
