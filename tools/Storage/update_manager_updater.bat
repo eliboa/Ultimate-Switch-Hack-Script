@@ -17,9 +17,9 @@ set temp_file_slash_path=%temp_file_path:\=/%
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
 set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
 set /p ushs_version=<DOC\folder_version.txt
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
+title Shadow256 Ultimate Switch Hack Script %ushs_version% Update Manager Updater
 echo :::::::::::::::::::::::::::::::::::::
-echo ::Shadow256 Ultimate Switch Hack Script %ushs_version%::
+echo ::Shadow256 Ultimate Switch Hack Script %ushs_version% Update Manager Updater::
 echo.
 echo Mise à jour du gestionnaire de mises à jour du script en cours...
 ping /n 2 www.google.com >nul 2>&1
