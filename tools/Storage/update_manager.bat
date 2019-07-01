@@ -93,7 +93,7 @@ IF /i "%new_install_choice%"=="o" goto:start_verif_update
 IF EXIST tools\Storage\verif_update.ini\*.* (
 	rmdir /s /q tools\Storage\verif_update.ini
 )
-IF not EXIST tools\Storage\verif_update.ini copy nul tools\Storage\verif_update.ini
+IF not EXIST tools\Storage\verif_update.ini copy nul tools\Storage\verif_update.ini >nul
 tools\gnuwin32\bin\grep.exe -m 1 "auto_update" <tools\Storage\verif_update.ini | tools\gnuwin32\bin\cut.exe -d = -f 2 >templogs\tempvar.txt
 set /p ini_auto_update=<templogs\tempvar.txt
 :initialize_auto_update
