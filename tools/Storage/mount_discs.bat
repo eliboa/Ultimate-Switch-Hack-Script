@@ -24,7 +24,7 @@ set ini_path=tools\memloader\mount_discs\ums_boot0.ini
 ) else IF "%disc_mounted%"=="4" (
 set ini_path=tools\memloader\mount_discs\ums_boot1.ini
 ) else (
-	goto:end_script
+	goto:end_script_2
 )
 :mounting
 echo *********************************************
@@ -54,4 +54,5 @@ IF %disc_mounted% EQU 1 (
 )
 :end_script
 pause
+:end_script_2
 endlocal

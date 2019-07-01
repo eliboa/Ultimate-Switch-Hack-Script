@@ -4,16 +4,11 @@
 chcp 1252 >nul
 cls
 cd /d "%~dp0"
-set /p ushs_version=<tools\version.txt
+set /p ushs_version=<DOC\folder_version.txt
 IF EXIST tools\sd_switch\version.txt (
 	set /p ushs_packs_version=<tools\sd_switch\version.txt
 ) else (
-	set /p ushs_packs_version=<tools\packs_version.txt
-)
-IF EXIST tools\sd_switch\cheats\version.txt (
-	set /p ushs_cheats_version=<tools\sd_switch\cheats\version.txt
-) else (
-	set /p ushs_cheats_version=<tools\cheats_version.txt
+	set ushs_packs_version=0
 )
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 mkdir test
@@ -37,7 +32,7 @@ IF EXIST "failed_updates\tools;Storage;update_manager.bat.file.failed" (
 	call tools\Storage\update_manager_updater.bat
 )
 	call tools\Storage\update_manager.bat "general_content_update"
-tools\Storage\verif_update.bat
+call tools\Storage\menu.bat
 :end_script
 pause
 exit

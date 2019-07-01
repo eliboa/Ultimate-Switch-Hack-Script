@@ -58,10 +58,8 @@ goto:define_action_choice
 :check_update
 set action_choice=
 echo.
-set force_update=1
 cls
-call TOOLS\Storage\verif_update.bat "update_all" "force"
-set force_update=
+call TOOLS\Storage\update_manager.bat "update_all" "force"
 @echo off
 exit
 :end_script

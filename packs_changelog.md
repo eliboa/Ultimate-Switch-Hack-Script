@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V204 (à utiliser avec la version 3.00.00 au minimum du script)</h2>
+<ul>
+<li>Suppression du fichier indiquant la version du pack de cheats car ceci est devenue inutile.</li>
+</ul>
 <h2>V203 (à utiliser avec la version 2.11.16 au minimum du script)</h2>
 <ul>
 <li>Quelques remaniements pour une futur fonctionnalité.</li>

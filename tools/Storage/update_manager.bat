@@ -3,11 +3,24 @@ Setlocal enabledelayedexpansion
 @echo off
 chcp 65001 >nul
 echo é >nul
-IF "%~1"=="" goto:end_script
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 echo :::::::::::::::::::::::::::::::::::::
 echo ::Shadow256 Ultimate Switch Hack Script %ushs_version% updater::
 echo.
+set base_script_path="%~dp0\..\.."
+set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
+set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
+IF EXIST "templogs" (
+	del /q "templogs" 2>nul
+	rmdir /s /q "templogs" 2>nul
+)
+mkdir "templogs"
+IF EXIST "failed_updates" (
+	del /q "failed_updates" 2>nul
+	IF NOT EXIST "failed_updates\*.failed" rmdir /s /q "failed_updates" 2>nul
+) else (
+	mkdir "failed_updates"
+)
 :new_script_install
 IF "%~1"=="update_all" goto:skip_new_script_install
 IF "%~1"=="general_content_update" goto:skip_new_script_install
@@ -31,6 +44,12 @@ IF "%~2"=="force" (
 	set /p new_install_choice=Souhaitez-vous lancer l'installation? ^(O/n^): 
 	IF NOT "!new_install_choice!"=="" set new_install_choice=!new_install_choice:~0,1!
 	IF /i NOT "!new_install_choice!"=="o" (
+		IF EXIST templogs (
+			rmdir /s /q templogs
+		)
+		IF NOT EXIST "failed_updates\*.failed" (
+			rmdir /s /q failed_updates
+	)
 		exit
 	)
 )
@@ -41,23 +60,15 @@ IF %errorlevel% NEQ 0 (
 	IF /i "%new_install_choice%"=="o" (
 		echo De plus, ceci était une tentative d'installation d'une nouvelle fonctionnalité, le script va donc se fermer pour plus de sécurité.
 		pause
+		IF EXIST templogs (
+			rmdir /s /q templogs
+		)
+		IF NOT EXIST "failed_updates\*.failed" (
+			rmdir /s /q failed_updates
+		)
 		exit
 	)
 	goto:end_script
-)
-set base_script_path="%~dp0\..\.."
-set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
-set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
-IF EXIST "templogs" (
-	del /q "templogs" 2>nul
-	rmdir /s /q "templogs" 2>nul
-)
-mkdir "templogs"
-IF EXIST "failed_updates" (
-	del /q "failed_updates" 2>nul
-	IF NOT EXIST "failed_updates\*.failed" rmdir /s /q "failed_updates" 2>nul
-) else (
-	mkdir "failed_updates"
 )
 :failed_updates_verification
 IF NOT EXIST "failed_updates\*.failed" goto:skip_failed_updates_verification
@@ -942,7 +953,7 @@ IF "%temp_folder_path%"=="tools\toolbox" (
 	del /q templogs\tempsave\folder_version.txt
 )
 rmdir /s /q "%temp_folder_path%"
-"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/%temp_folder_slash_path% %temp_folder_path% --force
+"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/%temp_folder_slash_path% %temp_folder_path% --force >nul
 set temp_folder_download_error=%errorlevel%
 IF "%temp_folder_path%"=="tools\Hactool_based_programs" (
 		move "templogs\tempsave" "%temp_folder_path%"

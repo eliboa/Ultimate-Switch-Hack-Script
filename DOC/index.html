@@ -18,18 +18,21 @@ Cette documentation a pour but d'orienter l'utilisateur pour faire fonctionner a
 Ce script est utilisable sur Windows 7 32 et 64 bits ainsi que sur les versions supérieurs (Windows Vista non testé mais devrait fonctionné).
 <br/><br/>
 Notez que je ne pourrai être tenu responsable en cas de domages résultant de l'utilisation de ce logiciel et de tout se qu'il contient.
+<br/><br/>
+L'ensemble de mon travail est soumis à la licence GPL V3 (tous les scripts ou programme portant la mention "by shadow256" dans le code source ou dans le programme en lui-même) et le reste des outils sont sous la licence de leurs auteurs.
 </p>
 &nbsp;
 <h2>Fonctionnalités</h2>
 &nbsp;
 <ul>
+<li>Possibilité de mise à jour automatique des scripts/fonctionnalités.</li>
 <li>Installation des drivers du mode RCM (driver "APX") et du mode libnx_USB_comms utilisé par Tinfoil (driver "libnx_USB_comms") de la Switch, voir <a href="files/install_drivers.html">cette page de la documentation pour plus d'infos</a>.</li>
 <li>Lancement d'un payload via le mode RCM de la Switch. Vous pouvez placer les payloads dans un dossier "Payloads" situé à la racine de ce script ou choisir un fichier de payload via un explorateur. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.</li>
-<li>Préparations pour pouvoir utiliser assez simplement <a target="_blank" href="https://github.com/pixel-stuck/nereba">l'exploit Nereba</a> grâce à <a target="_blank" href="https://github.com/reswitched/pegaswitch">Pegaswitch</a>.</li>
+<li>Préparations pour pouvoir utiliser assez simplement <a target="_blank" href="https://github.com/pixel-stuck/nereba">l'exploit Nereba</a> grâce à <a target="_blank" href="https://github.com/reswitched/pegaswitch">Pegaswitch</a>. L'exploit Caffeine est également utilisable via cette méthode.</li>
 <li>Gestion d'une boîte à outils (toolbox) permettant de lancer des logiciels en mode autonome avec la possibilité de gérer une liste de logiciel personnel. Il est à noter que les programmes peuvent être intégré au dossier "tools\toolbox" du script se qui permet d'avoir un possibilité de portabilité si cela est souhaité. Enfin, évitez de modifier les fichiers de configuration de la toolbox à la main, préférez le script.</li>
-<li>Lancement de Linux via le mode RCM de la Switch (soit avec le kernel officiel, soit via un <a href="_new" href="https://gbatemp.net/attachments/image-gz-zip.121538/">kernel patché</a> (merci Krazer89 de GBATemp et à Killua de Logic-sunrise pour l'info) pour les SD non compatibles avec le kernel officiel), soit avec un fichier de kernel sélectionnalbe via un explorateur de fichiers. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.</li>
+<li>Obsolète: Lancement de Linux via le mode RCM de la Switch (soit avec le kernel officiel, soit via un <a href="_new" href="https://gbatemp.net/attachments/image-gz-zip.121538/">kernel patché</a> (merci Krazer89 de GBATemp et à Killua de Logic-sunrise pour l'info) pour les SD non compatibles avec le kernel officiel), soit avec un fichier de kernel sélectionnalbe via un explorateur de fichiers. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.</li>
+<li>Obsolète: Téléchargement/mise à jour des binaires de Shofel2.</li>
 <li>Récupération des biskey grace au payload Biskeydump dans le fichier "biskey.txt" qui sera situé à la racine du script (les biskey commencent à la ligne 7 du fichier). Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.</li>
-<li>Téléchargement/mise à jour des binaires de Shofel2.</li>
 <li>Vérification si une console est patchée, peut-être patchée ou non patchée.</li>
 <li>Montage de la partition Boot0, Boot1, EMMC ou de la carte SD comme périphérique de stockage USB sur le PC.</li>
 <li>Gestion de nand (fichier ou disque physique) permettant d'obtenir des infos sur la nand, de dumper la nand ou une partition spécifique de celle-ci ou de restaurer un dump de nand ou une partition dumpée. Notez que pour ces fonctionnalités utilisant un disque physique vous aurez besoin de monter la partie de la nand sur laquelle vous souhaitez travailler via Memloader, le script permettant de faire cela est intégré.</li>
@@ -68,11 +71,10 @@ Notez que je ne pourrai être tenu responsable en cas de domages résultant de l
 <h2>Fonctions à venir</h2>
 &nbsp;
 <ul>
+<li>Améliorer et optimiser le script de mise à jour automatique.</li>
 <li>Dans le script de création du fichier de l'emunand pour une partition ou dans le script permettant de joindre un dump de nand, implémenter un choix permettant de traiter d'autres types de dump splitté.</li>
 <li>Mettre en place un script qui s'occupera du flash d'une partition de la SD avec le fichier de partition d'une Emunand et qui indiquera à l'utilisateur à quel secteur elle commence histoire qu'il puisse configurer ensuite facilement celle-ci dans Atmosphere.</li>
 <li>Créer de nouveaux scripts pour préparer et installer Linux ou Laka, les anciens scripts de préparation de Linux seront gardés mais seront nottés comme étant obsolètes.</li>
-<li>Implémenter la prise en charge de l'exploit Nereba.</li>
-<li>Affichage des versions des éléments lors de la gestion de ceux-ci (gestion des packs de cheats ou la version générale des packs).</li>
 <li>Mise en place du script utilisant Renxpack.</li>
 <li>Dans la gestion des cheats, certains jeux ne sont pas nommés, la base de données (fichier "tools\sd_switch\cheats\README.md") doit être mise à jour.</li>
 <li>Traduction de certains éléments de l'extraction d'un certificat, ceci est à faire dans le code source des scripts python de cette partie.</li>
