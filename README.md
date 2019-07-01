@@ -6,13 +6,14 @@ La licence GPL V3 s'applique sur les scripts batch se trouvant à la racine de c
 
 ## Fonctionnalités
 
+* Mise à jour automatique du script et de ses fonctionnalités (si souhaitée).
 * Installation des drivers du mode RCM (driver "APX") et du mode libnx_USB_comms utilisé par Tinfoil (driver "libnx_USB_comms") de la Switch.
 * Lancement d'un payload via le mode RCM de la Switch. Vous pouvez placer les payloads dans un dossier "Payloads" situé à la racine de ce script ou choisir un fichier de payload via un explorateur. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.
 * Préparations pour pouvoir utiliser assez simplement l'exploit Nereba grâce à Pegaswitch.
 * Gestion d'une boîte à outils (toolbox) permettant de lancer des logiciels en mode autonome avec la possibilité de gérer une liste de logiciel personnel. Il est à noter que les programmes peuvent être intégré au dossier "tools\toolbox" du script se qui permet d'avoir un possibilité de portabilité si cela est souhaité. Enfin, évitez de modifier les fichiers de configuration de la toolbox à la main, préférez le script.
-* Lancement de Linux via le mode RCM de la Switch (soit avec le kernel officiel, soit via un [kernel patché](https://gbatemp.net/attachments/image-gz-zip.121538/) (merci Krazer89 de GBATemp et à Killua de Logic-sunrise pour l'info) pour les SD non compatibles avec le kernel officiel), soit avec un fichier de kernel sélectionnalbe via un explorateur de fichiers. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.
+* Obsolète: Lancement de Linux via le mode RCM de la Switch (soit avec le kernel officiel, soit via un [kernel patché](https://gbatemp.net/attachments/image-gz-zip.121538/) (merci Krazer89 de GBATemp et à Killua de Logic-sunrise pour l'info) pour les SD non compatibles avec le kernel officiel), soit avec un fichier de kernel sélectionnalbe via un explorateur de fichiers. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.
+* Obsolète: Téléchargement/mise à jour des binaires de Shofel2.
 * Récupération des biskey grace au payload Biskeydump dans le fichier "biskey.txt" qui sera situé à la racine du script (les biskey commencent à la ligne 7 du fichier). Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.
-* Téléchargement/mise à jour des binaires de Shofel2.
 * Vérification si une console est patchée, peut-être patchée ou non patchée (fonctionnalité imparfaite, peut donner des résultats erronés, la base de donnée nécessite encore des ajustements).
 * Montage de la partition Boot0, Boot1, EMMC ou de la carte SD comme périphérique de stockage USB sur le PC.
 * Dump/restauration de nand ou de partitions de la Rawnand, extraction de partition d'un fichier de dump de la Rawnand, obtention d'infos sur la nand ou sur un fichier de dump...
