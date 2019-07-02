@@ -165,6 +165,7 @@ IF "%~1"=="" (
 	echo Vérifications et mises à jour en cours...
 	call :%~1
 )
+call :del_old_or_unused_files
 echo Vérifications et mises à jour terminées.
 pause
 goto:end_script
@@ -437,6 +438,13 @@ IF !errorlevel! EQU 1 (
 )
 for /d %%f in ("tools\sd_switch\mixed\modular\*") do (
 	call :verif_folder_version "%%f"
+	IF !errorlevel! EQU 1 (
+		call :update_folder
+	)
+)
+rem New homebrew added will be here, this wil be changed in a futur version to automaticaly check new homebrews added
+IF NOT EXIST "tools\sd_switch\mixed\modular\EmuMMC-Toggle" (
+	call :verif_folder_version "tools\sd_switch\mixed\modular\EmuMMC-Toggle"
 	IF !errorlevel! EQU 1 (
 		call :update_folder
 	)
@@ -1062,6 +1070,11 @@ IF NOT EXIST "failed_updates\*.failed" (
 start "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"tools\Storage\update_manager_updater.bat^""
 exit
 
+:del_old_or_unused_files
+echo Vérifications et suppressions d'éventuels anciens fichiers n'étant plus utilisés.
+
+echo Vérifications et suppressions terminées.
+exit /b
 :end_script
 IF EXIST templogs (
 	rmdir /s /q templogs

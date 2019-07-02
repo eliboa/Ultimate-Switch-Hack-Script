@@ -13,9 +13,9 @@ pause
 :set_nereba_choice
 echo.
 echo Que souhaitez-vous faire?
-echo 1: Préparer la SD avec l'exploit.
+echo 1: Préparer la SD avec les exploits.
 echo 2: Lancer le serveur Pegaswitch ou PegaScape.
-echo 3: Préparer la SD avec l'exploit puis lancer le serveur.
+echo 3: Préparer la SD avec les exploits puis lancer le serveur.
 echo 0: Lancer le script de préparation d'une SD pour, entre autres, installer un CFW sur celle-ci.
 echo Tout autre choix: Revenir au menu précédent.
 echo.

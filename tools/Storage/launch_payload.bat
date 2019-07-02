@@ -1,7 +1,7 @@
 ::Script by Shadow256
 Setlocal enabledelayedexpansion
-@echo on
-chcp 65001
+@echo off
+chcp 65001 >nul
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
@@ -12,7 +12,7 @@ IF NOT EXIST Payloads\*.* (
 	mkdir Payloads
 )
 :list_payloads
-copy nul templogs\payload_list.txt
+copy nul templogs\payload_list.txt >nul
 set max_payload=1
 cd Payloads
 for %%z in (*.bin) do (
@@ -21,13 +21,13 @@ for %%z in (*.bin) do (
 )
 cd ..
 :select_payload
-echo Choisir un payload. >con
-echo.>con
-TOOLS\gnuwin32\bin\tail.exe -q -n+0 templogs\payloads_list.txt >con
-echo 0: Choisir un fichier de payload >con
-echo N'importe quel autre choix: Revenir au menu principal. >con
-echo.>con
-set /p payload_number=Entrez le numéro du payload à lancer: >con
+echo Choisir un payload. 
+echo.
+TOOLS\gnuwin32\bin\tail.exe -q -n+0 templogs\payloads_list.txt 
+echo 0: Choisir un fichier de payload 
+echo N'importe quel autre choix: Revenir au menu principal. 
+echo.
+set /p payload_number=Entrez le numéro du payload à lancer: 
 IF "%payload_number%"=="" goto:finish_script
 call TOOLS\Storage\functions\strlen.bat nb "%payload_number%"
 set i=0
@@ -51,7 +51,7 @@ IF "%payload_number%"=="0" (
 )
 IF "%payload_number%"=="0" (
 	IF "%payload_path%"=="" (
-		echo Aucun payload sélectionné, retour à la sélection de payloads. >con
+		echo Aucun payload sélectionné, retour à la sélection de payloads. 
 		set payload_number=
 		goto:select_payload
 	)
@@ -64,27 +64,27 @@ IF "%payload_path%"=="" (
 )
 set payload_path=%payload_path:~1,-1%
 :launch_payload
-echo ********************************************* >con
-echo ***    CONNECTEZ LA SWITCH EN MODE RCM    *** >con
-echo ********************************************* >con
-echo 1) Connecter la Switch en USB et l'éteindre >con
-echo 2) Appliquer le JoyCon Haxx : PIN1 + PIN10 ou PIN9 + PIN10 >con
-echo 3) Faire un appui long sur VOLUME UP + appui court sur POWER >con
-echo En attente d'une Switch en mode RCM... >con
+echo ********************************************* 
+echo ***    CONNECTEZ LA SWITCH EN MODE RCM    *** 
+echo ********************************************* 
+echo 1) Connecter la Switch en USB et l'éteindre 
+echo 2) Appliquer le JoyCon Haxx : PIN1 + PIN10 ou PIN9 + PIN10 
+echo 3) Faire un appui long sur VOLUME UP + appui court sur POWER 
+echo En attente d'une Switch en mode RCM... 
 IF "%payload_number%"=="0" (
 	tools\TegraRcmSmash\TegraRcmSmash.exe -w "%payload_path%"
 ) else (
 	tools\TegraRcmSmash\TegraRcmSmash.exe -w "payloads\%payload_path%"
 )
 IF %errorlevel% GTR 0 (
-	echo Une erreur s'est produite pendant l'injection du payload. Vérifiez que le mode RCM de la Switch est lancé, que votre cable USB est bien relié à l'ordinateur et que les drivers ont été installés puis recommencez. >con
+	echo Une erreur s'est produite pendant l'injection du payload. Vérifiez que le mode RCM de la Switch est lancé, que votre cable USB est bien relié à l'ordinateur et que les drivers ont été installés puis recommencez. 
 ) else (
-	echo ********************************************* >con
-	echo ***            Payload injecté            *** >con
-	echo ********************************************* >con
+	echo ********************************************* 
+	echo ***            Payload injecté            *** 
+	echo ********************************************* 
 )
 :end_script
-pause >con
+pause 
 :finish_script
 IF EXIST templogs (
 	rmdir /s /q templogs

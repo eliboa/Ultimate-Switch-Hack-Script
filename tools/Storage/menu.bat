@@ -79,7 +79,7 @@ IF EXIST "tools\Storage\launch_payload.bat" (
 ) else (
 	call tools\Storage\update_manager.bat "update_launch_payload.bat" "force"
 )
-call tools\Storage\launch_payload.bat > log.txt 2>&1
+call tools\Storage\launch_payload.bat
 @echo off
 goto:define_action_choice
 :pegaswitch
