@@ -15,12 +15,10 @@ IF EXIST "templogs" (
 	rmdir /s /q "templogs" 2>nul
 )
 mkdir "templogs"
-IF EXIST "failed_updates" (
-	del /q "failed_updates" 2>nul
-	IF NOT EXIST "failed_updates\*.failed" rmdir /s /q "failed_updates" 2>nul
-) else (
-	mkdir "failed_updates"
+IF NOT EXIST "failed_updates\*.failed" (
+	rmdir /s /q "failed_updates" 2>nul
 )
+mkdir "failed_updates" >nul
 :new_script_install
 IF "%~1"=="update_all" goto:skip_new_script_install
 IF "%~1"=="general_content_update" goto:skip_new_script_install
@@ -286,12 +284,20 @@ call :verif_file_version "tools\Storage\emulators_pack_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-for /d %%f in ("tools\sd_switch\emulators\pack\*") do (
-	call :verif_folder_version "%%f"
-	IF !errorlevel! EQU 1 (
-		call :update_folder
-	)
+tools\gnuwin32\bin\grep.exe -c "" <"tools\default_configs\Lists\emulators.list" > templogs\tempvar.txt
+set /p count_emulators=<templogs\tempvar.txt
+set /a temp_count=1
+:listing_emulators
+IF %temp_count% GTR %count_emulators% goto:skip_listing_emulators
+"tools\gnuwin32\bin\sed.exe" -n %temp_count%p "tools\default_configs\Lists\emulators.list" >templogs\tempvar.txt
+set /p temp_emulator=<templogs\tempvar.txt
+call :verif_folder_version "tools\sd_switch\emulators\pack\%temp_emulator%"
+IF !errorlevel! EQU 1 (
+	call :update_folder
 )
+set /a temp_count+=1
+goto:listing_emulators
+:skip_listing_emulators
 exit /b
 
 :update_emunand_partition_file_create.bat
@@ -436,19 +442,20 @@ call :verif_folder_version "tools\sd_switch\mixed\base"
 IF !errorlevel! EQU 1 (
 	call :update_folder
 )
-for /d %%f in ("tools\sd_switch\mixed\modular\*") do (
-	call :verif_folder_version "%%f"
-	IF !errorlevel! EQU 1 (
-		call :update_folder
-	)
+tools\gnuwin32\bin\grep.exe -c "" <"tools\default_configs\Lists\homebrews.list" > templogs\tempvar.txt
+set /p count_homebrews=<templogs\tempvar.txt
+set /a temp_count=1
+:listing_homebrews
+IF %temp_count% GTR %count_homebrews% goto:skip_listing_homebrews
+"tools\gnuwin32\bin\sed.exe" -n %temp_count%p "tools\default_configs\Lists\homebrews.list" >templogs\tempvar.txt
+set /p temp_homebrew=<templogs\tempvar.txt
+call :verif_folder_version "tools\sd_switch\mixed\modular\%temp_homebrew%"
+IF !errorlevel! EQU 1 (
+	call :update_folder
 )
-rem New homebrew added will be here, this wil be changed in a futur version to automaticaly check new homebrews added
-IF NOT EXIST "tools\sd_switch\mixed\modular\EmuMMC-Toggle" (
-	call :verif_folder_version "tools\sd_switch\mixed\modular\EmuMMC-Toggle"
-	IF !errorlevel! EQU 1 (
-		call :update_folder
-	)
-)
+set /a temp_count+=1
+goto:listing_homebrews
+:skip_listing_homebrews
 exit /b
 
 :update_modules_profiles_management.bat
@@ -456,12 +463,20 @@ call :verif_file_version "tools\Storage\modules_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-for /d %%f in ("tools\sd_switch\modules\pack\*") do (
-	call :verif_folder_version "%%f"
-	IF !errorlevel! EQU 1 (
-		call :update_folder
-	)
+tools\gnuwin32\bin\grep.exe -c "" <"tools\default_configs\Lists\modules.list" > templogs\tempvar.txt
+set /p count_modules=<templogs\tempvar.txt
+set /a temp_count=1
+:listing_modules
+IF %temp_count% GTR %count_modules% goto:skip_listing_modules
+"tools\gnuwin32\bin\sed.exe" -n %temp_count%p "tools\default_configs\Lists\modules.list" >templogs\tempvar.txt
+set /p temp_module=<templogs\tempvar.txt
+call :verif_folder_version "tools\sd_switch\modules\pack\%temp_module%"
+IF !errorlevel! EQU 1 (
+	call :update_folder
 )
+set /a temp_count+=1
+goto:listing_modules
+:skip_listing_modules
 exit /b
 
 :update_mount_discs.bat
@@ -857,10 +872,15 @@ rem IF %errorlevel% NEQ 0 (
 rem 	echo Aucune connexion internet vérifiable, la vérification de version du fichier "%temp_file_path%" n'aura pas lieu.
 rem 	exit /b 0
 rem )
-call :test_write_access file "%~1"
+call :test_write_access file "%~dp1"
 set script_version=0.00.00
-IF EXIST "%~1.version" set /p script_version=<"%~1.version"
-"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path%.version 2>nul
+IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
+	IF EXIST "%temp_file_path%" set /p script_version=<"%temp_file_path%"
+	"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path% 2>nul
+) else (
+	IF EXIST "%~1.version" set /p script_version=<"%~1.version"
+	"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path%.version 2>nul
+)
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 set /p script_version_verif=<"templogs\version.txt"
 rem echo %temp_file_path% : va=%script_version%, vm=%script_version_verif%
@@ -905,6 +925,8 @@ IF %errorlevel% NEQ 0 (
 	pause
 	exit
 )
+:file.version_download
+IF "%temp_file_path%"=="tools\sd_switch\version.txt" goto:skip_file.version_download
 "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%.version" %files_url_project_base%/%temp_file_slash_path%.version 2>nul
 IF %errorlevel% NEQ 0 (
 	echo Erreur lors de la mise à jour du fichier "%temp_file_path%.version", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
@@ -914,6 +936,7 @@ IF %errorlevel% NEQ 0 (
 	pause
 	exit
 )
+:skip_file.version_download
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 del /q "failed_updates\%temp_file_path:\=;%.file.failed"
 echo Mise à jour de "%temp_file_path%" effectuée.
@@ -1046,10 +1069,10 @@ IF "%~1"=="folder" (
 exit /b
 
 :update_failed_content
-set temp_failed_update_path=<"%~1"
+set /p temp_failed_update_path=<"%~1"
 set temp_failed_file=%~1
 IF "%temp_failed_file:~-11,4%"=="file" (
-	set temp_file__path=%temp_failed_update_path%
+	set temp_file_path=%temp_failed_update_path%
 	set temp_file_slash_path=%temp_failed_update_path:\=/%
 	call :update_file
 )

@@ -6,12 +6,10 @@ IF EXIST "templogs" (
 	rmdir /s /q "templogs" 2>nul
 )
 mkdir "templogs"
-IF EXIST "failed_updates" (
-	del /q "failed_updates" 2>nul
-	IF NOT EXIST "failed_updates\*.failed" rmdir /s /q "failed_updates" 2>nul
-) else (
-	mkdir "failed_updates"
+IF NOT EXIST "failed_updates\*.failed" (
+	rmdir /s /q "failed_updates" 2>nul
 )
+	mkdir "failed_updates"
 set temp_file_path=tools\Storage\update_manager.bat
 set temp_file_slash_path=%temp_file_path:\=/%
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk

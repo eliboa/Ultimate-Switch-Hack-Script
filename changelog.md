@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.07</h2>
+<ul>
+<li>Correction denombreux bugs dans le gestionnaire de mise à jour ainsi que dans son updater, les éléments servant à la préparation d'une SD sont correctement téléchargés et les mises à jour échouées reprendront correctement.</li>
+</ul>
 <h2>V3.00.06</h2>
 <ul>
 <li>Le lancement d'un payload ne génère plus un fichier de log, je pense que ceci est inutile au final.</li>
