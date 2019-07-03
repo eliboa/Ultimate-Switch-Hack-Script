@@ -1,6 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
-<h2>V3.00.09</h2>
+<h2>V3.00.11</h2>
+<ul>
+<li>Légère modification dans le script de téléchargement/préparation d'un firmware pour ChoiDuJour/ChoiDuJourNX évitant à l'utilisateur l'action d'appuyer sur une touche lorsqu'il choisi de revenir au menu précédent au début du script.</li>
+</ul>
+<h2>V3.00.10</h2>
 <ul>
 <li>Le redémarrage automatique a été restauré lors d'une mise à jour du gestionnaire de mise à jour.</li>
 <li>Une vérification supplémentaire est maintenant effectuée au tout début du script, si aucune connexion internet n'est disponible à ce moment là, le script est immédiatement stopé et passe à la suite, épargnant quelques traitements inutiles dans ce genre de cas.</li>

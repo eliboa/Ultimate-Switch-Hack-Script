@@ -53,7 +53,7 @@ IF "%action_type%"=="4" (
 IF "%action_type%"=="1" cls & goto:define_firmware_choice
 IF "%action_type%"=="2" cls & goto:define_firmware_choice
 IF "%action_type%"=="3" cls & goto:define_firmware_choice
-goto:end_script
+goto:end_script_2
 :define_firmware_choice
 echo Choisissez le firmware que vous souhaitez préparer?
 echo.
@@ -416,6 +416,7 @@ IF NOT "%launch_choidujournx_doc%"=="" set launch_choidujournx_doc=%launch_choid
 IF /I "%launch_choidujournx_doc%"=="o" start DOC\files\choidujournx.html
 	:end_script
 pause 
+:end_script_2
 echo Nettoyage des fichiers temporaires...
 rmdir /s /q templogs 2>nul
 rmdir /s /q "firmware_temp" 2>nul
