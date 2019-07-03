@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.09</h2>
+<ul>
+<li>Lorsque le gestionnaire de mise à jour se met à jour lui-même, le script sera fermé et devra être redémarré manuellement car le redémarrage automatique de celui-ci provoquait des comportements bizarre.</li>
+</ul>
 <h2>V3.00.07</h2>
 <ul>
 <li>Correction denombreux bugs dans le gestionnaire de mise à jour ainsi que dans son updater, les éléments servant à la préparation d'une SD sont correctement téléchargés et les mises à jour échouées reprendront correctement.</li>

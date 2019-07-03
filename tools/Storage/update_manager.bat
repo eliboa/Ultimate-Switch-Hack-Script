@@ -20,6 +20,12 @@ IF NOT EXIST "failed_updates\*.failed" (
 )
 mkdir "failed_updates" >nul
 :new_script_install
+ping /n 2 www.google.com >nul 2>&1
+IF %errorlevel% NEQ 0 (
+	echo Aucune connexion à internet disponible, le script ne peux vérifier les mises à jour.
+	pause
+	goto_end_script
+)
 IF "%~1"=="update_all" goto:skip_new_script_install
 IF "%~1"=="general_content_update" goto:skip_new_script_install
 IF "%~2"=="force" (
@@ -31,7 +37,7 @@ IF "%~2"=="force" (
 		)
 		echo Le gestionnaire de mises à jour doit se mettre à jour lui-même avant de pouvoir continuer.
 		echo Pour se faire, le script va lancer un autre script puis se fermer pour que la mise à jour puisse s'effectuer correctement.
-		echo Une fois la mise à jour effectuée, le script va redémarrer.
+		echo Une fois la mise à jour effectuée, le script devra être redémarré.
 		pause
 		call :update_manager_update_special_script
 	)
@@ -77,7 +83,7 @@ IF !errorlevel! EQU 1 (
 )
 	echo Le gestionnaire de mises à jour doit se mettre à jour lui-même avant de pouvoir continuer car sa mise à jour précédente semble avoir échouée.
 	echo Pour se faire, le script va lancer un autre script puis se fermer pour que la mise à jour puisse s'effectuer correctement.
-	echo Une fois la mise à jour effectuée, le script va redémarrer.
+	echo Une fois la mise à jour effectuée, le script devra être redémarré.
 	pause
 	call :update_manager_update_special_script
 )
@@ -153,7 +159,7 @@ IF !errorlevel! EQU 1 (
 )
 	echo Le gestionnaire de mises à jour doit se mettre à jour lui-même avant de pouvoir continuer.
 	echo Pour se faire, le script va lancer un autre script puis se fermer pour que la mise à jour puisse s'effectuer correctement.
-	echo Une fois la mise à jour effectuée, le script va redémarrer.
+	echo Une fois la mise à jour effectuée, le script devra être redémarré.
 	pause
 	call :update_manager_update_special_script
 )
@@ -1099,6 +1105,7 @@ echo Vérifications et suppressions d'éventuels anciens fichiers n'étant plus 
 
 echo Vérifications et suppressions terminées.
 exit /b
+
 :end_script
 IF EXIST templogs (
 	rmdir /s /q templogs
