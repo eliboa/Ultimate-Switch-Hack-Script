@@ -1090,6 +1090,7 @@ IF EXIST templogs (
 IF NOT EXIST "failed_updates\*.failed" (
 	rmdir /s /q failed_updates
 )
+endlocal
 start "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"tools\Storage\update_manager_updater.bat^""
 exit
 
