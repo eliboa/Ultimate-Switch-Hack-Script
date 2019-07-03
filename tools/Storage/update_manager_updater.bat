@@ -56,4 +56,5 @@ IF NOT EXIST "failed_updates\*.failed" (
 echo Mise à jour du gestionnaire de mises à jour du script terminée, le script va se fermer.
 pause
 endlocal
+start "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"Ultimate-Switch-Hack-Script.bat^""
 exit
