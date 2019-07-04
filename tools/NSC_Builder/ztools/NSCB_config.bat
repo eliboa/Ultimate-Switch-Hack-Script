@@ -115,7 +115,7 @@ set v_rep="vrepack=%v_rep%"
 set v_rep="%v_rep%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "57" -nl "set %v_rep%"
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "57" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "57" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc2
@@ -155,7 +155,7 @@ set v_fold="fi_rep=%v_fold%"
 set v_fold="%v_fold%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "61" -nl "set %v_fold%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "61" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "61" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc2
@@ -195,7 +195,7 @@ set v_RSV="patchRSV=%v_RSV%"
 set v_RSV="%v_RSV%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "41" -nl "set %v_RSV%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "41" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "41" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc2
@@ -251,7 +251,7 @@ set v_KGEN="vkey=%v_KGEN%"
 set v_KGEN="%v_KGEN%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "95" -nl "set %v_KGEN%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "95" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "95" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc2
@@ -273,6 +273,7 @@ echo Tapez "8" pour régler le buffer
 echo Tapez "9" pour régler les options EXFAT/FAT32
 echo Tapez "10" pour régler comment organiser les fichiers en sortie
 echo Tapez "11" pour définir le nouveau mode ou l'ancien mode
+echo Tapez "12" pour ROMANIZE les noms lors de l'utilisation de direct-multi
 echo.
 echo Tapez "c" pour voir les paramètres globaux courant
 echo Tapez "d" pour remettre les paramètres globaux par défaut
@@ -292,6 +293,7 @@ if /i "%bs%"=="8" goto op_buffer
 if /i "%bs%"=="9" goto op_fat
 if /i "%bs%"=="10" goto op_oforg
 if /i "%bs%"=="11" goto op_nscbmode
+if /i "%bs%"=="12" goto op_romanize
 
 if /i "%bs%"=="c" call :curr_set2
 if /i "%bs%"=="c" echo.
@@ -427,7 +429,7 @@ set "v_col=!v_colB!!v_colF!"
 color !v_col!
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "3" -nl "color !v_col!"
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "3" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "3" -nl "La ligne de configuration a été modifiée en: "
 endlocal
 echo.
 pause
@@ -458,7 +460,7 @@ set v_wf="%v_wf%"
 
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "8" -nl "set %v_wf%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "8" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "8" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc3
@@ -489,7 +491,7 @@ set v_of="%v_of%"
 
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "10" -nl "set %v_of%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "10" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "10" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc3
@@ -535,11 +537,11 @@ set v_delta2_="%v_delta2_%"
 
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "36" -nl "set %v_delta%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "36" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "36" -nl "La ligne de configuration a été modifiée en: "
 echo.
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "37" -nl "set %v_delta2_%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "37" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "37" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc3
@@ -578,7 +580,7 @@ set v_gzip="zip_restore=%v_gzip%"
 set v_gzip="%v_gzip%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "78" -nl "set %v_gzip%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "78" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "78" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc3
@@ -617,7 +619,7 @@ set v_exit="va_exit=%v_exit%"
 set v_exit="%v_exit%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "101" -nl "set %v_exit%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "101" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "101" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc3
@@ -654,7 +656,7 @@ set skipRSVprompt="skipRSVprompt=%skipRSVprompt%"
 set skipRSVprompt="%skipRSVprompt%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "108" -nl "set %skipRSVprompt%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "108" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "108" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc3
@@ -709,7 +711,7 @@ set v_buffer="buffer=%v_buffer%"
 set v_buffer="%v_buffer%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "32" -nl "set %v_buffer%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "32" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "32" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc3
@@ -757,13 +759,13 @@ set v_fat1="fatype=%v_fat1%"
 set v_fat1="%v_fat1%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "116" -nl "set %v_fat1%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "116" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "116" -nl "La ligne de configuration a été modifiée en: "
 echo.
 set v_fat2="fexport=%v_fat2%"
 set v_fat2="%v_fat2%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "117" -nl "set %v_fat2%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "117" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "117" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc3
@@ -800,7 +802,7 @@ set v_oforg="oforg=%v_oforg%"
 set v_oforg="%v_oforg%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "125" -nl "set %v_oforg%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "125" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "125" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc3
@@ -837,7 +839,44 @@ set v_nscbmode="NSBMODE=%v_nscbmode%"
 set v_nscbmode="%v_nscbmode%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "132" -nl "set %v_nscbmode%" 
 echo.
-%pycommand% "%listmanager%" -rl "%op_file%" -ln "132" -nl "Line in config was changed to: "
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "132" -nl "La ligne de configuration a été modifiée en: "
+echo.
+pause
+goto sc3
+
+:op_romanize
+cls
+call :logo
+echo ***************************************************************************
+echo ROMANIZE RESULTING NAMES FOR DIRECT MULTI FUNCTION
+echo ***************************************************************************
+echo.
+echo Tapez "1" pour convertir les noms japonais\asian vers ROMAJI (par défaut)
+echo Tapez "2" conserver les noms tels qu'ils sont lus sur  PREVALENT BASEFILE
+echo.
+echo Tapez "b" pour revenir aux options global
+echo Tapez "0" pour revenir au menu de configuration
+echo Tapez "e" pour revenir au menu principal
+echo ...........................................................................
+echo.
+set /p bs="Faites votre choix: "
+set "v_roma=none"
+if /i "%bs%"=="1" set "v_roma=TRUE"
+if /i "%bs%"=="2" set "v_roma=FALSE"
+
+if /i "%bs%"=="b" goto sc3
+if /i "%bs%"=="0" goto sc1
+if /i "%bs%"=="e" goto salida
+
+if "%v_roma%"=="none" echo Mauvais choix
+if "%v_roma%"=="none" echo.
+if "%v_roma%"=="none" goto op_romanize
+
+set v_roma="romaji=%v_roma%"
+set v_roma="%v_roma%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "139" -nl "set %v_roma%" 
+echo.
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "139" -nl "La ligne de configuration a été modifiée en: "
 echo.
 pause
 goto sc3
@@ -972,6 +1011,12 @@ set v_nscbmode="%v_nscbmode%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "132" -nl "set %v_nscbmode%" 
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "132" -nl "La ligne de configuration a été modifiée en: "
 
+set "v_roma=TRUE"
+set v_roma="romaji=%v_roma%"
+set v_roma="%v_roma%"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "139" -nl "set %v_roma%" 
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "139" -nl "La ligne de configuration a été modifiée en: "
+
 exit /B
 
 :curr_set1
@@ -1031,6 +1076,8 @@ REM OUTPUT ORGANIZING format
 REM NSCB MODE
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "132" -nl "Le mode NSCB est réglé sur: "
 
+REM ROMANIZE
+%pycommand% "%listmanager%" -rl "%op_file%" -ln "139" -nl "Le mode ROMANIZE est réglé sur: "
 
 exit /B
 
@@ -1075,7 +1122,7 @@ ECHO =============================     BY JULESONTHEROAD     ===================
 ECHO -------------------------------------------------------------------------------------
 ECHO "                                POWERED BY SQUIRREL                                "
 ECHO "                    BASED IN THE WORK OF BLAWAR AND LUCA FRAGA                     "
-ECHO                                     VERSION 0.86
+ECHO                                     VERSION 0.87
 ECHO -------------------------------------------------------------------------------------                   
 ECHO Program's github: https://github.com/julesontheroad/NSC_BUILDER
 ECHO Blawar's github:  https://github.com/blawar

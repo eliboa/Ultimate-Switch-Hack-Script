@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.12</h2>
+<ul>
+<li>Mise à jour de NSC_Builder en version 0.87B traduite par @fabriceunko de Logic-sunrise, merci à lui.</li>
+</ul>
 <h2>V3.00.11</h2>
 <ul>
 <li>Légère modification dans le script de téléchargement/préparation d'un firmware pour ChoiDuJour/ChoiDuJourNX évitant à l'utilisateur l'action d'appuyer sur une touche lorsqu'il choisi de revenir au menu précédent au début du script.</li>
