@@ -180,6 +180,7 @@ rem Specific scripts instructions must be added here
 echo Mise à jour intégrale du script en cours...
 call :general_content_update
 call :update_about.bat
+call :update_android_installer.bat
 call :update_biskey_dump.bat
 call :update_convert_BOTW.bat
 call :update_convert_game_to_nsp.bat
@@ -219,6 +220,17 @@ exit /b
 call :verif_file_version "tools\Storage\about.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+exit /b
+
+:update_android_installer.bat
+call :verif_file_version "tools\Storage\android_installer.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\android_apps"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 exit /b
 

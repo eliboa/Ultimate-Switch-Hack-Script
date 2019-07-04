@@ -30,6 +30,8 @@ echo 10: Configurer l'émulateur Nes Classic Edition?
 echo.
 echo 11: Configurer l'émulateur Snes Classic Edition?
 echo.
+echo 12: Installer des applications Android (mode débogage USB requis)?
+echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
 echo.
@@ -45,6 +47,7 @@ IF "%action_choice%"=="8" goto:split_games
 IF "%action_choice%"=="9" goto:nsZip
 IF "%action_choice%"=="10" goto:config_nes_classic
 IF "%action_choice%"=="11" goto:config_snes_classic
+IF "%action_choice%"=="12" goto:install_android_apps
 goto:end_script
 :update_on_sd
 set action_choice=
@@ -176,6 +179,18 @@ IF EXIST "tools\SNES_Injector\*.*" (
 	call tools\Storage\update_manager.bat "update_SNES_Injector" "force"
 )
 call TOOLS\SNES_Injector\SNES_Injector.bat
+@echo off
+goto:define_action_choice
+:install_android_apps
+set action_choice=
+echo.
+cls
+IF EXIST "tools\Storage\android_installer.bat" (
+	call tools\Storage\update_manager.bat "update_android_installer.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_android_installer.bat" "force"
+)
+call TOOLS\Storage\android_installer.bat
 @echo off
 goto:define_action_choice
 :end_script
