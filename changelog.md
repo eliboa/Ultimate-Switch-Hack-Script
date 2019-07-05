@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.15</h2>
+<ul>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 210.</li>
+</ul>
 <h2>V3.00.14</h2>
 <ul>
 <li>Mise à jour de la documentation pour inclure l'installation d'application sur Android via le mode débogage USB dans la liste des fonctionnalités.</li>

@@ -1,5 +1,11 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V210</h2>
+<ul>
+<li>Mise à jour de NXShell en version 2.00.</li>
+<li>Mise à jour de Kosmos Updater en version 3.0.5.</li>
+<li>Mise à jour de Sys-ftpd vers la version master du Github, compilé par moi-même. Le dossier "ftpd" se trouvant à la racine de la SD pourra être supprimé car il se trouve maintenant dans le dossier "config".</li>
+</ul>
 <h2>V209</h2>
 <ul>
 <li>Ajout du homebrew <a target="_blank" href="github.com/noirscape/emummc-toggler/releases">EmuMMC-togle</a>.</li>
