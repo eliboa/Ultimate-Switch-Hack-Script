@@ -1047,6 +1047,14 @@ IF "%script_version%"=="" (
 		exit /b 0
 	)
 )
+IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
+	IF %script_version_verif% GTR %script_version% (
+		set update_finded=O
+		exit /b 1
+	) else (
+		exit /b 0
+	)
+)
 IF %script_version_verif:~0,1% GTR %script_version:~0,1% (
 	set update_finded=O
 	exit /b 1
