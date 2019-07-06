@@ -26,6 +26,7 @@ La licence GPL V3 s'applique sur les scripts batch se trouvant à la racine de c
 * Préparation d'une SD, du formatage (FAT32 ou EXFAT) à la mise en place de différentes solutions, voir la documentation pour plus d'informations sur le contenu des packs.
 * Lancement de NSC_Builder. Ce script est utile pour convertir des XCIs ou NSPs en XCIs ou NSPs. Les fichiers convertis via ce script sont nettoyé et rendus, en théorie, indétectable par Nintendo, surtout pour les NSPs. Enfin, ce script permet aussi de créé des NSPs ou XCIs contenant le jeu, ses mises à jour et DLCs dans un seul fichier. Pour plus d'infos, voir [cette page](https://github.com/julesontheroad/NSC_BUILDER).
 * Conversion de fichiers XCI en NSP.
+* Conversion d'un fichier NSP pour le rendre compatible avec le firmware de la Switch le plus bas possible.
 * Installation de NSP via Goldleaf et le réseau.
 * Sauvegarde, restauration et réinitialisation des fichiers importants utilisés par le script.
 * Vérification des NSPs.
