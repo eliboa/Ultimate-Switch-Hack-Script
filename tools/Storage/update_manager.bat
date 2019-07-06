@@ -167,8 +167,14 @@ IF "%~1"=="" (
 		goto:end_script
 	) else (
 	echo Vérifications et mises à jour en cours...
+	call :verif_file_version "tools\default_configs\general_update_version.txt"
+	IF !errorlevel! EQU 1 (
+		call :general_content_update
+	)
+	IF "%~1"=="general_content_update" goto:clean_files
 	call :%~1
 )
+:clean_files
 call :del_old_or_unused_files
 echo Vérifications et mises à jour terminées.
 pause
@@ -178,7 +184,7 @@ rem Specific scripts instructions must be added here
 
 :update_all
 echo Mise à jour intégrale du script en cours...
-call :general_content_update
+rem call :general_content_update
 call :update_about.bat
 call :update_android_installer.bat
 call :update_biskey_dump.bat
@@ -877,6 +883,10 @@ call :verif_folder_version "DOC"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
+call :verif_file_version "tools\default_configs\general_update_version.txt"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
 echo Mise à jour des éléments généraux terminée.
 exit /b
 
@@ -893,7 +903,18 @@ rem )
 call :test_write_access file "%~dp1"
 set script_version=0.00.00
 IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
-	IF EXIST "%temp_file_path%" set /p script_version=<"%temp_file_path%"
+	IF EXIST "%temp_file_path%" (
+		set /p script_version=<"%temp_file_path%"
+	) else (
+		set script_version=0
+	)
+	"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path% 2>nul
+) else IF "%temp_file_path%"=="tools\default_configs\general_update_version.txt" (
+	IF EXIST "%temp_file_path%" (
+		set /p script_version=<"%temp_file_path%"
+	) else (
+		set script_version=0
+	)
 	"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path% 2>nul
 ) else (
 	IF EXIST "%~1.version" set /p script_version=<"%~1.version"
@@ -1048,6 +1069,14 @@ IF "%script_version%"=="" (
 	)
 )
 IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
+	IF %script_version_verif% GTR %script_version% (
+		set update_finded=O
+		exit /b 1
+	) else (
+		exit /b 0
+	)
+)
+IF "%temp_file_path%"=="tools\default_configs\general_update_version.txt" (
 	IF %script_version_verif% GTR %script_version% (
 		set update_finded=O
 		exit /b 1
