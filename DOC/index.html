@@ -46,6 +46,7 @@ L'ensemble de mon travail est soumis à la licence GPL V3 (tous les scripts ou p
 <li>Préparation d'une SD, du formatage (FAT32 ou EXFAT) à la mise en place de différentes solutions, voir <a href="files/sd_prepare.html">cette page</a> pour plus d'informations sur le contenu des packs.</li>
 <li>Lancement de NSC_Builder. Ce script est utile pour convertir des XCIs ou NSPs en XCIs ou NSPs. Les fichiers convertis via ce script sont nettoyé et rendus, en théorie, indétectable par Nintendo, surtout pour les NSPs. Enfin, ce script permet aussi de créé des NSPs ou XCIs contenant le jeu, ses mises à jour et DLCs dans un seul fichier. Pour plus d'infos, voir <a target="_new" href="https://github.com/julesontheroad/NSC_BUILDER">cette page</a>.</li>
 <li>Conversion de fichiers XCI en NSP.</li>
+<li>Conversion d'un fichier NSP pour le rendre compatible avec le firmware de la Switch le plus bas possible.</li>
 <li>Installation de NSP via Goldleaf et le réseau.</li>
 <li>Sauvegarde, restauration et réinitialisation des fichiers importants utilisés par le script.</li>
 <li>Vérification des NSPs.</li>
@@ -76,7 +77,6 @@ L'ensemble de mon travail est soumis à la licence GPL V3 (tous les scripts ou p
 <li>Dans le script de création du fichier de l'emunand pour une partition ou dans le script permettant de joindre un dump de nand, implémenter un choix permettant de traiter d'autres types de dump splitté.</li>
 <li>Mettre en place un script qui s'occupera du flash d'une partition de la SD avec le fichier de partition d'une Emunand et qui indiquera à l'utilisateur à quel secteur elle commence histoire qu'il puisse configurer ensuite facilement celle-ci dans Atmosphere.</li>
 <li>Créer de nouveaux scripts pour préparer et installer Linux ou Laka, les anciens scripts de préparation de Linux seront gardés mais seront nottés comme étant obsolètes.</li>
-<li>Mise en place du script utilisant Renxpack.</li>
 <li>Dans la gestion des cheats, certains jeux ne sont pas nommés, la base de données (fichier "tools\sd_switch\cheats\README.md") doit être mise à jour.</li>
 <li>Traduction de certains éléments de l'extraction d'un certificat, ceci est à faire dans le code source des scripts python de cette partie.</li>
 <li>Récupération des Biskeys directement dans un fichier texte grâce au payload Biskeydump (fonction présente mais pas parfaite pour l'instant).</li>

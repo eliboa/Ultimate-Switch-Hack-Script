@@ -12,25 +12,27 @@ echo 1: Préparer une mise à jour via ChoiDuJour-NX sur la SD et/ou un package 
 echo.
 echo 2: Convertir un fichier XCI ou NCA en NSP?
 echo.
-echo 3: Installer des NSP via Goldleaf et le réseau.
+echo 3: Convertir un NSP pour le rendre compatible avec le firmware de la Switch le plus bas possible.
 echo.
-echo 4: Installer des NSP via Goldleaf et l'USB.
+echo 4: Installer des NSP via Goldleaf et le réseau.
 echo.
-echo 5: Convertir une sauvegarde de Zelda Breath Of The Wild du format Wii U vers Switch ou inversement?
+echo 5: Installer des NSP via Goldleaf et l'USB.
 echo.
-echo 6: Extraire le certificat d'une console?
+echo 6: Convertir une sauvegarde de Zelda Breath Of The Wild du format Wii U vers Switch ou inversement?
 echo.
-echo 7: Vérifier des fichiers NSP?
+echo 7: Extraire le certificat d'une console?
 echo.
-echo 8: Découper un fichier NSP ou XCI en fichiers de 4 GO?
+echo 8: Vérifier des fichiers NSP?
 echo.
-echo 9: Compresser/décompresser un jeu grâce à nsZip?
+echo 9: Découper un fichier NSP ou XCI en fichiers de 4 GO?
 echo.
-echo 10: Configurer l'émulateur Nes Classic Edition?
+echo 10: Compresser/décompresser un jeu grâce à nsZip?
 echo.
-echo 11: Configurer l'émulateur Snes Classic Edition?
+echo 11: Configurer l'émulateur Nes Classic Edition?
 echo.
-echo 12: Installer des applications Android (mode débogage USB requis)?
+echo 12: Configurer l'émulateur Snes Classic Edition?
+echo.
+echo 13: Installer des applications Android (mode débogage USB requis)?
 echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
@@ -38,16 +40,17 @@ echo.
 set /p action_choice=Entrez le numéro correspondant à l'action à faire: 
 IF "%action_choice%"=="1" goto:update_on_sd
 IF "%action_choice%"=="2" goto:convert_game
-IF "%action_choice%"=="3" goto:install_nsp_network
-IF "%action_choice%"=="4" goto:install_nsp_usb
-IF "%action_choice%"=="5" goto:convert_BOTW
-IF "%action_choice%"=="6" goto:extract_cert
-IF "%action_choice%"=="7" goto:verify_nsp
-IF "%action_choice%"=="8" goto:split_games
-IF "%action_choice%"=="9" goto:nsZip
-IF "%action_choice%"=="10" goto:config_nes_classic
-IF "%action_choice%"=="11" goto:config_snes_classic
-IF "%action_choice%"=="12" goto:install_android_apps
+IF "%action_choice%"=="3" goto:renxpack
+IF "%action_choice%"=="4" goto:install_nsp_network
+IF "%action_choice%"=="5" goto:install_nsp_usb
+IF "%action_choice%"=="6" goto:convert_BOTW
+IF "%action_choice%"=="7" goto:extract_cert
+IF "%action_choice%"=="8" goto:verify_nsp
+IF "%action_choice%"=="9" goto:split_games
+IF "%action_choice%"=="10" goto:nsZip
+IF "%action_choice%"=="11" goto:config_nes_classic
+IF "%action_choice%"=="12" goto:config_snes_classic
+IF "%action_choice%"=="13" goto:install_android_apps
 goto:end_script
 :update_on_sd
 set action_choice=
@@ -71,6 +74,18 @@ IF EXIST "tools\Storage\convert_game_to_nsp.bat" (
 	call tools\Storage\update_manager.bat "update_convert_game_to_nsp.bat" "force"
 )
 call TOOLS\Storage\convert_game_to_nsp.bat
+@echo off
+goto:define_action_choice
+:renxpack
+set action_choice=
+echo.
+cls
+IF EXIST "tools\Storage\renxpack.bat" (
+	call tools\Storage\update_manager.bat "update_renxpack.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_renxpack.bat" "force"
+)
+call TOOLS\Storage\renxpack.bat
 @echo off
 goto:define_action_choice
 :install_nsp_network

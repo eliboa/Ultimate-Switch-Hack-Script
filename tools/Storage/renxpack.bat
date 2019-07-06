@@ -7,7 +7,7 @@ IF EXIST templogs (
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-echo Ce script va permettre de convertir un fichier XCI au format NSP, fichier installable via Tinfoil, SXOS ou encore le DevMenu.
+echo Ce script va permettre de rendre un NSP compatible avec le firmware de la Switch le plus bas possible.
 echo Attention: Il est préférable de ne pas exécuter ce script sur une partition formatée en FAT32 à cause de la limite de création de fichiers de plus de  4 GO de ce système de fichiers.
 echo.
 pause
@@ -39,7 +39,7 @@ pause
 echo.
 echo Vous allez devoir sélectionner le fichier XCI à convertir.
 pause
-%windir%\system32\wscript.exe //Nologo ..\Storage\functions\open_file.vbs "" "Fichier de jeu Switch (*.xci)|*.xci|" "Sélection du jeu à convertir" "..\..\templogs\tempvar.txt"
+%windir%\system32\wscript.exe //Nologo ..\Storage\functions\open_file.vbs "" "Fichier de jeu Switch (*.nsp)|*.nsp|" "Sélection du jeu à convertir" "..\..\templogs\tempvar.txt"
 set /p game_path=<..\..\templogs\tempvar.txt
 IF "%game_path%"=="" (
 	echo Aucun jeu sélectionné, la conversion est annulée.
@@ -56,13 +56,7 @@ IF "%output_path%"=="" (
 	set output_path=!output_path!\
 	set output_path=!output_path:\\=\!
 )
-set /p rename_target=Souhaitez-vous que le NSP généré soit renommé grâce au nom du jeu plutôt que grâce à l'ID de celui-ci? (O/n): 
-IF NOT "%rename_target%"=="" set rename_target=%rename_target:~0,1%
-IF /i NOT "%rename_target%"=="o" set params=-r 
-set /p keepncaid=Souhaitez-vous que l'ID des NCA du NSP soit gardés (ne pas activer cette option est recommandé)? (O/n): 
-IF NOT "%keepncaid%"=="" set keepncaid=%keepncaid:~0,1%
-IF /i NOT "%keepncaid%"=="o" set params=--keepncaid
-"4nxci.exe" %params% -o "%output_path%" -t "..\..\templogs" "%game_path%"
+"renxpack.exe" -o "%output_path%" -t "..\..\templogs" "%game_path%"
 IF %errorlevel% NEQ 0 (
 	echo.
 	echo Erreur pendant la tentative de conversion.
@@ -71,7 +65,6 @@ IF %errorlevel% NEQ 0 (
 	echo Conversion terminée avec succès.
 )
 :end_script
-pause
 cd ..\..
 IF EXIST templogs (
 	rmdir /s /q templogs

@@ -204,6 +204,7 @@ call :update_pegaswitch.bat
 call :update_preload_NSC_Builder.bat
 call :update_prepare_sd_switch.bat
 call :update_prepare_update_on_sd.bat
+call :update_renxpack.bat
 call :update_serial_checker.bat
 call :update_split_games.bat
 call :update_test_keys.bat
@@ -706,6 +707,17 @@ IF %errorlevel% EQU 1 (
 	call :update_folder
 )
 call :update_create_update.bat
+exit /b
+
+:update_renxpack.bat
+call :verif_file_version "tools\Storage\renxpack.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+call :verif_folder_version "tools\Hactool_based_programs"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
 exit /b
 
 :update_restore_configs.bat
