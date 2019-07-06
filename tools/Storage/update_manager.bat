@@ -966,6 +966,7 @@ IF %errorlevel% NEQ 0 (
 )
 :file.version_download
 IF "%temp_file_path%"=="tools\sd_switch\version.txt" goto:skip_file.version_download
+IF "%temp_file_path%"=="tools\default_configs\general_update_version.txt" goto:skip_file.version_download
 "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%.version" %files_url_project_base%/%temp_file_slash_path%.version 2>nul
 IF %errorlevel% NEQ 0 (
 	echo Erreur lors de la mise à jour du fichier "%temp_file_path%.version", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
