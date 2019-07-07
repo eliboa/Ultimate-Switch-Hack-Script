@@ -1,5 +1,10 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V211</h2>
+<ul>
+<li>Mise à jour de Hekate de Joonie86  vers la version Master du Github, compilé par moi-même (version modifiée de Hekate 5.0.1).</li>
+<li>Mise à jour de Kosmos Updater en version 3.0.6.</li>
+</ul>
 <h2>V210</h2>
 <ul>
 <li>Mise à jour de NXShell en version 2.00.</li>

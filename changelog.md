@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.19</h2>
+<ul>
+<li>Mise à jour du payload de Hekate de Joonie86 que j'ai compilé par moi-même (version modifiée de Hekate 5.0.1).</li>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 211.</li>
+</ul>
 <h2>V3.00.18</h2>
 <ul>
 <li>Création d'un script utilisant Renxpack pour créer un NSP compatible avec le firmware le plus bas possible de la Switch. Cette nouvelle fonction est intégré au gestionnaire de mises à jour et se trouve dans le menu des "autres fonctions".</li>
