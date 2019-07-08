@@ -20,9 +20,9 @@ echo 5: Vérifier un fichier de clés?
 echo.
 echo 6: Utiliser le compagnon pour Hid-mitm?
 echo.
-echo 7: Lancer Linux (fonctionnalité opsolète)?
+echo 7: Lancer Linux (fonctionnalité obsolète)?
 echo.
-echo 8: Mettre à jour Shofel2 (fonctionnalité opsolète)?
+echo 8: Mettre à jour Shofel2 (fonctionnalité obsolète)?
 echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.

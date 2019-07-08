@@ -22,6 +22,8 @@ IF EXIST "%calling_script_dir%\templogs" (
 	rmdir /s /q "%calling_script_dir%\templogs" 2>nul
 )
 mkdir "%calling_script_dir%\templogs"
+echo Attention: Le package de firmware maximum qui peut être créé est pour le firmware 6.1.0, les firmwares supérieurs à ce dernier provoqueront une erreur.
+echo.
 cd ..\Hactool_based_programs
 IF NOT EXIST keys.txt (
 	IF EXIST keys.dat (

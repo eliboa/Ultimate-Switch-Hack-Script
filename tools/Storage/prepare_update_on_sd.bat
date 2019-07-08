@@ -1,6 +1,6 @@
 ::Script by Shadow256
 @echo off
-Setlocal
+Setlocal enabledelayedexpansion
 chcp 65001 > nul
 
 IF NOT EXIST templogs (
@@ -86,7 +86,7 @@ echo.
 echo F: Ouvrir le dossier contenant les firmwares déjà téléchargé?
 echo N'importe quel autre choix terminera ce script et reviendra au menu précédent.
 echo.
-set firmware_choice =
+set firmware_choice=
 set /p firmware_choice=Entrez le firmware souhaité ou une action à faire: 
 IF NOT EXIST "downloads" mkdir "downloads"
 IF NOT EXIST "downloads\firmwares" mkdir "downloads\firmwares"
@@ -103,170 +103,182 @@ IF /i "%firmware_choice%"=="F" (
 )
 IF "%firmware_choice%"=="1.0.0" (
 	set expected_md5=529bcdab4964809e44fa75634c7f1432
-	set firmware_link=https://mega.nz/#!YExVSRKY!MEBPOhYCQ1hXA0tlhSh70nC1C0rGEv2P3A6go56Z87g
+	set "firmware_link=https://mega.nz/#^!YExVSRKY^!MEBPOhYCQ1hXA0tlhSh70nC1C0rGEv2P3A6go56Z87g"
 	set firmware_file_name=Firmware 1.0.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="2.0.0" (
 	set expected_md5=78fe09c2da202d35e58c7b07bb7f39a8
-	set firmware_link=https://mega.nz/#!sAIzSQTK!c1RNFqOrDt3-iW4Rn_M5IkUgx-ormrpImrtZXixNrOQ
+	set "firmware_link=https://mega.nz/#^!sAIzSQTK^!c1RNFqOrDt3-iW4Rn_M5IkUgx-ormrpImrtZXixNrOQ"
 	set firmware_file_name=Firmware 2.0.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="2.1.0" (
 	set expected_md5=35752c26badc270f9fdd51883922432b
-	set firmware_link=https://mega.nz/#!gcx3UR5Y!P4Ka3g4hum5c2tI0YwX8HBokm6SQ4EoCG2OeKtKC8dg
+	set "firmware_link=https://mega.nz/#^!gcx3UR5Y^!P4Ka3g4hum5c2tI0YwX8HBokm6SQ4EoCG2OeKtKC8dg"
 	set firmware_file_name=Firmware 2.1.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="2.2.0" (
 	set expected_md5=137f5d416d1b41ad26c35575dd534bc4
-	set firmware_link=https://mega.nz/#!QVJl0aDA!MU03vBUo1OXxK5Ha0yP04vli6W0LQjvZILuc_bh_Xq4
+	set "firmware_link=https://mega.nz/#^!QVJl0aDA^!MU03vBUo1OXxK5Ha0yP04vli6W0LQjvZILuc_bh_Xq4"
 	set firmware_file_name=Firmware 2.2.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="2.3.0" (
 	set expected_md5=91e06f945e00e6412cc4ac44a0faa72b
-	set firmware_link=https://mega.nz/#!1IxFgJBD!kkliIMLOYNjmwIVR0tcr3svn72C6tMOQG5GHYie50q4
+	set "firmware_link=https://mega.nz/#^!1IxFgJBD^!kkliIMLOYNjmwIVR0tcr3svn72C6tMOQG5GHYie50q4"
 	set firmware_file_name=Firmware 2.3.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="3.0.0" (
 	set expected_md5=f4b5f8bffded14cca836bc24ecf19c06
-	set firmware_link=https://mega.nz/#!RUxF3Lwb!5fYRfHTFTx8KS9HnyYMmTuTTzKKQ4HyaQ4FqC-nyAc4
+	set "firmware_link=https://mega.nz/#^!RUxF3Lwb^!5fYRfHTFTx8KS9HnyYMmTuTTzKKQ4HyaQ4FqC-nyAc4"
 	set firmware_file_name=Firmware 3.0.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="3.0.1" (
 	set expected_md5=a245bc7d3151cd51687ce602a1d4dfbb
-	set firmware_link=https://mega.nz/#!pE51RLgI!pmvw4sfocWw-vZ26P3GjA2PSrLyeBcq-eunnvzmUx94
+	set "firmware_link=https://mega.nz/#^!pE51RLgI^!pmvw4sfocWw-vZ26P3GjA2PSrLyeBcq-eunnvzmUx94"
 	set firmware_file_name=Firmware 3.0.1.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="3.0.2" (
 	set expected_md5=521e4aabc0b3b18d49f99c861cd55196
-	set firmware_link=https://mega.nz/#!hNo1TLrL!S1pfSuDaOoeW2eNcpe89bPP3BiW0b3pPqUrJvsVCAuQ
+	set "firmware_link=https://mega.nz/#^!hNo1TLrL^!S1pfSuDaOoeW2eNcpe89bPP3BiW0b3pPqUrJvsVCAuQ"
 	set firmware_file_name=Firmware 3.0.2.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="4.0.0" (
 	set expected_md5=69ac6dbac1bd0a12ea9e12c97bc82907
-	set firmware_link=https://mega.nz/#!EBIDFCrZ!NaIuX7dvC3skUBAfb113qxhh0hJYzY3mm1mWou7Casc
+	set "firmware_link=https://mega.nz/#^!EBIDFCrZ^!NaIuX7dvC3skUBAfb113qxhh0hJYzY3mm1mWou7Casc"
 	set firmware_file_name=Firmware 4.0.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="4.0.1" (
 	set expected_md5=3680ddfb0f7a2f01c83495dca909c757
-	set firmware_link=https://mega.nz/#!NQg1yZaA!4yuWJbXOGlCp6lryPcsF5ADEydk7jZq08RstUCDMKwY
+	set "firmware_link=https://mega.nz/#^!NQg1yZaA^!4yuWJbXOGlCp6lryPcsF5ADEydk7jZq08RstUCDMKwY"
 	set firmware_file_name=Firmware 4.0.1.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="4.1.0" (
 	set expected_md5=fe53dd1eaa323bd9003f75a96822cb31
-	set firmware_link=https://mega.nz/#!wQ4HGLgI!ru3dBiMh9FdPJJvVTLJ6ex7EX0Rfma9Tw4J3gRWYU7k
+	set "firmware_link=https://mega.nz/#^!wQ4HGLgI^!ru3dBiMh9FdPJJvVTLJ6ex7EX0Rfma9Tw4J3gRWYU7k"
 	set firmware_file_name=Firmware 4.1.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="5.0.0" (
 	set expected_md5=de25e742c8c0fa9c7f6d079f65ddbf92
-	set firmware_link=https://mega.nz/#!IBQlXQqL!oePY4waKGpSnmVyxgXqEwx_vOeI6FvdBdpg0Wp4Y28c
+	set "firmware_link=https://mega.nz/#^!IBQlXQqL^!oePY4waKGpSnmVyxgXqEwx_vOeI6FvdBdpg0Wp4Y28c"
 	set firmware_file_name=Firmware 5.0.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="5.0.1" (
 	set expected_md5=79c2ac770eece2f9b713f3c6b12cc19a
-	set firmware_link=https://mega.nz/#!BUB3TShb!VFVqGrzK2j_6OIUTcbwzTvPCm8V5Aab2hXrdJrVmUqk
+	set "firmware_link=https://mega.nz/#^!BUB3TShb^!VFVqGrzK2j_6OIUTcbwzTvPCm8V5Aab2hXrdJrVmUqk"
 	set firmware_file_name=Firmware 5.0.1.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="5.0.2" (
 	set expected_md5=f14d2064255517aa1383e7e468e2ef19
-	set firmware_link=https://mega.nz/#!wBwDCTgI!7LsV9WSoYDBI6CamIBRzZYwA3wjCRchXyXw1VTTwXTc
+	set "firmware_link=https://mega.nz/#^!wBwDCTgI^!7LsV9WSoYDBI6CamIBRzZYwA3wjCRchXyXw1VTTwXTc"
 	set firmware_file_name=Firmware 5.0.2.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="5.1.0" (
 	set expected_md5=656823850a70fb3050079423ee177c1a
-	set firmware_link=https://mega.nz/#!8BplGRQA!z_2pCeh-8XV2Pf3E_38UfGhDPRSdN3nixb5s5-Q785w
+	set "firmware_link=https://mega.nz/#^!8BplGRQA^!z_2pCeh-8XV2Pf3E_38UfGhDPRSdN3nixb5s5-Q785w"
 	set firmware_file_name=Firmware 5.1.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="6.0.0" (
 	set expected_md5=8e107ad46a5aacc1f8f5db7fc83d6945
-	set firmware_link=https://mega.nz/#!0ZxlgABK!HN8_ZfQHha-LaVr-95wUiotvGSObIUoEY8RxMwjDgVg
+	set "firmware_link=https://mega.nz/#^!0ZxlgABK^!HN8_ZfQHha-LaVr-95wUiotvGSObIUoEY8RxMwjDgVg"
 	set firmware_file_name=Firmware 6.0.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="6.0.1" (
 	set expected_md5=684f2184d9dd4bdc25ff161e0ea7353d
-	set firmware_link=https://mega.nz/#!ZAYEhYSQ!69L4mdQnPNKghHnMY41w3Di5MjvGXr8MhXGMVAxG5GA
+	set "firmware_link=https://mega.nz/#^!ZAYEhYSQ^!69L4mdQnPNKghHnMY41w3Di5MjvGXr8MhXGMVAxG5GA"
 	set firmware_file_name=Firmware 6.0.1.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="6.1.0" (
 	set expected_md5=320bd423e073a92b74dff30d92bcffa8
-	set firmware_link=https://mega.nz/#!QAQ3ha4Y!7fI6dJmhk3SUwyEl9cj9orRSE7Fjb1rghJxCnliXZRU
+	set "firmware_link=https://mega.nz/#^!QAQ3ha4Y^!7fI6dJmhk3SUwyEl9cj9orRSE7Fjb1rghJxCnliXZRU"
 	set firmware_file_name=Firmware 6.1.0.zip
 	set firmware_folder=firmware_temp\
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="6.2.0" (
 	set expected_md5=602826f8ad0ed04452a1092fc6d73c8c
-	set firmware_link=https://mega.nz/#!9F5XFabb!UdZmY8qpMbDuo-rrn0jI-JCpXrTWKoshKhClZ_H7tkA
+	set "firmware_link=https://mega.nz/#^!9F5XFabb^!UdZmY8qpMbDuo-rrn0jI-JCpXrTWKoshKhClZ_H7tkA"
 	set firmware_file_name=Firmware 6.2.0.zip
 	set firmware_folder=firmware_temp\
+	call :cdj_test_max_firmware
+	IF !errorlevel! EQU 1 goto:define_firmware_choice
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="7.0.0" (
 	set expected_md5=550b0091304d54b67e3e977900c83dcc
-	set firmware_link=https://mega.nz/#!kdJWQKBT!G15TiWusLkrS7JT2KHNYXOfNAUOb2PWdhXsfe-kRtxg
+	set "firmware_link=https://mega.nz/#^!kdJWQKBT^!G15TiWusLkrS7JT2KHNYXOfNAUOb2PWdhXsfe-kRtxg"
 	set firmware_file_name=Firmware 7.0.0.zip
 	set firmware_folder=firmware_temp\
+	call :cdj_test_max_firmware
+	IF !errorlevel! EQU 1 goto:define_firmware_choice
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="7.0.1" (
 	set expected_md5=c5440e557b8b62eabedf754e508ded2f
-	set firmware_link=https://mega.nz/#!EERwCayT!KPGACrRhEVQdhsaqbfqpNTwzAyRIoZRLvfqqmxhNT80
+	set "firmware_link=https://mega.nz/#^!EERwCayT^!KPGACrRhEVQdhsaqbfqpNTwzAyRIoZRLvfqqmxhNT80"
 	set firmware_file_name=Firmware 7.0.1.zip
 	set firmware_folder=firmware_temp\
+	call :cdj_test_max_firmware
+	IF !errorlevel! EQU 1 goto:define_firmware_choice
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="8.0.0" (
 	set expected_md5=c0dab852378c289dc1fb135ed2a36f01
-	set firmware_link=https://mega.nz/#!gU4B3KDa!H5QKqthWmIAc5IM-pouiRFp-vOSkEfDTSMoSDFTUPps
+	set "firmware_link=https://mega.nz/#^!gU4B3KDa^!H5QKqthWmIAc5IM-pouiRFp-vOSkEfDTSMoSDFTUPps"
 	set firmware_file_name=Firmware 8.0.0.zip
 	set firmware_folder=firmware_temp\
+	call :cdj_test_max_firmware
+	IF !errorlevel! EQU 1 goto:define_firmware_choice
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="8.0.1" (
 	set expected_md5=c3a2a6ac6ef5956cdda6ce172ccd2053
-	set firmware_link=https://mega.nz/#!lM4wSKCL!_-38B-DFq9dqqUqu4EorS0hnBi099dY6JbkXYard51A
+	set "firmware_link=https://mega.nz/#^!lM4wSKCL^!_-38B-DFq9dqqUqu4EorS0hnBi099dY6JbkXYard51A"
 	set firmware_file_name=Firmware 8.0.1.zip
 	set firmware_folder=firmware_temp\
+	call :cdj_test_max_firmware
+	IF !errorlevel! EQU 1 goto:define_firmware_choice
 	goto:download_firmware
 )
 IF "%firmware_choice%"=="8.1.0" (
 	set expected_md5=31c69ecb30326193afb141e1da8ff053
-	set firmware_link=https://mega.nz/#!NQZnUKiJ!IF9MawZaDgTWcszyu3zzuE4RRM1Kdo_4OKII93VBbQw
+	set "firmware_link=https://mega.nz/#^!NQZnUKiJ^!IF9MawZaDgTWcszyu3zzuE4RRM1Kdo_4OKII93VBbQw"
 	set firmware_file_name=Firmware 8.1.0.zip
 	set firmware_folder=firmware_temp\
+	call :cdj_test_max_firmware
+	IF !errorlevel! EQU 1 goto:define_firmware_choice
 	goto:download_firmware
 )
 goto:end_script
@@ -276,7 +288,9 @@ IF EXIST "downloads\firmwares\%firmware_file_name%" goto:verif_md5sum
 :downloading_firmware
 IF NOT EXIST "downloads\firmwares\%firmware_file_name%" (
 	echo Téléchargement du firmware %firmware_choice%...
+Setlocal disabledelayedexpansion
 TOOLS\megatools\megadl.exe "%firmware_link%" --path=templogs\temp.zip
+endlocal
 	TOOLS\gnuwin32\bin\md5sum.exe templogs\temp.zip | TOOLS\gnuwin32\bin\cut.exe -d " " -f 1 | TOOLS\gnuwin32\bin\cut.exe -d ^\ -f 2 >templogs\tempvar.txt
 		set /p md5_verif=<templogs\tempvar.txt
 )
@@ -414,7 +428,28 @@ echo.
 set /p launch_choidujournx_doc=Souhaitez-vous consulter la documentation pour savoir comment utiliser ChoiDuJourNX (recommandé)? (O/n): 
 IF NOT "%launch_choidujournx_doc%"=="" set launch_choidujournx_doc=%launch_choidujournx_doc:~0,1%
 IF /I "%launch_choidujournx_doc%"=="o" start DOC\files\choidujournx.html
-	:end_script
+goto end_script
+
+:cdj_test_max_firmware
+IF %action_type% EQU 2 (
+	echo Impossible d'utiliser ChoiDuJour pour ce firmware, le firmware maximum supporté est le firmware 6.1.0.
+	exit /b 1
+)
+IF %action_type% EQU 3 (
+	echo Impossible d'utiliser ChoiDuJour pour ce firmware, le firmware maximum supporté est le firmware 6.1.0.
+	echo Cependant, le firmware peut être téléchargé et utilisé avec ChoiDuJourNX.
+	set cdjnx_use=
+	set /p cdjnx_use=Souhaitez-vous seulement télécharger le firmware pour l'utiliser avec ChoiDuJourNX? ^(O/n^): 
+	IF NOT "!cdjnx_use!"=="" set cdjnx_use=!cdjnx_use:~0,1!
+	IF /i NOT "!cdjnx_use!"=="o" (
+		exit /b 1
+	) else (
+		set action_type=1
+	)
+)
+exit /b
+
+:end_script
 pause 
 :end_script_2
 echo Nettoyage des fichiers temporaires...
