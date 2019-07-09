@@ -159,13 +159,15 @@ IF NOT "%partition%"=="" (
 	)
 )
 IF EXIST "%output_path%" (
-	set /p erase_output_file=Ce dossier contient déjà un fichier de ce type de dump, souhaitez-vous vraiment continuer en écrasant le fichier existant? ^(O/n^): 
+	set /p erase_output_file=Ce dossier contient déjà un fichier de ce type de dump, souhaitez-vous vraiment continuer en écrasant le fichier existant ^(si oui, le fichier sera supprimé juste après ce choix^)? ^(O/n^): 
 )
 IF NOT "%erase_output_file%"=="" set erase_output_file=%erase_output_file:~0,1%
 IF EXIST "%output_path%" (
 	IF /i NOT "%erase_output_file%"=="o" (
 		echo Opération annulée par l'utilisateur.
 		goto:dump_nand
+	) else (
+		del /q "%output_path%"
 	)
 )
 call :set_NNM_params

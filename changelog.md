@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.23</h2>
+<ul>
+<li>Modification de la fonctionnalité permettant de dumper la nand via NXNandManager, maintenant si un type de dump existant identique au type de dump tenté est trouvé dans le dossier de sortie indiqué et que l'utilisateur confirme le choix de continuer, celui-ci sera supprimé juste après le choix de continuer si l'utilisateur accepte, ceci a été implémenté pour éviter que NXNandManager pense que l'on restaure un dump, se qui l'empêchait de faire la vérification MD5 si souhaitée par l'utilisateur.</li>
+</ul>
 <h2>V3.00.22</h2>
 <ul>
 <li>Mise à jour de NSC_Builder en version 0.87C.</li>
