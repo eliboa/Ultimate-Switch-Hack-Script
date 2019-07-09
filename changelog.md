@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.20</h2>
+<ul>
+<li>Mise à jour du payload de démarrage d'Atmosphere, Fusee-primary.</li>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 212.</li>
+</ul>
 <h2>V3.00.19</h2>
 <ul>
 <li>Correction d'une faute d'orthographe dans le menu des fonctions occasionnelles.</li>

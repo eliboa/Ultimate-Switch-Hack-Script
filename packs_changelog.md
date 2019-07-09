@@ -1,5 +1,10 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V212</h2>
+<ul>
+<li>Mise à jour de Atmosphere vers la version master du Github, compilé par moi-même.</li>
+<li>Mise à jour du module de l'emunand (emummc.kipm) de Hekate en utilisant la dernière version de celle-ci sur le Github d'Atmosphere, module compilé par moi-même.</li>
+</ul>
 <h2>V211</h2>
 <ul>
 <li>Mise à jour de Hekate en version 5.0.1.</li>
