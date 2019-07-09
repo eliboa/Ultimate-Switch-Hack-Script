@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.22</h2>
+<ul>
+<li>Mise à jour de NSC_Builder en version 0.87C.</li>
+</ul>
 <h2>V3.00.21</h2>
 <ul>
 <li>Changement de la méthode de copie des éléments spécifiques à Retro Reloaded (partie concernant Sept) pour les CFWs Atmosphere et ReiNX, ceci permettant de réduire un peu la taille des packs en supprimant des fichiers qui faisaient doublons.</li>

@@ -1,11 +1,11 @@
 @ECHO OFF
 chcp 65001 >nul
-set "program_version=0.87"
+set "program_version=0.87C"
 
 :TOP_INIT
 CD /d "%prog_dir%"
 set "bat_name=%~n0"
-Title NSC_Builder v0.87 -- Profile: %ofile_name% -- by JulesOnTheRoad
+Title NSC_Builder v%program_version% -- Profile: %ofile_name% -- by JulesOnTheRoad
 
 ::Check if user is dragging a folder or a file
 if "%~1"=="" goto manual

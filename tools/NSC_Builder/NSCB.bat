@@ -1,12 +1,12 @@
 @ECHO OFF
 chcp 65001 >nul
-set "program_version=0.87"
+set "program_version=0.87C"
 
 :TOP_INIT
 set "prog_dir=%~dp0"
 set "bat_name=%~n0"
 set "ofile_name=%bat_name%_options.cmd"
-Title NSC_Builder v0.87 -- Profile: %ofile_name% -- by JulesOnTheRoad
+Title NSC_Builder v%program_version% -- Profile: %ofile_name% -- by JulesOnTheRoad
 set "list_folder=%prog_dir%lists"
 ::-----------------------------------------------------
 ::EDIT THIS VARIABLE TO LINK OTHER OPTION FILE
