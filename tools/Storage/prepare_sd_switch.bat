@@ -399,6 +399,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		)
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\mixed\modular\EdiZon %volume_letter%:\ /e >nul
 	)
+	IF NOT EXIST "%volume_letter%:\sept\ams" mkdir "%volume_letter%:\sept\ams"
 	%windir%\System32\Robocopy.exe tools\sd_switch\atmosphere\sept %volume_letter%:\sept\ams /e >nul
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\RR\payloads\Hekate.bin >nul
@@ -437,6 +438,7 @@ IF /i "%copy_reinx_pack%"=="o" (
 	IF EXIST "%volume_letter%:\ReiNX\titles\010000000000100D\exefs.nsp" del /q "%volume_letter%:\ReiNX\titles\010000000000100D\exefs.nsp" >nul
 	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\ReiNX\reboot_payload.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\RR\payloads\ReiNX.bin >nul
+	IF NOT EXIST "%volume_letter%:\sept\reinx" mkdir "%volume_letter%:\sept\reinx"
 	%windir%\System32\Robocopy.exe tools\sd_switch\reinx\sept %volume_letter%:\sept\reinx /e >nul
 	call :copy_modules_pack "reinx"
 )
