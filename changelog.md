@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.21</h2>
+<ul>
+<li>Changement de la méthode de copie des éléments spécifiques à Retro Reloaded (partie concernant Sept) pour les CFWs Atmosphere et ReiNX, ceci permettant de réduire un peu la taille des packs en supprimant des fichiers qui faisaient doublons.</li>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 213.</li>
+</ul>
 <h2>V3.00.20</h2>
 <ul>
 <li>Mise à jour du payload de démarrage d'Atmosphere, Fusee-primary.</li>
