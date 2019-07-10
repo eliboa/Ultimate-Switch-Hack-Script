@@ -135,6 +135,11 @@ IF "%dump_output%"=="" (
 	goto:end_script
 )
 set dump_output=%dump_output:\\=\%
+echo.
+set add_sxos_first_1024=
+echo Il est possible d'ajouter le code spécifique à SX OS pour détecter la partition que vous créerez pour injecter le dump. Par contre, vous devrez mettre la partition contenant l'emunand au tout début du disque.
+set /p add_sxos_first_1024=Souhaitez-vous ajouter les 1024 premiers octets spécifiques à SX OS à votre dump? (O/n): 
+IF NOT "%add_sxos_first_1024%"=="" set add_sxos_first_1024=%add_sxos_first_1024:~0,1%
 :verif_existing_file
 IF EXIST "%dump_output%\emunand_partition.bin" (
 	set /p erase_existing_dump=Un fichier "emunand_partition.bin" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(O/n^): 
@@ -154,64 +159,127 @@ IF EXIST "%dump_output%\emunand_partition.bin" (
 set /p free_space=<templogs\volume_free_space.txt
 call TOOLS\Storage\functions\strlen.bat nb "%free_space%"
 set /a nb=%nb%
-IF %nb% GTR 11 (
-	goto:copy_nand
-) else IF %nb% LSS 11 (
-	goto:error_disk_free_space
-)
-IF %nb% EQU 11 (
-	IF %free_space:~0,1% GTR 3 (
+IF /i NOT "%add_sxos_first_1024%"=="o" (
+	IF %nb% GTR 11 (
 		goto:copy_nand
-	) else IF %free_space:~0,1% LSS 3 (
+	) else IF %nb% LSS 11 (
 		goto:error_disk_free_space
 	)
-	IF %free_space:~1,1% GTR 1 (
+	IF %nb% EQU 11 (
+		IF %free_space:~0,1% GTR 3 (
+			goto:copy_nand
+		) else IF %free_space:~0,1% LSS 3 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~1,1% GTR 1 (
+			goto:copy_nand
+		) else IF %free_space:~1,1% LSS 1 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~2,1% GTR 2 (
+			goto:copy_nand
+		) else IF %free_space:~2,1% LSS 2 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~3,1% GTR 7 (
+			goto:copy_nand
+		) else IF %free_space:~3,1% LSS 7 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~4,1% GTR 6 (
+			goto:copy_nand
+		) else IF %free_space:~4,1% LSS 6 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~5,1% GTR 9 (
+			goto:copy_nand
+		) else IF %free_space:~5,1% LSS 9 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~6,1% GTR 2 (
+			goto:copy_nand
+		) else IF %free_space:~6,1% LSS 2 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~7,1% GTR 4 (
+			goto:copy_nand
+		) else IF %free_space:~7,1% LSS 4 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~8,1% GTR 9 (
+			goto:copy_nand
+		) else IF %free_space:~8,1% LSS 9 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~9,1% GTR 2 (
+			goto:copy_nand
+		) else IF %free_space:~9,1% LSS 2 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~10,1% GEQ 8 (
+			goto:copy_nand
+		)
+	)
+) else (
+	IF %nb% GTR 11 (
 		goto:copy_nand
-	) else IF %free_space:~1,1% LSS 1 (
+	) else IF %nb% LSS 11 (
 		goto:error_disk_free_space
 	)
-	IF %free_space:~2,1% GTR 2 (
-		goto:copy_nand
-	) else IF %free_space:~2,1% LSS 2 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~3,1% GTR 7 (
-		goto:copy_nand
-	) else IF %free_space:~3,1% LSS 7 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~4,1% GTR 6 (
-		goto:copy_nand
-	) else IF %free_space:~4,1% LSS 6 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~5,1% GTR 9 (
-		goto:copy_nand
-	) else IF %free_space:~5,1% LSS 9 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~6,1% GTR 2 (
-		goto:copy_nand
-	) else IF %free_space:~6,1% LSS 2 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~7,1% GTR 4 (
-		goto:copy_nand
-	) else IF %free_space:~7,1% LSS 4 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~8,1% GTR 9 (
-		goto:copy_nand
-	) else IF %free_space:~8,1% LSS 9 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~9,1% GTR 2 (
-		goto:copy_nand
-	) else IF %free_space:~9,1% LSS 2 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~10,1% GEQ 8 (
-		goto:copy_nand
+	IF %nb% EQU 11 (
+		IF %free_space:~0,1% GTR 3 (
+			goto:copy_nand
+		) else IF %free_space:~0,1% LSS 3 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~1,1% GTR 1 (
+			goto:copy_nand
+		) else IF %free_space:~1,1% LSS 1 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~2,1% GTR 2 (
+			goto:copy_nand
+		) else IF %free_space:~2,1% LSS 2 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~3,1% GTR 7 (
+			goto:copy_nand
+		) else IF %free_space:~3,1% LSS 7 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~4,1% GTR 6 (
+			goto:copy_nand
+		) else IF %free_space:~4,1% LSS 6 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~5,1% GTR 9 (
+			goto:copy_nand
+		) else IF %free_space:~5,1% LSS 9 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~6,1% GTR 2 (
+			goto:copy_nand
+		) else IF %free_space:~6,1% LSS 2 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~7,1% GTR 5 (
+			goto:copy_nand
+		) else IF %free_space:~7,1% LSS 5 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~8,1% GTR 9 (
+			goto:copy_nand
+		) else IF %free_space:~8,1% LSS 9 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~9,1% GTR 5 (
+			goto:copy_nand
+		) else IF %free_space:~9,1% LSS 5 (
+			goto:error_disk_free_space
+		)
+		IF %free_space:~10,1% GEQ 2 (
+			goto:copy_nand
+		)
 	)
 )
 :error_disk_free_space
@@ -224,11 +292,20 @@ goto:end_script
 echo.
 echo Copie en cours...
 cd /d "%dump_input%"
-IF "%cfw_used%"=="1" (
-	copy /b %hekate_files_copy_param% "%dump_output%\emunand_partition.bin"
-)
-IF "%cfw_used%"=="2" (
-copy /b BOOT0 + BOOT1 + full.00.bin + full.01.bin + full.02.bin + full.03.bin + full.04.bin + full.05.bin + full.06.bin + full.07.bin "%dump_output%\emunand_partition.bin"
+IF /i NOT "%add_sxos_first_1024%"=="o" (
+	IF "%cfw_used%"=="1" (
+		copy /v /b %hekate_files_copy_param% "%dump_output%\emunand_partition.bin"
+	)
+	IF "%cfw_used%"=="2" (
+		copy /v /b BOOT0 + BOOT1 + full.00.bin + full.01.bin + full.02.bin + full.03.bin + full.04.bin + full.05.bin + full.06.bin + full.07.bin "%dump_output%\emunand_partition.bin"
+	)
+) else (
+	IF "%cfw_used%"=="1" (
+		copy /v /b "%this_script_dir%\..\tools\default_configs\sxos_first1024.bin" + %hekate_files_copy_param% "%dump_output%\emunand_partition.bin"
+	)
+	IF "%cfw_used%"=="2" (
+		copy /v /b "%this_script_dir%\..\tools\default_configs\sxos_first1024.bin" + BOOT0 + BOOT1 + full.00.bin + full.01.bin + full.02.bin + full.03.bin + full.04.bin + full.05.bin + full.06.bin + full.07.bin "%dump_output%\emunand_partition.bin"
+	)
 )
 IF %errorlevel% NEQ 0 (
 	echo Il semble qu'une erreur se soit produite pendant la copie, le fichier créé va être supprimé s'il existe.
@@ -244,12 +321,22 @@ echo Copie terminée.
 goto:end_script
 
 :test_rawnand_size
-IF NOT "%~z1"=="31276924928" (
-	echo Il semble que la taille du fichier créé ne corresponde pas à la taille que devrait faire le fichier de l'emunand via partition, le fichier créé va donc être supprimé.
-	echo Il est donc conseillé de refaire le dump de la nand puis de réessayer d'exécuter ce script.
-	echo Si le dump est correct, vérifiez l'espace disque sur la partition sur laquelle vous essayez de copier le dump et vérifiez aussi que cette même partition ai un système de fichier supportant les fichiers de plus de 4 GO.
-	IF EXIST "%dump_output%\emunand_partition.bin" del /q "%dump_output%\emunand_partition.bin"
-	set copy_error=Y
+IF /i NOT "%add_sxos_first_1024%"=="o" (
+	IF NOT "%~z1"=="31276924928" (
+		echo Il semble que la taille du fichier créé ne corresponde pas à la taille que devrait faire le fichier de l'emunand via partition, le fichier créé va donc être supprimé.
+		echo Il est donc conseillé de refaire le dump de la nand puis de réessayer d'exécuter ce script.
+		echo Si le dump est correct, vérifiez l'espace disque sur la partition sur laquelle vous essayez de copier le dump et vérifiez aussi que cette même partition ai un système de fichier supportant les fichiers de plus de 4 GO.
+		IF EXIST "%dump_output%\emunand_partition.bin" del /q "%dump_output%\emunand_partition.bin"
+		set copy_error=Y
+	)
+) else (
+	IF NOT "%~z1"=="31276925952" (
+		echo Il semble que la taille du fichier créé ne corresponde pas à la taille que devrait faire le fichier de l'emunand via partition, le fichier créé va donc être supprimé.
+		echo Il est donc conseillé de refaire le dump de la nand puis de réessayer d'exécuter ce script.
+		echo Si le dump est correct, vérifiez l'espace disque sur la partition sur laquelle vous essayez de copier le dump et vérifiez aussi que cette même partition ai un système de fichier supportant les fichiers de plus de 4 GO.
+		IF EXIST "%dump_output%\emunand_partition.bin" del /q "%dump_output%\emunand_partition.bin"
+		set copy_error=Y
+	)
 )
 exit /B
 

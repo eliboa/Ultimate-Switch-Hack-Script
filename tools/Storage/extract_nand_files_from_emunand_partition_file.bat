@@ -70,6 +70,8 @@ IF EXIST "%dump_output%\rawnand.bin" (
 		goto:end_script
 	)
 )
+call :test_sxos_special_first_bytes "%dump_input%"
+IF %errorlevel% EQU 500 goto:end_script
 :verif_disk_free_space
 %windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\get_free_space_for_path.vbs" "%dump_output%"
 set /p free_space=<templogs\volume_free_space.txt
@@ -144,35 +146,68 @@ goto:end_script
 :copy_nand
 echo.
 echo Copie en cours...
-"tools\gnuwin32\bin\dd.exe" bs=1c count=4194304 if="%dump_input%" of="%dump_output%\BOOT0"
-IF %errorlevel% NEQ 0 (
-	echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
-	echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
-	echo Vérifiez également que vous avez les droits en écriture pour le répertoire dans lequel vous essayez de copier les fichiers.
-	IF EXIST "%dump_output%\BOOT0" del /q "%dump_output%\BOOT0"
-	IF EXIST "%dump_output%\BOOT1" del /q "%dump_output%\BOOT1"
-	IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
-	goto:end_script
-)
-"tools\gnuwin32\bin\dd.exe bs=1c skip=4194304 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
-IF %errorlevel% NEQ 0 (
-	echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
-	echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
-	echo Vérifiez également que vous avez les droits en écriture pour le répertoire dans lequel vous essayez de copier les fichiers.
-	IF EXIST "%dump_output%\BOOT0" del /q "%dump_output%\BOOT0"
-	IF EXIST "%dump_output%\BOOT1" del /q "%dump_output%\BOOT1"
-	IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
-	goto:end_script
-)
-"tools\gnuwin32\bin\dd.exe" bs=1c skip=8388609 if="%dump_input%" of="%dump_output%\rawnand.bin"
-IF %errorlevel% NEQ 0 (
-	echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
-	echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
-	echo Vérifiez également que vous avez les droits en écriture pour le répertoire dans lequel vous essayez de copier les fichiers.
-	IF EXIST "%dump_output%\BOOT0" del /q "%dump_output%\BOOT0"
-	IF EXIST "%dump_output%\BOOT1" del /q "%dump_output%\BOOT1"
-	IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
-	goto:end_script
+IF NOT "%sxos_first_1024%"=="Y" (
+	"tools\gnuwin32\bin\dd.exe" bs=1c count=4194304 if="%dump_input%" of="%dump_output%\BOOT0"
+	IF !errorlevel! NEQ 0 (
+		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
+		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
+		echo Vérifiez également que vous avez les droits en écriture pour le répertoire dans lequel vous essayez de copier les fichiers.
+		IF EXIST "%dump_output%\BOOT0" del /q "%dump_output%\BOOT0"
+		IF EXIST "%dump_output%\BOOT1" del /q "%dump_output%\BOOT1"
+		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
+		goto:end_script
+	)
+	"tools\gnuwin32\bin\dd.exe bs=1c skip=4194304 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
+	IF !errorlevel! NEQ 0 (
+		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
+		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
+		echo Vérifiez également que vous avez les droits en écriture pour le répertoire dans lequel vous essayez de copier les fichiers.
+		IF EXIST "%dump_output%\BOOT0" del /q "%dump_output%\BOOT0"
+		IF EXIST "%dump_output%\BOOT1" del /q "%dump_output%\BOOT1"
+		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
+		goto:end_script
+	)
+	"tools\gnuwin32\bin\dd.exe" bs=1c skip=8388609 if="%dump_input%" of="%dump_output%\rawnand.bin"
+	IF !errorlevel! NEQ 0 (
+		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
+		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
+		echo Vérifiez également que vous avez les droits en écriture pour le répertoire dans lequel vous essayez de copier les fichiers.
+		IF EXIST "%dump_output%\BOOT0" del /q "%dump_output%\BOOT0"
+		IF EXIST "%dump_output%\BOOT1" del /q "%dump_output%\BOOT1"
+		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
+		goto:end_script
+	)
+) else (
+	"tools\gnuwin32\bin\dd.exe" bs=1c skip=1024 count=4194304 if="%dump_input%" of="%dump_output%\BOOT0"
+	IF !errorlevel! NEQ 0 (
+		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
+		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
+		echo Vérifiez également que vous avez les droits en écriture pour le répertoire dans lequel vous essayez de copier les fichiers.
+		IF EXIST "%dump_output%\BOOT0" del /q "%dump_output%\BOOT0"
+		IF EXIST "%dump_output%\BOOT1" del /q "%dump_output%\BOOT1"
+		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
+		goto:end_script
+	)
+	"tools\gnuwin32\bin\dd.exe bs=1c skip=4195328 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
+	IF !errorlevel! NEQ 0 (
+		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
+		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
+		echo Vérifiez également que vous avez les droits en écriture pour le répertoire dans lequel vous essayez de copier les fichiers.
+		IF EXIST "%dump_output%\BOOT0" del /q "%dump_output%\BOOT0"
+		IF EXIST "%dump_output%\BOOT1" del /q "%dump_output%\BOOT1"
+		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
+		goto:end_script
+	)
+	"tools\gnuwin32\bin\dd.exe" bs=1c skip=8389633 if="%dump_input%" of="%dump_output%\rawnand.bin"
+	IF !errorlevel! NEQ 0 (
+		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
+		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
+		echo Vérifiez également que vous avez les droits en écriture pour le répertoire dans lequel vous essayez de copier les fichiers.
+		IF EXIST "%dump_output%\BOOT0" del /q "%dump_output%\BOOT0"
+		IF EXIST "%dump_output%\BOOT1" del /q "%dump_output%\BOOT1"
+		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
+		goto:end_script
+	)
 )
 call :test_rawnand_size "%dump_output%\BOOT0"
 call :test_rawnand_size "%dump_output%\BOOT1"
@@ -217,6 +252,17 @@ IF NOT "%~z1"=="4194304" (
 	)
 )
 exit /B
+
+:test_sxos_special_first_bytes
+IF "%~z1"=="31276924928" (
+	set sxos_first_1024=N
+) else IF "%~z1"=="31276925952" (
+	set sxos_first_1024=Y
+) else (
+	echo Le dump sélectionné ne semble pas être correct, le script va donc se terminer sans rien faire.
+	exit /b 500
+)
+exit /b
 
 :end_script
 pause
