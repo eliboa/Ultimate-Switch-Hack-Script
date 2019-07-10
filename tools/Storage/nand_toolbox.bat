@@ -44,31 +44,61 @@ IF "%action_choice%"=="4" cls & goto:autorcm_management
 IF "%action_choice%"=="5" (
 	cls
 	call tools\storage\nand_joiner.bat
+	IF EXIST templogs (
+		del /q templogs 2>nul
+		rmdir /s /q templogs 2>nul
+	)
+	mkdir templogs
 	goto:define_action_choice
 )
 IF "%action_choice%"=="6" (
 	cls
 	call tools\storage\nand_spliter.bat
+	IF EXIST templogs (
+		del /q templogs 2>nul
+		rmdir /s /q templogs 2>nul
+	)
+	mkdir templogs
 	goto:define_action_choice
 )
 IF "%action_choice%"=="7" (
 	cls
 	call tools\storage\emunand_partition_file_create.bat
+	IF EXIST templogs (
+		del /q templogs 2>nul
+		rmdir /s /q templogs 2>nul
+	)
+	mkdir templogs
 	goto:define_action_choice
 )
 IF "%action_choice%"=="8" (
 	cls
 	call tools\storage\extract_nand_files_from_emunand_partition_file.bat
+	IF EXIST templogs (
+		del /q templogs 2>nul
+		rmdir /s /q templogs 2>nul
+	)
+	mkdir templogs
 	goto:define_action_choice
 )
 IF "%action_choice%"=="9" (
 	cls
 	call tools\storage\nand_firmware_detect.bat
+	IF EXIST templogs (
+		del /q templogs 2>nul
+		rmdir /s /q templogs 2>nul
+	)
+	mkdir templogs
 	goto:define_action_choice
 )
 IF "%action_choice%"=="0" (
 	cls
 	call tools\storage\mount_discs.bat
+	IF EXIST templogs (
+		del /q templogs 2>nul
+		rmdir /s /q templogs 2>nul
+	)
+	mkdir templogs
 	goto:define_action_choice
 )
 goto:end_script

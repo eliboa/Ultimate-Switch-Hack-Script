@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V214</h2>
+<ul>
+<li>Mise à jour de Lockpick en version 1.2.5.</li>
+</ul>
 <h2>V213</h2>
 <ul>
 <li>Suppression de certains fichiers se trouvant en doubles dans les packs Atmosphere et ReiNX, cette modification est liée à la nouvelle méthode de copie utilisée pour ces CFWs implémentées dans la version 3.00.21 du script.</li>

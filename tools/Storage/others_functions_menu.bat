@@ -26,13 +26,15 @@ echo 8: Vérifier des fichiers NSP?
 echo.
 echo 9: Découper un fichier NSP ou XCI en fichiers de 4 GO?
 echo.
-echo 10: Compresser/décompresser un jeu grâce à nsZip?
+echo 10: Rassembler un XCI ou NSP découpé.
 echo.
-echo 11: Configurer l'émulateur Nes Classic Edition?
+echo 11: Compresser/décompresser un jeu grâce à nsZip?
 echo.
-echo 12: Configurer l'émulateur Snes Classic Edition?
+echo 12: Configurer l'émulateur Nes Classic Edition?
 echo.
-echo 13: Installer des applications Android (mode débogage USB requis)?
+echo 13: Configurer l'émulateur Snes Classic Edition?
+echo.
+echo 14: Installer des applications Android (mode débogage USB requis)?
 echo.
 echo N'importe quelle autre choix: Revenir au menu précédent?
 echo.
@@ -47,10 +49,11 @@ IF "%action_choice%"=="6" goto:convert_BOTW
 IF "%action_choice%"=="7" goto:extract_cert
 IF "%action_choice%"=="8" goto:verify_nsp
 IF "%action_choice%"=="9" goto:split_games
-IF "%action_choice%"=="10" goto:nsZip
-IF "%action_choice%"=="11" goto:config_nes_classic
-IF "%action_choice%"=="12" goto:config_snes_classic
-IF "%action_choice%"=="13" goto:install_android_apps
+IF "%action_choice%"=="10" goto:merge_games
+IF "%action_choice%"=="11" goto:nsZip
+IF "%action_choice%"=="12" goto:config_nes_classic
+IF "%action_choice%"=="13" goto:config_snes_classic
+IF "%action_choice%"=="14" goto:install_android_apps
 goto:end_script
 :update_on_sd
 set action_choice=
@@ -158,6 +161,18 @@ IF EXIST "tools\Storage\split_games.bat" (
 	call tools\Storage\update_manager.bat "update_split_games.bat" "force"
 )
 call TOOLS\Storage\split_games.bat
+@echo off
+goto:define_action_choice
+:merge_games
+set action_choice=
+echo.
+cls
+IF EXIST "tools\Storage\merge_games.bat" (
+	call tools\Storage\update_manager.bat "update_merge_games.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_merge_games.bat" "force"
+)
+call TOOLS\Storage\merge_games.bat
 @echo off
 goto:define_action_choice
 :nsZip

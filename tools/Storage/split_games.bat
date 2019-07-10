@@ -78,7 +78,7 @@ goto:end_script
 :XCI_cut
 echo XCI Cutter va être lancé pour permettre de découper votre XCI.
 pause
-start "tools\XCI-Cutter\XCI-Cutter.exe"
+"tools\XCI-Cutter\XCI-Cutter.exe"
 :end_script
 pause
 :finish_script

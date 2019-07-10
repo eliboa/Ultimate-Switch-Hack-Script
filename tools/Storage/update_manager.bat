@@ -167,7 +167,7 @@ IF "%~1"=="" (
 		goto:end_script
 	) else (
 	echo Vérifications et mises à jour en cours...
-	call :verif_file_version "tools\default_configs\general_update_version.txt"
+	call :verif_file_version "tools\general_update_version.txt"
 	IF !errorlevel! EQU 1 (
 		call :general_content_update
 	)
@@ -197,6 +197,7 @@ call :update_install_nsp_USB.bat
 call :update_launch_linux.bat
 call :update_launch_payload.bat
 call :update_launch_switch_lan_play_server.bat
+call :update_merge_games.bat
 call :update_nand_toolbox.bat
 call :update_netplay.bat
 call :update_nsZip.bat
@@ -453,6 +454,13 @@ exit /b
 
 :update_menu.bat
 call :verif_file_version "tools\Storage\menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+exit /b
+
+:update_merge_game.bat
+call :verif_file_version "tools\Storage\merge_games.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
@@ -895,7 +903,7 @@ call :verif_folder_version "DOC"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
-call :verif_file_version "tools\default_configs\general_update_version.txt"
+call :verif_file_version "tools\general_update_version.txt"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
@@ -921,7 +929,7 @@ IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
 		set script_version=0
 	)
 	"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path% 2>nul
-) else IF "%temp_file_path%"=="tools\default_configs\general_update_version.txt" (
+) else IF "%temp_file_path%"=="tools\general_update_version.txt" (
 	IF EXIST "%temp_file_path%" (
 		set /p script_version=<"%temp_file_path%"
 	) else (
@@ -978,7 +986,7 @@ IF %errorlevel% NEQ 0 (
 )
 :file.version_download
 IF "%temp_file_path%"=="tools\sd_switch\version.txt" goto:skip_file.version_download
-IF "%temp_file_path%"=="tools\default_configs\general_update_version.txt" goto:skip_file.version_download
+IF "%temp_file_path%"=="tools\general_update_version.txt" goto:skip_file.version_download
 "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%.version" %files_url_project_base%/%temp_file_slash_path%.version 2>nul
 IF %errorlevel% NEQ 0 (
 	echo Erreur lors de la mise à jour du fichier "%temp_file_path%.version", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
@@ -1089,7 +1097,7 @@ IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
 		exit /b 0
 	)
 )
-IF "%temp_file_path%"=="tools\default_configs\general_update_version.txt" (
+IF "%temp_file_path%"=="tools\general_update_version.txt" (
 	IF %script_version_verif% GTR %script_version% (
 		set update_finded=O
 		exit /b 1

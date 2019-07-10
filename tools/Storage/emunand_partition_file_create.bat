@@ -79,6 +79,11 @@ for /l %%i in (0,1,%temp_dump_parts%) do (
 		)
 	)
 )
+:skip_verif_input
+IF "%error_input%"=="Y" (
+	echo Il semble que des fichiers du dump soient manquants, la copie ne peut donc pas avoir lieu et ce script va s'arrêter.
+	goto:end_script
+)
 goto:output_select
 :verif_sx_dump
 IF NOT EXIST "%dump_input%\full.00.bin" (
@@ -121,7 +126,7 @@ IF "%error_input%"=="Y" (
 goto:output_select
 :output_select
 echo.
-echo Vous allez maintenant devoir sélectionner le répertoire vers lequel sera copié le fichier "rawnand.bin" du dump joint. Attention, le dossier devra se trouver sur une partition supportant les fichiers de plus de 4 GO (EXFAT, NTFS). Notez qu'une fois le fichier créé et son bon fonctionnement confirmé par vos soins, les fichiers découpés pouront être supprimé.
+echo Vous allez maintenant devoir sélectionner le répertoire vers lequel sera copié le fichier "emunand_partition.bin" du dump joint. Attention, le dossier devra se trouver sur une partition supportant les fichiers de plus de 4 GO (EXFAT, NTFS).
 pause
 %windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\select_dir.vbs" "templogs\tempvar.txt"
 set /p dump_output=<"templogs\tempvar.txt"

@@ -7,6 +7,15 @@
 <body>
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.24</h2>
+<ul>
+<li>Ajout d'une nouvelle fonctionnalité permettant de rassembler des fichiers de jeux splittés en un seul, fonction trouvable dans le menu des "autres fonctions" du script. Cependant, n'ayant pas de jeux splittés sous la main je n'ai pas pu tester cette fonctionnalité donc les retours seront les bienvenues.</li>
+<li>Mise à jour du gestionnaire de mises à jour pour modifier un peu la méthode de mise à jour des éléments généraux du script, ceci permettant probablement de prévenir de certains bugs possibles.</li>
+<li>Correction de bugs dans le script de la Nand Toolbox qui pourrait empêcher le script de fonctionner correctement.</li>
+<li>Correction d'un bug dans le script de création d'un fichier d'emunand à utiliser avec le mode partition de l'emunand, le script ne pouvait pas s'exécuter si le dump de la nand avait été fait via Hekate.</li>
+<li>Correction d'un bug empêchant XCI-Cutter de se lancer correctement dans le script de découpage de XCI/NSP.</li>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 214.</li>
+</ul>
 <h2>V3.00.23</h2>
 <ul>
 <li>Modification de la fonctionnalité permettant de dumper la nand via NXNandManager, maintenant si un type de dump existant identique au type de dump tenté est trouvé dans le dossier de sortie indiqué et que l'utilisateur confirme le choix de continuer, celui-ci sera supprimé juste après le choix de continuer si l'utilisateur accepte, ceci a été implémenté pour éviter que NXNandManager pense que l'on restaure un dump, se qui l'empêchait de faire la vérification MD5 si souhaitée par l'utilisateur.</li>
@@ -667,7 +676,7 @@
 </ul>
 <h2>V2.10.04</h2>
 <ul>
-<li>Correction d'un bug empêchant le script permettant de joindre les fichiers d'une nand splitée d'être réunifiée.</li>
+<li>Correction d'un bug empêchant le script permettant de joindre les fichiers d'une nand splittée d'être réunifiée.</li>
 </ul>
 <h2>V2.10.03</h2>
 <ul>
@@ -978,7 +987,7 @@
 </ul>
 <h2>V1.90</h2>
 <ul>
-<li>Le script permettant de joindre les parties d'une nand splitée vérifie qu'il y a assez d'espace disque pour copier le fichier. Dans ce script, la vérification de la taille final du fichier a également été corrigée.</li>
+<li>Le script permettant de joindre les parties d'une nand splittée vérifie qu'il y a assez d'espace disque pour copier le fichier. Dans ce script, la vérification de la taille final du fichier a également été corrigée.</li>
 <li>Ajout d'un message indiquant que le fichier de la base de données pour la vérification des numéros de série ne peut être téléchargée et modification du fichier "config.ini" de SSNC car il y avait une petite erreur dedans qui l'empêchait de fonctionner sans connexion à internet. Pour l'instant, le téléchargement de la base de donnée a été désactivé et un fichier modifiée de celle-ci est utilisé car il y a quelques erreurs dans la base de données de SSNC actuellement.</li>
 <li>Mise à jour de Ldn_mitm en version 0.2.3 dans le pack Kosmos et ajout du module pour ReiNX en version 0.2.2 pour ReiNX, le module sera à activer avec ReiNX Toolbox pour ce CFW.</li>
 <li>Mise à jour de ReiNX et de JKSV vers la dernière version "master", compilés par moi-même.</li>
@@ -1065,14 +1074,14 @@
 <h2>V1.77 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
 <ul>
 <li>Mise à jour de ReiNX vers la dernière version, compilée par moi-même. Cette version apporte donc le support du firmware 6.2.0.</li>
-<li>Correction du script de réunification d'un dump, le dump splité via SX OS ne fonctionnait pas.</li>
+<li>Correction du script de réunification d'un dump, le dump splitté via SX OS ne fonctionnait pas.</li>
 <li>Mise à jour de certains fichiers du pack Kosmos.</li>
 <li>Suppression de Kezplez-NX qui est maintenant remplacé par Lockpick, j'ai compilé la toute dernière version au passage.</li>
 <li>Mise à jour de la documentation.</li>
 </ul>
 <h2>V1.76 (ne pas écraser une ancienne version car certains remaniements de dossiers/fichiers)</h2>
 <ul>
-<li>Ajout de la fonctionnalité de réunification des fichiers d'un dump splité fait avec SX OS dans le script de réunification de dump. Ce script n'a pas du tout été testé car je n'ai pas de dump splité sous la main pour le faire donc les retours seront grandement appréciés sur cette fonctionnalité, que se soit un dump fait via Hekate ou SX OS.</li>
+<li>Ajout de la fonctionnalité de réunification des fichiers d'un dump splitté fait avec SX OS dans le script de réunification de dump. Ce script n'a pas du tout été testé car je n'ai pas de dump splitté sous la main pour le faire donc les retours seront grandement appréciés sur cette fonctionnalité, que se soit un dump fait via Hekate ou SX OS.</li>
 <li>Mise à jour de Atmosphere en version 0.8.2. Avec cette nouvelle version, l'ensemble des fichiers d'Atmosphere se trouve dans le dossier "atmosphere" de la SD donc  les fichiers "BCT.ini" et "fusee-secondary.bin" se trouvant à la racine de la SD seront supprimés par le script de préparation d'une SD.</li>
 </ul>
 <h2>V1.75</h2>
