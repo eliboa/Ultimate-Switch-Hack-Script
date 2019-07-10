@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.25</h2>
+<ul>
+<li>Légère modification du script permettant d'utiliser Memloader pour monter les différentes partitions de la Switch pour rendre l'expérience utilisateur moins pénible.</li>
+</ul>
 <h2>V3.00.24</h2>
 <ul>
 <li>Ajout d'une nouvelle fonctionnalité permettant de rassembler des fichiers de jeux splittés en un seul, fonction trouvable dans le menu des "autres fonctions" du script. Cependant, n'ayant pas de jeux splittés sous la main je n'ai pas pu tester cette fonctionnalité donc les retours seront les bienvenues.</li>

@@ -24,7 +24,7 @@ set ini_path=tools\memloader\mount_discs\ums_boot0.ini
 ) else IF "%disc_mounted%"=="4" (
 set ini_path=tools\memloader\mount_discs\ums_boot1.ini
 ) else (
-	goto:end_script_2
+	goto:end_script
 )
 :mounting
 echo *********************************************
@@ -38,6 +38,7 @@ tools\TegraRcmSmash\TegraRcmSmash.exe -w tools\memloader\memloader_usb.bin --dat
 echo.
 echo Le disque devrait être monté sur votre système. Pour le démonter, éjecter le périphérique à l'aide du bouton "retirer le périphérique en toute sécurité" situé sur la barre des tâches en bas à droite puis forcer l'extinction de la Switch en maintenant le bouton POWER pendant 10 secondes (Attention à ne pas écrire/lire de données pendant cette opération sous peine d'endommager gravement les données de votre nand/sd).
 IF "%disc_mounted%"=="1" echo Pour explorer la mémoire interne de la Switch vous devez utiliser l'outil HacDiskMount lancé en tant qu'administrateur (nécessite d'avoir les biskey pour décrypter les données mais non nécessaire pour faire un dump de la nand). Si vous souhaitez faire un dump de la nand via cette méthode, le dump peut prendre du temps (environ trois heures).
+echo.
 echo Parfois, le disque n'est pas reconu automatiquement. Vous devez ouvrir le gestionnaire de périphérique, trouver le périphérique avec un point d'exclamation nommé "Périphérique d’entrée USB" (testé sous Windows 7), faire un clique droit dessus, cliquer sur "Mettre à jour le pilote...", cliquer sur "Rechercher automatiquement un pilote mis à jour" puis cliquer sur "Fermer". Le périphérique devrait maintenant être utilisable.
 set /p launch_devices_manager=Souhaitez-vous lancer le gestionnaire de périphérique? (o/n): 
 echo.
@@ -53,6 +54,4 @@ IF %disc_mounted% EQU 1 (
 	IF /i "%launch_hacdiskmount%"=="o" start tools\HacDiskMount/HacDiskMount.exe
 )
 :end_script
-pause
-:end_script_2
 endlocal
