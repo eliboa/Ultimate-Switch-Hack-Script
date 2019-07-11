@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.28</h2>
+<ul>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 215.</li>
+</ul>
 <h2>V3.00.27</h2>
 <ul>
 <li>Réécriture de certains scripts de la Nand Toolbox pour changer la méthode de vérification de l'espace disponible sur le disque sur lequel les fichiers sont écrits, cette nouvelle méthode est beaucoup plus simple à comprendre au niveau du code.</li>
