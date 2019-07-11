@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.30</h2>
+<ul>
+<li>Ajout de la possibilité d'utiliser PegaScape dans sa version officielle (celle de la team Atlas accessible via leur serveur) lors de la préparation de la SD de ce script, le payload choisi et le fichier "hbl.nsp" seront copiés dans le dossier "atmosphere" et nommés correctement.</li>
+</ul>
 <h2>V3.00.29</h2>
 <ul>
 <li>Révision de la logique du début du gestionnaire de mises à jour, beaucoup de traitements inutiles dans certaines situations ne sont plus effectués, accélérant considérablement le script. Cette modification impactera surtout ceux qui ne font pas les mises à jour automatiques, que se soit via le choix permanant ou temporaire, ceux-ci gagneront du temps pour lancer les différents scripts. Pour les autres, le temps de traitement restera sensiblement le même.</li>

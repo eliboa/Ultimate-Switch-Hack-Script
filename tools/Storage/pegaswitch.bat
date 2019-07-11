@@ -153,14 +153,19 @@ IF "%payload_path%"=="" (
 	goto:set_nereba_choice
 )
 set payload_path=%payload_path:~1,-1%
+set /p integrate_pegascape_official=Souhaitez-vous également pouvoir utiliser le payload avec la version officielle de PegaScape (remplacera le fichier "reboot_payload.bin" du dossier "atmosphere" de la SD par le payload choisi)? (O/n): 
+IF NOT "%integrate_pegascape_official%"=="" set integrate_pegascape_official=%integrate_pegascape_official:~0,1%
 :copy_nereba
 "%windir%\system32\robocopy.exe" tools\sd_switch\pegaswitch %volume_letter%:\ /e >nul
 IF NOT EXIST "%volume_letter%:\nereba\*.*" mkdir "%volume_letter%:\nereba" >nul
 copy /v "%payload_path%" "%volume_letter%:\nereba\nereba.bin" >nul
 copy /v "tools\sd_switch\mixed\base\hbmenu.nro" %volume_letter%:\ >nul
 copy /v "tools\sd_switch\atmosphere\atmosphere\hbl.nsp" "%volume_letter%:\pegascape"
-IF NOT EXIST "%volume_letter%:\atmosphere\*.*" mkdir "%volume_letter%:\atmosphere" >nul
-copy /v "tools\sd_switch\atmosphere\atmosphere\hbl.nsp" "%volume_letter%:\atmosphere"
+IF /i "%integrate_pegascape_official%"=="o" (
+	IF NOT EXIST "%volume_letter%:\atmosphere\*.*" mkdir "%volume_letter%:\atmosphere" >nul
+	IF NOT EXIST "%volume_letter%:\atmosphere\hbl.nsp" copy /v "tools\sd_switch\atmosphere\atmosphere\hbl.nsp" "%volume_letter%:\atmosphere"
+	IF NOT EXIST "%volume_letter%:\atmosphere\reboot_payload.bin" copy /v "%payload_path%" "%volume_letter%:\atmosphere\reboot_payload.bin"
+)
 echo Préparation de la SD terminée.
 pause
 exit /b
