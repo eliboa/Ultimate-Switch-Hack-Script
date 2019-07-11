@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.29</h2>
+<ul>
+<li>Révision de la logique du début du gestionnaire de mises à jour, beaucoup de traitements inutiles dans certaines situations ne sont plus effectués, accélérant considérablement le script. Cette modification impactera surtout ceux qui ne font pas les mises à jour automatiques, que se soit via le choix permanant ou temporaire, ceux-ci gagneront du temps pour lancer les différents scripts. Pour les autres, le temps de traitement restera sensiblement le même.</li>
+</ul>
 <h2>V3.00.28</h2>
 <ul>
 <li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 215.</li>

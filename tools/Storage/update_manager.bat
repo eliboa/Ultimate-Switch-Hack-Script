@@ -3,6 +3,77 @@ Setlocal enabledelayedexpansion
 @echo off
 chcp 65001 >nul
 echo é >nul
+IF EXIST "templogs" (
+	del /q "templogs" 2>nul
+	rmdir /s /q "templogs" 2>nul
+)
+mkdir "templogs"
+IF  "%~2"=="force" (
+	set auto_update=O
+	goto:begin_update
+)
+IF EXIST "failed_updates\*.failed" (
+	set auto_update=O
+	goto:begin_update
+)
+:verif_auto_update_ini
+IF EXIST tools\Storage\verif_update.ini\*.* (
+	rmdir /s /q tools\Storage\verif_update.ini
+)
+IF not EXIST tools\Storage\verif_update.ini copy nul tools\Storage\verif_update.ini >nul
+tools\gnuwin32\bin\grep.exe -m 1 "auto_update" <tools\Storage\verif_update.ini | tools\gnuwin32\bin\cut.exe -d = -f 2 >templogs\tempvar.txt
+set /p ini_auto_update=<templogs\tempvar.txt
+:initialize_auto_update
+IF "%ini_auto_update%"=="" (
+	echo Réglage de la mise à jour automatique:
+	echo.
+	echo La mise à jour automatique intervient lors du démarrage des différentes fonctionnalités ou grands groupes de fonctionnalités du script. Si vous tentez de mettre à jour une fonctionnalité qui n'est pas encore installée, son installation sera forcée même en cas de désactivation de la mise à jour automatique.
+	echo Dans les choix qui vont suivre, si vous ne faites pas un choix définitif, cette question sera donc souvent posée.
+	echo Si vous choisissez de toujours vérifier les mises à jour, certaines fonctionnalités mettront un peu de temps à se lancer, notemment le démarrage du menu principal ou encore la préparation d'une SD ou la Nand Toolbox car ces fonctionnalités ont beaucoup de dépendances mais vous aurez toujours les dernières versions des fonctionnalités que vous utilisez et le reste ne bougera pas tant que vous ne l'aurez pas utilisé au moins une fois.
+	echo Au contraire, si vous choisissez de ne jamais mettre à jour, vous ne pourrez que faire la mise à jour de tous les éléments du script d'un coup via le menu "A propos" mais le lancement des fonctionnalités sera bien plus rapide.
+	echo Notez que vous pouvez toujours réinitialiser cette valeur en passant par le menu des paramètres du script.
+	echo Notez également que même en cas de désactivation de la mise à jour automatique et si vous faites une mise à jour manuelle qui a échouée, celle-ci sera reprise automatiquement pour éviter des bugs dans le script.
+	echo.
+	echo Que souhaitez-vous faire?
+	echo O: Vérifier les mises à jour cette fois-ci.
+	echo N: Ne pas vérifier les mises à jour cette fois-ci.
+	echo T: Toujours vérifier les mises à jour.
+	echo J: Ne jamais vérifier les mises à jour.
+	echo.
+	set /p auto_update=Souhaitez-vous activer la mise à jour automatique? (O/N/T/J^): 
+) else IF /i "%ini_auto_update%"=="O" (
+	set auto_update=O
+) else IF /i "%ini_auto_update%"=="N" (
+	set auto_update=N
+) else (
+	echo Mauvaise valeur configurée, le paramètre va être réinitialisé.
+	del /q tools\Storage\verif_update.ini
+	set ini_auto_update=
+	goto:initialize_auto_update
+)
+IF NOT "%auto_update%"=="" (
+	set auto_update=%auto_update:~0,1%
+) else (
+	echo Cette valeur ne peut être vide.
+	goto:initialize_auto_update
+)
+IF /i "%auto_update%"=="J" (
+	echo auto_update=N>>tools\Storage\verif_update.ini
+	set auto_update=N
+)
+IF /i "%auto_update%"=="T" (
+	echo auto_update=O>>tools\Storage\verif_update.ini
+	set auto_update=O
+)
+IF /i "%auto_update%"=="N" (
+	goto:end_script
+) else IF /i "%auto_update%"=="O" (
+	goto:begin_update
+) else (
+	echo Choix inexistant.
+	goto:initialize_auto_update
+)
+:begin_update
 title Shadow256 Ultimate Switch Hack Script %ushs_version%
 echo :::::::::::::::::::::::::::::::::::::
 echo ::Shadow256 Ultimate Switch Hack Script %ushs_version% updater::
@@ -10,25 +81,20 @@ echo.
 set base_script_path="%~dp0\..\.."
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
 set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
-IF EXIST "templogs" (
-	del /q "templogs" 2>nul
-	rmdir /s /q "templogs" 2>nul
-)
-mkdir "templogs"
 IF NOT EXIST "failed_updates\*.failed" (
 	rmdir /s /q "failed_updates" 2>nul
 )
 mkdir "failed_updates" >nul
-ping /n 2 www.google.com >nul 2>&1
-IF %errorlevel% NEQ 0 (
-	echo Aucune connexion à internet disponible, le script ne peux vérifier les mises à jour.
-	pause
-	goto_end_script
-)
 :new_script_install
 IF "%~1"=="update_all" goto:skip_new_script_install
 IF "%~1"=="general_content_update" goto:skip_new_script_install
 IF "%~2"=="force" (
+	ping /n 2 www.google.com >nul 2>&1
+	IF !errorlevel! NEQ 0 (
+		echo Aucune connexion à internet disponible, le script ne peux vérifier les mises à jour.
+		pause
+		goto_end_script
+	)
 	call :verif_file_version "tools\Storage\update_manager.bat"
 	IF !errorlevel! EQU 1 (
 		call :verif_file_version "tools\Storage\update_manager_updater.bat"
@@ -91,64 +157,6 @@ for %%f in (failed_updates\*.failed) do (
 	call :update_failed_content "%%f"
 )
 :skip_failed_updates_verification
-IF "%~2"=="force" goto:start_verif_update
-IF /i "%new_install_choice%"=="o" goto:start_verif_update
-:verif_auto_update_ini
-IF EXIST tools\Storage\verif_update.ini\*.* (
-	rmdir /s /q tools\Storage\verif_update.ini
-)
-IF not EXIST tools\Storage\verif_update.ini copy nul tools\Storage\verif_update.ini >nul
-tools\gnuwin32\bin\grep.exe -m 1 "auto_update" <tools\Storage\verif_update.ini | tools\gnuwin32\bin\cut.exe -d = -f 2 >templogs\tempvar.txt
-set /p ini_auto_update=<templogs\tempvar.txt
-:initialize_auto_update
-IF "%ini_auto_update%"=="" (
-	echo Réglage de la mise à jour automatique:
-	echo.
-	echo La mise à jour automatique intervient lors du démarrage des différentes fonctionnalités ou grands groupes de fonctionnalités du script. Si vous tentez de mettre à jour une fonctionnalité qui n'est pas encore installée, son installation sera forcée même en cas de désactivation de la mise à jour automatique.
-	echo Dans les choix qui vont suivre, si vous ne faites pas un choix définitif, cette question sera donc souvent posée.
-	echo Si vous choisissez de toujours vérifier les mises à jour, certaines fonctionnalités mettront un peu de temps à se lancer, notemment le démarrage du menu principal ou encore la préparation d'une SD ou la Nand Toolbox car ces fonctionnalités ont beaucoup de dépendances mais vous aurez toujours les dernières versions des fonctionnalités que vous utilisez et le reste ne bougera pas tant que vous ne l'aurez pas utilisé au moins une fois.
-	echo Au contraire, si vous choisissez de ne jamais mettre à jour, vous ne pourrez que faire la mise à jour de tous les éléments du script d'un coup via le menu "A propos" mais le lancement des fonctionnalités sera bien plus rapide.
-	echo Notez que vous pouvez toujours réinitialiser cette valeur en passant par le menu des paramètres du script.
-	echo Notez également que même en cas de désactivation de la mise à jour automatique et si vous faites une mise à jour manuelle qui a échouée, celle-ci sera reprise automatiquement pour éviter des bugs dans le script.
-	echo.
-	echo Que souhaitez-vous faire?
-	echo O: Vérifier les mises à jour cette fois-ci.
-	echo N: Ne pas vérifier les mises à jour cette fois-ci.
-	echo T: Toujours vérifier les mises à jour.
-	echo J: Ne jamais vérifier les mises à jour.
-	echo.
-	set /p auto_update=Souhaitez-vous activer la mise à jour automatique? (O/N/T/J^): >con
-) else IF /i "%ini_auto_update%"=="O" (
-	set auto_update=O
-) else IF /i "%ini_auto_update%"=="N" (
-	set auto_update=N
-) else (
-	echo Mauvaise valeur configurée, le paramètre va être réinitialisé.
-	del /q tools\Storage\verif_update.ini
-	goto:verif_auto_update_ini
-)
-IF NOT "%auto_update%"=="" (
-	set auto_update=%auto_update:~0,1%
-) else (
-	echo Cette valeur ne peut être vide.
-	goto:initialize_auto_update
-)
-IF /i "%auto_update%"=="J" (
-	echo auto_update=N>>tools\Storage\verif_update.ini
-	set auto_update=N
-)
-IF /i "%auto_update%"=="T" (
-	echo auto_update=O>>tools\Storage\verif_update.ini
-	set auto_update=O
-)
-IF /i "%auto_update%"=="N" (
-	goto:end_script
-) else IF /i "%auto_update%"=="O" (
-	goto:start_verif_update
-) else (
-	echo Choix inexistant.
-	goto:initialize_auto_update
-)
 :start_verif_update
 :update_manager_update
 call :verif_file_version "tools\Storage\update_manager.bat"
