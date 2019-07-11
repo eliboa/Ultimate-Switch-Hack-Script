@@ -14,7 +14,7 @@ pause
 echo.
 echo Vous allez devoir sélectionner le fichier de l'emunand.
 pause
-%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\open_file.vbs "" "Fichiers bin (*.bin)|*.bin|" "Sélection du fichier de dump de l'emunand" "templogs\tempvar.txt"
+%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\open_file.vbs "" "Fichiers bin (*.bin)|*.bin|" "Sélection du fichier de dump de l\'emunand" "templogs\tempvar.txt"
 set /p dump_input=<templogs\tempvar.txt
 IF "%dump_input%"=="" (
 	echo Aucun dossier sélectionné, le script va s'arrêter.
@@ -75,74 +75,16 @@ IF %errorlevel% EQU 500 goto:end_script
 :verif_disk_free_space
 %windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\get_free_space_for_path.vbs" "%dump_output%"
 set /p free_space=<templogs\volume_free_space.txt
-call TOOLS\Storage\functions\strlen.bat nb "%free_space%"
-set /a nb=%nb%
-IF %nb% GTR 11 (
+call "tools\Storage\functions\check_disk_free_space.bat" "%free_space%" "31276924928"
+IF "%verif_free_space%"=="OK" (
 	goto:copy_nand
-) else IF %nb% LSS 11 (
+) else (
 	goto:error_disk_free_space
-)
-IF %nb% EQU 11 (
-	IF %free_space:~0,1% GTR 3 (
-		goto:copy_nand
-	) else IF %free_space:~0,1% LSS 3 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~1,1% GTR 1 (
-		goto:copy_nand
-	) else IF %free_space:~1,1% LSS 1 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~2,1% GTR 2 (
-		goto:copy_nand
-	) else IF %free_space:~2,1% LSS 2 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~3,1% GTR 7 (
-		goto:copy_nand
-	) else IF %free_space:~3,1% LSS 7 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~4,1% GTR 6 (
-		goto:copy_nand
-	) else IF %free_space:~4,1% LSS 6 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~5,1% GTR 9 (
-		goto:copy_nand
-	) else IF %free_space:~5,1% LSS 9 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~6,1% GTR 2 (
-		goto:copy_nand
-	) else IF %free_space:~6,1% LSS 2 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~7,1% GTR 4 (
-		goto:copy_nand
-	) else IF %free_space:~7,1% LSS 4 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~8,1% GTR 9 (
-		goto:copy_nand
-	) else IF %free_space:~8,1% LSS 9 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~9,1% GTR 2 (
-		goto:copy_nand
-	) else IF %free_space:~9,1% LSS 2 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~10,1% GEQ 8 (
-		goto:copy_nand
-	)
 )
 :error_disk_free_space
 echo.
 echo Il n'y a pas assez d'espace libre à l'emplacement sur lequel vous souhaitez copier votre dump, le script va s'arrêter.
 goto:end_script
-
-
 :copy_nand
 echo.
 echo Copie en cours...
@@ -157,7 +99,7 @@ IF NOT "%sxos_first_1024%"=="Y" (
 		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
 		goto:end_script
 	)
-	"tools\gnuwin32\bin\dd.exe bs=1c skip=4194304 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
+	"tools\gnuwin32\bin\dd.exe" bs=1c skip=4194304 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
 	IF !errorlevel! NEQ 0 (
 		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
 		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
@@ -188,7 +130,7 @@ IF NOT "%sxos_first_1024%"=="Y" (
 		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
 		goto:end_script
 	)
-	"tools\gnuwin32\bin\dd.exe bs=1c skip=4195328 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
+	"tools\gnuwin32\bin\dd.exe" bs=1c skip=4195328 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
 	IF !errorlevel! NEQ 0 (
 		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
 		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
@@ -242,7 +184,7 @@ IF NOT "%~z1"=="4194304" (
 		IF EXIST "%dump_output%\BOOT0" del /q "%dump_output%\BOOT0"
 		set copy_error_boot0=Y
 	)
-) else IF "%~nx1"=="BOOT0" (
+) else IF "%~nx1"=="BOOT1" (
 IF NOT "%~z1"=="4194304" (
 		echo Il semble que la taille du fichier créé ne corresponde pas à la taille que devrait faire le dump de la partition BOOT1, le fichier créé va donc être supprimé.
 		echo Il est donc conseillé de refaire le dump de l'emunand puis de réessayer d'exécuter ce script.

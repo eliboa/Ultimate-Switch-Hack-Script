@@ -7,6 +7,11 @@
 <body>
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.27</h2>
+<ul>
+<li>Réécriture de certains scripts de la Nand Toolbox pour changer la méthode de vérification de l'espace disponible sur le disque sur lequel les fichiers sont écrits, cette nouvelle méthode est beaucoup plus simple à comprendre au niveau du code.</li>
+<li>Correction d'un bug important dans le script d'extraction des différentes parties de la nand d'un fichier d'emunand via partition, BOOT1 n'était pas correctement vérifié au niveau de sa taille une fois le processus terminé. Autre bug important corrigé, le fichier ne pouvait pas être sélectionné, ne permettant donc pas d'exécuter le script. Enfin, une erreur faisait que BOOT1 ne pouvait pas être extrait à cause d'une erreur dans la ligne de commande, ceci a également été corrigé.</li>
+</ul>
 <h2>V3.00.26</h2>
 <ul>
 <li>Ajout de la prise en compte des 1024 premiers octets permettant de créer une emunand en partition compatible avec SX OS dans le script permettant de générer ce type de fichier. La vérification de ce type de fichiers créé a également été ajouté au script permettant d'extraire les différentes parties d'une nand de ce type de fichier, ajoutant par la même une vérification suplémentaire.</li>

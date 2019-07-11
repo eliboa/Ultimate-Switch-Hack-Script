@@ -92,67 +92,11 @@ IF NOT "%rename_files%"=="" set rename_files=%rename_files:~0,1%
 :verif_disk_free_space
 %windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\get_free_space_for_path.vbs" "%dump_output%"
 set /p free_space=<templogs\volume_free_space.txt
-call TOOLS\Storage\functions\strlen.bat nb "%free_space%"
-set /a nb=%nb%
-IF %nb% GTR 11 (
+call "tools\Storage\functions\check_disk_free_space.bat" "%free_space%" "31268536320"
+IF "%verif_free_space%"=="OK" (
 	goto:copy_nand
-) else IF %nb% LSS 11 (
+) else (
 	goto:error_disk_free_space
-)
-IF %nb% EQU 11 (
-	IF %free_space:~0,1% GTR 3 (
-		goto:copy_nand
-	) else IF %free_space:~0,1% LSS 3 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~1,1% GTR 1 (
-		goto:copy_nand
-	) else IF %free_space:~1,1% LSS 1 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~2,1% GTR 2 (
-		goto:copy_nand
-	) else IF %free_space:~2,1% LSS 2 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~3,1% GTR 6 (
-		goto:copy_nand
-	) else IF %free_space:~3,1% LSS 6 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~4,1% GTR 8 (
-		goto:copy_nand
-	) else IF %free_space:~4,1% LSS 8 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~5,1% GTR 5 (
-		goto:copy_nand
-	) else IF %free_space:~5,1% LSS 5 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~6,1% GTR 3 (
-		goto:copy_nand
-	) else IF %free_space:~6,1% LSS 3 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~7,1% GTR 6 (
-		goto:copy_nand
-	) else IF %free_space:~7,1% LSS 6 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~8,1% GTR 3 (
-		goto:copy_nand
-	) else IF %free_space:~8,1% LSS 3 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~9,1% GTR 2 (
-		goto:copy_nand
-	) else IF %free_space:~9,1% LSS 2 (
-		goto:error_disk_free_space
-	)
-	IF %free_space:~10,1% GEQ 0 (
-		goto:copy_nand
-	)
 )
 :error_disk_free_space
 echo.
