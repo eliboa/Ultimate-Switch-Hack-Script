@@ -179,6 +179,10 @@ IF "%~1"=="" (
 	IF !errorlevel! EQU 1 (
 		call :general_content_update
 	)
+	call :verif_folder_version "DOC"
+IF !errorlevel! EQU 1 (
+	call :update_folder
+)
 	IF "%~1"=="general_content_update" goto:clean_files
 	call :%~1
 )
@@ -192,7 +196,6 @@ rem Specific scripts instructions must be added here
 
 :update_all
 echo Mise à jour intégrale du script en cours...
-rem call :general_content_update
 call :update_about.bat
 call :update_android_installer.bat
 call :update_biskey_dump.bat
@@ -332,6 +335,13 @@ IF !errorlevel! EQU 1 (
 set /a temp_count+=1
 goto:listing_emulators
 :skip_listing_emulators
+exit /b
+
+:update_emummc_profiles_management.bat
+call :verif_file_version "tools\Storage\emummc_profiles_management.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
 exit /b
 
 :update_emunand_partition_file_create.bat
@@ -682,10 +692,12 @@ IF %errorlevel% EQU 1 (
 )
 call :update_cheats_profiles_management.bat
 call :update_emulators_pack_profiles_management.bat
+call :update_emummc_profiles_management.bat
 call :update_mixed_pack_profiles_management.bat
 call :update_modules_profiles_management.bat
 call :update_prepare_sd_switch_profiles_management.bat
 call :verif_file_version "tools\sd_switch\version.txt"
+IF %errorlevel% EQU 1 (
 	call :update_file
 )
 exit /b
@@ -904,10 +916,6 @@ IF %errorlevel% EQU 1 (
 	call :update_folder
 )
 call :verif_folder_version "tools\Storage\functions"
-IF %errorlevel% EQU 1 (
-	call :update_folder
-)
-call :verif_folder_version "DOC"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )

@@ -1,5 +1,13 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.31</h2>
+<ul>
+<li>Création d'une nouvelle fonctionnalité permettant de configurer des profiles d'emummc pour Atmosphere utilisables dans la préparation d'une SD. De fait, les anciens profiles généraux ne sont plus valable car la façon de gérer la copie des éléments sur la SD a complètement changé à ce niveau là. Les profiles généraux par défaut ont été mis à jour pour intégrer cette nouveauté et le gestionnaire de mises à jour la prend aussi en compte. Enfin, il est possible de retrouver cette fonctionnalité lors de la préparation d'une SD si Atmosphere est choisi pour être copié et on peut aussi la trouver dans le menu des paramètres.</li>
+<li>Ajout d'un profile par défaut pour l'emummc d'Atmosphere qui permet d'avoir une configuration pouvant démarrer sur une emunand via partition créé par SXOS et de complètement partager cette emunand entre les deux CFWs.</li>
+<li>Correction d'un bug dans la préparation d'une SD qui ne copiait pas correctement le répertoire "sept" et ses fichiers nécessaires lors de la copie de SX OS.</li>
+<li>Dans le gestionnaire de mises à jour, la documentation est maintenant mise à jour à part du contenu général du script car celle-ci est mise à jour à chaque version du script et vérifier l'ensemble des mises à jour des éléments principaux prend trop de temps, là se sera plus rapide ainsi. Un léger bug a également été corrigé.</li>
+<li>Correction d'un bug dans la remise à zéro de la boîte à outils, il manquait un outil dans le fichier permettant cette restauration.</li>
+</ul>
 <h2>V3.00.30</h2>
 <ul>
 <li>Ajout de la possibilité d'utiliser PegaScape dans sa version officielle (celle de la team Atlas accessible via leur serveur) lors de la préparation de la SD de ce script, le payload choisi et le fichier "hbl.nsp" seront copiés dans le dossier "atmosphere" et nommés correctement.</li>

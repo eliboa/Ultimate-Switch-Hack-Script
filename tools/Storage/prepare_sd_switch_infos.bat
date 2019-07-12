@@ -92,31 +92,69 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		) else (
 			echo Touche associée à l'activation de Layeredfs: %atmo_layeredfs_override_key%
 		)
-		IF /i "%emunand_enable%"=="o" (
+	)
+	echo.
+	IF NOT "%atmosphere_pass_copy_emummc_pack%"=="Y" (
+		Setlocal enabledelayedexpansion
+		set temp_profile_path=%atmosphere_emummc_profile_path%
+		set emunand_enable=
+set emummc_id=
+set emummc_sector=
+set emummc_path=
+set emummc_nintendo_path=
+		tools\gnuwin32\bin\grep.exe -E "^^enabled =" <"!temp_profile_path!" | tools\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
+		set /p emunand_enable=<templogs\tempvar.txt
+		del /q templogs\tempvar.txt
+		IF NOT "!emunand_enable!"=="" set emunand_enable=!emunand_enable:~1!
+		IF "!emunand_enable!"=="1" (
+			set emunand_enable=o
+		) else (
+			set emunand_enable=n
+		)
+		tools\gnuwin32\bin\grep.exe -E "^^id =" <"!temp_profile_path!" | tools\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
+		set /p emummc_id=<templogs\tempvar.txt
+		del /q templogs\tempvar.txt
+		IF NOT "!emummc_id!"=="" set emummc_id=!emummc_id:~1!
+		tools\gnuwin32\bin\grep.exe -E "^^sector =" <"!temp_profile_path!" | tools\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
+		set /p emummc_sector=<templogs\tempvar.txt
+		del /q templogs\tempvar.txt
+		IF NOT "!emummc_sector!"=="" set emummc_sector=!emummc_sector:~1!
+		tools\gnuwin32\bin\grep.exe -E "^^path =" <"!temp_profile_path!" | tools\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
+		set /p emummc_path=<templogs\tempvar.txt
+		del /q templogs\tempvar.txt
+		IF NOT "!emummc_path!"=="" set emummc_path=!emummc_path:~1!
+		tools\gnuwin32\bin\grep.exe -E "^^nintendo_path =" <"!temp_profile_path!" | tools\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
+		set /p emummc_nintendo_path=<templogs\tempvar.txt
+		del /q templogs\tempvar.txt
+		IF NOT "!emummc_nintendo_path!"=="" set emummc_nintendo_path=!emummc_nintendo_path:~1!
+		IF /i "!emunand_enable!"=="o" (
 			echo Emunand activée avec les paramètres suivants:
-			IF "%emummc_id%"=="" (
+			IF "!emummc_id!"=="" (
 				echo ID de l'emunand par défaut.
 			) else (
-				echo ID de l'emunand: %emummc_id%
+				echo ID de l'emunand: !emummc_id!
 			)
-			IF "%emummc_sector%"=="" (
+			IF "!emummc_sector!"=="" (
 				echo Aucun secteur de démarrage configuré.
 			) else (
-				echo Secteur de démarrage de l'emunand: %emummc_sector%
+				echo Secteur de démarrage de l'emunand: !emummc_sector!
 			)
-			IF "%emummc_path%"=="" (
+			IF "!emummc_path!"=="" (
 				echo Aucun chemin vers les fichiers de dump de la nand défini.
 			) else (
-				echo Chemin vers les fichiers de dump de la nand: %emummc_path%
+				echo Chemin vers les fichiers de dump de la nand: !emummc_path!
 			)
-			IF "%emummc_nintendo_path%"=="" (
+			IF "!emummc_nintendo_path!"=="" (
 				echo Chemin du dossier Nintendo de l'emunand par défaut.
 			) else (
-				echo Chemin du dossier Nintendo de l'emunand: %emummc_nintendo_path%
+				echo Chemin du dossier Nintendo de l'emunand: !emummc_nintendo_path!
 			)
 		) else (
 			echo Emunand désactivée.
 		)
+		endlocal
+	) else (
+		echo Aucun fichier de configuration de l'emummc à copier.
 	)
 	echo.
 )

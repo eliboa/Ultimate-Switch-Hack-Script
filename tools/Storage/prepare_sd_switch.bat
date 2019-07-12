@@ -420,6 +420,7 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		call :copy_atmosphere_configuration
 	)
 	call :copy_modules_pack "atmosphere"
+	IF NOT "%atmosphere_pass_copy_emummc_pack%"=="Y" copy /v "%atmosphere_emummc_profile_path%" "%volume_letter%:\emummc\emummc.ini" >nul
 )
 
 IF /i "%copy_reinx_pack%"=="o" (
@@ -446,9 +447,10 @@ IF /i "%copy_reinx_pack%"=="o" (
 IF /i "%copy_sxos_pack%"=="o" (
 	%windir%\System32\Robocopy.exe TOOLS\sd_switch\sxos %volume_letter%:\ /e >nul
 	IF NOT EXIST "%volume_letter%:\sept\*.*" mkdir %volume_letter%:\sept
-	IF NOT EXIST "%volume_letter%:\sept\sept-primary.bin" copy /v /b tools\sd_switch\atmosphere\sept\sept-primary.bin %volume_letter%:\sept\sept-primary.bin
-	IF NOT EXIST "%volume_letter%:\sept\sept-secondary.bin" copy /v /b tools\sd_switch\atmosphere\sept\sept-secondary.bin %volume_letter%:\sept\sept-secondary.bin
-	IF NOT EXIST "%volume_letter%:\sept\sept-secondary.enc" copy /v /b tools\sd_switch\atmosphere\sept\sept-secondary.enc %volume_letter%:\sept\sept-secondary.enc
+	IF NOT EXIST "%volume_letter%:\sept\sept-primary.bin" copy /v /b tools\sd_switch\atmosphere\sept\sept-primary.bin %volume_letter%:\sept\sept-primary.bin >nul
+	IF NOT EXIST "%volume_letter%:\sept\sept-secondary.bin" copy /v /b tools\sd_switch\atmosphere\sept\sept-secondary.bin %volume_letter%:\sept\sept-secondary.bin >nul
+	IF NOT EXIST "%volume_letter%:\sept\sept-secondary_00.enc" copy /v /b tools\sd_switch\atmosphere\sept\sept-secondary_00.enc %volume_letter%:\sept\sept-secondary_00.enc >nul
+	IF NOT EXIST "%volume_letter%:\sept\sept-secondary_01.enc" copy /v /b tools\sd_switch\atmosphere\sept\sept-secondary_01.enc %volume_letter%:\sept\sept-secondary_01.enc >nul
 	IF /i "%copy_payloads%"=="o" (
 		copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\SXOS.bin >nul
 		copy /V /B TOOLS\sd_switch\payloads\Retro_reloaded.bin %volume_letter%:\Retro_reloaded.bin >nul
@@ -789,25 +791,6 @@ echo.>>%volume_letter%:\atmosphere\loader.ini
 echo [default_config]>>%volume_letter%:\atmosphere\loader.ini
 echo override_key=%atmo_layeredfs_override_key%>>%volume_letter%:\atmosphere\loader.ini
 echo cheat_enable_key=%atmo_cheats_override_key%>>%volume_letter%:\atmosphere\loader.ini
-
-echo [emummc]>%volume_letter%:\emummc\emummc.ini
-IF /i "%emunand_enable%"=="o" (
-	echo enabled = ^1>>%volume_letter%:\emummc\emummc.ini
-) else (
-	echo enabled = ^0>>%volume_letter%:\emummc\emummc.ini
-)
-IF "%emummc_id%"=="" (
-	echo id = >>%volume_letter%:\emummc\emummc.ini
-) else (
-	echo id = 0x%emummc_id%>>%volume_letter%:\emummc\emummc.ini
-)
-IF "%emummc_sector%"=="" (
-	echo sector = >>%volume_letter%:\emummc\emummc.ini
-) else (
-	echo sector = 0x%emummc_sector%>>%volume_letter%:\emummc\emummc.ini
-)
-echo path = %emummc_path%>>%volume_letter%:\emummc\emummc.ini
-echo nintendo_path = %emummc_nintendo_path%>>%volume_letter%:\emummc\emummc.ini
 endlocal
 exit /b
 

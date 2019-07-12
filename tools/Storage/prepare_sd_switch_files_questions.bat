@@ -46,6 +46,7 @@ set atmosphere_manual_config=
 set /p atmosphere_manual_config=Souhaitez-vous régler manuellement les options d'Atmosphere? (O/n): 
 IF NOT "%atmosphere_manual_config%"=="" set atmosphere_manual_config=%atmosphere_manual_config:~0,1%
 IF /i "%atmosphere_manual_config%"=="o" call :set_atmosphere_configs
+call :emummc_profile_choice "atmosphere"
 call :modules_profile_choice "atmosphere"
 IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_atmosphere
 :ask_cheats_atmosphere
@@ -644,66 +645,87 @@ IF "%check_chars%"=="0" (
 )
 :skip_check_atmo_layeredfs_override_key
 
-:emunand_config
+:emummc_profile_choice
+:define_emummc_select_profile
 echo.
-echo Configuration de l'emunand
-echo.
-set emunand_enable=
-set /p "emunand_enable=Souhaitez-vous activer l'emunand? (O/n): "
-IF NOT "%emunand_enable%"=="" set emunand_enable=%emunand_enable:~0,1%
-IF /i NOT "%emunand_enable%"=="o" goto:skip_emunand_config
-:define_emummc_id
-set emummc_id=
-set /p emummc_id=Définir l'ID de l'emunand (laisser vide pour utiliser l'ID par défaut) (ne pas noter le 0x de début) (4 caractères): 
-IF "%emummc_id%"=="" goto:skip_define_emummc_id
-call TOOLS\Storage\functions\strlen.bat nb "%emummc_id%"
-IF %nb% neq 4 (
-	echo L'ID de l'emunand doit comprendre 4 caractères hexadécimaux.
-	goto:define_emummc_id
+echo Sélection du profile pour la copie de la configuration de l'emummc  du CFW %~1:
+set /a temp_count=1
+copy nul templogs\profiles_list.txt >nul
+IF NOT EXIST "tools\sd_switch\atmosphere_emummc_profiles\*.ini" (
+	goto:emummc_no_profile_created
 )
-call TOOLS\Storage\functions\CONV_VAR_to_MAJ.bat emummc_id
+cd tools\sd_switch\atmosphere_emummc_profiles
+for %%p in (*.ini) do (
+	set temp_profilename=%%p
+	set temp_profilename=!temp_profilename:~0,-4!
+	echo !temp_count!: !temp_profilename!
+	echo %%p>> ..\..\..\templogs\profiles_list.txt
+	set /a temp_count+=1
+)
+cd ..\..\..
+:emummc_no_profile_created
+IF EXIST "tools\default_configs\emummc_profile_sxos_partition_share.ini" (
+	echo %temp_count%: Emummc partagé avec l'emunand via partition de SXOS.
+	set emummc_no_default_config=N
+) else (
+	set /a temp_count-=1
+	set emummc_no_default_config=Y
+)
+echo 0: Accéder à la gestion des profiles d'emummc.
+echo Tout autre choix: Ne pas copier de configuration d'emummc.
+echo.
+set emummc_profile_path=
+set emummc_profile=
+set pass_copy_emummc_pack=
+set /p emummc_profile=Choisissez un profile d'emummc: 
+IF "%emummc_profile%"=="" (
+	set pass_copy_emummc_pack=Y
+	goto:skip_verif_emummc_profile
+)
+call TOOLS\Storage\functions\strlen.bat nb "%emummc_profile%"
 set i=0
-:check_chars_emummc_id
-IF %i% LSS %nb% (
-	FOR %%z in (0 1 2 3 4 5 6 7 8 9 A B C D E F) do (
-		IF "!emummc_id:~%i%,1!"=="%%z" (
+:check_chars_emummc_profile
+IF %i% NEQ %nb% (
+	set check_chars=0
+	FOR %%z in (0 1 2 3 4 5 6 7 8 9) do (
+		IF "!emummc_profile:~%i%,1!"=="%%z" (
 			set /a i+=1
-			goto:check_chars_emummc_id
+			set check_chars=1
+			goto:check_chars_emummc_profile
 		)
 	)
-	echo Un caractère non autorisé a été saisie dans l'ID de l'emunand.
-	goto:define_emummc_id
-)
-:skip_define_emummc_id
-:define_emummc_sector
-set emummc_sector=
-set /p emummc_sector=Définir le secteur de la partition démarrant l'emunand (si emunand via fichiers, laisser cette valeur vide) (ne pas noter le 0x de début): 
-IF "%emummc_sector%"=="" goto:skip_define_emummc_sector
-call TOOLS\Storage\functions\strlen.bat nb "%emummc_sector%"
-call TOOLS\Storage\functions\CONV_VAR_to_MAJ.bat emummc_sector
-set i=0
-:check_chars_emummc_sector
-IF %i% LSS %nb% (
-	FOR %%z in (0 1 2 3 4 5 6 7 8 9 A B C D E F) do (
-		IF "!emummc_sector:~%i%,1!"=="%%z" (
-			set /a i+=1
-			goto:check_chars_emummc_sector
-		)
+	IF "!check_chars!"=="0" (
+		set pass_copy_emummc_pack=Y
+		goto:skip_verif_emummc_profile
 	)
-	echo Un caractère non autorisé a été saisie dans le secteur de démarrage de l'emunand.
-	goto:define_emummc_sector
 )
-:skip_define_emummc_sector
-set emummc_path=
-IF "%emummc_sector%"=="" set /p emummc_path=Définir le chemin vers le dossier contenant les fichiers permettant de booter l'emunand (si laisser vide, l'emunand sera désactivée): 
-IF "%emummc_path%"=="" (
-	echo Aucun secteur de démarrage ni chemin de dossier vers des fichiers d'un dump de nand défini, l'emunand va donc être désactivée.
-	set emunand_enable=n
-	goto:skip_emunand_config
+IF %emummc_profile% GTR %temp_count% (
+	set pass_copy_emummc_pack=Y
+		goto:skip_verif_emummc_profile
 )
-set emummc_nintendo_path=
-set /p emummc_nintendo_path=Définir le chemin du dossier nintendo de l'emunand (laisser vide pour garder le chemin par défaut): 
-:skip_emunand_config
+IF "%emummc_profile%"=="0" (
+	call tools\Storage\emummc_profiles_management.bat
+	goto:define_emummc_select_profile
+)
+IF %emummc_profile% EQU %temp_count% (
+	IF NOT "%emummc_no_default_config%"=="Y" (
+		set emummc_profile_path=tools\default_configs\emummc_profile_sxos_partition_share.ini
+		goto:skip_verif_emummc_profile
+	)
+)
+TOOLS\gnuwin32\bin\sed.exe -n %emummc_profile%p <templogs\profiles_list.txt > templogs\tempvar.txt
+set /p emummc_profile_path=<templogs\tempvar.txt
+set emummc_profile_path=tools\sd_switch\atmosphere_emummc_profiles\%emummc_profile_path%
+:skip_verif_emummc_profile
+del /q templogs\profiles_list.txt >nul 2>&1
+IF "%~1"=="atmosphere" (
+	set atmosphere_emummc_profile_path=%emummc_profile_path%
+	set atmosphere_pass_copy_emummc_pack=%pass_copy_emummc_pack%
+)
+IF "%~1"=="reinx" (
+	set reinx_emummc_profile_path=%emummc_profile_path%
+	set reinx_pass_copy_emummc_pack=%pass_copy_emummc_pack%
+)
 exit /b
 
 :endscript
