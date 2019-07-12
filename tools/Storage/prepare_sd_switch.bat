@@ -400,7 +400,8 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		%windir%\System32\Robocopy.exe TOOLS\sd_switch\mixed\modular\EdiZon %volume_letter%:\ /e >nul
 	)
 	IF NOT EXIST "%volume_letter%:\sept\ams" mkdir "%volume_letter%:\sept\ams"
-	%windir%\System32\Robocopy.exe tools\sd_switch\atmosphere\sept %volume_letter%:\sept\ams /e >nul
+	copy /v tools\sd_switch\atmosphere\sept\payload.bin %volume_letter%:\sept\ams\payload.bin >nul
+	%windir%\System32\Robocopy.exe tools\sd_switch\mixed\base\sept %volume_letter%:\sept\ams /e >nul
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\atmosphere\reboot_payload.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\Hekate.bin %volume_letter%:\RR\payloads\Hekate.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\Atmosphere_fusee-primary.bin %volume_letter%:\RR\payloads\Atmosphere.bin >nul
@@ -440,17 +441,13 @@ IF /i "%copy_reinx_pack%"=="o" (
 	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\ReiNX\reboot_payload.bin >nul
 	copy /V /B TOOLS\sd_switch\payloads\ReiNX.bin %volume_letter%:\RR\payloads\ReiNX.bin >nul
 	IF NOT EXIST "%volume_letter%:\sept\reinx" mkdir "%volume_letter%:\sept\reinx"
-	%windir%\System32\Robocopy.exe tools\sd_switch\reinx\sept %volume_letter%:\sept\reinx /e >nul
+	copy /v tools\sd_switch\reinx\sept\payload.bin %volume_letter%:\sept\reinx\payload.bin >nul
+	%windir%\System32\Robocopy.exe tools\sd_switch\mixed\base\sept %volume_letter%:\sept\reinx /e >nul
 	call :copy_modules_pack "reinx"
 )
 
 IF /i "%copy_sxos_pack%"=="o" (
 	%windir%\System32\Robocopy.exe TOOLS\sd_switch\sxos %volume_letter%:\ /e >nul
-	IF NOT EXIST "%volume_letter%:\sept\*.*" mkdir %volume_letter%:\sept
-	IF NOT EXIST "%volume_letter%:\sept\sept-primary.bin" copy /v /b tools\sd_switch\atmosphere\sept\sept-primary.bin %volume_letter%:\sept\sept-primary.bin >nul
-	IF NOT EXIST "%volume_letter%:\sept\sept-secondary.bin" copy /v /b tools\sd_switch\atmosphere\sept\sept-secondary.bin %volume_letter%:\sept\sept-secondary.bin >nul
-	IF NOT EXIST "%volume_letter%:\sept\sept-secondary_00.enc" copy /v /b tools\sd_switch\atmosphere\sept\sept-secondary_00.enc %volume_letter%:\sept\sept-secondary_00.enc >nul
-	IF NOT EXIST "%volume_letter%:\sept\sept-secondary_01.enc" copy /v /b tools\sd_switch\atmosphere\sept\sept-secondary_01.enc %volume_letter%:\sept\sept-secondary_01.enc >nul
 	IF /i "%copy_payloads%"=="o" (
 		copy /V /B TOOLS\sd_switch\payloads\SXOS.bin %volume_letter%:\SXOS.bin >nul
 		copy /V /B TOOLS\sd_switch\payloads\Retro_reloaded.bin %volume_letter%:\Retro_reloaded.bin >nul

@@ -47,18 +47,20 @@ copy /V tools\NSC_Builder\keys.txt KEY_SAVES\tools\NSC_Builder\keys.txt
 IF NOT EXIST "KEY_SAVES\tools\sd_switch" mkdir "KEY_SAVES\tools\sd_switch"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\mixed" mkdir "KEY_SAVES\tools\sd_switch\mixed"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\mixed\profiles" mkdir "KEY_SAVES\tools\sd_switch\mixed\profiles"
-copy /V "tools\sd_switch\mixed\profiles\*.ini" "KEY_SAVES\tools\sd_switch\mixed\profiles\
+copy /V "tools\sd_switch\mixed\profiles\*.ini" "KEY_SAVES\tools\sd_switch\mixed\profiles\"
+IF NOT EXIST "KEY_SAVES\tools\sd_switch\atmosphere_emummc_profiles" mkdir "KEY_SAVES\tools\sd_switch\atmosphere_emummc_profiles"
+copy /V "tools\sd_switch\atmosphere_emummc_profiles\*.ini" "KEY_SAVES\tools\sd_switch\atmosphere_emummc_profiles\"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\cheats" mkdir "KEY_SAVES\tools\sd_switch\cheats"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\cheats\profiles" mkdir "KEY_SAVES\tools\sd_switch\cheats\profiles"
-copy /V "tools\sd_switch\cheats\profiles\*.ini" "KEY_SAVES\tools\sd_switch\cheats\profiles\
+copy /V "tools\sd_switch\cheats\profiles\*.ini" "KEY_SAVES\tools\sd_switch\cheats\profiles\"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\emulators" mkdir "KEY_SAVES\tools\sd_switch\emulators"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\emulators\profiles" mkdir "KEY_SAVES\tools\sd_switch\emulators\profiles"
-copy /V "tools\sd_switch\emulators\profiles\*.ini" "KEY_SAVES\tools\sd_switch\emulators\profiles\
+copy /V "tools\sd_switch\emulators\profiles\*.ini" "KEY_SAVES\tools\sd_switch\emulators\profiles\"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\modules" mkdir "KEY_SAVES\tools\sd_switch\modules"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\modules\profiles" mkdir "KEY_SAVES\tools\sd_switch\modules\profiles"
-copy /V "tools\sd_switch\modules\profiles\*.ini" "KEY_SAVES\tools\sd_switch\modules\profiles\
+copy /V "tools\sd_switch\modules\profiles\*.ini" "KEY_SAVES\tools\sd_switch\modules\profiles\"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\profiles" mkdir "KEY_SAVES\tools\sd_switch\profiles"
-copy /V "tools\sd_switch\profiles\*.bat" "KEY_SAVES\tools\sd_switch\profiles\
+copy /V "tools\sd_switch\profiles\*.bat" "KEY_SAVES\tools\sd_switch\profiles\"
 IF NOT EXIST KEY_SAVES\tools\Storage mkdir KEY_SAVES\tools\Storage
 copy /v tools\Storage\verif_update.ini KEY_SAVES\tools\Storage\verif_update.ini
 IF NOT EXIST KEY_SAVES\tools\toolbox mkdir KEY_SAVES\tools\toolbox

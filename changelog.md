@@ -1,5 +1,11 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.32</h2>
+<ul>
+<li>Changement de la méthode de copie de Sept dans la préparation d'une SD, celui-ci sera maintenant toujours copié lors de la préparation d'une SD.</li>
+<li>Ajout de la sauvegarde des profiles d'emummc dans la fonction de sauvegarde. Au passage, quelques bugs ont été corrigés dans ce script.</li>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 216.</li>
+</ul>
 <h2>V3.00.31</h2>
 <ul>
 <li>Création d'une nouvelle fonctionnalité permettant de configurer des profiles d'emummc pour Atmosphere utilisables dans la préparation d'une SD. De fait, les anciens profiles généraux ne sont plus valable car la façon de gérer la copie des éléments sur la SD a complètement changé à ce niveau là. Les profiles généraux par défaut ont été mis à jour pour intégrer cette nouveauté et le gestionnaire de mises à jour la prend aussi en compte. Enfin, il est possible de retrouver cette fonctionnalité lors de la préparation d'une SD si Atmosphere est choisi pour être copié et on peut aussi la trouver dans le menu des paramètres.</li>
