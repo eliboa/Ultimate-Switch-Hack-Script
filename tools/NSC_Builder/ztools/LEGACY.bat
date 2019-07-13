@@ -302,7 +302,7 @@ if /i "%bs%"=="4" goto UPDMODE
 if /i "%bs%"=="5" goto INFMODE
 if /i "%bs%"=="6" goto DBMODE
 if /i "%bs%"=="0" goto OPT_CONFIG
-if /i "%bs%"=="N" goto exit /B
+if /i "%bs%"=="N" exit /B
 goto manual_Reentry
 
 REM //////////////////////////////////////////////////
@@ -409,7 +409,7 @@ echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
 echo Tapez "z" pour supprimer toute la liste.
 echo ......................................................................
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 set /p bs="Glissez un fichier ou choisissez une option: "
@@ -1487,7 +1487,7 @@ if !conta! LEQ 0 ( del UPDlist.txt )
 endlocal
 :upd_ADD_BASE
 ECHO.
-echo Tappez "0" pour revenir à la sélection du mode.
+echo Tapez "0" pour revenir à la sélection du mode.
 ECHO.
 ECHO *******************************************************************
 ECHO                         Indiquez le contenu de base. 
@@ -1524,7 +1524,7 @@ echo ..................................................................
 echo NOTE: En appuyant sur 3 vous verrez la liste précédente que vous pourrez modifier avant de lancer son traitement.
 echo.
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 set /p bs="Faites votre choix: "
@@ -1552,7 +1552,7 @@ ECHO *******************************************************************
 ECHO Veuillez indiquer les fichiers que vous souhaitez ajouter pour mettre à jour le contenu de base.
 ECHO *******************************************************************
 ECHO.
-echo Tappez "0" pour revenir à la sélection du mode.
+echo Tapez "0" pour revenir à la sélection du mode.
 ECHO.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%UPDlist.txt" -uin "%uinput%" -ff "uinput"
 set /p eval=<"%uinput%"
@@ -1576,7 +1576,7 @@ echo Tapez "z" pour supprimer toute la liste.
 echo Tapez "e" pour quitter.
 echo ......................................................................
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%UPDlist.txt" -uin "%uinput%" -ff "uinput"
@@ -2229,7 +2229,7 @@ ECHO =============================     BY JULESONTHEROAD     ===================
 ECHO -------------------------------------------------------------------------------------
 ECHO "                                POWERED BY SQUIRREL                                "
 ECHO "                    BASED IN THE WORK OF BLAWAR AND LUCA FRAGA                     "
-ECHO                                  VERSION 0.87 (LEGACY)
+ECHO                                  VERSION %program_version% (LEGACY)
 ECHO -------------------------------------------------------------------------------------                   
 ECHO Program's github: https://github.com/julesontheroad/NSC_BUILDER
 ECHO Blawar's github:  https://github.com/blawar

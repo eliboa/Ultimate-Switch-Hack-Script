@@ -209,7 +209,7 @@ goto aut_exit_choice
 CD /d "%prog_dir%"
 call :program_logo
 echo --------------------------------------
-echo Mode automatique. Le ré-empaquetage individuel est defini
+echo Mode automatique. Le ré-empaquetage individuel est défini
 echo --------------------------------------
 echo.
 ::*************
@@ -361,7 +361,7 @@ goto aut_exit_choice
 CD /d "%prog_dir%"
 call :program_logo
 echo --------------------------------------
-echo Mode automatique. Le ré-empaquetage multiple est defini
+echo Mode automatique. Le ré-empaquetage multiple est défini
 echo --------------------------------------
 echo.
 set "filename=%~n1"
@@ -1100,7 +1100,7 @@ echo Remarque: la langue ne pouvant pas être lue à partir de dlcs, cette optio
 echo ne les affectera pas
 echo.
 ECHO *********************************************
-echo Ou tapez "b" pour revenir à AJOUTER NUMERO DE VERSION
+echo Ou tapez "b" pour revenir à ajouter numéro de version
 echo Ou tapez "0" pour revenir à la liste des options
 ECHO *********************************************
 echo.
@@ -1127,7 +1127,7 @@ echo Tapez "2" pour RENOMMER comme numéro de DLC (1,2,3...)
 echo Tapez "3" pour conserver le nom de base et AJOUTER un numéro de DLC comme étiquette
 echo.
 ECHO *********************************************
-echo Ou tapez "b" pour revenir à ajouter GARDER LES NOMS DE DLC
+echo Ou tapez "b" pour revenir à GARDER LES NOMS DE DLC
 echo Ou tapez "0" pour revenir à la liste des options
 ECHO *********************************************
 echo.
@@ -1841,7 +1841,7 @@ exit /B
 if "%fatype%" EQU "-fat fat32" goto m_KeyChange_skip_fat32
 REM For the current beta the filenames are calculted. This code remains commented for future reintegration
 rem echo *******************************************************
-rem echo ENTRER LE NOM DE FICHIER FINAL POUR LE FICHIER DE SORTIE
+rem echo ENTRER LE NOM DU FICHIER FINAL POUR LE FICHIER DE SORTIE
 rem echo *******************************************************
 rem echo.
 rem echo Ou Tapez "b" pour revenir à la liste des options
@@ -1889,7 +1889,7 @@ goto m_exit_choice
 :m_KeyChange_skip_fat32
 CD /d "%prog_dir%"
 echo *******************************************************
-echo ENTRER LE NOM DE FICHIER FINAL POUR LE FICHIER DE SORTIE
+echo ENTRER LE NOM DU FICHIER FINAL POUR LE FICHIER DE SORTIE
 echo *******************************************************
 echo.
 echo Ou Tapez "b" pour revenir à la liste des options
@@ -2715,7 +2715,7 @@ ECHO =============================     BY JULESONTHEROAD     ===================
 ECHO -------------------------------------------------------------------------------------
 ECHO "                                POWERED BY SQUIRREL                                "
 ECHO "                    BASED IN THE WORK OF BLAWAR AND LUCA FRAGA                     "
-ECHO                                   VERSION 0.87 (NEW)
+ECHO                                   VERSION %program_version% (NEW)
 ECHO -------------------------------------------------------------------------------------                   
 ECHO Program's github: https://github.com/julesontheroad/NSC_BUILDER
 ECHO Blawar's github:  https://github.com/blawar

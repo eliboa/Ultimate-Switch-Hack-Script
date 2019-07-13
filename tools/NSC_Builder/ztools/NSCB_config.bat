@@ -728,6 +728,8 @@ echo Tapez "1" pour utiliser le format exfat (option par défaut)
 echo Tapez "2" pour utiliser le format FAT32 spécifique à SX OS (fichiers xc0 et ns0)
 echo Tapez "3" pour utiliser le format FAT32 fat32 pour tous les CFWs (répertoire archivé)
 
+echo Remarque: l'option de dossier d'archivage exporte les fichiers NSP sous forme de dossiers et de fichiers xci. 
+echo fichiers fractionnés.
 echo.
 echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
 echo Tapez "0" pour revenir au menu de configuration
@@ -1122,7 +1124,7 @@ ECHO =============================     BY JULESONTHEROAD     ===================
 ECHO -------------------------------------------------------------------------------------
 ECHO "                                POWERED BY SQUIRREL                                "
 ECHO "                    BASED IN THE WORK OF BLAWAR AND LUCA FRAGA                     "
-ECHO                                     VERSION 0.87
+ECHO                                     VERSION %program_version%
 ECHO -------------------------------------------------------------------------------------                   
 ECHO Program's github: https://github.com/julesontheroad/NSC_BUILDER
 ECHO Blawar's github:  https://github.com/blawar

@@ -3,7 +3,7 @@ set "info_dir=%~1INFO"
 cls
 call :logo
 echo ********************************************************
-echo INFORMATION FICHIER
+echo Information sur le fichier
 echo ********************************************************
 echo.
 echo -- Tapez "0" pour revenir au menu principal du script --
@@ -18,7 +18,7 @@ if "%Extension%" EQU ".nsp" ( goto sc2 )
 if "%Extension%" EQU ".nsx" ( goto sc2 )
 if "%Extension%" EQU ".xci" ( goto sc2 )
 if "%Extension%" EQU ".nca" ( goto sc3 )
-echo Type de fichier nom supporté.
+echo Type de fichier non supporté.
 pause
 goto sc1
 :sc2
@@ -149,7 +149,7 @@ goto sc2
 cls
 call :logo
 echo ********************************************************
-echo Vérifier NSP\XCI\NCA
+echo Vérification  NSP\XCI\NCA
 echo ********************************************************
 %pycommand% "%nut%" -b %buffer% -o "%info_dir%" -v "%targt%" 
 goto sc2
@@ -273,7 +273,7 @@ ECHO =============================     BY JULESONTHEROAD     ===================
 ECHO -------------------------------------------------------------------------------------
 ECHO "                                POWERED BY SQUIRREL                                "
 ECHO "                    BASED IN THE WORK OF BLAWAR AND LUCA FRAGA                     "
-ECHO                                     VERSION 0.87
+ECHO                                     VERSION %program_version%
 ECHO -------------------------------------------------------------------------------------                   
 ECHO Program's github: https://github.com/julesontheroad/NSC_BUILDER
 ECHO Blawar's github:  https://github.com/blawar

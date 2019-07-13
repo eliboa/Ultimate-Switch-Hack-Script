@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.34</h2>
+<ul>
+<li>Mise à jour de NSC_Builder, toujours en 0.87C mais la traduction a subit quelques modifications.</li>
+</ul>
 <h2>V3.00.33</h2>
 <ul>
 <li>Mise à jour du script de préparation d'une SD pour coller à la dernière version de Tinfoil qui n'inclue plus le module spécial qui était présent dans la version précédente.</li>
