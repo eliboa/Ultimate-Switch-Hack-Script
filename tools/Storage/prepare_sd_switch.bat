@@ -536,46 +536,6 @@ for /l %%i in (1,1,%temp_count%) do (
 	set temp_special_homebrew=N
 	TOOLS\gnuwin32\bin\sed.exe -n %%ip <"%mixed_profile_path%" >templogs\tempvar.txt
 	set /p temp_homebrew=<templogs\tempvar.txt
-	IF "!temp_homebrew!"=="DZ" (
-		set temp_special_homebrew=Y
-		IF EXIST "%volume_letter%:\atmosphere\titles" (
-			set one_cfw_chosen=Y
-			%windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew!\module %volume_letter%:\atmosphere /e >nul
-		)
-		IF EXIST "%volume_letter%:\ReiNX\titles" (
-			set one_cfw_chosen=Y
-			%windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew!\module %volume_letter%:\ReiNX /e >nul
-		)
-		IF EXIST "%volume_letter%:\sxos\titles" (
-			set one_cfw_chosen=Y
-			%windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew!\module %volume_letter%:\sxos /e >nul
-		)
-		IF EXIST "%volume_letter%:\boot.dat" (
-			set one_cfw_chosen=Y
-			IF NOT EXIST "%volume_letter%:\sxos" mkdir "%volume_letter%:\sxos"
-			%windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew!\module %volume_letter%:\sxos /e >nul
-		)
-		IF /i "%copy_atmosphere_pack%"=="o" (
-			set one_cfw_chosen=Y
-			IF NOT EXIST "%volume_letter%:\atmosphere" mkdir "%volume_letter%:\atmosphere"
-			%windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew!\module %volume_letter%:\atmosphere /e >nul
-		)
-		IF /i "%copy_reinx_pack%"=="o" (
-			set one_cfw_chosen=Y
-			IF NOT EXIST "%volume_letter%:\ReiNX" mkdir "%volume_letter%:\ReiNX"
-			%windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew!\module %volume_letter%:\ReiNX /e >nul
-		)
-		IF /i "%copy_sxos_pack%"=="o" (
-			set one_cfw_chosen=Y
-			IF NOT EXIST "%volume_letter%:\sxos" mkdir "%volume_letter%:\sxos"
-			%windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew!\module %volume_letter%:\sxos /e >nul
-		)
-		IF "!one_cfw_chosen!"=="Y" (
-			%windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew!\homebrew %volume_letter%:\ /e >nul
-		) else (
-			echo Le homebrew DZ Tinfoil ne peut être copié si aucun CFW n'y est associé pendant la préparation de la SD car il contient des éléments liés aux différents CFW. Pour copier correctement ce homebrew, vous devez sélectionner un ou plusieurs CFW avec lesquels ce homebrew sera utilisé sur votre console ou la SD doit contenir le répertoire "titles" associé aux CFWs installés sur la SD.
-		)
-	)
 	IF "!temp_special_homebrew!"=="N" %windir%\System32\Robocopy.exe tools\sd_switch\mixed\modular\!temp_homebrew! %volume_letter%:\ /e >nul
 	IF "!temp_homebrew!"=="Nxdumptool" (
 		IF EXIST "%volume_letter%:\switch\gcdumptool\*.*" rmdir /s /q "%volume_letter%:\switch\gcdumptool"

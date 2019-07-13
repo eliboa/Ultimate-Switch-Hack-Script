@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.33</h2>
+<ul>
+<li>Mise à jour du script de préparation d'une SD pour coller à la dernière version de Tinfoil qui n'inclue plus le module spécial qui était présent dans la version précédente.</li>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 217.</li>
+</ul>
 <h2>V3.00.32</h2>
 <ul>
 <li>Changement de la méthode de copie de Sept dans la préparation d'une SD, celui-ci sera maintenant toujours copié lors de la préparation d'une SD.</li>

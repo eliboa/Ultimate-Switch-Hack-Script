@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V217</h2>
+<ul>
+<li>Mise à jour de DZ Tinfoil et de Lithium en version 1.70.</li>
+</ul>
 <h2>V216</h2>
 <ul>
 <li>Suppression des fichiers principaux de Sept dans les packs Atmosphere et ReiNX pour les intégrer dans la copie des éléments obligatoires qui sont toujours copiés lors de la préparation d'une SD.</li>
