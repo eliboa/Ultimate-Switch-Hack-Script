@@ -89,7 +89,7 @@ goto:end_script
 echo.
 echo Copie en cours...
 IF NOT "%sxos_first_1024%"=="Y" (
-	"tools\gnuwin32\bin\dd.exe" bs=1c count=4194304 if="%dump_input%" of="%dump_output%\BOOT0"
+	"tools\gnuwin32\bin\dd.exe" bs=4096 iflag=count_bytes count=4194304 if="%dump_input%" of="%dump_output%\BOOT0"
 	IF !errorlevel! NEQ 0 (
 		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
 		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
@@ -99,7 +99,7 @@ IF NOT "%sxos_first_1024%"=="Y" (
 		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
 		goto:end_script
 	)
-	"tools\gnuwin32\bin\dd.exe" bs=1c skip=4194304 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
+	"tools\gnuwin32\bin\dd.exe" bs=4096 iflag=count_bytes,skip_bytes skip=4194304 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
 	IF !errorlevel! NEQ 0 (
 		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
 		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
@@ -109,7 +109,7 @@ IF NOT "%sxos_first_1024%"=="Y" (
 		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
 		goto:end_script
 	)
-	"tools\gnuwin32\bin\dd.exe" bs=1c skip=8388609 if="%dump_input%" of="%dump_output%\rawnand.bin"
+	"tools\gnuwin32\bin\dd.exe" bs=4096 iflag=skip_bytes skip=8388608 if="%dump_input%" of="%dump_output%\rawnand.bin"
 	IF !errorlevel! NEQ 0 (
 		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
 		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
@@ -120,7 +120,7 @@ IF NOT "%sxos_first_1024%"=="Y" (
 		goto:end_script
 	)
 ) else (
-	"tools\gnuwin32\bin\dd.exe" bs=1c skip=1024 count=4194304 if="%dump_input%" of="%dump_output%\BOOT0"
+	"tools\gnuwin32\bin\dd.exe" bs=4096 iflag=count_bytes,skip_bytes skip=1024 count=4194304 if="%dump_input%" of="%dump_output%\BOOT0"
 	IF !errorlevel! NEQ 0 (
 		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
 		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
@@ -130,7 +130,7 @@ IF NOT "%sxos_first_1024%"=="Y" (
 		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
 		goto:end_script
 	)
-	"tools\gnuwin32\bin\dd.exe" bs=1c skip=4195328 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
+	"tools\gnuwin32\bin\dd.exe" bs=4096 iflag=count_bytes,skip_bytes skip=4195328 count=4194304 if="%dump_input%" of="%dump_output%\BOOT1"
 	IF !errorlevel! NEQ 0 (
 		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
 		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.
@@ -140,7 +140,7 @@ IF NOT "%sxos_first_1024%"=="Y" (
 		IF EXIST "%dump_output%\rawnand.bin" del /q "%dump_output%\rawnand.bin"
 		goto:end_script
 	)
-	"tools\gnuwin32\bin\dd.exe" bs=1c skip=8389633 if="%dump_input%" of="%dump_output%\rawnand.bin"
+	"tools\gnuwin32\bin\dd.exe" bs=4096 iflag=skip_bytes skip=8389632 if="%dump_input%" of="%dump_output%\rawnand.bin"
 	IF !errorlevel! NEQ 0 (
 		echo Il semble qu'une erreur se soit produite pendant la copie, les fichiers créés vont être supprimés s'ils existent.
 		echo Vérifiez que la partition sur laquelle vous copiez les fichiers est une partition supportant les fichiers de plus de 4 GO et vérifiez également que vous avez au moins 30 GO de libre sur la partition sur lequel les fichiers sont copié puis réessayez.

@@ -1,5 +1,11 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.35</h2>
+<ul>
+<li>Large augmentation de la vitesse pour l'extraction des fichiers du dump de nand d'un fichier de partition pour l'emunand et correction de bugs dans celui-ci.</li>
+<li>Large augmentation de la vitesse de traitement de la création d'un fichier permettant la création d'une partition pour l'emunand, l'ancienne méthode était vraiment trop longue donc je décide de sacrifier les vérifications pour gagner de la vitesse de traitement.</li>
+<li>Ajout du paramètre gérant le titre de l'emunand dans la gestion de profiles d'emunand ainsi que dans la préparation d'une SD.</li>
+</ul>
 <h2>V3.00.34</h2>
 <ul>
 <li>Mise à jour de NSC_Builder, toujours en 0.87C mais la traduction a subit quelques modifications.</li>

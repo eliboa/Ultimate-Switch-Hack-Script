@@ -184,17 +184,17 @@ echo Copie en cours...
 cd /d "%dump_input%"
 IF /i NOT "%add_sxos_first_1024%"=="o" (
 	IF "%cfw_used%"=="1" (
-		copy /v /b %hekate_files_copy_param% "%dump_output%\emunand_partition.bin"
+		copy /b %hekate_files_copy_param% "%dump_output%\emunand_partition.bin"
 	)
 	IF "%cfw_used%"=="2" (
-		copy /v /b BOOT0 + BOOT1 + full.00.bin + full.01.bin + full.02.bin + full.03.bin + full.04.bin + full.05.bin + full.06.bin + full.07.bin "%dump_output%\emunand_partition.bin"
+		copy /b BOOT0 + BOOT1 + full.00.bin + full.01.bin + full.02.bin + full.03.bin + full.04.bin + full.05.bin + full.06.bin + full.07.bin "%dump_output%\emunand_partition.bin"
 	)
 ) else (
 	IF "%cfw_used%"=="1" (
-		copy /v /b "%this_script_dir%\..\tools\default_configs\sxos_first1024.bin" + %hekate_files_copy_param% "%dump_output%\emunand_partition.bin"
+		copy /b "%this_script_dir%\..\tools\default_configs\sxos_first1024.bin" + %hekate_files_copy_param% "%dump_output%\emunand_partition.bin"
 	)
 	IF "%cfw_used%"=="2" (
-		copy /v /b "%this_script_dir%\..\tools\default_configs\sxos_first1024.bin" + BOOT0 + BOOT1 + full.00.bin + full.01.bin + full.02.bin + full.03.bin + full.04.bin + full.05.bin + full.06.bin + full.07.bin "%dump_output%\emunand_partition.bin"
+		copy /b "%this_script_dir%\..\tools\default_configs\sxos_first1024.bin" + BOOT0 + BOOT1 + full.00.bin + full.01.bin + full.02.bin + full.03.bin + full.04.bin + full.05.bin + full.06.bin + full.07.bin "%dump_output%\emunand_partition.bin"
 	)
 )
 IF %errorlevel% NEQ 0 (

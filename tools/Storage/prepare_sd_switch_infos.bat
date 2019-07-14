@@ -98,10 +98,11 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 		Setlocal enabledelayedexpansion
 		set temp_profile_path=%atmosphere_emummc_profile_path%
 		set emunand_enable=
-set emummc_id=
-set emummc_sector=
-set emummc_path=
-set emummc_nintendo_path=
+		set emummc_id=
+		set emummc_title=
+		set emummc_sector=
+		set emummc_path=
+		set emummc_nintendo_path=
 		tools\gnuwin32\bin\grep.exe -E "^^enabled =" <"!temp_profile_path!" | tools\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
 		set /p emunand_enable=<templogs\tempvar.txt
 		del /q templogs\tempvar.txt
@@ -115,6 +116,10 @@ set emummc_nintendo_path=
 		set /p emummc_id=<templogs\tempvar.txt
 		del /q templogs\tempvar.txt
 		IF NOT "!emummc_id!"=="" set emummc_id=!emummc_id:~1!
+		tools\gnuwin32\bin\grep.exe -E "^^title =" <"!temp_profile_path!" | tools\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
+		set /p emummc_title=<templogs\tempvar.txt
+		del /q templogs\tempvar.txt
+		IF NOT "!emummc_title!"=="" set emummc_title=!emummc_title:~1!
 		tools\gnuwin32\bin\grep.exe -E "^^sector =" <"!temp_profile_path!" | tools\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
 		set /p emummc_sector=<templogs\tempvar.txt
 		del /q templogs\tempvar.txt
@@ -133,6 +138,11 @@ set emummc_nintendo_path=
 				echo ID de l'emunand par défaut.
 			) else (
 				echo ID de l'emunand: !emummc_id!
+			)
+			IF "!emummc_title!"=="" (
+				echo Titre de l'emunand par défaut.
+			) else (
+				echo Titre de l'emunand: !emummc_title!
 			)
 			IF "!emummc_sector!"=="" (
 				echo Aucun secteur de démarrage configuré.

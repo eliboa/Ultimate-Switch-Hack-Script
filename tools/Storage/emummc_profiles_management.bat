@@ -188,6 +188,7 @@ exit /b
 set temp_profile_path=tools\sd_switch\atmosphere_emummc_profiles\%~1
 set emunand_enable=
 set emummc_id=
+set emummc_title=
 set emummc_sector=
 set emummc_path=
 set emummc_nintendo_path=
@@ -204,6 +205,10 @@ tools\gnuwin32\bin\grep.exe -E "^^id =" <"%temp_profile_path%" | tools\gnuwin32\
 set /p emummc_id=<templogs\tempvar.txt
 del /q templogs\tempvar.txt
 IF NOT "%emummc_id%"=="" set emummc_id=%emummc_id:~1%
+tools\gnuwin32\bin\grep.exe -E "^^title =" <"%temp_profile_path%" | tools\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
+set /p emummc_title=<templogs\tempvar.txt
+del /q templogs\tempvar.txt
+IF NOT "%emummc_title%"=="" set emummc_title=%emummc_title:~1%
 tools\gnuwin32\bin\grep.exe -E "^^sector =" <"%temp_profile_path%" | tools\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
 set /p emummc_sector=<templogs\tempvar.txt
 del /q templogs\tempvar.txt
@@ -225,6 +230,11 @@ IF NOT "%~2"=="display" (
 			echo ID de l'emunand par défaut.
 		) else (
 			echo ID de l'emunand: %emummc_id%
+		)
+		IF "%emummc_title%"=="" (
+			echo Titre de l'emunand par défaut.
+		) else (
+			echo Titre de l'emunand: %emummc_title%
 		)
 		IF "%emummc_sector%"=="" (
 			echo Aucun secteur de démarrage configuré.
@@ -278,6 +288,9 @@ IF %i% LSS %nb% (
 	goto:define_emummc_id
 )
 :skip_define_emummc_id
+:define_emummc_title
+set emummc_title=
+set /p emummc_title=Définir le titre de l'emunand (laisser vide pour garder le titre par défaut): 
 :define_emummc_sector
 set emummc_sector=
 set /p emummc_sector=Définir le secteur de la partition démarrant l'emunand (si emunand via fichiers, laisser cette valeur vide) (ne pas noter le 0x de début): 
@@ -318,6 +331,9 @@ IF /i "%emunand_enable%"=="o" (
 )
 IF NOT "%emummc_id%"=="" (
 	echo id = 0x%emummc_id%>>"tools\sd_switch\atmosphere_emummc_profiles\%~1"
+)
+IF NOT "%emummc_title%"=="" (
+	echo title = %emummc_title%>>"tools\sd_switch\atmosphere_emummc_profiles\%~1"
 )
 IF NOT "%emummc_sector%"=="" (
 	echo sector = 0x%emummc_sector%>>"tools\sd_switch\atmosphere_emummc_profiles\%~1"
