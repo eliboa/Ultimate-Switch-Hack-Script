@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V218</h2>
+<ul>
+<li>Mise à jour de NXDumpTool en version 1.1.3.</li>
+</ul>
 <h2>V217</h2>
 <ul>
 <li>Mise à jour de DZ Tinfoil et de Lithium en version 1.70.</li>

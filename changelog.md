@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.00.37</h2>
+<ul>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 218.</li>
+</ul>
 <h2>V3.00.36</h2>
 <ul>
 <li>Mise à jour de Rekado en version 3.1.1.</li>
