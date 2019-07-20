@@ -1,5 +1,10 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V219</h2>
+<ul>
+<li>Mise à jour de NX-Shell vers la version Master du Github, compilé par moi-même.</li>
+<li>Mise à jour de SwitchIdent vers la version Master du Github, compilé par moi-même.</li>
+</ul>
 <h2>V218</h2>
 <ul>
 <li>Mise à jour de NXDumpTool en version 1.1.3.</li>
