@@ -1,5 +1,10 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V220</h2>
+<ul>
+<li>Mise à jour de DZ Tinfoil en version 2.0.</li>
+<li>Suppression de Tinfoil et de ZeroTwoXCI de la liste des homebrews. De fait, le homebrew appelé avant "DZ" a été renommé "Tinfoil".</li>
+</ul>
 <h2>V219</h2>
 <ul>
 <li>Mise à jour de NX-Shell vers la version Master du Github, compilé par moi-même.</li>

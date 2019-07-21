@@ -1,6 +1,12 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
-<h2>V3.00.37</h2>
+<h2>V3.00.39</h2>
+<ul>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 220.</li>
+<li>Remise en place des instructions spécials pour Tinfoil dans la copie de homebrews pendant la préparation d'une SD, le module a été remis en place.</li>
+<li>Suppression de certains homebrews des profiles par défaut ainsi que de la liste des homebrews.</li>
+</ul>
+<h2>V3.00.38</h2>
 <ul>
 <li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 219.</li>
 </ul>
