@@ -109,7 +109,7 @@ IF %temp_language_number% GTR %temp_count% (
 	pause
 	goto:set_temp_language
 )
-tools\gnuwin32\bin\sed.exe -n %temp_language_number%p <templogs\profiles_list.txt|tools\gnuwin32\bin\cut.exe -d ; -f 1 > templogs\tempvar.txt
+tools\gnuwin32\bin\sed.exe -n %temp_language_number%p <"tools\default_configs\Lists\languages.list"|tools\gnuwin32\bin\cut.exe -d ; -f 1 > templogs\tempvar.txt
 set /p temp_language_path=<templogs\tempvar.txt
 set temp_language_path=languages\%temp_language_path%
 IF NOT EXIST "%temp_language_path%" call "tools\Storage\update_manager.bat" "" "language_init"
