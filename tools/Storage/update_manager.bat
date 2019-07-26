@@ -1287,7 +1287,7 @@ rem End of specific scripts instructions
 set temp_file_path=%~1
 set temp_file_slash_path=%temp_file_path:\=/%
 call :test_write_access file "%~dp1"
-set script_version=0.00.00
+set script_version=0
 IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
 	IF EXIST "%temp_file_path%" (
 		set /p script_version=<"%temp_file_path%"
@@ -1296,6 +1296,13 @@ IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
 	)
 	"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path% 2>nul
 ) else IF "%temp_file_path%"=="tools\general_update_version.txt" (
+	IF EXIST "%temp_file_path%" (
+		set /p script_version=<"%temp_file_path%"
+	) else (
+		set script_version=0
+	)
+	"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path% 2>nul
+) else IF "%temp_file_path%"=="tools\version.txt" (
 	IF EXIST "%temp_file_path%" (
 		set /p script_version=<"%temp_file_path%"
 	) else (
@@ -1318,7 +1325,7 @@ exit /b %errorlevel%
 set temp_folder_path=%~1
 set temp_folder_slash_path=%temp_folder_path:\=/%
 call :test_write_access folder "%~1"
-set script_version=0.00.00
+set script_version=0
 IF EXIST "%~1\folder_version.txt" set /p script_version=<"%~1\folder_version.txt"
 "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_folder_slash_path%/folder_version.txt 2>nul
 call "%associed_language_script%" "display_title"
@@ -1373,7 +1380,6 @@ IF "%temp_folder_path%"=="tools\gitget" (
 	) else (
 		rmdir /s /q "%temp_folder_path%"
 		move "templogs\gitget" "%temp_folder_path%"
-		del /q "failed_updates\%temp_folder_path:\=;%.folder.failed"
 		exit /b
 	)
 )
