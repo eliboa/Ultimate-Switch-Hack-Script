@@ -1,4 +1,5 @@
 ::Script by Shadow256
+@echo off
 Setlocal enabledelayedexpansion
 chcp 65001 >nul
 cd /d "%~dp0\..\.."
