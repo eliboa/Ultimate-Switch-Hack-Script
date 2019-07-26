@@ -9,6 +9,7 @@ IF EXIST "templogs" (
 mkdir "templogs"
 cd >templogs\tempvar.txt
 set /p ushs_base_path=<templogs\tempvar.txt
+set ushs_base_path=%ushs_base_path%\
 :define_language_path
 set language_custom=0
 set language_path=
