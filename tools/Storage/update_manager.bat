@@ -200,9 +200,9 @@ IF "%~1"=="" (
 		call :general_content_update
 	)
 	call :verif_file_version "tools\version.txt"
-IF %errorlevel% EQU 1 (
-	call :update_file
-)
+	IF !errorlevel! EQU 1 (
+		call :update_file
+	)
 	IF "%language_custom%"=="0" (
 		call :verif_folder_version "%language_path%\doc"
 		IF !errorlevel! EQU 1 (
@@ -1438,13 +1438,13 @@ exit /b
 
 :compare_version
 set update_finded=
-IF "%script_version_verif%"=="" exit /b 0
+IF "%script_version_verif%"=="" goto:end_compare_version
 IF "%script_version%"=="" (
 	IF NOT "%script_version_verif%"=="" (
-		set update_finded=O
-		exit /b 1
+		set update_finded=Y
+		goto:end_compare_version
 	) else (
-		exit /b 0
+		goto:end_compare_version
 	)
 )
 echo %script_version_verif%|"tools\gnuwin32\bin\grep.exe" -o "\."|"tools\gnuwin32\bin\wc.exe" -l >templogs\tempvar.txt
@@ -1456,10 +1456,10 @@ set /a count_script_version_cols+=1
 IF %count_script_version_verif_cols% EQU 1 (
 	IF %count_script_version_cols% EQU 1 (
 		IF %script_version_verif% GTR %script_version% (
-			set update_finded=O
-			exit /b 1
+			set update_finded=Y
+			goto:end_compare_version
 		) else (
-			exit /b 0
+			goto:end_compare_version
 		)
 	)
 )
@@ -1469,14 +1469,19 @@ for /l %%i in (1,1,%count_script_version_verif_cols%) do (
 	echo %script_version%|"tools\gnuwin32\bin\grep.exe" ""|"tools\gnuwin32\bin\cut.exe" -d . -f %%i >templogs\tempvar.txt
 	set /p temp_script_version=<templogs\tempvar.txt
 	IF !temp_script_version_verif! GTR !temp_script_version! (
-		set update_finded=O
-		exit /b 1
+		set update_finded=Y
+		goto:end_compare_version
 	) else (
-		exit /b 0
+		goto:end_compare_version
 	)
 )
 )
+:end_compare_version
+IF "%update_finded%"=="Y" (
+	exit /b 1
+) else (
 	exit /b 0
+)
 
 :test_write_access
 IF "%~1"=="folder" (
