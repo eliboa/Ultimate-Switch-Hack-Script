@@ -1,7 +1,9 @@
 ::Script by Shadow256
-chcp 65001 >nul
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-@echo off
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
@@ -11,18 +13,9 @@ IF NOT EXIST "tools\sd_switch\profiles\*.*" mkdir "tools\sd_switch\profiles"
 
 :define_action_choice
 cls
-echo Gestions de profiles généraux des éléments à copier durant la préparation d'une SD.
-echo.
-echo Que souhaitez-vous faire?
-echo.
-echo 1: Créer un profile?
-echo 2: Modifier un profile?
-echo 3: Supprimer un profile?
-echo 0: Obtenir la liste des éléments qui seront copiés via un profile?
-echo N'importe quel autre choix: Revenir au menu précédent?
-echo.
 set action_choice=
-set /p action_choice=Faites votre choix: 
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "main_action_choice"
 IF "%action_choice%"=="1" cls & goto:create_profile
 IF "%action_choice%"=="2" cls & goto:modify_profile
 IF "%action_choice%"=="3" cls & goto:remove_profile
@@ -30,23 +23,23 @@ IF "%action_choice%"=="0" cls & goto:info_profile
 goto:end_script
 
 :info_profile
-echo Information sur un profile
+call "%associed_language_script%" "intro_info_profile"
 call :select_profile
 IF %errorlevel% EQU 404 (
-	echo Aucun profile existant, veuillez en créer un pour obtenir des infos.
+	call "%associed_language_script%" "info_no_profile_exist_error"
+	pause
 	goto:define_action_choice
 )
+call "%associed_language_script%" "info_profile"
 call %profile_path%
 call tools\Storage\prepare_sd_switch_infos.bat
 pause
 goto:define_action_choice
 
 :create_profile
-echo Création d'un profile
-echo.
 :define_new_profile_name
 set new_profile_name=
-set /p new_profile_name=Entrez le nom du profile, laisser vide pour annuler l'opération: 
+call "%associed_language_script%" "intro_create_profile"
 IF "%new_profile_name%"=="" goto:define_action_choice
 call TOOLS\Storage\functions\strlen.bat nb "%new_profile_name%"
 set i=0
@@ -54,8 +47,7 @@ set i=0
 IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^/ ^* ^? ^: ^^ ^| ^\ ^( ^) ^") do (
 		IF "!new_profile_name:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans le nom du profile.
-			set new_profile_name=
+			call "%associed_language_script%" "char_error_in_profile_name"
 			goto:define_new_profile_name
 		)
 	)
@@ -63,16 +55,17 @@ IF %i% LSS %nb% (
 	goto:check_chars_new_profile_name
 )
 copy nul "tools\sd_switch\profiles\%new_profile_name%.bat" >nul
-echo Profile "%new_profile_name%" créé avec succès.
+call "%associed_language_script%" "create_profile_success"
 set profile_selected=%new_profile_name%.bat
 goto:skip_modify_select_profile
 
 :modify_profile
-echo Modification d'un profile
+call "%associed_language_script%" "intro_modify_profile"
 echo.
 call :select_profile
 IF %errorlevel% EQU 404 (
-	echo Aucun profile à modifier, veuillez en créer un.
+	call "%associed_language_script%" "modify_no_profile_exist_error"
+	pause
 	goto:define_action_choice
 )
 set /a errorlevel=0
@@ -80,7 +73,7 @@ set /a errorlevel=0
 IF %errorlevel% EQU 0 (
 	call tools\Storage\prepare_sd_switch_files_questions.bat
 ) else (
-	echo Opération annulée.
+	goto:define_action_choice
 )
 IF %errorlevel% EQU 200 (
 	call :save_profile_choices
@@ -88,25 +81,26 @@ IF %errorlevel% EQU 200 (
 goto:define_action_choice
 
 :remove_profile
-echo Suppression d'un profile
+call "%associed_language_script%" "intro_delete_profile"
 echo.
 call :select_profile
 IF %errorlevel% EQU 404 (
-	echo Aucun profile à supprimer, veuillez en créer un.
+	call "%associed_language_script%" "delete_no_profile_exist_error"
+	pause
 	goto:define_action_choice
 )
 IF %errorlevel% EQU 0 (
 	del /q "tools\sd_switch\profiles\%profile_selected%" >nul
-	echo Profile "%profile_selected:~0,-4%" supprimé avec succès.
+	call "%associed_language_script%" "delete_profile_success"
+	pause
 ) else (
-	echo Opération annulée.
+	goto:define_action_choice
 )
-pause
 goto:define_action_choice
 
 :select_profile
 set profile_selected=
-echo Sélectionner un profile:
+call "%associed_language_script%" "intro_select_profile"
 IF NOT EXIST "tools\sd_switch\profiles\*.bat" exit /b 404
 set /a temp_count=1
 copy nul templogs\profiles_list.txt >nul
@@ -119,10 +113,8 @@ for %%p in (*.bat) do (
 	set /a temp_count+=1
 )
 cd ..\..\..
-echo N'importe quel autre choix: Revenir à l'action précédente.
-echo.
 set profile_choice=
-set /p profile_choice=Choisir un profile.
+call "%associed_language_script%" "select_profile_choice"
 IF "%profile_choice%"=="" set /a profile_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%profile_choice%"
 set i=0
@@ -193,7 +185,7 @@ echo set "cheats_profile_path=%cheats_profile_path%">>"%profile_path%"
 echo set "atmosphere_enable_cheats=%atmosphere_enable_cheats%">>"%profile_path%"
 echo set "sxos_enable_cheats=%sxos_enable_cheats%">>"%profile_path%"
 echo set "del_files_dest_copy=%del_files_dest_copy%">>"%profile_path%"
-echo Valeurs enregistrées avec succès pour le profile %profile_selected:~0,-4%.
+call "%associed_language_script%" "values_saved_success"
 pause
 exit /b
 

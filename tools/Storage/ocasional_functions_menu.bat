@@ -1,33 +1,14 @@
 ::Script by Shadow256
-chcp 65001 > nul
-setlocal
+call tools\storage\functions\ini_scripts.bat
+Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 :define_action_choice
+call "%associed_language_script%" "display_title"
 set action_choice=
 cls
-echo Menu des fonctions occasionnelles
-echo.
-echo Que souhaitez-vous faire?
-echo.
-echo 1: Récupérer les Biskey dans un fichier texte?
-echo.
-echo 2: Installer les drivers pour la Switch?
-echo.
-echo 3: Créer un package de mise à jour de la Switch via ChoiDuJour via un fichier ou un dossier déjà téléchargé??
-echo.
-echo 4: Vérifier si des numéros de série de consoles sont patchées ou non?
-echo.
-echo 5: Vérifier un fichier de clés?
-echo.
-echo 6: Utiliser le compagnon pour Hid-mitm?
-echo.
-echo 7: Lancer Linux (fonctionnalité obsolète)?
-echo.
-echo 8: Mettre à jour Shofel2 (fonctionnalité obsolète)?
-echo.
-echo N'importe quelle autre choix: Revenir au menu précédent?
-echo.
-echo.
-set /p action_choice=Entrez le numéro correspondant à l'action à faire: 
+call "%associed_language_script%" "display_menu"
 IF "%action_choice%"=="1" goto:biskey_dump
 IF "%action_choice%"=="2" goto:install_drivers
 IF "%action_choice%"=="3" goto:create_update

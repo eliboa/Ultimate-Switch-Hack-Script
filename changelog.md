@@ -1,5 +1,14 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.99.80</h2>
+<ul>
+<li>Implémentation du multi-langues qui a changé un bon nombre de choses, par exemple le paramètre de mise à jour automatique n'est plus géré de la même façon et sera donc réinitialisé. Du fait de très nombreux changements, des bugs sont très possibles, vous pouvez me faire les retours sur le sujet du script ou sur le Github du projet.</li>
+<li>Mise à jour de HID_mitm Compagnon en version 0.1.2 et ajout de la version Android au pack par défaut pour Android.</li>
+<li>Corrections de bugs dans différents scripts.</li>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 221.</li>
+<li>Mise à jour de la documentation, d'ailleurs au passage celle-ci se trouve maintenant dans le pack de langue.</li>
+<li>Beaucoup d'autres choses que je n''ai pas noté au vu des nombreuses modifications effectuées.</li>
+</ul>
 <h2>V3.00.39</h2>
 <ul>
 <li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 220.</li>

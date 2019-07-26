@@ -1,43 +1,30 @@
 ::Script by Shadow256
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
+call "%associed_language_script%" "display_title"
 chcp 1252 > nul
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-echo Ce script va permettre d'installer et de lancer le nécessaire pour utiliser le jeu en réseau alternatif de la Switch.
-echo Pour plus d'informations sur le sujet, choisissez d'ouvrir la documentation lorsque cela sera proposé.
+call "%associed_language_script%" "intro"
 pause
 :select_install
 cls
-echo Client de jeu en réseau alternatif
-echo.
-echo Que souhaitez-vous faire:
-echo.
-echo 1: Lancer le client?
-echo 2: Installation de Winpcap (à ne faire qu'une seule fois)?
-echo 0: Lancer la documentation?
-echo N'importe quel autre choix: Revenir au menu précédent.
-echo.
 set install_choice=
-set /p install_choice=Votre choix: 
+call "%associed_language_script%" "first_action_choice"
 IF NOT "%install_choice%"=="" set install_choice=%install_choice:~0,1%
 IF "%install_choice%"=="1" goto:launch_client
 IF "%install_choice%"=="2" goto:install_winpcap
 IF "%install_choice%"=="0" goto:launch_doc
 goto:finish_script
 :launch_client
-set install_choice=
+call "%associed_language_script%" "launch_client_choice"
 echo.
-echo Que souhaitez-vous faire:
-echo.
-echo 1: Lancer le client en mode interactif (recommandé)?
-echo 2: Se connecter à un serveur stocké dans une liste?
-echo 3: Gérer la liste des serveurs?
-echo N'importe quel autre choix: Terminer ce script et revenir au menu précédent?
-echo.
-set /p launch_client_choice=Votre choix: 
 IF NOT "%launch_client_choice%"=="" set launch_client_choice=%launch_client_choice:~0,1%
 IF "%launch_client_choice%"=="1" goto:load_client
 IF "%launch_client_choice%"=="2" goto:server_select
@@ -48,7 +35,7 @@ set server_name=
 set server_addr=
 set selected_server=
 IF NOT EXIST "tools\netplay\servers_list.txt" (
-	echo La liste de serveurs n'existe pas, le client sera donc lancé en mode interactif.
+	call "%associed_language_script%" "no_server_list_error"
 	pause
 	goto:load_client
 )
@@ -62,7 +49,8 @@ IF %count_server% EQU 0 (
 	)
 )
 echo.
-echo Choisir un serveur:
+set selected_server=
+call "%associed_language_script%" "choose_server_first_part"
 echo.
 set /a temp_count=0
 :server_listing
@@ -75,10 +63,10 @@ set /p temp_server=<templogs\tempvar.txt
 echo %temp_count%: %temp_server%
 goto:server_listing
 :finish_server_listing
-IF "%launch_client_choice%"=="2" echo N'importe quel autre choix: Lancer le client en mode interactif.
-IF "%launch_client_choice%"=="3" echo N'importe quel autre choix: Revenir à l'action à faire dans la gestion des serveurs.
+IF "%launch_client_choice%"=="2" call "%associed_language_script%" "launch_client_in_interactive_mode_message"
+IF "%launch_client_choice%"=="3" call "%associed_language_script%" "go_back_message"
 echo.
-set /p selected_server=Choisir votre serveur: 
+call "%associed_language_script%" "select_server_choice"
 IF "%launch_client_choice%"=="2" (
 	IF "%selected_server%"=="" goto:load_client
 ) else IF "%launch_client_choice%"=="3" (
@@ -118,11 +106,11 @@ IF NOT "%server_addr%"=="" (
 	)
 ) else (
 	IF "%launch_client_choice%"=="2" (
-		echo Le serveur sélectionné n'existe pas dans la liste, le client sera donc lancé en mode interactif.
+		call "%associed_language_script%" "server_choice_not_exist_in_list_error"
 		pause
 		goto:load_client
 	) else IF "%launch_client_choice%"=="3" (
-		echo Le serveur sélectionné n'existe pas dans la liste, retour aux actions de la gestion des serveurs.
+		call "%associed_language_script%" "server_choice_not_exist_in_list_error2"
 		pause
 		goto:servers_manage
 	)
@@ -143,25 +131,16 @@ IF NOT EXIST "tools\netplay\servers_list.txt" (
 	copy nul "tools\netplay\servers_list.txt"
 )
 cls
-echo Gestion des serveurs du réseau alternatif
-echo.
-echo Que souhaitez-vous faire:
-echo.
-echo 1: Ajouter un serveur?
-echo 2: Modifier un serveur?
-echo 3: Supprimer un serveur?
-echo N'importe quel autre choix: Quitter la gestion des serveurs.
-echo.
-set /p manage_choice=Votre choix: 
+call "%associed_language_script%" "manage_servers_choice"
 IF NOT "%manage_choice%"=="" set manage_choice=%manage_choice:~0,1%
 IF "%manage_choice%"=="1" goto:add_server
 IF "%manage_choice%"=="2" goto:server_select
 IF "%manage_choice%"=="3" goto:server_select
 goto:select_install
 :add_server
-set /p new_server_name=Entrez le nom du serveur: 
+call "%associed_language_script%" "server_name_choice"
 IF "%new_server_name%"=="" (
-	echo Le nom du serveur ne peut être vide, l'ajout est annulé.
+	call "%associed_language_script%" "server_name_empty_error"
 	pause
 	goto:servers_manage
 )
@@ -175,16 +154,16 @@ IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^^ ^\ ^( ^)) do (
 		::echo %%z !new_server_name:~%i%,1!
 		IF "!new_server_name:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans le nom du serveur, l'ajout est annulé.
+			call "%associed_language_script%" "server_name_char_error"
 			goto:servers_manage
 		)
 	)
 	set /a i+=1
 	goto:check_chars_new_server_name_1
 )
-set /p new_server_addr=Entrez l'adresse du serveur: 
+call "%associed_language_script%" "server_addr_choice"
 IF "%new_server_addr%"=="" (
-	echo L'adresse du serveur ne peut être vide, l'ajout est annulé.
+	call "%associed_language_script%" "server_addr_empty_error"
 	pause
 	goto:servers_manage
 )
@@ -197,7 +176,7 @@ set i=0
 IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^^ ^\ ^( ^)) do (
 		IF "!new_server_addr:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans l'adresse du serveur, l'ajout est annulé.
+			call "%associed_language_script%" "server_addr_char_error"
 			goto:servers_manage
 		)
 	)
@@ -205,12 +184,12 @@ IF %i% LSS %nb% (
 	goto:check_chars_new_server_addr_1
 )
 echo %new_server_name%; %new_server_addr%>> tools\netplay\servers_list.txt
-echo Serveur ajouté.
+call "%associed_language_script%" "add_server_success"
 pause
 set manage_choice=
 goto:servers_manage
 :modify_server
-set /p new_server_name=Entrez le nouveau nom du serveur (si vide, l'ancien nom sera gardé): 
+call "%associed_language_script%" "modify_server_name_choice"
 IF "%new_server_name%"=="" (
 	set new_server_name=%server_name%
 )
@@ -223,14 +202,14 @@ set i=0
 IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^^ ^\ ^( ^)) do (
 		IF "!new_server_name:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans le nom du serveur, l'ajout est annulé.
+			call "%associed_language_script%" "server_name_char_error"
 			goto:servers_manage
 		)
 	)
 	set /a i+=1
 	goto:check_chars_new_server_name_2
 )
-set /p new_server_addr=Entrez la nouvelle adresse du serveur (si vide, l'ancienne adresse sera gardée): 
+call "%associed_language_script%" "modify_server_addr_choice"
 IF "%new_server_addr%"=="" (
 	set new_server_addr=%server_addr%
 )
@@ -243,7 +222,7 @@ set i=0
 IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^^ ^\ ^( ^)) do (
 		IF "!new_server_addr:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans l'adresse du serveur, l'ajout est annulé.
+			call "%associed_language_script%" "server_addr_char_error"
 			goto:servers_manage
 		)
 	)
@@ -253,7 +232,7 @@ IF %i% LSS %nb% (
 TOOLS\gnuwin32\bin\sed.exe "%selected_server%s/%server_name%; %server_addr:/=\/%/%new_server_name%; %new_server_addr:/=\/%/" tools\netplay\servers_list.txt > tools\netplay\servers_list_new.txt
 del tools\netplay\servers_list.txt
 rename tools\netplay\servers_list_new.txt servers_list.txt
-echo Serveur modifié.
+call "%associed_language_script%" "modify_server_success"
 pause
 set manage_choice=
 goto:servers_manage
@@ -261,13 +240,13 @@ goto:servers_manage
 TOOLS\gnuwin32\bin\sed.exe -re "%selected_server%d" tools\netplay\servers_list.txt > tools\netplay\servers_list_new.txt
 del tools\netplay\servers_list.txt
 rename tools\netplay\servers_list_new.txt servers_list.txt
-echo Serveur supprimé.
+call "%associed_language_script%" "delete_server_success"
 pause
 set manage_choice=
 goto:servers_manage
 :install_winpcap
 set install_choice=
-echo Winpcap va être lancé, veuillez accepter la demande d'élévation des privilèges qui va suivre pour faire fonctionner ce programme.
+call "%associed_language_script%" "winpcap_install_instructions"
 pause
 echo.
 start tools\netplay\WinPcap.exe
@@ -275,7 +254,7 @@ goto:select_install
 :launch_doc
 set install_choice=
 echo.
-start DOC\files\netplay.html
+start "%language_path%\doc\files\netplay.html"
 goto:select_install
 :end_script
 pause

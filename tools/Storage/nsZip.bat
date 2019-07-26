@@ -1,42 +1,39 @@
 ::Script by Shadow256
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-@echo off
-chcp 65001 >nul
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-echo Ce script va permettre de compresser/décompresser un fichier XCI/NSP.
-echo Attention: Il est préférable de ne pas exécuter ce script sur une partition formatée en FAT32 à cause de la limite de création de fichiers de plus de  4 GO de ce système de fichiers.
-echo.
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "intro"
 pause
 echo.
-echo Vous allez devoir sélectionner le fichier XCI/NSP à compresser/décompresser.
-pause
-%windir%\system32\wscript.exe //Nologo tools\Storage\functions\open_file.vbs "" "Fichier de jeu Switch (*.xci;*.nsp;*.xciz;*.nspz)|*.xci;*.nsp;*.xciz;*.nspz;" "Sélection du jeu à compresser/décompresser" "templogs\tempvar.txt"
+call "%associed_language_script%" "input_file_choice"
 set /p game_path=<templogs\tempvar.txt
 IF "%game_path%"=="" (
-	echo Aucun jeu sélectionné, la conversion est annulée.
+	call "%associed_language_script%" "no_input_file_selected_error"
 	goto:end_script
 )
-echo Maintenant, sélectionner le dossier de sortie.
-pause
-%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\select_dir.vbs "templogs\tempvar.txt"
+call "%associed_language_script%" "output_folder_choice"
 set /p output_path=<templogs\tempvar.txt
 IF NOT "%output_path%"=="" (
 	set output_path=%output_path:\\=\%
 ) else (
-	echo Aucun dossier sélectionné, le script va s'arrêter.
+	call "%associed_language_script%" "no_output_folder_selected_error"
 	goto:end_script
 )
 IF /i "%game_path:~-4%"=="nspz" goto:skip_set_params
 IF /i "%game_path:~-4%"=="xciz" goto:skip_set_params
 :set_compression_level
 set compression_level=
-set /p compression_level=Choisir le niveau de compression (1 pour le minimum, 22 pour le maximum): 
+call "%associed_language_script%" "compression_level_choice"
 IF "%compression_level%"=="" (
-	echo Cette valeur ne peut être vide.
+	call "%associed_language_script%" "no_empty_value_error"
 	goto:set_compression_level
 )
 call TOOLS\Storage\functions\strlen.bat nb "%compression_level%"
@@ -52,16 +49,16 @@ IF %i% NEQ %nb% (
 		)
 	)
 	IF "!check_chars!"=="0" (
-		echo Valeur non autorisée.
+		call "%associed_language_script%" "bad_value_error"
 		goto:set_compression_level
 	)
 )
 IF %compression_level% LSS 1 (
-	echo La valeur ne peut être inférieur à 1.
+	call "%associed_language_script%" "compression_level_too_low_error"
 	goto:set_compression_level
 )
 IF %compression_level% GTR 22 (
-	echo La valeur ne peut être supérieur à 22.
+	call "%associed_language_script%" "compression_level_too_high_error"
 	goto:set_compression_level
 )
 set params=-l %compression_level%
@@ -69,10 +66,10 @@ set params=-l %compression_level%
 "tools\nsZip\nsZip.exe" -i "%game_path:\=\\%" -o "%output_path:\=\\%" -t "templogs" %params%
 IF %errorlevel% NEQ 0 (
 	echo.
-	echo Erreur pendant la tentative de compression/décompression.
+	call "%associed_language_script%" "operation_error"
 ) else (
 	echo.
-	echo Compression/décompression terminée avec succès.
+	call "%associed_language_script%" "operation_success"
 )
 :end_script
 pause

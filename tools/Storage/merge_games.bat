@@ -1,24 +1,20 @@
 ::Script by Shadow256
-@echo off
-chcp 65001 >nul
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 set this_script_dir=%~dp0
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-echo Ce script permet de joindre les parties d'un fichier XCI ou NSP découpé en un seul fichier XCI ou NSP.
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "intro"
 pause
-echo Quel est le type de fichier à joindre?
-echo 1: NSP via fichiers.
-echo 2: XCI via fichiers.
-echo 3: NSP via dossier.
-echo 4: XCI via dossier.
-echo N'importe quel autre choix: Retourne au menu précédent.
-echo.
 set game_type=
-set /p game_type=Faites votre choix: 
+call "%associed_language_script%" "game_type_choice"
 IF "%game_type%"=="1" goto:input_choice
 IF "%game_type%"=="2" goto:input_choice
 IF "%game_type%"=="3" goto:input_choice
@@ -26,35 +22,25 @@ IF "%game_type%"=="4" goto:input_choice
 goto:end_script_2
 :input_choice
 echo.
-echo Vous allez devoir sélectionner le premier fichier du jeu splitté.
-pause
-IF "%game_type%"=="1" (
-	%windir%\system32\wscript.exe //Nologo tools\Storage\functions\open_file.vbs "" "Premier fichier d'un jeu NSP splitté (*.ns0)|*.ns0|" "Sélection du premier fichier du contenu" "templogs\tempvar.txt"
-) else IF "%game_type%"=="2" (
-	%windir%\system32\wscript.exe //Nologo tools\Storage\functions\open_file.vbs "" "Premier fichier d'un jeu XCI splitté (*.xc0)|*.xc0|" "Sélection du premier fichier du contenu" "templogs\tempvar.txt"
-) else (
-	%windir%\system32\wscript.exe //Nologo tools\Storage\functions\open_file.vbs "" "Premier fichier d'un jeu NSP ou XCI splitté via dossier (00)|00|" "Sélection du premier fichier du contenu" "templogs\tempvar.txt"
-)
+call "%associed_language_script%" "game_choice"
 set /p dump_input=<"templogs\tempvar.txt"
 IF "%dump_input%"=="" (
-	echo Aucun fichier sélectionné, le script va s'arrêter.
+	call "%associed_language_script%" "no_file_selected_error"
 	goto:end_script
 )
 call :extract_input_filename "%dump_input%"
 echo.
-echo Vous allez devoir sélectionner le répertoire vers lequel créé le fichier réunifié.
-pause
-%windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\select_dir.vbs" "templogs\tempvar.txt"
+call "%associed_language_script%" "output_folder_choice"
 set /p dump_output=<"templogs\tempvar.txt"
 IF "%dump_output%"=="" (
-	echo Aucun dossier sélectionné, le script va s'arrêter.
+	call "%associed_language_script%" "no_output_folder_selected_error"
 	goto:end_script
 )
 set dump_output=%dump_output%\
 set dump_output=%dump_output:\\=\%
 :define_filename
 set filename=
-set /p filename=Entrez le nom du fichier que vous souhaitez en sortie sans l'extension, laissez vide pour annuler: 
+call "%associed_language_script%" "output_filename_choice"
 IF "%filename%"=="" (
 	goto:end_script_2
 ) else (
@@ -66,8 +52,7 @@ set i=0
 IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^/ ^* ^? ^: ^^ ^| ^\) do (
 		IF "!filename:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans le nom du jeu.
-			set filename=
+			call "%associed_language_script%" "output_filename_char_error"
 			goto:define_filename
 		)
 	)
@@ -77,40 +62,40 @@ IF %i% LSS %nb% (
 IF "%game_type%"=="1" (
 	IF EXIST "%dump_output%%filename%.nsp" (
 		set erase_file=
-		set /p erase_file=Le fichier existe déjà à l'emplacement indiqué, souhaitez-vous l'écraser? ^(O/n^): 
+		call "%associed_language_script%" "output_file_exist_choice"
 		IF NOT "!erase_file!"=="" set erase_file=!erase_file:0,1!
 		IF /i NOT "!erase_file!"=="o" (
-			echo Action annulée par l'utilisateur.
+			call "%associed_language_script%" "canceled"
 			goto:end_script
 		)
 	)
 ) else IF "%game_type%"=="3" (
 IF EXIST "%dump_output%%filename%.nsp" (
 		set erase_file=
-		set /p erase_file=Le fichier existe déjà à l'emplacement indiqué, souhaitez-vous l'écraser? ^(O/n^): 
+		call "%associed_language_script%" "output_file_exist_choice"
 		IF NOT "!erase_file!"=="" set erase_file=!erase_file:0,1!
 		IF /i NOT "!erase_file!"=="o" (
-			echo Action annulée par l'utilisateur.
+			call "%associed_language_script%" "canceled"
 			goto:end_script
 		)
 	)
 ) else IF "%game_type%"=="2" (
 IF EXIST "%dump_output%%filename%.xci" (
 		set erase_file=
-		set /p erase_file=Le fichier existe déjà à l'emplacement indiqué, souhaitez-vous l'écraser? ^(O/n^): 
+		call "%associed_language_script%" "output_file_exist_choice"
 		IF NOT "!erase_file!"=="" set erase_file=!erase_file:0,1!
 		IF /i NOT "!erase_file!"=="o" (
-			echo Action annulée par l'utilisateur.
+			call "%associed_language_script%" "canceled"
 			goto:end_script
 		)
 	)
 ) else IF "%game_type%"=="4" (
 IF EXIST "%dump_output%%filename%.xci" (
 		set erase_file=
-		set /p erase_file=Le fichier existe déjà à l'emplacement indiqué, souhaitez-vous l'écraser? ^(O/n^): 
+		call "%associed_language_script%" "output_file_exist_choice"
 		IF NOT "!erase_file!"=="" set erase_file=!erase_file:0,1!
 		IF /i NOT "!erase_file!"=="o" (
-			echo Action annulée par l'utilisateur.
+			call "%associed_language_script%" "canceled"
 			goto:end_script
 		)
 	)
@@ -123,7 +108,7 @@ IF "%game_type%"=="1" (
 	)
 	for /l %%i in (0,1,!temp_count!) do (
 		IF NOT EXIST "%input_dirrectory%\%input_filename%.ns%%i" (
-			echo Erreur, il semble qu'un fichier soit manquant dans le nombre des parties de celui-ci, le script ne peut continuer.
+			call "%associed_language_script%" "input_parts_error"
 			goto:end_script
 		)
 		IF %%i NEQ !temp_count! (
@@ -138,7 +123,7 @@ IF "%game_type%"=="1" (
 	)
 	for /l %%i in (0,1,!temp_count!) do (
 		IF NOT EXIST "%input_dirrectory%\%input_filename%.xc%%i" (
-			echo Erreur, il semble qu'un fichier soit manquant dans le nombre des parties de celui-ci, le script ne peut continuer.
+			call "%associed_language_script%" "input_parts_error"
 			goto:end_script
 		)
 		IF %%i NEQ !temp_count! (
@@ -154,7 +139,7 @@ IF "%game_type%"=="1" (
 	for /l %%i in (0,1,!temp_count!) do (
 		IF !temp_count! LEQ 9 (
 			IF NOT EXIST "%input_dirrectory%\0%%i" (
-				echo Erreur, il semble qu'un fichier soit manquant dans le nombre des parties de celui-ci, le script ne peut continuer.
+				call "%associed_language_script%" "input_parts_error"
 				goto:end_script
 			)
 			IF %%i NEQ !temp_count! (
@@ -164,7 +149,7 @@ IF "%game_type%"=="1" (
 			)
 		) else (
 			IF NOT EXIST "%input_dirrectory%\%%i" (
-				echo Erreur, il semble qu'un fichier soit manquant dans le nombre des parties de celui-ci, le script ne peut continuer.
+				call "%associed_language_script%" "input_parts_error"
 				goto:end_script
 			)
 			IF %%i NEQ !temp_count! (
@@ -184,6 +169,8 @@ IF "%game_type%"=="1" (
 ) else IF "%game_type%"=="4" (
 	copy /v /b %copy_files_param% "%dump_output%%filename%.xci"
 )
+echo.
+call "%associed_language_script%" "merge_end"
 goto:end_script
 
 :extract_input_filename

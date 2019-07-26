@@ -1,17 +1,17 @@
 ::Script by Shadow256
-chcp 65001 >nul
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 set script_path=%~dp0
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-echo Ce script va vous permettre d'installer des NSPs  sur une Switch connectée en USB.
-echo Il faut que Goldleaf soit lancé en mode USB sur la console et que la console soit relié au PC sur lequel est exécuté le script.
-echo Attention: Il faut que le driver soit installer pour que cela fonctionne.
-echo Attention: Il est conseillé de désactiver la mise en veille de la Switch pendant le processus pour éviter que les jeux ne soient pas complètements installés si la console se met en veille durant l'installation.
-echo.
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "intro"
 pause
 start tools\Goldtree\Goldtree.exe
 goto:endscript
@@ -27,7 +27,7 @@ IF NOT "%install_type%"=="" set install_type=%install_type:~0,1%
 IF "%install_type%"=="1" (
 	echo Sélectionnez un dossier contenant des NSP (les sous-dossiers ne sont pas pris en compte^) dans la fenêtre qui va s'ouvrir.
 	pause
-	%windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\select_dir.vbs" "templogs\tempvar.txt"
+	%windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\select_dir.vbs" "templogs\tempvar.txt" "Sélection du dossier"
 	set /p filepath=<"templogs\tempvar.txt"
 	IF "!filepath!"=="" (
 		echo Installation annulée.
@@ -35,7 +35,7 @@ IF "%install_type%"=="1" (
 		goto:endscript
 	)
 ) else IF "%install_type%"=="2" (
-	%windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\select_dir.vbs" "templogs\tempvar.txt"
+	%windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\select_dir.vbs" "templogs\tempvar.txt" "Sélection du dossier"
 	set /p filepath=<"templogs\tempvar.txt"
 	IF "!filepath!"=="" (
 		echo Installation annulée.

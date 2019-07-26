@@ -1,28 +1,29 @@
 ::Script by Shadow256
-@echo off
-chcp 65001 >nul
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 set this_script_dir=%~dp0
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-echo Ce script permet de découper un dump de la rawnand en plusieurs parties, ceci peut être utile pour utiliser ensuite ce dump pour l'Emunand de Atmosphere.
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "intro"
 pause
 :rawnand_choice
 echo.
-echo Vous allez devoir sélectionner le fichier de la rawnand à découper.
-pause
-%windir%\system32\wscript.exe //Nologo "tools\Storage\functions\open_file.vbs" "" "Fichier bin(*.bin)|*.bin|" "Sélection du fichier de dump de la nand" "templogs\tempvar.txt"
+call "%associed_language_script%" "input_rawnand_choice"
 set /p dump_input=<"templogs\tempvar.txt"
 IF "%dump_input%"=="" (
-	echo Aucun fichier sélectionné, le script va s'arrêter.
+	call "%associed_language_script%" "no_input_file_selected_error"
 	goto:end_script
 )
 call :get_type_nand "%dump_input%"
 IF /i NOT "%nand_type%"=="RAWNAND" (
-	echo Le fichier sélectionné n'est pas un dump de rawnand valide ou est un fichier de dump d'une rawnand déjà découpé, le script ne peut continuer.
+	call "%associed_language_script%" "invalid_input_file_error"
 	goto:end_script
 )
 set /a chars_filename_count=0
@@ -38,26 +39,24 @@ set /a chars_filename_count-=1
 set filename=!dump_input:~-%chars_filename_count%!
 :output_select
 echo.
-echo Vous allez maintenant devoir sélectionner le répertoire vers lequel seront copié les fichiers du dump découpé. Notez que l'archive byte sera appliquer au dossier pour rendre celui-ci compatible avec l'Emunand d'Atmosphere.
-pause
-%windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\select_dir.vbs" "templogs\tempvar.txt"
+call "%associed_language_script%" "output_folder_choice"
 set /p dump_output=<"templogs\tempvar.txt"
 IF "%dump_output%"=="" (
-	echo Aucun dossier sélectionné, le script va s'arrêter.
+	call "%associed_language_script%" "no_output_selected_error"
 	goto:end_script
 )
 set dump_output=%dump_output:\\=\%
 :define_parts_number
 echo.
 set parts_number=
-set /p parts_number=Choisissez le nombre de partie que vous souhaitez avoir (de 8 jusqu'à 64): 
+call "%associed_language_script%" "parts_number_choice"
 IF "%parts_number%"=="" (
-	echo Le nombre de parties ne peut être vide.
+	call "%associed_language_script%" "empty_parts_number_error"
 	goto:define_parts_number
 )
 call TOOLS\Storage\functions\strlen.bat nb "%parts_number%"
 IF %nb% GTR 2 (
-	echo Une valeur incorrecte a été saisie pour le nombre de parties.
+	call "%associed_language_script%" "bad_value_parts_number_error"
 	goto:define_parts_number
 )
 IF "%parts_number:~0,1%"=="0" (
@@ -72,22 +71,22 @@ IF %i% LSS %nb% (
 			goto:check_chars_parts_number
 		)
 	)
-	echo Un caractère non autorisé a été saisie dans le choix du nombre de parties.
+	call "%associed_language_script%" "parts_number_char_error"
 	goto:define_parts_number
 )
 IF %parts_number% LSS 8 (
-	echo Le nombre de parties ne peut être inférieur à 8.
+	call "%associed_language_script%" "parts_number_too_low_error"
 	goto:define_parts_number
 )
 IF %parts_number% GTR 64 (
-	echo Le nombre de parties ne peut être supérieur à 64.
+	call "%associed_language_script%" "parts_number_too_high_error"
 	goto:define_parts_number
 )
 set /a temp_parts_number=%parts_number%-1
 :skip_define_parts_number
 echo.
 set rename_files=
-set /p rename_files=Souhaitez-vous que les fichiers splittés soient renommés pour être compatible avec l'emunand de Atmosphere? (O/n): 
+call "%associed_language_script%" "output_rename_choice"
 IF NOT "%rename_files%"=="" set rename_files=%rename_files:~0,1%
 :verif_disk_free_space
 %windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\get_free_space_for_path.vbs" "%dump_output%"
@@ -100,19 +99,17 @@ IF "%verif_free_space%"=="OK" (
 )
 :error_disk_free_space
 echo.
-echo Il n'y a pas assez d'espace libre à l'emplacement sur lequel vous souhaitez copier votre dump, le script va s'arrêter.
+call "%associed_language_script%" "not_enough_disk_space_error"
 goto:end_script
 
 
 :copy_nand
 echo.
-echo Copie en cours...
+call "%associed_language_script%" "copying_begin"
 cd /d "%dump_output%"
 "%this_script_dir%\..\gnuwin32\bin\split.exe" -d -n %parts_number% "%dump_input%" %filename%.
 IF %errorlevel% NEQ 0 (
-	echo Il semble qu'une erreur se soit produite pendant la copie.
-	echo Vérifiez que vous avez au moins 30 GO de libre sur la partition sur lequel le fichier est copié puis réessayez.
-	echo Vérifiez également que vous avez les droits en écriture pour le répertoire dans lequel vous essayez de copier le fichier.
+	call "%associed_language_script%" "copying_error"
 	set copy_error=Y
 )
 cd /D "%this_script_dir%\..\.."
@@ -128,7 +125,7 @@ IF /i "%rename_files%"=="o" (
 	)
 	attrib +a "%dump_output%\eMMC"
 )
-echo Copie terminée.
+call "%associed_language_script%" "copying_end"
 goto:end_script
 
 :get_type_nand

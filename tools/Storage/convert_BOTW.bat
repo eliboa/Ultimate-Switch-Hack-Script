@@ -1,7 +1,9 @@
 ::Script by Shadow256
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-chcp 65001 >nul
-
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
@@ -12,16 +14,15 @@ IF EXIST "BOTW_save" (
 	del /q BOTW_save 2>nul
 )
 	mkdir "BOTW_save"
-echo Ce script va vous permettre de convertir une sauvegarde de Zelda Breath Of The Wild Wii U vers Switch ou inversement.
-echo Vous devrez donc choisir le dossier contenant l'ensemble des dossiers de la sauvegarde (celui qui contient le fichier "option.sav"), appuyez sur "y" pour lancer la conversion, appuyez sur "Entrer" à la fin de celle-ci et une fois terminée, copier la nouvelle sauvegarde dans le dossier adéquat du homebrew EdiZon ou Checkpoint pour la restaurer sur la Switch. Pour la Wii U, il faudra la copier dans le dossier de Savemi Mod ou la restaurer via Saviine.
-echo La sauvegarde convertie se trouvera dans le dossier "BOTW_save" à la racine du script.
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "intro"
 pause
-%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\select_dir.vbs "templogs\tempvar.txt"
+call "%associed_language_script%" "select_save_folder"
 set /p filepath=<templogs\tempvar.txt
 IF NOT "%filepath%"=="" (
 	set filepath=%filepath:\\=\%
 ) else (
-	echo Aucun dossier sélectionné, le script va s'arrêter.
+	call "%associed_language_script%" "no_folder_selected_error"
 	rmdir /s /q "BOTW_save" 2>nul
 	goto:end_script
 )
@@ -102,19 +103,19 @@ IF EXIST "%filepath%\7\*.*" (
 	)
 )
 :files_error
-echo Il semblerai que le dossier sélectionné ne contienne pas une sauvegarde de Zelda Breath OF The Wild, le script va s'arrêter.
+call "%associed_language_script%" "error_with_save_file"
 rmdir /s /q "BOTW_save" 2>nul
 goto:end_script
 :start_converting
-echo Copie des fichiers en cours...
+call "%associed_language_script%" "intro_copying_files"
 copy "TOOLS\BOTW_SaveConv\BOTW_SaveConv.exe" "BOTW_save\BOTW_SaveConv.exe"
 %windir%\System32\Robocopy.exe "%filepath%" "BOTW_save" /e
-echo Copie terminée.
+call "%associed_language_script%" "end_copying_files"
 cd "BOTW_save"
 BOTW_SaveConv.exe
 del /q "BOTW_SaveConv.exe"
 cd ..
-echo Conversion de la sauvegarde terminée.
+call "%associed_language_script%" "converting_success"
 :end_script
 rmdir /s /q templogs
 pause 

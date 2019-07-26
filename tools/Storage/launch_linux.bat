@@ -1,7 +1,10 @@
 ::Script by Eliboa, modified by Shadow256
-@echo off
-chcp 65001 >nul
-setlocal
+call tools\storage\functions\ini_scripts.bat
+Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
+call "%associed_language_script%" "display_title"
 del /q tools\shofel2\kernel\Image.gz 2>nul
 cd tools\shofel2
 if not exist conf\imx_usb.conf set MISSING=1
@@ -13,30 +16,23 @@ if not exist image\switch.scr.img set MISSING=1
 if not exist kernel\*.* set MISSING=1
 cd ..\..
 IF "%MISSING%"=="1" (
-	echo Des fichiers sont manquants et Linux ne pourra pas être lancé.
-	echo Veuillez utiliser l'option de mise à jour de Shofel2 dans le menu principal pour corriger ce problème.
+	call "%associed_language_script%" "missing_files_error"
 	pause
 	set MISSING=
 	goto:end_script
 )
 :choose_kernel
-echo Choisissez un kernel.
-echo.
-echo 1: Kernel officiel (recommandé)
-echo 2: Kernel patché (si vous avez des erreurs de carte SD au chargement du kernel)
-echo 0: Choisir un fichier de kernel personnel
-echo Tout autre choix: Quitter le script.
-echo.
-set /p choose_kernel=Entrez le numéro du kernel à utiliser: 
+set choose_kernel=
+call "%associed_language_script%" "kernel_choice"
 IF "%choose_kernel%"=="0" (
 	mkdir templogs
-	%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\open_file.vbs "" "Fichier de kernel Linux (*.gz)|*.gz|" "Sélection du kernel" "templogs\tempvar.txt"
+	call "%associed_language_script%" "kernel_file_choice"
 	set /p kernel_path=<templogs\tempvar.txt
 	rmdir /s /q templogs
 )
 IF "%choose_kernel%"=="0" (
 	IF "%kernel_path%"=="" (
-		Aucun kernel sélectionné, le lancement de Linux est annulé.
+		call "%associed_language_script%" "no_kernel_selected_error"
 		pause
 		goto:end_script
 	) else (
@@ -47,8 +43,7 @@ IF "%choose_kernel%"=="0" (
 )
 IF "%choose_kernel%"=="1" (
 	IF NOT EXIST "tools\linux_kernels\Image_1.gz" (
-	echo Des fichiers sont manquants et Linux ne pourra pas être lancé.
-	echo Veuillez utiliser l'option de mise à jour de Shofel2 dans le menu principal pour corriger ce problème.
+	call "%associed_language_script%" "missing_files_error"
 	pause
 	goto:end_script
 	)
@@ -59,30 +54,21 @@ IF "%choose_kernel%"=="1" (
 	goto:end_script
 )
 :launch_linux
-echo *********************************************
-echo ***    CONNECTEZ LA SWITCH EN MODE RCM    ***
-echo *********************************************
-echo 1) Connecter la Switch en USB et l'éteindre
-echo 2) Appliquer le JoyCon Haxx : PIN1 + PIN10 ou PIN9 + PIN10
-echo 3) Faire un appui long sur VOLUME UP + appui court sur POWER
+call "%associed_language_script%" "rcm_instructions"
 tools\TegraRcmSmash\TegraRcmSmash.exe -w --relocator= "tools\shofel2\coreboot\cbfs.bin" "CBFS:tools\shofel2\coreboot\coreboot.rom"
-echo Switch détectée. Attendons 5 secondes...
+call "%associed_language_script%" "waiting"
 SLEEP 5
 cd tools\shofel2\
 imx_usb.exe -c conf\
 cd ..\..
-echo *********************************************
-echo ***   ATTENDEZ QUE LA SWITCH REDEMARRE    ***
-echo *********************************************
+call "%associed_language_script%" "reboot_waiting"
 tools\TegraRcmSmash\TegraRcmSmash.exe -w --relocator= "tools\shofel2\coreboot\cbfs.bin" "CBFS:tools\shofel2\coreboot\coreboot.rom"
-echo Switch détectée. Attendons 5 secondes...
+call "%associed_language_script%" "waiting"
 SLEEP 5
 cd tools\shofel2\
 imx_usb.exe -c conf\
 cd ..\..
-echo *********************************************
-echo *** LINUX DEVRAIT SE LANCER SUR LA SWITCH ***
-echo *********************************************
+call "%associed_language_script%" "end_launch"
 pause
 :end_script
 set choose_kernel=

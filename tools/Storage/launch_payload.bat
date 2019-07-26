@@ -1,7 +1,9 @@
 ::Script by Shadow256
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-@echo off
-chcp 65001 >nul
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
@@ -11,6 +13,7 @@ IF NOT EXIST Payloads\*.* (
 	del /q Payloads 2>nul
 	mkdir Payloads
 )
+call "%associed_language_script%" "display_title"
 :list_payloads
 copy nul templogs\payload_list.txt >nul
 set max_payload=1
@@ -21,13 +24,11 @@ for %%z in (*.bin) do (
 )
 cd ..
 :select_payload
-echo Choisir un payload. 
+set payload_number=
+call "%associed_language_script%" "begin_payload_choice"
 echo.
 TOOLS\gnuwin32\bin\tail.exe -q -n+0 templogs\payloads_list.txt 
-echo 0: Choisir un fichier de payload 
-echo N'importe quel autre choix: Revenir au menu principal. 
-echo.
-set /p payload_number=Entrez le numéro du payload à lancer: 
+call "%associed_language_script%" "end_payload_choice"
 IF "%payload_number%"=="" goto:finish_script
 call TOOLS\Storage\functions\strlen.bat nb "%payload_number%"
 set i=0
@@ -46,13 +47,12 @@ IF %i% NEQ %nb% (
 	)
 )
 IF "%payload_number%"=="0" (
-	%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\open_file.vbs "" "Fichier de payload Switch (*.bin)|*.bin|" "Sélection du payload" "templogs\tempvar.txt"
+	call "%associed_language_script%" "payload_file_choice"
 	set /p payload_path=<templogs\tempvar.txt
 )
 IF "%payload_number%"=="0" (
 	IF "%payload_path%"=="" (
-		echo Aucun payload sélectionné, retour à la sélection de payloads. 
-		set payload_number=
+		call "%associed_language_script%" "no_payload_file_selected_error"
 		goto:select_payload
 	)
 	goto:launch_payload
@@ -64,24 +64,16 @@ IF "%payload_path%"=="" (
 )
 set payload_path=%payload_path:~1,-1%
 :launch_payload
-echo ********************************************* 
-echo ***    CONNECTEZ LA SWITCH EN MODE RCM    *** 
-echo ********************************************* 
-echo 1) Connecter la Switch en USB et l'éteindre 
-echo 2) Appliquer le JoyCon Haxx : PIN1 + PIN10 ou PIN9 + PIN10 
-echo 3) Faire un appui long sur VOLUME UP + appui court sur POWER 
-echo En attente d'une Switch en mode RCM... 
+call "%associed_language_script%" "rcm_instructions"
 IF "%payload_number%"=="0" (
 	tools\TegraRcmSmash\TegraRcmSmash.exe -w "%payload_path%"
 ) else (
 	tools\TegraRcmSmash\TegraRcmSmash.exe -w "payloads\%payload_path%"
 )
 IF %errorlevel% GTR 0 (
-	echo Une erreur s'est produite pendant l'injection du payload. Vérifiez que le mode RCM de la Switch est lancé, que votre cable USB est bien relié à l'ordinateur et que les drivers ont été installés puis recommencez. 
+	call "%associed_language_script%" "launch_payload_error"
 ) else (
-	echo ********************************************* 
-	echo ***            Payload injecté            *** 
-	echo ********************************************* 
+	call "%associed_language_script%" "launch_payload_success"
 )
 :end_script
 pause 

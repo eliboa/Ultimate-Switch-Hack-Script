@@ -1,35 +1,27 @@
 ::Script by Shadow256
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-@echo off
-chcp 65001 >nul
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-echo Ce script permet de découper un NSP en plusieurs fichiers de 4 GO.
-echo Il permet également de pouvoir découper un XCI avec XCI-Cutter.
-echo.
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "intro"
 pause
 echo.
-echo Que souhaitez-vous faire:
-echo 1: Découper un NSP?
-echo 2: Découper un XCI?
-echo N'importe quel autre choix: Revenir au menu précédent.
-echo.
-set /p cut_type=Faites votre choix: 
+set cut_type=
+call "%associed_language_script%" "cut_type_choice"
 IF NOT "%cut_type%"=="" set cut_type=%cut_type:~0,1%
 IF "%cut_type%"=="1" goto:NSP_cut
 IF "%cut_type%"=="2" goto:XCI_cut
 goto:finish_script
 :NSP_cut
 echo.
-echo Comment Souhaitez-vous découper votre NSP:
-echo 1: Découper le fichier et concerver le fichier original?
-echo 2: Découper le fichier mais ne pas concerver le fichier original (plus rapide)?
-echo N'importe quel autre choix: Revenir au menu précédent.
-echo.
-set /p split_type=Choisissez comment le découpage du fichier sera fait: 
+call "%associed_language_script%" "nsp_split_type_choice"
 IF NOT "%split_type%"=="" set split_type=%split_type:~0,1%
 IF "%split_type%"=="1" (
 	set params=
@@ -39,24 +31,20 @@ IF "%split_type%"=="1" (
 	goto:finish_script
 )
 echo.
-echo Veuillez renseigner le fichier NSP dans la fenêtre suivante.
-pause
-%windir%\system32\wscript.exe //Nologo "tools\Storage\functions\open_file.vbs" "" "Fichier NSP(*.nsp)|*.nsp|" "Sélection du fichier NSP" "templogs\tempvar.txt"
+call "%associed_language_script%" "nsp_input_file_choice"
 set /p nsp_path=<"templogs\tempvar.txt"
 IF "%nsp_path%"=="" (
-	echo Aucun fichier NSP renseigné, le script va s'arrêter.
+	call "%associed_language_script%" "no_nsp_input_file_selected_error"
 	goto:end_script
 	)
 IF "%split_type%"=="1" (
 	echo.
-	echo Vous allez devoir sélectionner le dossier dans lequel le NSP découpé sera extrait.
-	pause
-	%windir%\system32\wscript.exe //Nologo tools\Storage\functions\select_dir.vbs "templogs\tempvar.txt"
+	call "%associed_language_script%" "nsp_output_folder_choice"
 	set /p filepath=<templogs\tempvar.txt
 )
 IF "%split_type%"=="1" (
 	IF "%filepath%"=="" (
-		echo Aucun dossier sélectionné, le script va s'arrêter.
+		call "%associed_language_script%" "no_nsp_output_folder_selected_error"
 		goto:end_script
 	)
 )
@@ -69,14 +57,14 @@ IF "%split_type%"=="2" (
 )
 IF %errorlevel% NEQ 0 (
 	echo.
-	echo Une erreur inconnue s'est produite.
+	call "%associed_language_script%" "nsp_split_error"
 	goto:end_script
 )
 echo.
-echo Découpage du NSP terminée.
+call "%associed_language_script%" "nsp_split_success"
 goto:end_script
 :XCI_cut
-echo XCI Cutter va être lancé pour permettre de découper votre XCI.
+call "%associed_language_script%" "launch_xcicutter_message"
 pause
 "tools\XCI-Cutter\XCI-Cutter.exe"
 :end_script

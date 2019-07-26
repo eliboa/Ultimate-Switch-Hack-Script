@@ -1,44 +1,14 @@
 ::Script by Shadow256
-chcp 65001 > nul
-setlocal
+call tools\storage\functions\ini_scripts.bat
+Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 :define_action_choice
+call "%associed_language_script%" "display_title"
+set action_choice=
 cls
-echo Menu de Paramètres
-echo.
-echo Que souhaitez-vous faire?
-echo.
-echo 1: Sauvegarder les fichiers importants du script?
-echo.
-echo 2: Restaurer les fichiers importants du script?
-echo.
-echo 3: Réinitialiser complètement le script?
-echo.
-echo 4: Réinitialiser le paramètre de mise à jour automatique du script?
-echo.
-echo 5: Réinitialiser la liste de programmes personnels de la Toolbox (supprimera également les programmes incluent dans le dossier "tools\toolbox")?
-echo.
-echo 6: Réinitialiser la liste de serveurs de Switch-Lan-Play?
-echo.
-echo 7: Supprimer le fichiers de clés utilisé par NSC_Builder?
-echo.
-echo 8: Supprimer les fichiers de clés utilisés par Hactool, XCI-Explorer, ChoiDuJour...?
-echo.
-echo 9: Configurer les profiles généraux utilisés lors de la préparation d'une SD?
-echo.
-echo 10: Configurer les profiles de copie de homebrews utilisés lors de la préparation d'une SD?
-echo.
-echo 11: Configurer les profiles de copie de cheats utilisés lors de la préparation d'une SD?
-echo.
-echo 12: Configurer les profiles de copie d'émulateurs utilisés lors de la préparation d'une SD?
-echo.
-echo 13: Configurer les profiles de copie de modules utilisés lors de la préparation d'une SD?
-echo.
-echo 14: Configurer les profiles d'emummc d'Atmosphere utilisés lors de la préparation d'une SD?
-echo.
-echo N'importe quelle autre choix: Revenir au menu précédent?
-echo.
-echo.
-set /p action_choice=Entrez le numéro correspondant à l'action à faire: 
+call "%associed_language_script%" "display_menu"
 IF "%action_choice%"=="1" goto:save_config
 IF "%action_choice%"=="2" goto:restaure_config
 IF "%action_choice%"=="3" goto:restaure_default
@@ -76,43 +46,51 @@ call TOOLS\Storage\restore_default.bat
 @echo off
 goto:define_action_choice
 :default_auto_update
-set action_choice=
+setlocal
 echo.
-del /q tools\Storage\verif_update.ini 2>nul
-echo Paramètre de mise à jour automatique réinitialisé.
+IF NOT EXIST "templogs\*.*" mkdir templogs
+tools\gnuwin32\bin\grep.exe -n "set auto_update=" <"%language_path%\script_general_config.bat" >templogs\tempvar.txt
+set /p temp_auto_update_line=<templogs\tempvar.txt
+IF NOT "%temp_auto_update_line%"=="" (
+	echo %temp_auto_update_line%| "tools\gnuwin32\bin\cut.exe" -d : -f 1 >templogs\tempvar.txt
+	set /p auto_update_file_param_line=<templogs\tempvar.txt
+	echo %temp_auto_update_line%|"tools\gnuwin32\bin\cut.exe" -d = -f 2 >templogs\tempvar.txt
+	set /p ini_auto_update=<templogs\tempvar.txt
+)
+"tools\gnuwin32\bin\sed.exe" %auto_update_file_param_line%d "%language_path%\script_general_config.bat">"%language_path%\script_general_config2.bat"
+del /q "%language_path%\script_general_config.bat"
+ren "%language_path%\script_general_config2.bat" "script_general_config.bat"
+rmdir /s /q templogs
+endlocal
+call "%associed_language_script%" "auto_update_reset_success"
 pause
 goto:define_action_choice
 :default_toolbox
-set action_choice=
 echo.
 rmdir /s /q tools\toolbox
 mkdir tools\toolbox
-copy tools\default_configs\default_tools.txt tools\toolbox\default_tools.txt
-copy nul tools\toolbox\user_tools.txt
-echo Programmes personnels de la Toolbox réinitialisés.
+copy tools\default_configs\default_tools.txt tools\toolbox\default_tools.txt >nul
+copy nul tools\toolbox\user_tools.txt >nul
+call "%associed_language_script%" "toolbox_reset_success"
 pause
 goto:define_action_choice
 :default_switch-lan-play
-set action_choice=
 echo.
 copy /v "tools\default_configs\servers_list.txt" "tools\netplay\servers_list.txt"
-echo Liste de serveurs Switch-Lan-Play réinitialisée.
+call "%associed_language_script%" "switchlanplay_reset_success"
 pause
 goto:define_action_choice
 :default_keys_nsc_builder
-:default_switch-lan-play
-set action_choice=
 echo.
 del /q "tools\NSC_Builder\keys.txt" 2>nul
-echo Fichier de clés pour NSC_Builder supprimé.
+call "%associed_language_script%" "nscbuilder_keys_file_reset_success"
 pause
 goto:define_action_choice
 :default_keys_hactool
-set action_choice=
 echo.
 del /q "tools\Hactool_based_programs\keys.txt" 2>nul
 del /q "tools\Hactool_based_programs\keys.dat" 2>nul
-echo Fichiers de clés pour les outils basés sur Hactool supprimés.
+call "%associed_language_script%" "hactool_keys_file_reset_success"
 pause
 goto:define_action_choice
 :sd_packs_profiles_management

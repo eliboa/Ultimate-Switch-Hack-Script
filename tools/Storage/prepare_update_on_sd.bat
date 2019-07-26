@@ -1,52 +1,32 @@
 ::Script by Shadow256
-@echo off
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-chcp 65001 > nul
-
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF NOT EXIST templogs (
 	mkdir templogs
 ) else (
 	rmdir /s /q templogs
 	mkdir templogs
 )
+call "%associed_language_script%" "display_title"
 ping /n 2 www.google.com >nul 2>&1
 IF %errorlevel% NEQ 0 (
-	echo Aucune connexion à internet disponible, le script va s'arrêter.
+	call "%associed_language_script%" "no_internet_connection_error"
 	goto:end_script
 )
 set md5_try=0
-echo Ce script permet de préparer la carte SD avec un firmware spécifique à installer avec ChoiDuJourNX, le firmware sera téléchargé puis copié sur la SD et ChoiDuJour-NX sera également copié sur la SD. Notez que vous aurez besoin de lancer un CFW pour finaliser la mise à jour sur votre console donc si vous ne l'avez pas fait, veuillez préparer la SD pour le hack avant ou après l'exécution de ce script (si après, ne pas formater la carte ou supprimer les données s'y trouvant car sinon vous devrez exécuter de nouveau ce script).
-echo.
-echo ATTENTION: Choisissez bien la lettre du volume qui correspond à votre SD car aucune vérification ne pourra être faites à ce niveau là. 
-echo.
-echo Le script permet également de créer un package de mise à jour via ChoiDuJour en se basant sur le firmware sélectionné pour mettre à jour manuellement la console via Memloader, Etcher et HacDiskMount (pour les utilisateurs avancés).
-echo.
-echo Attention: Aucune vérification n'est faite sur l'espace disque sur lequel est exécuté ce script ni sur celui de la SD, vous aurez au moins besoin de 800 MO (1 GO si vous créez en plus un package via ChoiDuJour) d'espace libre sur le disque sur lequel s'exécute ce script et d'environ 400 MO sur la SD de la Switch pour y copier le firmware. Notez que ces estimations sont un peu plus large que la réalité mais c'est à vous de faire ces vérifications pour le moment.
-echo Notez également qu'une vérification sera tout de même faite pour savoir si le firmware téléchargé n'est pas corrompu via son MD5, seulement l'extraction de celui-ci n'est pas vérifiée donc faites bien attention aux éventuels messages d'erreurs des différents programmes pendant ce script pour savoir si quelque chose s'est mal passé. En cas de problème, vérifiez en premier lieu que vous avez assez d'espace disque sur les périphériques utilisés.
-echo.
-echo Notez également que les fichiers sont téléchargés via Mega donc certaines limitations pourraient s'appliquer en cas de trop nombreux téléchargements venant d'une même connexion internet. Si vous avez un compte sur Mega.nz, vous pouvez le configurer dans le fichier "tools\megatools\mega.ini" en supprimant les signes "#" devant "Username" et "Password" et en remplaçant les valeurs après le signe "=" par votre nom d'utilisateur et votre mot de passe.
-echo.
-echo Je ne pourrais être tenu pour responsable en cas de dommage lié à l'utilisation de ce script ou des outils qu'il contient. 
+call "%associed_language_script%" "intro"
 pause 
 :define_action_type
 cls
-echo Préparation d'un package de mise à jour
-echo.
-Echo Que souhaitez-vous faire?
-echo.
-echo 1: Préparer un firmware qui sera copié sur la SD pour une installation via ChoiDuJour-NX?
-echo 2: Préparer un firmware pour la mise à jour manuel avec ChoiDuJour?
-echo 3: Effectuer les deux actions.
-echo 4: Préparer une SD avec les différents CFWs et homebrews utiles et revenir à ce menu ensuite?
-echo N'importe quel autre choix: Revenir au menu précédent.
-echo.
 set action_type=
-set /p action_type=Faites votre choix: 
+call "%associed_language_script%" "action_choice"
 IF NOT "%action_type%"=="" set action_type=%action_type:~0,1%
 IF "%action_type%"=="4" (
-	set action_type=
 	cls
-	call tools\storage\prepare_sd_switch.bat > log.txt 2>&1
+	call tools\storage\prepare_sd_switch.bat
 	@echo off
 	goto:define_action_type
 )
@@ -55,9 +35,8 @@ IF "%action_type%"=="2" cls & goto:define_firmware_choice
 IF "%action_type%"=="3" cls & goto:define_firmware_choice
 goto:end_script_2
 :define_firmware_choice
-echo Choisissez le firmware que vous souhaitez préparer?
-echo.
-echo Liste des firmwares:
+set firmware_choice=
+call "%associed_language_script%" "firmware_choice_begin"
 echo 1.0.0?
 echo 2.0.0?
 echo 2.1.0?
@@ -83,11 +62,7 @@ echo 8.0.0?
 echo 8.0.1?
 echo 8.1.0?
 echo.
-echo F: Ouvrir le dossier contenant les firmwares déjà téléchargé?
-echo N'importe quel autre choix terminera ce script et reviendra au menu précédent.
-echo.
-set firmware_choice=
-set /p firmware_choice=Entrez le firmware souhaité ou une action à faire: 
+call "%associed_language_script%" "firmware_choice_end"
 IF NOT EXIST "downloads" mkdir "downloads"
 IF NOT EXIST "downloads\firmwares" mkdir "downloads\firmwares"
 IF EXIST "firmware_temp" (
@@ -97,7 +72,6 @@ IF EXIST "firmware_temp" (
 	mkdir firmware_temp
 )
 IF /i "%firmware_choice%"=="F" (
-	set firmware_choice=
 	start explorer.exe "%~dp0..\..\downloads\firmwares"
 	goto:define_firmware_choice
 )
@@ -287,7 +261,7 @@ set md5_try=0
 IF EXIST "downloads\firmwares\%firmware_file_name%" goto:verif_md5sum
 :downloading_firmware
 IF NOT EXIST "downloads\firmwares\%firmware_file_name%" (
-	echo Téléchargement du firmware %firmware_choice%...
+	call "%associed_language_script%" "firmware_downloading_begin"
 Setlocal disabledelayedexpansion
 TOOLS\megatools\megadl.exe "%firmware_link%" --path=templogs\temp.zip
 endlocal
@@ -297,10 +271,10 @@ endlocal
 IF NOT EXIST "downloads\firmwares\%firmware_file_name%" (
 	IF NOT "%md5_verif%"=="%expected_md5%" (
 		IF %md5_try% EQU 3 (
-			echo Le md5 du firmware ne semble pas être correct. Veuillez vérifier votre connexion internet ainsi que l'espace disponible sur votre disque dur puis relancer le script. 
+			call "%associed_language_script%" "firmware_downloading_md5_error"
 			goto:end_script
 		) else (
-			echo Le md5 du firmware ne semble pas être correct, le téléchargement va être réessayé.
+			call "%associed_language_script%" "firmware_downloading_md5_retry"
 			set /a md5_try+=1
 			goto:downloading_firmware
 		)
@@ -314,32 +288,31 @@ TOOLS\gnuwin32\bin\md5sum.exe "downloads\firmwares\%firmware_file_name%" | TOOLS
 set /p md5_verif=<templogs\tempvar.txt
 IF NOT "%md5_verif%"=="%expected_md5%" (
 	set md5_verif=
-	echo Le fichier du firmware semble exister mais son MD5 est incorrect, il va donc être retéléchargé.
+	call "%associed_language_script%" "firmware_exist_but_bad_md5_tested_error"
 	goto:downloading_firmware
 )
 :skip_verif_md5sum
-echo Extraction du firmware pour la suite des traitements...
+call "%associed_language_script%" "extract_firmware_begin"
 TOOLS\7zip\7za.exe x -y -sccUTF-8 "downloads\firmwares\%firmware_file_name%" -o"firmware_temp" -r
 IF "%action_type%"=="1" goto:define_volume_letter
 IF "%action_type%"=="2" (
-	set action_type=
 	call tools\storage\create_update.bat "%~dp0..\..\firmware_temp"
 	mkdir templogs
 	goto:define_action_type
 )
 IF "%action_type%"=="3" goto:define_volume_letter
 :define_volume_letter
+set volume_letter=
 %windir%\system32\wscript //Nologo //B TOOLS\Storage\functions\list_volumes.vbs
 TOOLS\gnuwin32\bin\grep.exe -c "" <templogs\volumes_list.txt >templogs\count.txt
 set /p tempcount=<templogs\count.txt
 del /q templogs\count.txt
 IF "%tempcount%"=="" (
-	echo Aucun disque compatible trouvé. Veuillez insérer votre clé USB puis relancez le script. 
-	echo Le script va maintenant s'arrêté. 
+	call "%associed_language_script%" "no_compatible_disk_found_error"
 	goto:end_script
 )
 echo. 
-echo Liste des disques: 
+call "%associed_language_script%" "disk_list_begin"
 :list_volumes
 IF "%tempcount%"=="0" goto:set_volume_letter
 TOOLS\gnuwin32\bin\tail.exe -%tempcount% <templogs\volumes_list.txt | TOOLS\gnuwin32\bin\head.exe -1 
@@ -348,11 +321,10 @@ goto:list_volumes
 :set_volume_letter
 echo.
 echo.
-set volume_letter=
-set /p volume_letter=Entrez la lettre du volume de la carte SD que vous souhaitez utiliser: 
+call "%associed_language_script%" "disk_list_choice"
 call TOOLS\Storage\functions\strlen.bat nb "%volume_letter%"
 IF %nb% EQU 0 (
-	echo La lettre de lecteur ne peut être vide. Réessayez. 
+	call "%associed_language_script%" "disk_choice_empty_error"
 	goto:define_volume_letter
 )
 set volume_letter=%volume_letter:~0,1%
@@ -370,32 +342,29 @@ IF %i% LSS %nb% (
 		)
 	)
 	IF "!check_chars_volume_letter!"=="0" (
-		echo Un caractère non autorisé a été saisie dans la lettre du lecteur. Recommencez. 
-		set volume_letter=
+		call "%associed_language_script%" "disk_choice_char_error"
 		goto:define_volume_letter
 	)
 )
 IF NOT EXIST "%volume_letter%:\" (
-	echo Ce volume n'existe pas. Recommencez. 
-	set volume_letter=
+	call "%associed_language_script%" "disk_choice_not_exist_error"
 	goto:define_volume_letter
 )
 TOOLS\gnuwin32\bin\grep.exe "Lettre volume=%volume_letter%" <templogs\volumes_list.txt | TOOLS\gnuwin32\bin\cut.exe -d ; -f 1 | TOOLS\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
 set /p temp_volume_letter=<templogs\tempvar.txt
 IF NOT "%volume_letter%"=="%temp_volume_letter%" (
-	echo Cette lettre de volume n'est pas dans la liste. Recommencez. 
+	call "%associed_language_script%" "disk_choice_letter_not_exist_error"
 	goto:define_volume_letter
 )
 	TOOLS\gnuwin32\bin\grep.exe "Lettre volume=%volume_letter%" <templogs\volumes_list.txt | TOOLS\gnuwin32\bin\cut.exe -d ; -f 3 | TOOLS\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
 	set /p temp_volume_format=<templogs\tempvar.txt
 IF NOT "%temp_volume_format%"=="FAT32" (
-	echo Attention: Le support que vous avez choisi n'est pas formaté en FAT32. Si vous n'avez pas installé le driver EXFAT sur votre Switch, il est nécessaire de formater la carte SD en FAT32. 
-set /p cancel_script=Souhaitez-vous annuler les oppérations en cours pour formater la SD en FAT32 (le firmware ne sera pas à retélécharger^)? (O/n^): 
+	call "%associed_language_script%" "disk_choice_not_fat32_formated_choice"
 )
 IF NOT "%cancel_script%"=="" set cancel_script=%cancel_script:~0,1%
 IF /i "%cancel_script%"=="o" goto:end_script
 IF "%action_type%"=="1" (
-	echo Copie du firmware sur la SD dans le dossier "FW_%firmware_choice%" et copie du homebrew ChoiDuJour-NX...
+	call "%associed_language_script%" "copying_begin"
 	%windir%\System32\Robocopy.exe "firmware_temp" %volume_letter%:\FW_%firmware_choice% /e >nul
 	IF EXIST "%volume_letter%:\switch\ChoiDuJourNX.nro" del /q "%volume_letter%:\switch\ChoiDuJourNX.nro"
 	IF NOT EXIST "%volume_letter%:\switch" mkdir "%volume_letter%:\switch"
@@ -404,10 +373,10 @@ IF "%action_type%"=="1" (
 		del /q "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
 	)
 	copy /V /B "tools\sd_switch\mixed\modular\ChoiDuJourNX\switch\ChoiDuJourNX\ChoiDuJourNX.nro" "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro" >nul
-	echo Les fichiers ont été copiés.
+	call "%associed_language_script%" "copying_end"
 )
 IF "%action_type%"=="3" (
-	echo Copie du firmware sur la SD dans le dossier "FW_%firmware_choice%" et copie du homebrew ChoiDuJour-NX...
+	call "%associed_language_script%" "copying_begin"
 	%windir%\System32\Robocopy.exe "firmware_temp" %volume_letter%:\FW_%firmware_choice% /e >nul
 	IF EXIST "%volume_letter%:\switch\ChoiDuJourNX.nro" del /q "%volume_letter%:\switch\ChoiDuJourNX.nro"
 	IF NOT EXIST "%volume_letter%:\switch" mkdir "%volume_letter%:\switch"
@@ -416,30 +385,28 @@ IF "%action_type%"=="3" (
 		del /q "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro"
 	)
 	copy /V /B "tools\sd_switch\mixed\modular\ChoiDuJourNX\switch\ChoiDuJourNX\ChoiDuJourNX.nro" "%volume_letter%:\switch\ChoiDuJourNX\ChoiDuJourNX.nro" >nul
-	echo Les fichiers ont été copiés.
+	call "%associed_language_script%" "copying_end"
 	echo.
-	echo Maintenant, la préparation du package de mise à jour avec ChoiDuJour va être lancée et vous allez devoir régler ces options.
+	call "%associed_language_script%" "choidujour_special_message"
 	echo.
 	pause
 	call tools\storage\create_update.bat "%~dp0..\..\firmware_temp"
 	mkdir templogs
 )
 echo.
-set /p launch_choidujournx_doc=Souhaitez-vous consulter la documentation pour savoir comment utiliser ChoiDuJourNX (recommandé)? (O/n): 
+call "%associed_language_script%" "choidujournx_doc_launch_choice"
 IF NOT "%launch_choidujournx_doc%"=="" set launch_choidujournx_doc=%launch_choidujournx_doc:~0,1%
-IF /I "%launch_choidujournx_doc%"=="o" start DOC\files\choidujournx.html
+IF /I "%launch_choidujournx_doc%"=="o" start "%language_path%\doc\files\choidujournx.html"
 goto end_script
 
 :cdj_test_max_firmware
 IF %action_type% EQU 2 (
-	echo Impossible d'utiliser ChoiDuJour pour ce firmware, le firmware maximum supporté est le firmware 6.1.0.
+	call "%associed_language_script%" "choidujour_max_firmware_error"
 	exit /b 1
 )
 IF %action_type% EQU 3 (
-	echo Impossible d'utiliser ChoiDuJour pour ce firmware, le firmware maximum supporté est le firmware 6.1.0.
-	echo Cependant, le firmware peut être téléchargé et utilisé avec ChoiDuJourNX.
 	set cdjnx_use=
-	set /p cdjnx_use=Souhaitez-vous seulement télécharger le firmware pour l'utiliser avec ChoiDuJourNX? ^(O/n^): 
+	call "%associed_language_script%" "choidujour_max_firmware_error"
 	IF NOT "!cdjnx_use!"=="" set cdjnx_use=!cdjnx_use:~0,1!
 	IF /i NOT "!cdjnx_use!"=="o" (
 		exit /b 1
@@ -452,7 +419,6 @@ exit /b
 :end_script
 pause 
 :end_script_2
-echo Nettoyage des fichiers temporaires...
 rmdir /s /q templogs 2>nul
 rmdir /s /q "firmware_temp" 2>nul
 endlocal

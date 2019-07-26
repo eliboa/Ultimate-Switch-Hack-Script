@@ -1,31 +1,16 @@
 ::Script by Shadow256
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-@echo off
-chcp 65001 >nul
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-IF EXIST "tools\packs_version.txt" (
-	echo Il semble qu'une mise à jour des packs via le script ait échouée précédemment et n'ai pas été réussie depuis, par sécurité ce script va donc s'arrêter.
-	echo Si vous êtes certains d'avoir mis à jour correctement le dossier des packs (par exemple en retéléchargeant le script et en extrayant le dossier "tools\sd_switch" de l'archive dans le dossier "tools" du script, vous pouvez supprimer manuellement le fichier "tools\packs_version.txt" et relancer ce script et cette erreur n'apparaîtra plus. Notez que si ceci n'a pas été fait correctement, ce script pourrait avoir des comportements anormaux.
-	goto:endscript
-)
-IF EXIST "tools\cheats_version.txt" (
-	echo Il semble qu'une mise à jour des cheats via le script ait échouée précédemment et n'ai pas été réussie depuis, par sécurité ce script va donc s'arrêter.
-	echo Si vous êtes certains d'avoir mis à jour correctement le dossier des cheats (par exemple en retéléchargeant le script et en extrayant le dossier "tools\sd_switch\cheats" de l'archive dans le dossier "tools\sd_switch" du script, vous pouvez supprimer manuellement le fichier "tools\cheats_version.txt" et relancer ce script et cette erreur n'apparaîtra plus. Notez que si ceci n'a pas été fait correctement, ce script ne proposera pas la possibilité de copier les cheats sur la SD.
-	set cheats_update_error=Y
-)
-echo Ce script va vous permettre de préparer une carte SD pour le hack Switch en y installant les outils importants.
-echo Pendant le script, les droits administrateur seront peut-être demandé.
-echo.
-echo ATTENTION: Si vous décidez de formater votre carte SD, toutes les données de celle-ci seront perdues. Sauvegardez les données importante avant de formater.
-echo ATTENTION: Choisissez bien la lettre du volume qui correspond à votre carte SD car aucune vérification ne pourra être faites à ce niveau là.
-echo.
-echo Je ne pourrais être tenu pour responsable de quelque domage que se soit lié à l'utilisation de ce script ou des outils qu'il contient.
-echo.
-echo.
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "intro"
 pause
 :define_volume_letter
 %windir%\system32\wscript //Nologo //B TOOLS\Storage\functions\list_volumes.vbs
@@ -33,12 +18,11 @@ TOOLS\gnuwin32\bin\grep.exe -c "" <templogs\volumes_list.txt >templogs\count.txt
 set /p tempcount=<templogs\count.txt
 del /q templogs\count.txt
 IF "%tempcount%"=="0" (
-	echo Aucun disque compatible trouvé. Veuillez insérer votre carte SD puis relancez le script.
-	echo Le script va maintenant s'arrêté.
+	call "%associed_language_script%" "disk_not_finded_error"
 	goto:endscript
 )
 echo.
-echo Liste des disques:
+call "%associed_language_script%" "disk_list_begin"
 :list_volumes
 IF "%tempcount%"=="0" goto:set_volume_letter
 TOOLS\gnuwin32\bin\tail.exe -%tempcount% <templogs\volumes_list.txt | TOOLS\gnuwin32\bin\head.exe -1
@@ -48,10 +32,10 @@ goto:list_volumes
 echo.
 echo.
 set volume_letter=
-set /p volume_letter=Entrez la lettre du volume de la SD que vous souhaitez utiliser ou entrez "0" pour quitter le script:
+call "%associed_language_script%" "disk_choice"
 call TOOLS\Storage\functions\strlen.bat nb "%volume_letter%"
 IF %nb% EQU 0 (
-	echo La lettre de lecteur ne peut être vide. Réessayez.
+	call "%associed_language_script%" "disk_choice_empty_error"
 	goto:define_volume_letter
 )
 set volume_letter=%volume_letter:~0,1%
@@ -70,96 +54,82 @@ IF %i% LSS %nb% (
 		)
 	)
 	IF "!check_chars_volume_letter!"=="0" (
-		echo Un caractère non autorisé a été saisie dans la lettre du lecteur. Recommencez.
-		set volume_letter=
+		call "%associed_language_script%" "disk_choice_char_error"
 		goto:define_volume_letter
 	)
 )
 IF NOT EXIST "%volume_letter%:\" (
-	echo Ce volume n'existe pas. Recommencez.
-	set volume_letter=
+	call "%associed_language_script%" "disk_choice_not_exist_error"
 	goto:define_volume_letter
 )
 TOOLS\gnuwin32\bin\grep.exe "Lettre volume=%volume_letter%" <templogs\volumes_list.txt | TOOLS\gnuwin32\bin\cut.exe -d ; -f 1 | TOOLS\gnuwin32\bin\cut.exe -d = -f 2 > templogs\tempvar.txt
 set /p temp_volume_letter=<templogs\tempvar.txt
 IF NOT "%volume_letter%"=="%temp_volume_letter%" (
-	echo Cette lettre de volume n'est pas dans la liste. Recommencez.
+	call "%associed_language_script%" "disk_choice_not_in_list_error"
 	goto:define_volume_letter
 )
-set /p format_choice=Souhaitez-vous formaté la SD (volume "%volume_letter%")? (O/n):
+set format_choice=
+call "%associed_language_script%" "disk_format_choice"
 IF NOT "%format_choice%"=="" set format_choice=%format_choice:~0,1%
 IF /i "%format_choice%"=="o" (
 	echo.
-	echo Quel type de formatage souhaitez-vous effectuer:
-	echo 1: EXFAT (la Switch doit avoir le support pour ce format d'installé^)?
-	echo 2: FAT32 (limité au fichier de moins de 4 GO^)?
-	echo Tout autre choix: Annule le formatage.
-	echo.
-	set /p format_type=Choisissez le type de formatage à effectuer:
+	set format_type=
+	call "%associed_language_script%" "disk_format_type_choice"
 ) else (
 	goto:copy_to_sd
 )
 IF "%format_type%"=="1" goto:format_exfat
 IF "%format_type%"=="2" goto:format_fat32
-set format_choice=
 goto:copy_to_sd
 :format_exfat
-echo Formatage en cours...
+call "%associed_language_script%" "disk_formating_begin"
 echo.
 chcp 850 >nul
 format %volume_letter%: /X /Q /FS:EXFAT
 IF %errorlevel% NEQ 0 (
 	chcp 65001 >nul
-	echo Un problème s'est produit pendant la tentative de formatage, le script va maintenant s'arrêter.
+	call "%associed_language_script%" "disk_formating_error"
 	goto:endscript
 ) else (
 chcp 65001 >nul
-	echo Formatage effectué avec succès.
+	call "%associed_language_script%" "disk_formating_success"
 	echo.
 	goto:copy_to_sd
 )
 :format_fat32
-echo Formatage en cours...
+call "%associed_language_script%" "disk_formating_begin"
 echo.
 TOOLS\fat32format\fat32format.exe -q -c128 %volume_letter%
 echo.
 IF "%ERRORLEVEL%"=="5" (
-	echo La demande d'élévation n'a pas été acceptée, le formatage est annulé.
+	call "%associed_language_script%" "disk_formating_fat32_not_admin_error"
 	::echo.
 	goto:copy_to_sd
 )
 IF "%ERRORLEVEL%"=="32" (
-	echo Le formatage n'a pas été effectué.
-	echo Essayez d'éjecter proprement votre clé USB, réinsérez-là et relancez immédiatement ce script.
-	echo Vous pouvez également essayer de fermer toutes les fenêtres de l'explorateur Windows avant le formatage, parfois cela règle le bug.
-	echo.
-	echo Le script va maintenant s'arrêter.
+	call "%associed_language_script%" "disk_formating_fat32_disk_used_error"
 	goto:endscript
 )
 IF "%ERRORLEVEL%"=="2" (
-	echo Le volume à formater n'existe pas. Vous avez peut-être débranché ou éjecté la carte SD durant ce script.
-	echo.
-	echo Le script va maintenant s'arrêter.
+	call "%associed_language_script%" "disk_formating_fat32_disk_not_exist_error"
 	goto:endscript
 )
 IF NOT "%ERRORLEVEL%"=="1" (
 	IF NOT "%ERRORLEVEL%"=="0" (
-		echo Une erreur inconue s'est produite pendant le formatage.
-		echo.
-		echo Le script va maintenant s'arrêter.
+		call "%associed_language_script%" "disk_formating_fat32_unknown_error"
 		goto:endscript
 	)
 )
 IF "%ERRORLEVEL%"=="1" (
-	echo Le formatage a été annulé par l'utilisateur.
+	call "%associed_language_script%" "disk_formating_fat32_canceled_info"
 )
 IF "%ERRORLEVEL%"=="0" (
-	echo Formatage effectué avec succès.
+	call "%associed_language_script%" "disk_formating_success"
 )
 :copy_to_sd
 :define_general_select_profile
 echo.
-echo Sélection du profile général:
+call "%associed_language_script%" "general_profile_select_begin"
 set /a temp_count=0
 copy nul templogs\profiles_list.txt >nul
 IF NOT EXIST "tools\sd_switch\profiles\*.bat" (
@@ -180,7 +150,7 @@ IF EXIST "tools\default_configs\general_profile_all.bat" (
 	set /a general_profile_number=1
 	set /a general_profile_number+=%temp_count%
 	set /a count_default_profile+=1
-	echo !count_default_profile!: Profile Atmosphere + SXOS + Memloader recommandé, ne contient pas le patch NOGC et met juste à jour les fichiers existant de la SD donc ce profile n'est pas toujours adapté.
+	call "%associed_language_script%" "general_profile_select_atmosphere_and_sxos_recommanded_profile_display"
 ) else (
 	set general_no_default_config=Y
 )
@@ -192,7 +162,7 @@ IF EXIST "tools\default_configs\atmosphere_profile_all.bat" (
 	)
 	set /a atmosphere_profile_number+=%temp_count%
 	set /a count_default_profile+=1
-	echo !count_default_profile!: Profile Atmosphere recommandé, ne contient pas le patch NOGC et met juste à jour les fichiers existant de la SD donc ce profile n'est pas toujours adapté.
+	call "%associed_language_script%" "general_profile_select_atmosphere_recommanded_profile_display"
 ) else (
 	set atmosphere_no_default_config=Y
 )
@@ -217,17 +187,13 @@ IF EXIST "tools\default_configs\sxos_profile_all.bat" (
 	)
 	set /a sxos_profile_number+=%temp_count%
 	set /a count_default_profile+=1
-	echo !count_default_profile!: Profile  SXOS recommandé,  met juste à jour les fichiers existant de la SD donc ce profile n'est pas toujours adapté.
+	call "%associed_language_script%" "general_profile_select_sxos_recommanded_profile_display"
 ) else (
 	set sxos_no_default_config=Y
 )
-echo 0: Accéder à la gestion des profiles généraux.
-echo E: Terminer le script sans préparer la SD.
-echo Tout autre choix: Préparer la SD manuellement.
-echo.
 set general_profile_path=
 set general_profile=
-set /p general_profile=Choisissez un profile: 
+call "%associed_language_script%" "general_profile_choice"
 IF /i "%general_profile%"=="e" goto:endscript2
 IF "%general_profile%"=="" (
 	set pass_copy_general_pack=Y
@@ -327,16 +293,16 @@ IF NOT "%pass_copy_mixed_pack%"=="Y" (
 :confirm_settings
 call tools\Storage\prepare_sd_switch_infos.bat
 set confirm_copy=
-	set /p confirm_copy=Souhaitez-vous confirmer ceci? (O/n^): 
+call "%associed_language_script%" "confirm_copy_choice"
 IF NOT "%confirm_copy%"=="" set confirm_copy=%confirm_copy:~0,1%
 IF /i "%confirm_copy%"=="o" (
 	set errorlevel=200
 	goto:test_copy_launch
 ) else IF /i "%confirm_copy%"=="n" (
-	echo Opération annulée.
+	call "%associed_language_script%" "canceled"
 	goto:endscript
 ) else (
-	echo Choix inexistant.
+	call "%associed_language_script%" "bad_choice"
 	goto:confirm_settings
 )
 :test_copy_launch
@@ -345,13 +311,13 @@ IF %errorlevel% EQU 200 (
 ) else IF %errorlevel% EQU 400 (
 	goto:endscript
 ) else (
-	echo Préparation de la SD annulée car une erreur inconnue est survenue, vérifiez que vous n'avez pas supprimer de profiles utilisés dans ce profile général.
-	echo Si le problème persiste, veuillez refaire ce profile.
+	call "%associed_language_script%" "before_copy_error"
 	goto:endscript
 )
 
 :begin_copy
-echo Copie en cours...
+echo.
+call "%associed_language_script%" "copying_begin"
 
 IF /i "%del_files_dest_copy%"=="1" (
 	call :delete_cfw_files
@@ -481,7 +447,7 @@ del /Q /S "%volume_letter%:\rr\payloads\.emptydir" >nul 2>&1
 IF EXIST "%volume_letter%:\tinfoil\" del /Q /S "%volume_letter%:\tinfoil\.emptydir" >nul 2>&1
 IF EXIST "%volume_letter%:\folder_version.txt" del /q "%volume_letter%:\folder_version.txt"
 IF EXIST "%volume_letter%:\switch\folder_version.txt" del /q "%volume_letter%:\switch\folder_version.txt"
-echo Copie terminée.
+call "%associed_language_script%" "copying_end"
 goto:endscript
 
 :copy_modules_pack

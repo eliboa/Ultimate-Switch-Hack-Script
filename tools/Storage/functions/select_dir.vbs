@@ -1,6 +1,6 @@
 Const RETURNONLYFSDIRS = &H1   
 Set oShell = CreateObject("Shell.Application") 
-Set oFolder = oShell.BrowseForFolder(&H0&, "Choisir un dossier", RETURNONLYFSDIRS)
+Set oFolder = oShell.BrowseForFolder(&H0&, Wscript.Arguments.Item(1), RETURNONLYFSDIRS)
 If oFolder is Nothing Then  
 	rep = ""
 Else 

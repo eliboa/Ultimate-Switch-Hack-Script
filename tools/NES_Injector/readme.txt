@@ -44,3 +44,6 @@ Changements:
 
 0.9.6:
 - Corrections de bugs.
+
+0.9.7:
+- Le script n'est maintenant utilisable qu'avec mon Ultimate Switch Hack Script pour des raisons pratiques liées à la traduction de celui-ci.

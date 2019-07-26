@@ -3,12 +3,12 @@ set "info_dir=%~1INFO"
 cls
 call :logo
 echo ********************************************************
-echo Information sur le fichier
+echo FILE - INFORMATION
 echo ********************************************************
 echo.
-echo -- Tapez "0" pour revenir au menu principal du script --
+echo -- Input "0" to go back to the MAIN PROGRAM --
 echo.
-set /p bs="Ou faites glisser un  fichier XCI ou NSP et appuyez sur Entrer: "
+set /p bs="OR DRAG A XCI\NSP\NSX\NCA FILE AND PRESS ENTER: "
 set bs=%bs:"=%
 if /i "%bs%"=="0" goto salida
 set "targt=%bs%"
@@ -18,28 +18,28 @@ if "%Extension%" EQU ".nsp" ( goto sc2 )
 if "%Extension%" EQU ".nsx" ( goto sc2 )
 if "%Extension%" EQU ".xci" ( goto sc2 )
 if "%Extension%" EQU ".nca" ( goto sc3 )
-echo Type de fichier non supporté.
+echo WRONG TYPE OF FILE
 pause
 goto sc1
 :sc2
 cls
 call :logo
 echo .......................................................
-echo Tapez "1" pour voir le contenu du xci/nsp
-echo Tapez "2" pour obtenir la liste de contenu du xci \ nsp
-echo Tapez "3" pour voir les infos de NUT sur le xci/nsp
-echo Tapez "4" pour voir les informations sur le jeu et le FIRMWARE requis du xci/nsp
-echo Tapez "5" pour lire le CNMT du xci/nsp
-echo Input "6" Pour lire le NACP du xci\nsp
-echo Tapez "7" pour vérifier le fichier (xci \ nsp \ nsx \ nca)
+echo Input "1" to get FILE LIST of the xci\nsp
+echo Input "2" to get CONTENT LIST of the xci\nsp
+echo Input "3" to get NUT-INFO of the xci\nsp
+echo Input "4" to get GAME-INFO and FW requirements
+echo Input "5" to READ the CNMT of the xci\nsp
+echo Input "6" to READ the NACP of the xci\nsp
+echo Input "7" to VERIFY file (xci\nsp\nsx\nca)
 echo.
-echo Tapez "b" pour revenir à la sélection du fichier
-echo Tapez "0" pour revenir au menu principal du script --
+echo Input "b" to go back to FILE LOADING
+echo Input "0" to go back to the MAIN PROGRAM
 echo.
-echo Ou glissez un autre fichier pour changer de cible.
+echo --- Or DRAG a New File to change the current target ---
 echo .......................................................
 echo.
-set /p bs="faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 for /f "delims=" %%a in ("%bs%") do set "Extension=%%~xa"
 if "%Extension%" EQU ".*" ( goto wch )
@@ -65,7 +65,7 @@ for /f "delims=" %%a in ("%bs%") do set "Name=%%~na"
 set "targt=%bs%"
 goto sc2
 :wch
-echo Choix inexistant.
+echo WRONG CHOICE
 pause
 goto sc2
 
@@ -73,7 +73,7 @@ goto sc2
 cls
 call :logo
 echo ********************************************************
-echo Voir le contenu du NSP ou de la partition SECURE du XCI
+echo SHOW NSP FILE CONTENT OR XCI SECURE PARTITION CONTENT
 echo ********************************************************
 %pycommand% "%nut%" -o "%info_dir%" --ADVfilelist "%targt%"
 goto sc2
@@ -82,7 +82,7 @@ goto sc2
 cls
 call :logo
 echo ********************************************************
-echo AFFICHER LE CONTENU NSP OU XCI ORGANISÉ PAR ID
+echo SHOW NSP OR XCI CONTENT ARRANGED BY ID
 echo ********************************************************
 %pycommand% "%nut%" -o "%info_dir%" --ADVcontentlist "%targt%"
 goto sc2
@@ -96,16 +96,16 @@ echo ********************************************************
 %pycommand% "%nut%" -i "%targt%"
 echo.
 ECHO ********************************************************
-echo Souhaitez-vous copier ces informations dans un fichier texte?
+echo Do you want to print the information to a text file?
 ECHO ********************************************************
 :n_info_wrong
-echo Tapez "1" pour les copier dans un fichier texte
-echo Tapez "2" pour ne pas les copier dans un fichier texte
+echo Input "1" to print to text file
+echo Input "2" to NOT print to text file
 echo.
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 if /i "%bs%"=="1" goto n_info_print
 if /i "%bs%"=="2" goto sc2
-echo Choix inexistant
+echo WRONG CHOICE
 echo.
 goto n_info_wrong
 :n_info_print
@@ -114,14 +114,14 @@ set "i_file=%info_dir%\%Name%-info.txt"
 %pycommand% "%nut%" -i "%targt%">"%i_file%"
 more +2 "%i_file%">"%i_file%.new"
 move /y "%i_file%.new" "%i_file%" >nul
-ECHO Terminé.
+ECHO DONE
 goto sc2
 
 :f_info
 cls
 call :logo
 echo ********************************************************
-echo Afficher les Informations et données sur le firmware requis
+echo SHOW INFORMATION AND DATA ABOUT THE REQUIRED FIRMWARE
 echo ********************************************************
 %pycommand% "%nut%" -o "%info_dir%" --fw_req "%targt%"
 goto sc2
@@ -130,7 +130,7 @@ goto sc2
 cls
 call :logo
 echo ********************************************************
-echo Afficher les données CMT de META NCA dans NSP\XCI
+echo SHOW CMT DATA FROM META NCA IN NSP\XCI
 echo ********************************************************
 %pycommand% "%nut%" -o "%info_dir%" --Read_cnmt "%targt%"
 goto sc2
@@ -139,9 +139,9 @@ goto sc2
 cls
 call :logo
 echo ********************************************************
-echo Afficher les données NACP du contrôle NCA dans NSP\XCI
-echo *******************************************************
-echo Mise en oeuve de la bibliotheque 0LIAM'S NACP
+echo SHOW NACP DATA FROM CONTROL NCA IN NSP\XCI
+echo ********************************************************
+echo IMPLEMENTATION OF 0LIAM'S NACP LIBRARY
 %pycommand% "%nut%" -o "%info_dir%" --Read_nacp "%targt%"
 goto sc2
 
@@ -149,7 +149,7 @@ goto sc2
 cls
 call :logo
 echo ********************************************************
-echo Vérification  NSP\XCI\NCA
+echo VERIFY A NSP\XCI\NCA
 echo ********************************************************
 %pycommand% "%nut%" -b %buffer% -o "%info_dir%" -v "%targt%" 
 goto sc2
@@ -158,18 +158,18 @@ goto sc2
 cls
 call :logo
 echo .......................................................
-echo Tapez "1" pour obtenir les infos NUT du fichier xci\nsp
-echo Tapez "2" pour lire le CNMT du fichier xci\nsp
-echo Tapez "3" pour lire le NACP du fichier xci\nsp
-echo Tapez "4" pour vérifier le fichier (xci\nsp\nsx\nca)
+echo Input "1" to get NUT-INFO of the xci\nsp
+echo Input "2" to READ the CNMT of the xci\nsp
+echo Input "3" to READ the NACP of the xci\nsp
+echo Input "4" to VERIFY file (xci\nsp\nsx\nca)
 echo.
-echo Tapez "b" pour revenir au chargement de fichiers
-echo Tapez "0" pour revenir au programme principal
+echo Input "b" to go back to FILE LOADING
+echo Input "0" to go back to the MAIN PROGRAM
 echo.
-echo --- ou glisser un nouveau fichier pour changer la destination actuelle ---
+echo --- Or DRAG a New File to change the current target ---
 echo .......................................................
 echo.
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 set bs=%bs:"=%
 for /f "delims=" %%a in ("%bs%") do set "Extension=%%~xa"
 if "%Extension%" EQU ".*" ( goto wch_nca )
@@ -192,7 +192,7 @@ for /f "delims=" %%a in ("%bs%") do set "Name=%%~na"
 set "targt=%bs%"
 goto sc3
 :wch_nca
-echo Mauvaix choix
+echo WRONG CHOICE
 pause
 goto sc3
 
@@ -200,21 +200,21 @@ goto sc3
 cls
 call :logo
 echo ********************************************************
-echo NUT - information par BLAWAR
+echo NUT - INFO BY BLAWAR
 echo ********************************************************
 %pycommand% "%nut%" -i "%targt%"
 echo.
 ECHO ********************************************************
-echo Souhaitez-vous copier ces informations dans un fichier texte?
+echo Do you want to print the information to a text file?
 ECHO ********************************************************
 :n_info_wrong_nca
-echo Tapez "1" pour les copier dans un fichier texte
-echo Tapez "2" pour ne pas les copier dans un fichier texte
+echo Input "1" to print to text file
+echo Input "2" to NOT print to text file
 echo.
-set /p bs="Faites votre choix: "
+set /p bs="Enter your choice: "
 if /i "%bs%"=="1" goto n_info_print_nca
 if /i "%bs%"=="2" goto sc3
-echo Choix inexistant
+echo WRONG CHOICE
 echo.
 goto n_info_wrong_nca
 :n_info_print_nca
@@ -223,14 +223,14 @@ set "i_file=%info_dir%\%Name%-info.txt"
 %pycommand% "%nut%" -i "%targt%">"%i_file%"
 more +2 "%i_file%">"%i_file%.new"
 move /y "%i_file%.new" "%i_file%" >nul
-ECHO Terminé
+ECHO DONE
 goto sc3
 
 :r_cnmt_nca
 cls
 call :logo
 echo ********************************************************
-echo Afficher les données CMT de META NCA dans le fichier NSP\XCI
+echo SHOW CMT DATA FROM META NCA IN NSP\XCI
 echo ********************************************************
 %pycommand% "%nut%" -o "%info_dir%" --Read_cnmt "%targt%"
 goto sc3
@@ -239,9 +239,9 @@ goto sc3
 cls
 call :logo
 echo ********************************************************
-echo Afficher les données NACP de contrôle NCA dans le fichier NSP\XCI
+echo SHOW NACP DATA FROM CONTROL NCA IN NSP\XCI
 echo ********************************************************
-echo Mise en oeuve de la bibliotheque 0LIAM'S NACP
+echo IMPLEMENTATION OF 0LIAM'S NACP LIBRARY
 %pycommand% "%nut%" -o "%info_dir%" --Read_nacp "%targt%"
 goto sc3
 
@@ -249,7 +249,7 @@ goto sc3
 cls
 call :logo
 echo ********************************************************
-echo Vérifier un  NSP \ XCI \ NCA
+echo VERIFY A NSP\XCI\NCA
 echo ********************************************************
 %pycommand% "%nut%" -b %buffer% -o "%info_dir%" -v "%targt%" 
 goto sc3
@@ -273,7 +273,7 @@ ECHO =============================     BY JULESONTHEROAD     ===================
 ECHO -------------------------------------------------------------------------------------
 ECHO "                                POWERED BY SQUIRREL                                "
 ECHO "                    BASED IN THE WORK OF BLAWAR AND LUCA FRAGA                     "
-ECHO                                     VERSION %program_version%
+ECHO                                     VERSION 0.87
 ECHO -------------------------------------------------------------------------------------                   
 ECHO Program's github: https://github.com/julesontheroad/NSC_BUILDER
 ECHO Blawar's github:  https://github.com/blawar

@@ -1,48 +1,43 @@
 ::Script by Shadow256
-chcp 65001 >nul
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 set script_path=%~dp0
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-echo Ce script va vous permettre d'installer un fichier NSP ou un dossier contenant des fichiers NSP sur une Switch connectée sur le réseau.
-echo Il faut que Tinfoil soit lancé en mode réseau sur la console et que la console soit relié au même réseau que le PC sur lequel est exécuté ce script.
-echo Attention: Accepter la demande d'autorisation de votre pare-feu si elle s'affiche car sinon l'installation ne fonctionnera pas.
-echo Attention: Il est conseillé de désactiver la mise en veille de la Switch pendant le processus pour éviter que les jeux ne soient pas complètements installés si la console se met en veille durant l'installation.
-echo.
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "intro"
 pause
-set /p custom_ip=Entrez l'adresse IP de votre Switch: 
+set custom_ip=
+call "%associed_language_script%" "ip_choice"
 :select_install_type
-echo.
-echo Que souhaitez-vous faire:
-echo 1: Installer un fichier NSP?
-echo 2: Installer plusieurs NSP en sélectionnant un dossier sans la prise en compte des sous-dossiers?
-echo 3: Installer plusieurs NSP en sélectionnant un dossier avec la prise en compte des sous-dossiers?
-echo N'importe quel autre choix: Revenir au menu précédent.
-echo.
-set /p install_type=Choisissez la méthode d'installation: 
+set install_type=
+call "%associed_language_script%" "install_type_choice"
 IF NOT "%install_type%"=="" set install_type=%install_type:~0,1%
 IF "%install_type%"=="1" (
-	%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\open_file.vbs "" "Fichiers NSP (*.nsp)|*.nsp|" "Sélection du fichier NSP à installer" "templogs\tempvar.txt"
+	call "%associed_language_script%" "file_choice"
 	set /p filepath=<templogs\tempvar.txt
 	IF "!filepath!"=="" (
-		echo Installation annulée.
+		call "%associed_language_script%" "canceled"
 		goto:endscript
 	)
 ) else IF "%install_type%"=="2" (
-%windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\select_dir.vbs" "templogs\tempvar.txt"
+	call "%associed_language_script%" "folder_choice"
 	set /p filepath=<"templogs\tempvar.txt"
 	IF "!filepath!"=="" (
-		echo Installation annulée.
+		call "%associed_language_script%" "canceled"
 		goto:endscript
 	)
 ) else IF "%install_type%"=="3" (
-	%windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\select_dir.vbs" "templogs\tempvar.txt"
+	call "%associed_language_script%" "folder_choice"
 	set /p filepath=<"templogs\tempvar.txt"
 	IF "!filepath!"=="" (
-		echo Installation annulée.
+		call "%associed_language_script%" "canceled"
 		goto:endscript
 	)
 ) else (
@@ -52,7 +47,7 @@ set filepath=%filepath:\\=\%
 IF "%install_type%"=="1" (
 	TOOLS\python3_scripts\remote_NSP\remote_NSP.exe %custom_ip% "%filepath%"
 	IF !errorlevel! NEQ 0 (
-		echo Une erreur s'est produite pendant l'installation.
+		call "%associed_language_script%" "install_error"
 		goto:endscript
 	)
 	)
@@ -62,7 +57,7 @@ IF "%install_type%"=="2" (
 	FOR %%f in (*.nsp) do (
 		"%script_path%\..\python3_scripts\remote_NSP\remote_NSP.exe" %custom_ip% "%filepath%\%%f"
 		IF !errorlevel! NEQ 0 (
-			echo Erreur d'installation pour le fichier %filepath%\%%f
+			call "%associed_language_script%" "multi_install_error" "%%f"
 			echo.
 		)
 	)
@@ -77,7 +72,7 @@ IF "%install_type%"=="3" (
 	set /p tempcount=<"%script_path%\..\..\templogs\count.txt"
 	del /q "%script_path%\..\..\templogs\count.txt"
 	IF "!tempcount!"=="0" (
-		echo Il n'y a aucun fichier NSP à installer dans ce dossier ou ses sous-dossiers.
+		call "%associed_language_script%" "no_file_to_install_error"
 		goto:endscript
 	)
 	:installing
@@ -88,7 +83,7 @@ IF "%install_type%"=="3" (
 	set /p temp_nsp=<"%script_path%\..\..\templogs\nsp_list2.txt"
 	"%script_path%\..\python3_scripts\remote_NSP\remote_NSP.exe" %custom_ip% "%filepath%\!temp_nsp!"
 	IF !errorlevel! NEQ 0 (
-		echo Erreur d'installation pour le fichier %filepath%\!temp_nsp!
+		call "%associed_language_script%" "multi_recursive_install_error"
 		echo.
 	)
 	set temp_nsp=
@@ -99,7 +94,7 @@ IF "%install_type%"=="3" (
 	cd "%script_path%\..\.."
 )
 echo.
-echo Installation terminée.
+call "%associed_language_script%" "install_end"
 :endscript
 pause
 :finish_script

@@ -1,10 +1,16 @@
 ::Script by Shadow256, using a part of a script of Eliboa
-chcp 65001 > nul
+call tools\storage\functions\ini_scripts.bat
+Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
+call "%associed_language_script%" "display_title"
 ping /n 2 www.google.com >nul 2>&1
 IF %errorlevel% NEQ 0 (
-	echo Aucune connexion internet disponible, mise à jour annulée.
+	call "%associed_language_script%" "no_internet_connection_error"
 	goto:end_script
 )
+call "%associed_language_script%" "update_begin"
 cd tools\shofel2
 IF EXIST "master.zip" del /q master.zip
 if exist conf\ RMDIR /S /Q conf
@@ -13,7 +19,7 @@ if exist dtb\ RMDIR /S /Q dtb
 if exist image\ RMDIR /S /Q image
 if exist kernel\ RMDIR /S /Q kernel
 ..\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "master.zip" https://github.com/SoulCipher/shofel2_linux/archive/master.zip
-title Shadow256 Ultimate Switch Hack Script
+call "%associed_language_script%" "display_title"
 ..\7zip\7za.exe x -y -sccUTF-8 "master.zip" -r
 del /q master.zip
 move shofel2_linux-master\conf .\
@@ -25,6 +31,7 @@ move shofel2_linux-master\kernel .\
 rmdir /s/q shofel2_linux-master
 cd ..\..
 echo.
-echo Mise à jour effectuée.
+call "%associed_language_script%" "update_end"
 :end_script
 pause
+endlocal

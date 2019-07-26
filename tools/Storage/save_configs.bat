@@ -1,15 +1,20 @@
 ::Script by Shadow256
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-chcp 65001 >nul
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
+call "%associed_language_script%" "display_title"
 :define_filename
-set /p filename=Entrez le nom de la sauvegarde: 
+set filename=
+call "%associed_language_script%" "filename_choice"
 IF "%filename%"=="" (
-	echo Le nom de la sauvegarde ne peut être vide.
+	call "%associed_language_script%" "filename_empty_error"
 	goto:define_filename
 ) else (
 	set filename=%filename:"=%
@@ -20,20 +25,28 @@ set i=0
 IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^/ ^* ^? ^: ^^ ^| ^\) do (
 		IF "!filename:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans le nom de la sauvegarde.
-			set filename=
+			call "%associed_language_script%" "filename_char_error"
 			goto:define_filename
 		)
 	)
 	set /a i+=1
 	goto:check_chars_filename
 )
-%windir%\system32\wscript.exe //Nologo tools\Storage\functions\select_dir.vbs "templogs\tempvar.txt"
+call "%associed_language_script%" "output_folder_choice"
 set /p filepath=<templogs\tempvar.txt
 IF NOT "%filepath%"=="" set filepath=%filepath%\
 IF NOT "%filepath%"=="" set filepath=%filepath:\\=\%
-echo Sauvegarde en cours... 
+call "%associed_language_script%" "save_begin"
 IF NOT EXIST KEY_SAVES mkdir KEY_SAVES
+IF NOT EXIST KEY_SAVES\languages mkdir KEY_SAVES\languages
+cd languages
+for /f %%p in ("*") do (
+	IF EXIST "%%p\script_general_config.bat" (
+		IF NOT EXIST "KEY_SAVES\languages\%%p" mkdir "KEY_SAVES\languages\%%p"
+	)
+	IF EXIST "%%p\script_general_config.bat" copy /v "%%p\script_general_config.bat" "KEY_SAVES\languages\%%p\script_general_config.bat"
+)
+cd ..
 IF NOT EXIST KEY_SAVES\tools mkdir KEY_SAVES\tools
 IF NOT EXIST "KEY_SAVES\tools\Hactool_based_programs" mkdir "KEY_SAVES\tools\Hactool_based_programs"
 copy /V tools\Hactool_based_programs\keys.txt KEY_SAVES\tools\Hactool_based_programs\keys.txt
@@ -61,8 +74,6 @@ IF NOT EXIST "KEY_SAVES\tools\sd_switch\modules\profiles" mkdir "KEY_SAVES\tools
 copy /V "tools\sd_switch\modules\profiles\*.ini" "KEY_SAVES\tools\sd_switch\modules\profiles\"
 IF NOT EXIST "KEY_SAVES\tools\sd_switch\profiles" mkdir "KEY_SAVES\tools\sd_switch\profiles"
 copy /V "tools\sd_switch\profiles\*.bat" "KEY_SAVES\tools\sd_switch\profiles\"
-IF NOT EXIST KEY_SAVES\tools\Storage mkdir KEY_SAVES\tools\Storage
-copy /v tools\Storage\verif_update.ini KEY_SAVES\tools\Storage\verif_update.ini
 IF NOT EXIST KEY_SAVES\tools\toolbox mkdir KEY_SAVES\tools\toolbox
 %windir%\System32\Robocopy.exe tools\toolbox KEY_SAVES\tools\toolbox\ /e
 cd KEY_SAVES
@@ -72,7 +83,7 @@ IF NOT "%filepath%"=="" (
 	..\tools\7zip\7za.exe a -y -tzip -sdel -sccUTF-8 "..\%filename%".ushs  -r
 )
 cd ..
-echo Sauvegarde des fichiers de configurations terminée. 
+call "%associed_language_script%" "save_end"
 rmdir /s /q KEY_SAVES
 rmdir /s /q templogs
 pause 

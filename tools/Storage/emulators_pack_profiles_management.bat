@@ -1,7 +1,9 @@
 ::Script by Shadow256
-chcp 65001 >nul
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-@echo off
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
@@ -10,19 +12,10 @@ mkdir templogs
 IF NOT EXIST "tools\sd_switch\emulators\profiles\*.*" mkdir "tools\sd_switch\emulators\profiles"
 
 :define_action_choice
-cls
-echo Gestion des profiles d'émulateurs
-echo.
-echo Que souhaitez-vous faire?
-echo.
-echo 1: Créer un profile?
-echo 2: Modifier un profile?
-echo 3: Supprimer un profile?
-echo 0: Obtenir la liste des émulateurs d'un profile?
-echo N'importe quel autre choix: Revenir au menu précédent?
-echo.
 set action_choice=
-set /p action_choice=Faites votre choix: 
+cls
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "main_action_choice"
 IF "%action_choice%"=="1" cls & goto:create_profile
 IF "%action_choice%"=="2" cls & goto:modify_profile
 IF "%action_choice%"=="3" cls & goto:remove_profile
@@ -30,25 +23,23 @@ IF "%action_choice%"=="0" cls & goto:info_profile
 goto:end_script
 
 :info_profile
-echo Information sur un profile
+call "%associed_language_script%" "intro_info_profile"
 call :select_profile
 IF %errorlevel% EQU 404 (
-	echo Aucun profile existant, veuillez en créer un pour obtenir des infos.
+	call "%associed_language_script%" "info_no_profile_exist_error"
+	pause
 	goto:define_action_choice
 )
 echo.
-echo Nom du profile: %profile_selected:~0,-4%
-echo Emulateurs présents dans le profile:
+call "%associed_language_script%" "info_profile"
 call :list_homebrews_in_profile "%profile_selected%"
 pause
 goto:define_action_choice
 
 :create_profile
-echo Création d'un profile
-echo.
 :define_new_profile_name
 set new_profile_name=
-set /p new_profile_name=Entrez le nom du profile, laisser vide pour annuler l'opération: 
+call "%associed_language_script%" "intro_create_profile"
 IF "%new_profile_name%"=="" goto:define_action_choice
 call TOOLS\Storage\functions\strlen.bat nb "%new_profile_name%"
 set i=0
@@ -56,8 +47,7 @@ set i=0
 IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^/ ^* ^? ^: ^^ ^| ^\ ^( ^) ^") do (
 		IF "!new_profile_name:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans le nom du profile.
-			set new_profile_name=
+			call "%associed_language_script%" "char_error_in_profile_name"
 			goto:define_new_profile_name
 		)
 	)
@@ -65,32 +55,34 @@ IF %i% LSS %nb% (
 	goto:check_chars_new_profile_name
 )
 copy nul "tools\sd_switch\emulators\profiles\%new_profile_name%.ini" >nul
-echo Profile "%new_profile_name%" créé avec succès.
+call "%associed_language_script%" "create_profile_success"
 set profile_selected=%new_profile_name%.ini
 goto:skip_modify_select_profile
 
 :modify_profile
-echo Modification d'un profile
+call "%associed_language_script%" "intro_modify_profile"
 echo.
 call :select_profile
 IF %errorlevel% EQU 404 (
-	echo Aucun profile à modifier, veuillez en créer un.
+	call "%associed_language_script%" "modify_no_profile_exist_error"
+	pause
 	goto:define_action_choice
 )
 :skip_modify_select_profile
 IF %errorlevel% EQU 0 (
 	call :add_del_homebrew_in_profile "%profile_selected%"
 ) else (
-	echo Opération annulée.
+	goto:define_action_choice
 )
 goto:define_action_choice
 
 :remove_profile
-echo Suppression d'un profile
+call "%associed_language_script%" "intro_delete_profile"
 echo.
 call :select_profile
 IF %errorlevel% EQU 404 (
-	echo Aucun profile à supprimer, veuillez en créer un.
+	call "%associed_language_script%" "delete_no_profile_exist_error"
+	pause
 	goto:define_action_choice
 )
 IF %errorlevel% EQU 0 (
@@ -109,35 +101,36 @@ IF %errorlevel% EQU 0 (
 	IF !temp_count! EQU 0 (
 		goto:removing_profile
 	) else (
-		echo Ce profile est utilisé dans les profiles généraux suivant:
+		call "%associed_language_script%" "delete_profile_finded_in_general_profile"
 		for /l %%k in (1,1,!temp_count!) do (
 			echo !temp_used_profile_list_%%k:~0,-4!
 		)
 	)
 	echo.
 	set define_del_profile=
-	set /p define_del_profile=Supprimer ce profile supprimera les profiles généraux auxquels il est lié, souhaitez-vous continuer? ^(O/n^): 
+	call "%associed_language_script%" "delete_profile_finded_in_general_profile2"
 	IF NOT "!define_del_profile!"=="" set define_del_profile=!define_del_profile:~0,1!
 	IF /i "!define_del_profile!"=="o" (
 		for /l %%k in (1,1,!temp_count!) do (
 			del /q tools\sd_switch\profiles\!temp_used_profile_list_%%k!
 		)
 	) else (
-		echo Opération annulée.
+		call "%associed_language_script%" "canceled"
 		endlocal
+		pause
 		goto:define_action_choice
 	)
 	:removing_profile
 	del /q "tools\sd_switch\emulators\profiles\%profile_selected%" >nul
-	echo Profile "%profile_selected:~0,-4%" supprimé avec succès.
+	call "%associed_language_script%" "delete_profile_success"
 	endlocal
+	pause
 )
-pause
 goto:define_action_choice
 
 :select_profile
 set profile_selected=
-echo Sélectionner un profile:
+call "%associed_language_script%" "intro_select_profile"
 IF NOT EXIST "tools\sd_switch\emulators\profiles\*.ini" exit /b 404
 set /a temp_count=1
 copy nul templogs\profiles_list.txt >nul
@@ -150,10 +143,8 @@ for %%p in (*.ini) do (
 	set /a temp_count+=1
 )
 cd ..\..\..\..
-echo N'importe quel autre choix: Revenir à l'action précédente.
-echo.
 set profile_choice=
-set /p profile_choice=Choisir un profile: 
+call "%associed_language_script%" "select_profile_choice"
 IF "%profile_choice%"=="" set /a profile_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%profile_choice%"
 set i=0
@@ -184,7 +175,7 @@ copy nul templogs\homebrews_list.txt >nul
 tools\gnuwin32\bin\grep.exe -c "" <"tools\sd_switch\emulators\profiles\%~1" > templogs\tempvar.txt
 set /p count_homebrews=<templogs\tempvar.txt
 IF %count_homebrews% EQU 0 (
-	echo Aucun émulateur configuré pour ce profile.
+	call "%associed_language_script%" "no_emulators_in_profile_error"
 	endlocal
 	exit /b
 )
@@ -223,12 +214,12 @@ IF %modulo% NEQ 0 set /a page_number+=1
 :skip:modulo_calc
 :recall_add_remove_homebrew
 IF %count_homebrews% LEQ 20 (
-	echo Sélection d'un émulateur à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%"
+	call "%associed_language_script%" "intro_emulators_one_page"
 ) else (
-	echo Sélection d'un émulateur à ajouter ou à supprimer pour le profile "%temp_profile:~0,-4%", page %selected_page%/%page_number%
+	call "%associed_language_script%" "intro_emulators_multi_page"
 )
 echo.
-echo Les émulateurs dont le nom est préfixé d'un "*" sont les émulateurs présent dans le profile.
+call "%associed_language_script%" "add_remove_emulators_info"
 echo.
 IF %modulo% NEQ 0 (
 	IF %selected_page% EQU %page_number% (
@@ -256,11 +247,9 @@ for /l %%i in (%temp_min_display_homebrews%,1,%temp_max_display_homebrews%) do (
 		echo %%i: *!homebrews_list_%%i_0!
 	)
 )
-IF %count_homebrews% GTR 20 echo P: Changer de page, faire suivre le P d'un numéro de page valide.
-echo N'importe quel autre choix: Arrêter la modification de la liste des homebrews du profile.
-echo.
+IF %count_homebrews% GTR 20 call "%associed_language_script%" "change_page_info"
 set homebrew_choice=
-set /p homebrew_choice=Choisir un homebrew pour l'ajouter ou le supprimer: 
+call "%associed_language_script%" "add_remove_emulators_choice_ending"
 IF "%homebrew_choice%"=="" set /a homebrew_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%homebrew_choice%"
 IF /i "%homebrew_choice:~0,1%"=="p" (
@@ -289,11 +278,11 @@ exit /b 400
 )
 IF "%change_page%"=="Y" (
 	IF %homebrew_choice% GTR %page_number% (
-		echo Cette page n'existe pas.
+		call "%associed_language_script%" "page_not_exist_error"
 		set change_page=
 		goto:recall_add_remove_homebrew
 	) else IF %homebrew_choice% LEQ 0 (
-	echo Cette page n'existe pas.
+	call "%associed_language_script%" "page_not_exist_error"
 	set change_page=
 	goto:recall_add_remove_homebrew
 	) else (
@@ -336,7 +325,7 @@ set /p count_homebrews=<templogs\tempvar.txt
 set temp_count=1
 :listing_homebrews
 IF %count_homebrews% EQU 0 (
-	echo Erreur, il ne semble y avoir aucun émulateur dans le dossier "tools\sd_switch\emulators\pack" du script, le processus ne peut continuer.
+	call "%associed_language_script%" "no_emulators_in_emulators_folder"
 	exit /b 404
 )
 IF %temp_count% GTR %count_homebrews% goto:skip_listing_homebrews

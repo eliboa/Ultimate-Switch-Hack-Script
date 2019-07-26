@@ -1,7 +1,9 @@
 ::Script by Shadow256
-chcp 65001 >nul
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-@echo off
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
@@ -11,18 +13,9 @@ IF NOT EXIST "tools\sd_switch\atmosphere_emummc_profiles\*.*" mkdir "tools\sd_sw
 
 :define_action_choice
 cls
-echo Gestion des profiles d'emummc pour Atmosphere
-echo.
-echo Que souhaitez-vous faire?
-echo.
-echo 1: Créer un profile?
-echo 2: Modifier un profile?
-echo 3: Supprimer un profile?
-echo 0: Obtenir la configuration de l'emummc d'un profile?
-echo N'importe quel autre choix: Revenir au menu précédent?
-echo.
+call "%associed_language_script%" "display_title"
 set action_choice=
-set /p action_choice=Faites votre choix: 
+call "%associed_language_script%" "main_action_choice"
 IF "%action_choice%"=="1" cls & goto:create_profile
 IF "%action_choice%"=="2" cls & goto:modify_profile
 IF "%action_choice%"=="3" cls & goto:remove_profile
@@ -30,24 +23,23 @@ IF "%action_choice%"=="0" cls & goto:info_profile
 goto:end_script
 
 :info_profile
-echo Information sur un profile
+call "%associed_language_script%" "intro_info_profile"
 call :select_profile
 IF %errorlevel% EQU 404 (
-	echo Aucun profile existant, veuillez en créer un pour obtenir des infos.
+	call "%associed_language_script%" "info_no_profile_exist_error"
+	pause
 	goto:define_action_choice
 )
 echo.
-echo Nom du profile: %profile_selected:~0,-4%
+call "%associed_language_script%" "info_profile"
 call :parse_emummc.ini_file "%profile_selected%" "display"
 pause
 goto:define_action_choice
 
 :create_profile
-echo Création d'un profile
-echo.
 :define_new_profile_name
 set new_profile_name=
-set /p new_profile_name=Entrez le nom du profile, laisser vide pour annuler l'opération: 
+call "%associed_language_script%" "intro_create_profile"
 IF "%new_profile_name%"=="" goto:define_action_choice
 call TOOLS\Storage\functions\strlen.bat nb "%new_profile_name%"
 set i=0
@@ -55,7 +47,7 @@ set i=0
 IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^/ ^* ^? ^: ^^ ^| ^\ ^( ^) ^") do (
 		IF "!new_profile_name:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans le nom du profile.
+			call "%associed_language_script%" "char_error_in_profile_name"
 			set new_profile_name=
 			goto:define_new_profile_name
 		)
@@ -64,32 +56,34 @@ IF %i% LSS %nb% (
 	goto:check_chars_new_profile_name
 )
 copy nul "tools\sd_switch\atmosphere_emummc_profiles\%new_profile_name%.ini" >nul
-echo Profile "%new_profile_name%" créé avec succès.
+call "%associed_language_script%" "create_profile_success"
 set profile_selected=%new_profile_name%.ini
 goto:skip_modify_select_profile
 
 :modify_profile
-echo Modification d'un profile
+call "%associed_language_script%" "intro_modify_profile"
 echo.
 call :select_profile
 IF %errorlevel% EQU 404 (
-	echo Aucun profile à modifier, veuillez en créer un.
+	call "%associed_language_script%" "modify_no_profile_exist_error"
+	pause
 	goto:define_action_choice
 )
 :skip_modify_select_profile
 IF %errorlevel% EQU 0 (
 	call :emunand_config "%profile_selected%"
 ) else (
-	echo Opération annulée.
+	goto:define_action_choice
 )
 goto:define_action_choice
 
 :remove_profile
-echo Suppression d'un profile
+call "%associed_language_script%" "intro_delete_profile"
 echo.
 call :select_profile
 IF %errorlevel% EQU 404 (
-	echo Aucun profile à supprimer, veuillez en créer un.
+	call "%associed_language_script%" "delete_no_profile_exist_error"
+	pause
 	goto:define_action_choice
 )
 IF %errorlevel% EQU 0 (
@@ -115,35 +109,36 @@ IF %errorlevel% EQU 0 (
 	IF !temp_count! EQU 0 (
 		goto:removing_profile
 	) else (
-		echo Ce profile est utilisé dans les profiles généraux suivant:
+		call "%associed_language_script%" "delete_profile_finded_in_general_profile"
 		for /l %%k in (1,1,!temp_count!) do (
 			echo !temp_used_profile_list_%%k:~0,-4!
 		)
 	)
 	echo.
 	set define_del_profile=
-	set /p define_del_profile=Supprimer ce profile supprimera les profiles généraux auxquels il est lié, souhaitez-vous continuer? ^(O/n^): 
+	call "%associed_language_script%" "delete_profile_finded_in_general_profile2"
 	IF NOT "!define_del_profile!"=="" set define_del_profile=!define_del_profile:~0,1!
 	IF /i "!define_del_profile!"=="o" (
 		for /l %%k in (1,1,!temp_count!) do (
 			del /q tools\sd_switch\profiles\!temp_used_profile_list_%%k!
 		)
 	) else (
-		echo Opération annulée.
+		call "%associed_language_script%" "canceled"
 		endlocal
+		pause
 		goto:define_action_choice
 	)
 	:removing_profile
 	del /q "tools\sd_switch\atmosphere_emummc_profiles\%profile_selected%" >nul
-	echo Profile "%profile_selected:~0,-4%" supprimé avec succès.
+	call "%associed_language_script%" "delete_profile_success"
 	endlocal
+	pause
 )
-pause
 goto:define_action_choice
 
 :select_profile
 set profile_selected=
-echo Sélectionner un profile:
+call "%associed_language_script%" "intro_select_profile"
 IF NOT EXIST "tools\sd_switch\atmosphere_emummc_profiles\*.ini" exit /b 404
 set /a temp_count=1
 copy nul templogs\profiles_list.txt >nul
@@ -156,10 +151,8 @@ for %%p in (*.ini) do (
 	set /a temp_count+=1
 )
 cd ..\..\..
-echo N'importe quel autre choix: Revenir à l'action précédente.
-echo.
 set profile_choice=
-set /p profile_choice=Choisir un profile: 
+call "%associed_language_script%" "select_profile_choice"
 IF "%profile_choice%"=="" set /a profile_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%profile_choice%"
 set i=0
@@ -224,54 +217,23 @@ IF NOT "%emummc_nintendo_path%"=="" set emummc_nintendo_path=%emummc_nintendo_pa
 IF NOT "%~2"=="display" (
 	exit /b
 ) else (
-	IF /i "%emunand_enable%"=="o" (
-		echo Emunand activée avec les paramètres suivants:
-		IF "%emummc_id%"=="" (
-			echo ID de l'emunand par défaut.
-		) else (
-			echo ID de l'emunand: %emummc_id%
-		)
-		IF "%emummc_title%"=="" (
-			echo Titre de l'emunand par défaut.
-		) else (
-			echo Titre de l'emunand: %emummc_title%
-		)
-		IF "%emummc_sector%"=="" (
-			echo Aucun secteur de démarrage configuré.
-		) else (
-			echo Secteur de démarrage de l'emunand: %emummc_sector%
-		)
-		IF "%emummc_path%"=="" (
-			echo Aucun chemin vers les fichiers de dump de la nand défini.
-		) else (
-			echo Chemin vers les fichiers de dump de la nand: %emummc_path%
-		)
-		IF "%emummc_nintendo_path%"=="" (
-			echo Chemin du dossier Nintendo de l'emunand par défaut.
-		) else (
-			echo Chemin du dossier Nintendo de l'emunand: %emummc_nintendo_path%
-		)
-	) else (
-		echo Emunand désactivée.
-	)
+	call "%associed_language_script%" "display_emummc_config_parsed"
 )
 exit /b
 
 :emunand_config
 echo.
-echo Configuration de l'emunand
-echo.
 set emunand_enable=
-set /p "emunand_enable=Souhaitez-vous activer l'emunand? (O/n): "
+call "%associed_language_script%" "emummc_config_enable_choice"
 IF NOT "%emunand_enable%"=="" set emunand_enable=%emunand_enable:~0,1%
 IF /i NOT "%emunand_enable%"=="o" goto:skip_emunand_config
 :define_emummc_id
 set emummc_id=
-set /p emummc_id=Définir l'ID de l'emunand (laisser vide pour utiliser l'ID par défaut) (ne pas noter le 0x de début) (4 caractères maximum): 
+call "%associed_language_script%" "emummc_config_enable_choice"
 IF "%emummc_id%"=="" goto:skip_define_emummc_id
 call TOOLS\Storage\functions\strlen.bat nb "%emummc_id%"
 IF %nb% GTR 4 (
-	echo L'ID de l'emunand doit comprendre 4 caractères hexadécimaux au maximum.
+	call "%associed_language_script%" "emummc_id_size_error"
 	goto:define_emummc_id
 )
 call TOOLS\Storage\functions\CONV_VAR_to_MAJ.bat emummc_id
@@ -284,16 +246,16 @@ IF %i% LSS %nb% (
 			goto:check_chars_emummc_id
 		)
 	)
-	echo Un caractère non autorisé a été saisie dans l'ID de l'emunand.
+	call "%associed_language_script%" "emummc_id_char_error"
 	goto:define_emummc_id
 )
 :skip_define_emummc_id
 :define_emummc_title
 set emummc_title=
-set /p emummc_title=Définir le titre de l'emunand (laisser vide pour garder le titre par défaut): 
+call "%associed_language_script%" "emummc_title_choice"
 :define_emummc_sector
 set emummc_sector=
-set /p emummc_sector=Définir le secteur de la partition démarrant l'emunand (si emunand via fichiers, laisser cette valeur vide) (ne pas noter le 0x de début): 
+call "%associed_language_script%" "emummc_sector_choice"
 IF "%emummc_sector%"=="" goto:skip_define_emummc_sector
 call TOOLS\Storage\functions\strlen.bat nb "%emummc_sector%"
 call TOOLS\Storage\functions\CONV_VAR_to_MAJ.bat emummc_sector
@@ -306,21 +268,21 @@ IF %i% LSS %nb% (
 			goto:check_chars_emummc_sector
 		)
 	)
-	echo Un caractère non autorisé a été saisie dans le secteur de démarrage de l'emunand.
+	call "%associed_language_script%" "emummc_sector_char_error"
 	goto:define_emummc_sector
 )
 goto:define_emummc_nintendo_path
 :skip_define_emummc_sector
 set emummc_path=
-set /p emummc_path=Définir le chemin vers le dossier contenant les fichiers permettant de booter l'emunand (si laisser vide, l'emunand sera désactivée): 
+call "%associed_language_script%" "emummc_path_choice"
 IF "%emummc_path%"=="" (
-	echo Aucun secteur de démarrage ni chemin de dossier vers des fichiers d'un dump de nand défini, l'emunand va donc être désactivée.
+	call "%associed_language_script%" "emummc_no_sector_or_path_error"
 	set emunand_enable=n
 	goto:skip_emunand_config
 )
 :define_emummc_nintendo_path
 set emummc_nintendo_path=
-set /p emummc_nintendo_path=Définir le chemin du dossier nintendo de l'emunand (laisser vide pour garder le chemin par défaut): 
+call "%associed_language_script%" "emummc_nintendo_path_choice"
 :skip_emunand_config
 :copy_atmosphere_emummc_configuration
 echo [emummc]>"tools\sd_switch\atmosphere_emummc_profiles\%~1"
@@ -345,7 +307,7 @@ IF NOT "%emummc_nintendo_path%"=="" (
 	echo nintendo_path = %emummc_nintendo_path%>>"tools\sd_switch\atmosphere_emummc_profiles\%~1"
 )
 echo.
-echo Configuration du fichier d'emummc sauvegardée avec succès dans le profile "%profile_selected:~0,-4%".
+call "%associed_language_script%" "emummc_config_success"
 pause
 exit /b
 

@@ -1,6 +1,10 @@
 ::Script by Shadow256
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-@echo off
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
+call "%associed_language_script%" "display_title"
 chcp 1252 >nul
 IF EXIST templogs (
 	del /q templogs 2>nul
@@ -9,39 +13,21 @@ IF EXIST templogs (
 mkdir templogs
 IF EXIST tools\toolbox\user_tools.txt\*.* rmdir /s /qtools\toolbox\user_tools.txt
 IF NOT EXIST tools\toolbox\user_tools.txt copy nul tools\toolbox\user_tools.txt
-
-echo Bienvenue dans la boîte à outils.
-echo.
-echo Ici, vous pouvez gérer le lancement de programmes ayant une interface graphique et qui ne sont donc pas interractif avec mon script.
-echo Vous trouverez une liste d'outils par défaut qui interviennent parfois dans mon script et cette liste ne sera pas modifiable.
-echo Par contre, vous pouvez également gérer votre liste de programmes personnel et donc en ajouter ou en supprimer un.
-echo.
-echo Attention, du fait du fonctionnement qui peut différer pour chaque programme, vous vous devez de gérer vous-même les dépendances de ceux-ci, cette boîte à outils ne sert qu'à lancer ou organiser vos outils.
+call "%associed_language_script%" "intro"
+pause
 :define_action_choice
 cls
-echo Boîte à outils
-echo.
-echo Que souhaitez-vous faire?
-echo.
-echo 1: Lancer un programme?
-echo 2: Ouvrir le dossier principal d'un programme de la liste de programmes personnels?
-echo 3: Gérer la liste de programmes personnels?
-echo N'importe quel autre choix: Revenir au menu précédent.
-echo.
 set action_choice=
-set /p action_choice=Faites votre choix: 
-IF "%action_choice%"=="1" cls & goto:launch_software
-IF "%action_choice%"=="2" cls & goto:launch_working_folder
-IF "%action_choice%"=="3" cls & goto:config_softwares_list
+call "%associed_language_script%" "first_action_choice"
+IF "%action_choice%"=="1" goto:launch_software
+IF "%action_choice%"=="2" goto:launch_working_folder
+IF "%action_choice%"=="3" goto:config_softwares_list
 goto:end_script
 
 :launch_software
 cls
-echo Lancement d'un logiciel
-echo.
-echo Liste des logiciels:
-echo.
-echo Logiciels par défaut:
+set launch_software_choice=
+call "%associed_language_script%" "launch_software_begin"
 echo.
 TOOLS\gnuwin32\bin\grep.exe -c "" <tools\toolbox\default_tools.txt > templogs\tempvar.txt
 set /p count_software_default=<templogs\tempvar.txt
@@ -63,7 +49,7 @@ goto:software_default_listing
 set /a temp_count_user=0
 IF %count_software_user% EQU 0 goto:finish_software_user_listing
 echo.
-echo Logiciels personnels:
+call "%associed_language_script%" "software_personal_list_begin"
 echo.
 set /a temp_count-=1
 :software_user_listing
@@ -78,10 +64,7 @@ echo %temp_count%: %temp_software%
 goto:software_user_listing
 :finish_software_user_listing
 echo.
-echo N'importe quel autre chiffres: Revenir au menu de sélection du mode de la toolbox.
-echo.
-set launch_software_choice=
-set /p launch_software_choice=Choisissez un logiciel à lancer ou une action à faire: 
+call "%associed_language_script%" "launch_software_choice"
 IF "%launch_software_choice%"=="" set launch_software_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%launch_software_choice%"
 set i=0
@@ -96,7 +79,7 @@ IF %i% NEQ %nb% (
 		)
 	)
 	IF "!check_chars!"=="0" (
-	echo Un caractère non-autorisé a été saisie.
+	call "%associed_language_script%" "bad_char_error"
 	goto:launch_software
 	)
 )
@@ -122,14 +105,16 @@ start "" /d "%software_folder_path%" "%software_path%"
 goto:launch_software
 
 :launch_working_folder
+cls
+set launch_software_choice=
 TOOLS\gnuwin32\bin\grep.exe -c "" <tools\toolbox\user_tools.txt > templogs\tempvar.txt
 set /p count_software_user=<templogs\tempvar.txt
 IF %count_software_user% EQU 0 (
-	echo Aucun logiciel personnel défini, cette fonctionnalité ne peut donc pas être utilisée.
+	call "%associed_language_script%" "no_personal_software_defined_error"
 	goto:define_action_choice
 )
 echo.
-echo Liste des logiciels personnels:
+call "%associed_language_script%" "software_personal_list_begin"
 echo.
 set /a temp_count=0
 set /a temp_count_user=0
@@ -145,10 +130,7 @@ echo %temp_count%: %temp_software%
 goto:software_user_f_listing
 :finish_software_user_f_listing
 echo.
-echo N'importe quel autre chiffres: Revenir au menu de sélection du mode de la toolbox.
-echo.
-set launch_software_choice=
-set /p launch_software_choice=Choisissez un logiciel pour lequel son dossier de travail sera ouvert ou une action à faire: 
+call "%associed_language_script%" "launch_working_dir_choice"
 IF "%launch_software_choice%"=="" set launch_software_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%launch_software_choice%"
 set i=0
@@ -163,7 +145,7 @@ IF %i% NEQ %nb% (
 		)
 	)
 	IF "!check_chars!"=="0" (
-	echo Un caractère non-autorisé a été saisie.
+	call "%associed_language_script%" "bad_char_error"
 	goto:launch_working_folder
 	)
 )
@@ -180,17 +162,8 @@ goto:launch_working_folder
 
 :config_softwares_list
 cls
-echo Configuration de la liste des logiciels de la boîte à outils
-echo.
-echo Que souhaitez-vous faire?
-echo.
-echo 1: Ajouter un logiciel?
-echo 2: Modifier le nom d'un logiciel?
-echo 3: Supprimer un logiciel?
-echo N'importe quel autre choix: Revenir au menu de sélection du mode de la toolbox.
-echo.
 set manage_choice=
-set /p manage_choice=Faites votre choix: 
+call "%associed_language_script%" "manage_action_choice"
 IF "%manage_choice%"=="1" goto:add_software
 IF "%manage_choice%"=="2" goto:modify_software
 IF "%manage_choice%"=="3" goto:del_software
@@ -199,9 +172,9 @@ goto:define_action_choice
 :add_software
 :define_software_name
 set software_name=
-set /p software_name=Entrez le nom du logiciel: 
+call "%associed_language_script%" "software_name_choice"
 IF "%software_name%"=="" (
-	echo Le nom du logiciel ne peut être vide.
+	call "%associed_language_script%" "software_name_empty_error"
 	goto:define_software_name
 ) else (
 	set software_name=%software_name:"=%
@@ -212,8 +185,7 @@ set i=0
 IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^/ ^* ^? ^: ^^ ^| ^\) do (
 		IF "!software_name:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans le nom du logiciel.
-			set software_name=
+			call "%associed_language_script%" "software_name_char_error"
 			goto:define_software_name
 		)
 	)
@@ -222,42 +194,33 @@ IF %i% LSS %nb% (
 )
 echo.
 set software_copy=
-set /p software_copy=Souhaitez-vous copier le logiciel dans le répertoire de travail du script? (O/n): 
+call "%associed_language_script%" "software_copy_type_choice"
 IF NOT "%software_copy%"=="" set software_copy=%software_copy:~0,1%
 IF /i "%software_copy%"=="o" (
 	IF EXIST "tools\toolbox\%software_name%" (
-		echo Ce logiciel semble déjà avoir été copié dans le répertoire "toolbox" du script, l'ajout est donc annulé.
+		call "%associed_language_script%" "software_already_exist_error"
 		goto:config_softwares_list
 	)
 )
 :define_software_type
 IF /i "%software_copy%"=="o" (
 	echo.
-	echo Quel est le type du logiciel?
-	echo.
-	echo 1: Un logiciel n'utilisant qu'un seul fichier pour être lancé?
-	echo 2: Un logiciel contenu dans un dossier dont les autres fichiers/dossiers de ce dossier sont nécessaires à sont fonctionnement?
-	echo 0: Annuler la configuration de cet ajout et revenir au menu précédent.
-	echo.
 	set software_type=
-	set /p software_type=Faites votre choix: 
+	call "%associed_language_script%" "software_type_choice"
 )
 IF /i "%software_copy%"=="o" (
 	IF "%software_type%"=="0" goto:config_softwares_list
 	IF "%software_type%"=="1" goto:define_software_path
 	IF "%software_type%"=="2" goto:define_software_path
-	echo Ce choix n'est pas disponible.
+	call "%associed_language_script%" "choice_not_allowed_error"
 	goto:define_software_type
 )
 :define_software_path
 echo.
-echo Dans la prochaine étape, vous devrez indiquer où se trouve le logiciel sur votre ordinateur.
-echo Si vous avez choisi de copier le logiciel et selon le type de logiciel choisi, le fichier indiqué et/ou le dossier qui le contient seront copiés dans le dossier "tools\toolbox" du script et le chemin sera adapté pour n'être qu'un chemin relatif vers l'exécutable choisi.
-pause
-%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\open_file2.vbs "" "Tout les fichiers (*.*)|*.*|" "Sélection du fichier principal de votre logiciel" "templogs\tempvar.txt"
+call "%associed_language_script%" "add_software_file_choice"
 set /p software_path=<templogs\tempvar.txt
 IF "%software_path%"=="" (
-	echo Le fichier n'a pas été indiqué, la procédure d'ajout est annulée.
+	call "%associed_language_script%" "no_software_file_selected_error"
 	goto:config_softwares_list
 )
 IF /i "%software_copy%"=="o" (
@@ -273,18 +236,20 @@ IF /i "%software_copy%"=="o" (
 	set software_path=tools\toolbox\%software_name%\%software_file_name%
 )
 echo %software_name%; %software_path%>> tools\toolbox\user_tools.txt
-echo Logiciel ajouté.
+call "%associed_language_script%" "add_software_success"
 pause
 goto:config_softwares_list
+
 :modify_software
+set launch_software_choice=
 TOOLS\gnuwin32\bin\grep.exe -c "" <tools\toolbox\user_tools.txt > templogs\tempvar.txt
 set /p count_software_user=<templogs\tempvar.txt
 IF %count_software_user% EQU 0 (
-	echo Aucun logiciel personnel défini, cette fonctionnalité ne peut donc pas être utilisée.
+	call "%associed_language_script%" "no_personal_software_defined_error"
 	goto:config_softwares_list
 )
 echo.
-echo Liste des logiciels personnels:
+call "%associed_language_script%" "software_personal_list_begin"
 echo.
 set /a temp_count=0
 set /a temp_count_user=0
@@ -300,10 +265,7 @@ echo %temp_count%: %temp_software%
 goto:software_user_m_listing
 :finish_software_user_m_listing
 echo.
-echo N'importe quel autre chiffres: Revenir au menu  précédent.
-echo.
-set launch_software_choice=
-set /p launch_software_choice=Faites votre choix: 
+call "%associed_language_script%" "modify_software_choice"
 IF "%launch_software_choice%"=="" set launch_software_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%launch_software_choice%"
 set i=0
@@ -318,7 +280,7 @@ IF %i% NEQ %nb% (
 		)
 	)
 	IF "!check_chars!"=="0" (
-	echo Un caractère non-autorisé a été saisie.
+	call "%associed_language_script%" "bad_char_error"
 	goto:modify_software
 	)
 )
@@ -334,12 +296,12 @@ set /p software_name=<templogs\tempvar.txt
 :define_new_software_name
 echo.
 set new_software_name=
-set /p new_software_name=Entrez le nouveau nom du logiciel (si vide ou si le nom est exactement le même, l'ancien nom sera gardé): 
+call "%associed_language_script%" "modify_software_name_choice"
 IF "%new_software_name%"=="" (
-	echo Le logiciel n'a pas été renommé, retour au menu précédent.
+	call "%associed_language_script%" "modify_software_not_renamed_error"
 	goto:config_softwares_list
 ) else IF "%new_software_name%"=="%software_name%" (
-	echo Le logiciel n'a pas été renommé, retour au menu précédent.
+	call "%associed_language_script%" "modify_software_not_renamed_error"
 	goto:config_softwares_list
 	) else (
 	set new_software_name=%new_software_name:"=%
@@ -350,8 +312,7 @@ set i=0
 IF %i% LSS %nb% (
 	FOR %%z in (^& ^< ^> ^/ ^* ^? ^: ^^ ^| ^\) do (
 		IF "!new_software_name:~%i%,1!"=="%%z" (
-			echo Un caractère non autorisé a été saisie dans le nom du logiciel.
-			set new_software_name=
+			call "%associed_language_script%" "software_name_char_error"
 			goto:define_new_software_name
 		)
 	)
@@ -371,18 +332,19 @@ set new_software_path=tools\toolbox\%new_software_name%\%software_file_name%
 TOOLS\gnuwin32\bin\sed.exe -re "%launch_software_choice%s/%software_name%; %software_path:\=\\%/%new_software_name%; %new_software_path:\=\\%/" tools\toolbox\user_tools.txt > tools\toolbox\user_tools_new.txt
 del tools\toolbox\user_tools.txt
 rename tools\toolbox\user_tools_new.txt user_tools.txt
-echo Nom du logiciel modifié.
+call "%associed_language_script%" "modify_software_success"
 pause
 goto:config_softwares_list
 :del_software
+set launch_software_choice=
 TOOLS\gnuwin32\bin\grep.exe -c "" <tools\toolbox\user_tools.txt > templogs\tempvar.txt
 set /p count_software_user=<templogs\tempvar.txt
 IF %count_software_user% EQU 0 (
-	echo Aucun logiciel personnel défini, cette fonctionnalité ne peut donc pas être utilisée.
+	call "%associed_language_script%" "no_personal_software_defined_error"
 	goto:config_softwares_list
 )
 echo.
-echo Liste des logiciels personnels:
+call "%associed_language_script%" "software_personal_list_begin"
 echo.
 set /a temp_count=0
 set /a temp_count_user=0
@@ -398,10 +360,7 @@ echo %temp_count%: %temp_software%
 goto:software_user_d_listing
 :finish_software_user_d_listing
 echo.
-echo N'importe quel autre chiffres: Revenir au menu  précédent.
-echo.
-set launch_software_choice=
-set /p launch_software_choice=Faites votre choix: 
+call "%associed_language_script%" "modify_software_choice"
 IF "%launch_software_choice%"=="" set launch_software_choice=0
 call TOOLS\Storage\functions\strlen.bat nb "%launch_software_choice%"
 set i=0
@@ -416,7 +375,7 @@ IF %i% NEQ %nb% (
 		)
 	)
 	IF "!check_chars!"=="0" (
-	echo Un caractère non-autorisé a été saisie.
+	call "%associed_language_script%" "bad_char_error"
 	goto:del_software
 	)
 )
@@ -435,7 +394,7 @@ rmdir /s /q tools\toolbox\%software_name% 2>nul
 TOOLS\gnuwin32\bin\sed.exe "%launch_software_choice%d" tools\toolbox\user_tools.txt > tools\toolbox\user_tools_new.txt
 del tools\toolbox\user_tools.txt
 rename tools\toolbox\user_tools_new.txt user_tools.txt
-echo Logiciel supprimé.
+call "%associed_language_script%" "del_software_success"
 pause
 goto:config_softwares_list
 

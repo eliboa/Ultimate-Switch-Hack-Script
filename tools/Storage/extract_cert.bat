@@ -1,8 +1,9 @@
 ::CertNXtractionPack by SocraticBliss and SimonMKWii, modified by Shadow256
-@ECHO OFF
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-chcp 65001 >nul
-
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
@@ -13,46 +14,34 @@ IF EXIST "Certificat" (
 	del /q Certificat 2>nul
 )
 mkdir "Certificat"
-
-echo Ce script permet d'extraire le certificat d'une console via la partition PRODINFO déchiffrée de celle-ci.
-echo Pour obtenir ce fichier, il va vous falloir les Bis Keys (Bis Key 0) qui peuvent être obtenuent grâce au payload BiskeyDump.
-echo Ensuite il y a deux possibilités, soit extraire le fichier d'une Switch directement en montant la partition EMMC de celle-ci ou soit extraire le fichier d'un dump de la nand.
-echo Dans les deux cas, il faudra utiliser HacDiskMount pour extraire le fichier en lui indiquant les Bis Keys requises avant l'extraction.
-echo Pendant le script, il vous sera proposer d'éventuellement lancer le payload BiskeyDump, de monter la partition EMMC d'une Switch puis de lancer HacDiskMount pour tenter d'obtenir le fichier PRODINFO.bin nécessaire mais il faut savoir comment s'y prendre pour l'extraction dans HacDiskMount car ceci ne peut être automatisé.
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "intro"
 pause
-set /p biskey=Souhaitez-vous lancer le payload BiskeyDump? (O/n): 
+set biskey=
+call "%associed_language_script%" "launch_biskeydump_choice"
 IF NOT "%biskey%"=="" set biskey=%biskey:~0,1%
 IF /i "%biskey%"=="o" call TOOLS\Storage\biskey_dump.bat
-set /p mount_emmc=Souhaitez-vous monter la partition EMMC de la Switch? (O/n): 
+set mount_emmc=
+call "%associed_language_script%" "mount_emmc_choice"
 IF NOT "%mount_emmc%"=="" set mount_emmc=%mount_emmc:~0,1%
 IF /i "%mount_emmc%"=="o" (
-echo *********************************************
-echo ***    CONNECTEZ LA SWITCH EN MODE RCM    ***
-echo *********************************************
-echo 1^) Connecter la Switch en USB et l'éteindre
-echo 2^) Appliquer le JoyCon Haxx : PIN1 + PIN10 ou PIN9 + PIN10
-echo 3^) Faire un appui long sur VOLUME UP + appui court sur POWER (l'écran restera noir^)
-echo En attente d'une Switch en mode RCM...
+	call "%associed_language_script%" "rcm_instructions"
 	tools\TegraRcmSmash\TegraRcmSmash.exe -w tools\memloader\memloader.bin --dataini="tools\memloader\mount_discs\ums_emmc.ini"
 	echo.
-	echo Le disque devrait être monté sur votre système. Pour le démonter, éjecter le périphérique à l'aide du bouton "retirer le périphérique en toute sécurité" situé sur la barre des tâches en bas à droite puis forcer l'extinction de la Switch en maintenant le bouton POWER pendant 10 secondes (Attention à ne pas écrire/lire de données pendant cette opération sous peine d'endommager gravement les données de votre nand^).
-	echo Pour explorer la mémoire interne de la Switch vous devez utiliser l'outil HacDiskMount lancé en tant qu'administrateur (nécessite d'avoir les biskey pour décrypter les données mais non nécessaire pour faire un dump de la nand^). Si vous souhaitez faire un dump de la nand via cette méthode, le dump peut prendre du temps (environ trois heures^).
-	echo Parfois, le disque n'est pas reconu automatiquement. Vous devez ouvrir le gestionnaire de périphérique, trouver le périphérique avec un point d'exclamation nommé "Périphérique d’entrée USB" (testé sous Windows 7^), faire un clique droit dessus, cliquer sur "Mettre à jour le pilote...", cliquer sur "Rechercher automatiquement un pilote mis à jour" puis cliquer sur "Fermer". Le périphérique devrait maintenant être utilisable.
-	set /p launch_devices_manager=Souhaitez-vous lancer le gestionnaire de périphérique? (o/n^): 
+	set launch_devices_manager=
+	call "%associed_language_script%" "after_rcm_instructions_choice"
 	echo.
 	IF NOT "!launch_devices_manager!"=="" set launch_devices_manager=!launch_devices_manager:~0,1!
 	IF /i "!launch_devices_manager!"=="o" start devmgmt.msc
 )
-set /p launch_hacdiskmount=Souhaitez-vous lancer HacDiskMount? (o/n^): 
+call "%associed_language_script%" "launch_hacdiskmount_choice"
 IF NOT "%launch_hacdiskmount%"=="" set launch_hacdiskmount=%launch_hacdiskmount:~0,1%
 IF /i "%launch_hacdiskmount%"=="o" start tools\HacDiskMount/HacDiskMount.exe
 echo.
-echo Vous allez devoir sélectionner le fichier "PRODINFO.bin" décrypter de la Switch dont le certificat doit être extrait.
-pause
-%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\open_file.vbs "" "Fichiers bin (*.bin)|*.bin|" "Sélection du fichier PRODINFO.bin" "templogs\tempvar.txt"
+call "%associed_language_script%" "prodinfo_file_choice"
 set /p filepath=<templogs\tempvar.txt
 IF "!filepath!"=="" (
-	echo Oppération annulée.
+	call "%associed_language_script%" "prodinfo_no_file_selected_error"
 	rmdir /s /q "Certificat"
 	goto:endscript
 )
@@ -89,8 +78,7 @@ DEL privkey.pem >NUL 2>&1
 DEL nx_tls_client_cert.pem >NUL 2>&1
 
 ECHO:
-ECHO Le fichier nx_tls_client_cert.pfx a été sauvegardé dans le répertoire "Certificat" à la racine du script.
-ECHO Mot de passe = switch
+call "%associed_language_script%" "certificat_first_success"
 ECHO:
 
 REM Convertion du fichier "PFX" au format "PEM"
@@ -98,8 +86,8 @@ REM Convertion du fichier "PFX" au format "PEM"
 IF %ERRORLEVEL% NEQ 0 (ECHO: && cd .. && goto:end_script)
 
 ECHO:
-ECHO Le fichier nx_tls_client_cert.pem a été sauvegardé dans le répertoire "Certificat" à la racine du script.
-ECHO Toutes les oppérations ont été complétées!
+call "%associed_language_script%" "certificat_extraction_success"
+
 ECHO:
 cd ..
 :end_script

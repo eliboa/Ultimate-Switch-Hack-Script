@@ -123,7 +123,7 @@ set "fexport=-fx files"
 ::Organization in the output folder.
 ::inline -> All files go to root folder
 ::subfolder -> Files go to folder named by game
-set "oforg=subfolder"
+set "oforg=inline"
 
 ::--------------------------------------------------------------
 ::OPTION 14: NEW OR LEGACY

@@ -1,5 +1,11 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V221</h2>
+<ul>
+<li>Mise à jour du module HID_mitm en version 0.1.2.</li>
+<li>Mise à jour de NX-Shell vers la version master du Github, compilé par moi-même.</li>
+<li>Probablement d'autres mises à jour que j'ai oublié.</li>
+</ul>
 <h2>V220</h2>
 <ul>
 <li>Mise à jour de DZ Tinfoil en version 2.0.</li>

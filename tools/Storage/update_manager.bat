@@ -1,13 +1,24 @@
 ::Script by Shadow256
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
-@echo off
-chcp 65001 >nul
-echo é >nul
+set base_script_path="%~dp0\..\.."
+set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
+set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
 IF EXIST "templogs" (
 	del /q "templogs" 2>nul
 	rmdir /s /q "templogs" 2>nul
 )
 mkdir "templogs"
+IF  "%~2"=="language_init" (
+	rmdir /s /q "templogs" 2>nul
+	call :initialize_language
+	exit
+)
+echo é >nul
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
+call "%associed_language_script%" "display_title"
 IF  "%~2"=="force" (
 	set auto_update=O
 	goto:begin_update
@@ -17,52 +28,56 @@ IF EXIST "failed_updates\*.failed" (
 	goto:begin_update
 )
 :verif_auto_update_ini
-IF EXIST tools\Storage\verif_update.ini\*.* (
-	rmdir /s /q tools\Storage\verif_update.ini
+IF EXIST "%language_path%\script_general_config.bat\*.*" (
+	rmdir /s /q "%language_path%\script_general_config.bat"
 )
-IF not EXIST tools\Storage\verif_update.ini copy nul tools\Storage\verif_update.ini >nul
-tools\gnuwin32\bin\grep.exe -m 1 "auto_update" <tools\Storage\verif_update.ini | tools\gnuwin32\bin\cut.exe -d = -f 2 >templogs\tempvar.txt
-set /p ini_auto_update=<templogs\tempvar.txt
+IF not EXIST "%language_path%\script_general_config.bat" copy nul "%language_path%\script_general_config.bat" >nul
+tools\gnuwin32\bin\grep.exe -n "set auto_update=" <"%language_path%\script_general_config.bat" >templogs\tempvar.txt
+set /p temp_auto_update_line=<templogs\tempvar.txt
+IF NOT "%temp_auto_update_line%"=="" (
+	echo %temp_auto_update_line%|"tools\gnuwin32\bin\cut.exe" -d : -f 1 >templogs\tempvar.txt
+	set /p auto_update_file_param_line=<templogs\tempvar.txt
+	echo %temp_auto_update_line%|"tools\gnuwin32\bin\cut.exe" -d = -f 2 >templogs\tempvar.txt
+	set /p ini_auto_update=<templogs\tempvar.txt
+)
+set temp_auto_update_line=
 :initialize_auto_update
 IF "%ini_auto_update%"=="" (
-	echo Réglage de la mise à jour automatique:
-	echo.
-	echo La mise à jour automatique intervient lors du démarrage des différentes fonctionnalités ou grands groupes de fonctionnalités du script. Si vous tentez de mettre à jour une fonctionnalité qui n'est pas encore installée, son installation sera forcée même en cas de désactivation de la mise à jour automatique.
-	echo Dans les choix qui vont suivre, si vous ne faites pas un choix définitif, cette question sera donc souvent posée.
-	echo Si vous choisissez de toujours vérifier les mises à jour, certaines fonctionnalités mettront un peu de temps à se lancer, notemment le démarrage du menu principal ou encore la préparation d'une SD ou la Nand Toolbox car ces fonctionnalités ont beaucoup de dépendances mais vous aurez toujours les dernières versions des fonctionnalités que vous utilisez et le reste ne bougera pas tant que vous ne l'aurez pas utilisé au moins une fois.
-	echo Au contraire, si vous choisissez de ne jamais mettre à jour, vous ne pourrez que faire la mise à jour de tous les éléments du script d'un coup via le menu "A propos" mais le lancement des fonctionnalités sera bien plus rapide.
-	echo Notez que vous pouvez toujours réinitialiser cette valeur en passant par le menu des paramètres du script.
-	echo Notez également que même en cas de désactivation de la mise à jour automatique et si vous faites une mise à jour manuelle qui a échouée, celle-ci sera reprise automatiquement pour éviter des bugs dans le script.
-	echo.
-	echo Que souhaitez-vous faire?
-	echo O: Vérifier les mises à jour cette fois-ci.
-	echo N: Ne pas vérifier les mises à jour cette fois-ci.
-	echo T: Toujours vérifier les mises à jour.
-	echo J: Ne jamais vérifier les mises à jour.
-	echo.
-	set /p auto_update=Souhaitez-vous activer la mise à jour automatique? (O/N/T/J^): 
+	call "%associed_language_script%" "autoupdate_choice"
 ) else IF /i "%ini_auto_update%"=="O" (
 	set auto_update=O
 ) else IF /i "%ini_auto_update%"=="N" (
 	set auto_update=N
 ) else (
-	echo Mauvaise valeur configurée, le paramètre va être réinitialisé.
-	del /q tools\Storage\verif_update.ini
+	call "%associed_language_script%" "autoupdate_bad_value_error"
+	"tools\gnuwin32\bin\sed.exe" %auto_update_file_param_line%d "%language_path%\script_general_config.bat">"%language_path%\script_general_config2.bat"
+	del /q "%language_path%\script_general_config.bat"
+	ren "%language_path%\script_general_config2.bat" "script_general_config.bat"
 	set ini_auto_update=
 	goto:initialize_auto_update
 )
 IF NOT "%auto_update%"=="" (
 	set auto_update=%auto_update:~0,1%
 ) else (
-	echo Cette valeur ne peut être vide.
+	call "%associed_language_script%" "autoupdate_empty_value_error"
 	goto:initialize_auto_update
 )
 IF /i "%auto_update%"=="J" (
-	echo auto_update=N>>tools\Storage\verif_update.ini
+	IF NOT "%auto_update_file_param_line%"=="" (
+		"tools\gnuwin32\bin\sed.exe" '%auto_update_file_param_line% d' "%language_path%\script_general_config.bat">"%language_path%\script_general_config2.bat"
+		del /q "%language_path%\script_general_config.bat"
+		ren "%language_path%\script_general_config2.bat" "script_general_config.bat"
+	)
+	echo set auto_update=N>>"%language_path%\script_general_config.bat"
 	set auto_update=N
 )
 IF /i "%auto_update%"=="T" (
-	echo auto_update=O>>tools\Storage\verif_update.ini
+	IF NOT "%auto_update_file_param_line%"=="" (
+		"tools\gnuwin32\bin\sed.exe" '%auto_update_file_param_line% d' "%language_path%\script_general_config.bat">"%language_path%\script_general_config2.bat"
+		del /q "%language_path%\script_general_config.bat"
+		ren "%language_path%\script_general_config2.bat" "script_general_config.bat"
+	)
+	echo set auto_update=O>>"%language_path%\script_general_config.bat"
 	set auto_update=O
 )
 IF /i "%auto_update%"=="N" (
@@ -70,17 +85,13 @@ IF /i "%auto_update%"=="N" (
 ) else IF /i "%auto_update%"=="O" (
 	goto:begin_update
 ) else (
-	echo Choix inexistant.
+	call "%associed_language_script%" "autoupdate_choice_not_permited_error"
 	goto:initialize_auto_update
 )
 :begin_update
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
 echo :::::::::::::::::::::::::::::::::::::
 echo ::Shadow256 Ultimate Switch Hack Script %ushs_version% updater::
 echo.
-set base_script_path="%~dp0\..\.."
-set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
-set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
 IF NOT EXIST "failed_updates\*.failed" (
 	rmdir /s /q "failed_updates" 2>nul
 )
@@ -91,7 +102,7 @@ IF "%~1"=="general_content_update" goto:skip_new_script_install
 IF "%~2"=="force" (
 	ping /n 2 www.google.com >nul 2>&1
 	IF !errorlevel! NEQ 0 (
-		echo Aucune connexion à internet disponible, le script ne peux vérifier les mises à jour.
+		call "%associed_language_script%" "no_internet_connection_error"
 		pause
 		goto_end_script
 	)
@@ -101,17 +112,18 @@ IF "%~2"=="force" (
 		IF !errorlevel! EQU 1 (
 			call :update_file
 		)
-		echo Le gestionnaire de mises à jour doit se mettre à jour lui-même avant de pouvoir continuer.
-		echo Pour se faire, le script va lancer un autre script puis se fermer pour que la mise à jour puisse s'effectuer correctement.
-		echo Une fois la mise à jour effectuée, le script va redémarré.
+		IF "%language_custom%"=="0" (
+			call :verif_file_version "%language_path%\tools\Storage\update_manager_updater.bat"
+			IF !errorlevel! EQU 1 (
+				call :update_file
+			)
+		)
+		call "%associed_language_script%" "update_manager_updater_update"
 		pause
 		call :update_manager_update_special_script
 	)
-	echo Attention, il semble que vous souhaitiez utiliser une fonctionnalité non installée.
-	echo De fait, l'installation de celle-ci va être forcée si vous choisissez d'accepter cette installation, une connexion internet est nécessaire.
-	echo Si vous ne pouvez pas utiliser internet, la fonctionnalité ne se lancera pas après cette tentative d'installation et des bugs pourraienent se produire donc dans ce cas il est fortement conseillé de refuser le choix qui va suivre et le script se fermera pour plus de sécurité.
 	set new_install_choice=
-	set /p new_install_choice=Souhaitez-vous lancer l'installation? ^(O/n^): 
+	call "%associed_language_script%" "new_installation_choice"
 	IF NOT "!new_install_choice!"=="" set new_install_choice=!new_install_choice:~0,1!
 	IF /i NOT "!new_install_choice!"=="o" (
 		IF EXIST templogs (
@@ -126,9 +138,9 @@ IF "%~2"=="force" (
 :skip_new_script_install
 ping /n 2 www.google.com >nul 2>&1
 IF %errorlevel% NEQ 0 (
-	echo Aucune connexion internet vérifiable, tentative de mise à jour arrêtée.
+	call "%associed_language_script%" "no_internet_connection_error"
 	IF /i "%new_install_choice%"=="o" (
-		echo De plus, ceci était une tentative d'installation d'une nouvelle fonctionnalité, le script va donc se fermer pour plus de sécurité.
+		call "%associed_language_script%" "no_internet_connection_for_new_installation_error"
 		pause
 		IF EXIST templogs (
 			rmdir /s /q templogs
@@ -143,13 +155,17 @@ IF %errorlevel% NEQ 0 (
 :failed_updates_verification
 IF NOT EXIST "failed_updates\*.failed" goto:skip_failed_updates_verification
 IF EXIST "failed_updates\update_manager.bat.file.failed" (
-		call :verif_file_version "tools\Storage\update_manager_updater.bat"
-IF !errorlevel! EQU 1 (
-	call :update_file
-)
-	echo Le gestionnaire de mises à jour doit se mettre à jour lui-même avant de pouvoir continuer car sa mise à jour précédente semble avoir échouée.
-	echo Pour se faire, le script va lancer un autre script puis se fermer pour que la mise à jour puisse s'effectuer correctement.
-	echo Une fois la mise à jour effectuée, le script va redémarré.
+	call :verif_file_version "tools\Storage\update_manager_updater.bat"
+	IF !errorlevel! EQU 1 (
+		call :update_file
+	)
+	IF "%language_custom%"=="0" (
+		call :verif_file_version "%language_path%\tools\Storage\update_manager_updater.bat"
+		IF !errorlevel! EQU 1 (
+			call :update_file
+		)
+	)
+	call "%associed_language_script%" "update_manager_updater_update"
 	pause
 	call :update_manager_update_special_script
 )
@@ -165,37 +181,58 @@ IF %errorlevel% EQU 1 (
 IF !errorlevel! EQU 1 (
 	call :update_file
 )
-	echo Le gestionnaire de mises à jour doit se mettre à jour lui-même avant de pouvoir continuer.
-	echo Pour se faire, le script va lancer un autre script puis se fermer pour que la mise à jour puisse s'effectuer correctement.
-	echo Une fois la mise à jour effectuée, le script va redémarré.
+	IF "%language_custom%"=="0" (
+		call :verif_file_version "%language_path%\tools\Storage\update_manager_updater.bat"
+		IF !errorlevel! EQU 1 (
+			call :update_file
+		)
+	)
+	call "%associed_language_script%" "update_manager_updater_update"
 	pause
 	call :update_manager_update_special_script
 )
 IF "%~1"=="" (
 		goto:end_script
 	) else (
-	echo Vérifications et mises à jour en cours...
+	call "%associed_language_script%" "begin_update"
 	call :verif_file_version "tools\general_update_version.txt"
 	IF !errorlevel! EQU 1 (
 		call :general_content_update
 	)
-	call :verif_folder_version "DOC"
-IF !errorlevel! EQU 1 (
-	call :update_folder
+	call :verif_file_version "tools\version.txt"
+IF %errorlevel% EQU 1 (
+	call :update_file
 )
+	IF "%language_custom%"=="0" (
+		call :verif_folder_version "%language_path%\doc"
+		IF !errorlevel! EQU 1 (
+			call :update_folder
+		)
+		call :verif_file_version "%language_path%\language_general_config.bat"
+		IF !errorlevel! EQU 1 (
+			"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\language_general_config.bat" %files_url_project_base%/%language_path:\=/%/language_general_config.bat 2>nul
+			IF !errorlevel! EQU 0 (
+				move "templogs\language_general_config.bat" "%language_path%\language_general_config.bat" >nul
+			)
+			call "%associed_language_script%" "display_title"
+		)
+	)
 	IF "%~1"=="general_content_update" goto:clean_files
 	call :%~1
 )
 :clean_files
 call :del_old_or_unused_files
-echo Vérifications et mises à jour terminées.
+call "%associed_language_script%" "end_update"
 pause
 goto:end_script
 
 rem Specific scripts instructions must be added here
 
 :update_all
-echo Mise à jour intégrale du script en cours...
+call "%associed_language_script%" "update_all_begin"
+call "%associed_language_script%" "languages_update_begin"
+"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/languages languages --force >nul
+call "%associed_language_script%" "languages_update_end"
 call :update_about.bat
 call :update_android_installer.bat
 call :update_biskey_dump.bat
@@ -225,13 +262,19 @@ call :update_update_shofel2.bat
 call :update_verify_nsp.bat
 call :update_NES_Injector
 call :update_SNES_Injector
-echo Mise à jour intégrale du script terminée.
+call "%associed_language_script%" "update_all_end"
 exit /b
 
 :update_starting_script
 call :verif_file_version "Ultimate-Switch-Hack-Script.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\Ultimate-Switch-Hack-Script.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 exit /b
 
@@ -240,12 +283,24 @@ call :verif_file_version "tools\Storage\about.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\about.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_android_installer.bat
 call :verif_file_version "tools\Storage\android_installer.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\android_installer.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\android_apps"
 IF %errorlevel% EQU 1 (
@@ -257,6 +312,12 @@ exit /b
 call :verif_file_version "tools\Storage\biskey_dump.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\biskey_dump.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\biskeydump"
 IF %errorlevel% EQU 1 (
@@ -273,6 +334,12 @@ call :verif_file_version "tools\Storage\cheats_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\cheats_profiles_management.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\sd_switch\cheats"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -283,6 +350,12 @@ exit /b
 call :verif_file_version "tools\Storage\convert_BOTW.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\convert_BOTW.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\BOTW_saveconv"
 IF %errorlevel% EQU 1 (
@@ -295,6 +368,12 @@ call :verif_file_version "tools\Storage\convert_game_to_nsp.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\convert_game_to_nsp.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\Hactool_based_programs"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -305,6 +384,12 @@ exit /b
 call :verif_file_version "tools\Storage\create_update.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\create_update.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\Hactool_based_programs"
 IF %errorlevel% EQU 1 (
@@ -320,6 +405,12 @@ exit /b
 call :verif_file_version "tools\Storage\emulators_pack_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\emulators_pack_profiles_management.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 tools\gnuwin32\bin\grep.exe -c "" <"tools\default_configs\Lists\emulators.list" > templogs\tempvar.txt
 set /p count_emulators=<templogs\tempvar.txt
@@ -342,6 +433,12 @@ call :verif_file_version "tools\Storage\emummc_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\emummc_profiles_management.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_emunand_partition_file_create.bat
@@ -349,12 +446,24 @@ call :verif_file_version "tools\Storage\emunand_partition_file_create.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\emunand_partition_file_create.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_extract_cert.bat
 call :verif_file_version "tools\Storage\extract_cert.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\extract_cert.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\openssl"
 IF %errorlevel% EQU 1 (
@@ -375,12 +484,24 @@ call :verif_file_version "tools\Storage\extract_nand_files_from_emunand_partitio
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\extract_nand_files_from_emunand_partition_file.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_install_drivers.bat
 call :verif_file_version "tools\Storage\install_drivers.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\install_drivers.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\drivers"
 IF %errorlevel% EQU 1 (
@@ -397,6 +518,12 @@ call :verif_file_version "tools\Storage\install_nsp_network.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\install_nsp_network.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\python3_scripts\remote_NSP"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -407,6 +534,12 @@ exit /b
 call :verif_file_version "tools\Storage\install_nsp_USB.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\install_nsp_USB.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\Goldtree"
 IF %errorlevel% EQU 1 (
@@ -419,6 +552,12 @@ call :verif_file_version "tools\Storage\launch_hid-mitm_compagnon.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\launch_hid-mitm_compagnon.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\Hid-mitm_compagnon"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -429,6 +568,12 @@ exit /b
 call :verif_file_version "tools\Storage\launch_linux.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\launch_linux.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\linux_kernels"
 IF %errorlevel% EQU 1 (
@@ -449,6 +594,12 @@ call :verif_file_version "tools\Storage\launch_payload.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\launch_payload.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "Payloads"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -464,6 +615,12 @@ call :verif_file_version "tools\Storage\launch_switch_lan_play_server.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\launch_switch_lan_play_server.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\Node.js_programs"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -475,6 +632,12 @@ call :verif_file_version "tools\Storage\menu.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\menu.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_merge_game.bat
@@ -482,12 +645,24 @@ call :verif_file_version "tools\Storage\merge_games.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\merge_games.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_mixed_pack_profiles_management.bat
 call :verif_file_version "tools\Storage\mixed_pack_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\mixed_pack_profiles_management.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\sd_switch\mixed\base"
 IF !errorlevel! EQU 1 (
@@ -514,6 +689,12 @@ call :verif_file_version "tools\Storage\modules_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\modules_profiles_management.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 tools\gnuwin32\bin\grep.exe -c "" <"tools\default_configs\Lists\modules.list" > templogs\tempvar.txt
 set /p count_modules=<templogs\tempvar.txt
 set /a temp_count=1
@@ -535,6 +716,12 @@ call :verif_file_version "tools\Storage\mount_discs.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\mount_discs.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\HacDiskMount"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -554,6 +741,12 @@ call :verif_file_version "tools\Storage\nand_firmware_detect.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\nand_firmware_detect.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\python3_scripts\FVI"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -565,6 +758,12 @@ call :verif_file_version "tools\Storage\nand_joiner.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\nand_joiner.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_nand_spliter.bat
@@ -572,12 +771,24 @@ call :verif_file_version "tools\Storage\nand_spliter.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\nand_spliter.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_nand_toolbox.bat
 call :verif_file_version "tools\Storage\nand_toolbox.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\nand_toolbox.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\NxNandManager"
 IF %errorlevel% EQU 1 (
@@ -596,6 +807,12 @@ call :verif_file_version "tools\Storage\netplay.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\netplay.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\netplay"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -606,6 +823,12 @@ exit /b
 call :verif_file_version "tools\Storage\nsZip.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\nsZip.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\nsZip"
 IF %errorlevel% EQU 1 (
@@ -618,6 +841,12 @@ call :verif_file_version "tools\Storage\ocasional_functions_menu.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\ocasional_functions_menu.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_others_functions_menu.bat
@@ -625,12 +854,24 @@ call :verif_file_version "tools\Storage\others_functions_menu.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\others_functions_menu.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_pegaswitch.bat
 call :verif_file_version "tools\Storage\pegaswitch.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\pegaswitch.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\sd_switch\pegaswitch"
 IF %errorlevel% EQU 1 (
@@ -651,6 +892,12 @@ call :verif_file_version "tools\Storage\preload_NSC_Builder.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\preload_NSC_Builder.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\NSC_Builder"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -661,6 +908,12 @@ exit /b
 call :verif_file_version "tools\Storage\prepare_sd_switch.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\prepare_sd_switch.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\fat32format"
 IF %errorlevel% EQU 1 (
@@ -707,6 +960,12 @@ call :verif_file_version "tools\Storage\prepare_sd_switch_files_questions.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\prepare_sd_switch_files_questions.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_prepare_sd_switch_infos.bat
@@ -714,12 +973,24 @@ call :verif_file_version "tools\Storage\prepare_sd_switch_infos.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\prepare_sd_switch_infos.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_prepare_sd_switch_profiles_management.bat
 call :verif_file_version "tools\Storage\prepare_sd_switch_profiles_management.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\prepare_sd_switch_profiles_management.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :update_prepare_sd_switch_files_questions.bat
 call :update_prepare_sd_switch_infos.bat
@@ -729,6 +1000,12 @@ exit /b
 call :verif_file_version "tools\Storage\prepare_update_on_sd.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\prepare_update_on_sd.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\sd_switch\mixed\modular\ChoiDuJourNX"
 IF %errorlevel% EQU 1 (
@@ -742,6 +1019,12 @@ call :verif_file_version "tools\Storage\renxpack.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\renxpack.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\Hactool_based_programs"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -753,6 +1036,12 @@ call :verif_file_version "tools\Storage\restore_configs.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\restore_configs.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_restore_default.bat
@@ -760,12 +1049,11 @@ call :verif_file_version "tools\Storage\restore_default.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-exit /b
-
-:update_settings_menu.bat
-call :verif_file_version "tools\Storage\settings_menu.bat"
-IF %errorlevel% EQU 1 (
-	call :update_file
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\restore_default.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 exit /b
 
@@ -774,6 +1062,12 @@ call :verif_file_version "tools\Storage\save_configs.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\save_configs.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_serial_checker.bat
@@ -781,9 +1075,28 @@ call :verif_file_version "tools\Storage\serial_checker.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\serial_checker.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\python3_scripts\ssnc"
 IF %errorlevel% EQU 1 (
 	call :update_folder
+)
+exit /b
+
+:update_settings_menu.bat
+call :verif_file_version "tools\Storage\settings_menu.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\settings_menu.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 exit /b
 
@@ -791,6 +1104,12 @@ exit /b
 call :verif_file_version "tools\Storage\split_games.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\split_games.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\python3_scripts\splitNSP"
 IF %errorlevel% EQU 1 (
@@ -807,6 +1126,12 @@ call :verif_file_version "tools\Storage\test_keys.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\test_keys.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\python3_scripts\Keys_management"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -817,6 +1142,12 @@ exit /b
 call :verif_file_version "tools\Storage\toolbox.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\toolbox.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\toolbox"
 IF %errorlevel% EQU 1 (
@@ -853,6 +1184,12 @@ call :verif_file_version "tools\Storage\update_shofel2.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\update_shofel2.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 call :verif_folder_version "tools\shofel2"
 IF %errorlevel% EQU 1 (
 	call :update_folder
@@ -863,6 +1200,12 @@ exit /b
 call :verif_file_version "tools\Storage\verify_nsp.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\verify_nsp.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
 )
 call :verif_folder_version "tools\Hactool_based_programs"
 IF %errorlevel% EQU 1 (
@@ -875,6 +1218,12 @@ call :verif_folder_version "tools\NES_Injector"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\NES_Injector\NES_Injector.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :update_SNES_Injector
@@ -882,10 +1231,16 @@ call :verif_folder_version "tools\SNES_Injector"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\SNES_Injector\SNES_Injector.bat"
+	IF %errorlevel% EQU 1 (
+		call :update_file
+	)
+)
 exit /b
 
 :general_content_update
-echo Vérification et mise à jour des éléments généraux du script
+call "%associed_language_script%" "update_basic_elements_begin"
 call :update_starting_script
 call :update_about.bat
 call :update_menu.bat
@@ -923,7 +1278,7 @@ call :verif_file_version "tools\general_update_version.txt"
 IF %errorlevel% EQU 1 (
 	call :update_file
 )
-echo Mise à jour des éléments généraux terminée.
+call "%associed_language_script%" "update_basic_elements_end"
 exit /b
 
 rem End of specific scripts instructions
@@ -931,11 +1286,6 @@ rem End of specific scripts instructions
 :verif_file_version
 set temp_file_path=%~1
 set temp_file_slash_path=%temp_file_path:\=/%
-rem ping /n 2 www.google.com >nul 2>&1
-rem IF %errorlevel% NEQ 0 (
-rem 	echo Aucune connexion internet vérifiable, la vérification de version du fichier "%temp_file_path%" n'aura pas lieu.
-rem 	exit /b 0
-rem )
 call :test_write_access file "%~dp1"
 set script_version=0.00.00
 IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
@@ -956,7 +1306,7 @@ IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
 	IF EXIST "%~1.version" set /p script_version=<"%~1.version"
 	"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_file_slash_path%.version 2>nul
 )
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
+call "%associed_language_script%" "display_title"
 set /p script_version_verif=<"templogs\version.txt"
 rem echo %temp_file_path% : va=%script_version%, vm=%script_version_verif%
 rem echo %temp_file_slash_path%
@@ -967,16 +1317,11 @@ exit /b %errorlevel%
 :verif_folder_version
 set temp_folder_path=%~1
 set temp_folder_slash_path=%temp_folder_path:\=/%
-rem ping /n 2 www.google.com >nul 2>&1
-rem IF %errorlevel% NEQ 0 (
-rem 	echo Aucune connexion internet vérifiable, la vérification de version du dossier "%temp_folder_path%" n'aura pas lieu.
-rem 	exit /b 0
-rem )
 call :test_write_access folder "%~1"
 set script_version=0.00.00
 IF EXIST "%~1\folder_version.txt" set /p script_version=<"%~1\folder_version.txt"
 "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\version.txt" %files_url_project_base%/%temp_folder_slash_path%/folder_version.txt 2>nul
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
+call "%associed_language_script%" "display_title"
 set /p script_version_verif=<"templogs\version.txt"
 rem echo %temp_folder_path% : va=%script_version%, vm=%script_version_verif%
 rem echo %temp_folder_slash_path%
@@ -985,15 +1330,10 @@ call :compare_version
 exit /b %errorlevel%
 
 :update_file
-rem ping /n 2 www.google.com >nul 2>&1
-rem IF %errorlevel% NEQ 0 (
-rem 	echo Aucune connexion internet vérifiable, la mise à jour du fichier "%temp_file_path%" n'aura pas lieu.
-rem 	exit /b 404
-rem )
 echo %temp_file_path%>"failed_updates\%temp_file_path:\=;%.file.failed"
 "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%" %files_url_project_base%/%temp_file_slash_path% 2>nul
 IF %errorlevel% NEQ 0 (
-	echo Erreur lors de la mise à jour du fichier "%temp_file_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
+	call "%associed_language_script%" "update_file_error"
 	IF EXIST templogs (
 		rmdir /s /q templogs
 	)
@@ -1003,9 +1343,10 @@ IF %errorlevel% NEQ 0 (
 :file.version_download
 IF "%temp_file_path%"=="tools\sd_switch\version.txt" goto:skip_file.version_download
 IF "%temp_file_path%"=="tools\general_update_version.txt" goto:skip_file.version_download
+IF "%temp_file_path%"=="tools\version.txt" goto:skip_file.version_download
 "tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "%temp_file_path%.version" %files_url_project_base%/%temp_file_slash_path%.version 2>nul
 IF %errorlevel% NEQ 0 (
-	echo Erreur lors de la mise à jour du fichier "%temp_file_path%.version", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
+	call "%associed_language_script%" "update_file.version_error"
 	IF EXIST templogs (
 		rmdir /s /q templogs
 	)
@@ -1013,22 +1354,17 @@ IF %errorlevel% NEQ 0 (
 	exit
 )
 :skip_file.version_download
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
+call "%associed_language_script%" "display_title"
 del /q "failed_updates\%temp_file_path:\=;%.file.failed"
-echo Mise à jour de "%temp_file_path%" effectuée.
+call "%associed_language_script%" "update_file_success"
 exit /b
 
 :update_folder
-rem ping /n 2 www.google.com >nul 2>&1
-rem IF %errorlevel% NEQ 0 (
-rem 	echo Aucune connexion internet vérifiable, la mise à jour du dossier "%temp_folder_path%" n'aura pas lieu.
-rem 	exit /b 404
-rem )
 echo %temp_folder_path%>"failed_updates\%temp_folder_path:\=;%.fold.failed"
 IF "%temp_folder_path%"=="tools\gitget" (
 	"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/%temp_folder_slash_path% templogs\gitget --force >nul
 	IF !errorlevel! NEQ 0 (
-		echo Erreur lors de la mise à jour du dossier "%temp_folder_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
+		call "%associed_language_script%" "update_folder_error"
 		IF EXIST templogs (
 			rmdir /s /q templogs
 		)
@@ -1083,7 +1419,7 @@ IF "%temp_folder_path%"=="tools\toolbox" (
 		move "templogs\tempsave" "%temp_folder_path%"
 )
 IF %temp_folder_download_error% NEQ 0 (
-	echo Erreur lors de la mise à jour du dossier "%temp_folder_path%", le script va se fermer pour pouvoir relancer le processus de mise à jour lors du prochain redémarrage de celui-ci.
+	call "%associed_language_script%" "update_folder_error"
 	IF EXIST templogs (
 		rmdir /s /q templogs
 	)
@@ -1091,7 +1427,7 @@ IF %temp_folder_download_error% NEQ 0 (
 	exit
 )
 del /q "failed_updates\%temp_folder_path:\=;%.fold.failed"
-echo Mise à jour de "%temp_folder_path%" effectuée.
+call "%associed_language_script%" "update_folder_success"
 exit /b
 
 :compare_version
@@ -1105,41 +1441,34 @@ IF "%script_version%"=="" (
 		exit /b 0
 	)
 )
-IF "%temp_file_path%"=="tools\sd_switch\version.txt" (
-	IF %script_version_verif% GTR %script_version% (
+echo %script_version_verif%|"tools\gnuwin32\bin\grep.exe" -o "\."|"tools\gnuwin32\bin\wc.exe" -l >templogs\tempvar.txt
+set /p count_script_version_verif_cols=<templogs\tempvar.txt
+set /a count_script_version_verif_cols+=1
+echo %script_version%|"tools\gnuwin32\bin\grep.exe" -o "\."|"tools\gnuwin32\bin\wc.exe" -l >templogs\tempvar.txt
+set /p count_script_version_cols=<templogs\tempvar.txt
+set /a count_script_version_cols+=1
+IF %count_script_version_verif_cols% EQU 1 (
+	IF %count_script_version_cols% EQU 1 (
+		IF %script_version_verif% GTR %script_version% (
+			set update_finded=O
+			exit /b 1
+		) else (
+			exit /b 0
+		)
+	)
+)
+for /l %%i in (1,1,%count_script_version_verif_cols%) do (
+	echo %script_version_verif%|"tools\gnuwin32\bin\grep.exe" ""|"tools\gnuwin32\bin\cut.exe" -d . -f %%i >templogs\tempvar.txt
+	set /p temp_script_version_verif=<templogs\tempvar.txt
+	echo %script_version%|"tools\gnuwin32\bin\grep.exe" ""|"tools\gnuwin32\bin\cut.exe" -d . -f %%i >templogs\tempvar.txt
+	set /p temp_script_version=<templogs\tempvar.txt
+	IF !temp_script_version_verif! GTR !temp_script_version! (
 		set update_finded=O
 		exit /b 1
 	) else (
 		exit /b 0
 	)
 )
-IF "%temp_file_path%"=="tools\general_update_version.txt" (
-	IF %script_version_verif% GTR %script_version% (
-		set update_finded=O
-		exit /b 1
-	) else (
-		exit /b 0
-	)
-)
-IF %script_version_verif:~0,1% GTR %script_version:~0,1% (
-	set update_finded=O
-	exit /b 1
-)
-IF %script_version_verif:~2,1% GTR %script_version:~2,1% (
-	set update_finded=O
-	exit /b 1
-)
-IF %script_version_verif:~3,1% GTR %script_version:~3,1% (
-	set update_finded=O
-	exit /b 1
-)
-IF %script_version_verif:~5,1% GTR %script_version:~5,1% (
-	set update_finded=O
-	exit /b 1
-)
-IF %script_version_verif:~6,1% GTR %script_version:~6,1% (
-	set update_finded=O
-	exit /b 1
 )
 	exit /b 0
 
@@ -1150,7 +1479,7 @@ IF "%~1"=="folder" (
 	mkdir "%~dp2\test"
 )
 IF %errorlevel% NEQ 0 (
-	echo Le script se trouve dans un répertoire nécessitant les privilèges administrateur pour être écrit. Veuillez relancer le script avec les privilèges administrateur en faisant un clique droit dessus et en sélectionnant "Exécuter en tant qu'administrateur".
+	call "%associed_language_script%" "write_access_test_error"
 	goto:end_script
 )
 IF "%~1"=="folder" (
@@ -1185,11 +1514,25 @@ IF NOT EXIST "failed_updates\*.failed" (
 endlocal
 start "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"tools\Storage\update_manager_updater.bat^""
 exit
+exit /b
+
+:initialize_language
+ping /n 2 www.google.com >nul 2>&1
+IF %errorlevel% NEQ 0 (
+	echo No internet connection and the language is not initialized, script will close.
+	pause
+	exit /b 500
+)
+"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/%temp_language_path:\=/% %temp_language_path% --force >nul
+echo Language initialized, script will close so restart it manualy to use the language installed.
+pause
+exit /b 200
 
 :del_old_or_unused_files
-echo Vérifications et suppressions d'éventuels anciens fichiers n'étant plus utilisés.
-
-echo Vérifications et suppressions terminées.
+call "%associed_language_script%" "del_hold_files_begin"
+IF EXIST "tools\Storage\verif_update.ini" del /q "tools\Storage\verif_update.ini"
+IF EXIST "DOC\*.*" rmdir /s /q "DOC"
+call "%associed_language_script%" "del_hold_files_end"
 exit /b
 
 :end_script

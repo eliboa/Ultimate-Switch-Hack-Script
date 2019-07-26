@@ -1,7 +1,10 @@
 ::Script by Shadow256
-@echo off
-chcp 65001 >nul
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
+call "%associed_language_script%" "display_title"
 cd >temp.txt
 set /p calling_script_dir=<temp.txt
 del /q temp.txt
@@ -12,7 +15,7 @@ IF NOT "%~1"=="" (
 		set update_file_path=%~1
 		set update_type=1
 	) else (
-		echo Une erreur de saisie du paramètre du dossier s'est produite, le script va s'arrêter.
+		call "%associed_language_script%" "folder_script_param_error"
 		goto:endscript
 	)
 )
@@ -22,7 +25,7 @@ IF EXIST "%calling_script_dir%\templogs" (
 	rmdir /s /q "%calling_script_dir%\templogs" 2>nul
 )
 mkdir "%calling_script_dir%\templogs"
-echo Attention: Le package de firmware maximum qui peut être créé est pour le firmware 6.1.0, les firmwares supérieurs à ce dernier provoqueront une erreur.
+call "%associed_language_script%" "warning_firmware_max_create"
 echo.
 cd ..\Hactool_based_programs
 IF NOT EXIST keys.txt (
@@ -30,19 +33,17 @@ IF NOT EXIST keys.txt (
 		copy keys.dat keys.txt
 		goto:skip_keys_file_creation
 	)
-	echo Fichiers clés non trouvé, veuillez suivre les instructions.
+	call "%associed_language_script%" "keys_file_not_finded"
 	goto:keys_file_creation
 ) else (
 	goto:skip_keys_file_creation
 )
 :keys_file_creation
 echo.
-echo Veuillez renseigner le fichier de clés dans la fenêtre suivante.
-pause
-%windir%\system32\wscript.exe //Nologo "%calling_script_dir%\TOOLS\Storage\functions\open_file.vbs" "" "Fichier de liste de clés Switch(*.*)|*.*|" "Sélection du fichier de clés pour Hactool" "%calling_script_dir%\templogs\tempvar.txt"
+call "%associed_language_script%" "keys_file_selection"
 	set /p keys_file_path=<"%calling_script_dir%\templogs\tempvar.txt"
 	IF "%keys_file_path%"=="" (
-	echo Aucun fichier clés renseigné, le script va s'arrêter.
+	call "%associed_language_script%" "no_keys_file_selected_error"
 	goto:endscript
 	)
 	
@@ -52,43 +53,37 @@ pause
 IF EXIST ChoiDuJour_keys.txt del /q ChoiDuJour_keys.txt
 ..\python3_scripts\Keys_management\keys_management.exe create_choidujour_keys_file keys.txt
 IF NOT EXIST ChoiDuJour_keys.txt (
-	echo Il semble que le fichier de clés nécessaire à ChoiDuJour n'ait pu être créé, veuillez vérifier votre fichier de clés et relancer le script.
-	echo Pour vous aider, regarder les clés incorrectes qui se sont affichées juste avant.
+	call "%associed_language_script%" "choidujour_keys_file_create_error"
 	goto:endscript
 )
 IF NOT "%update_file_path%"=="" goto:skip_hfs0_select
-echo Il est possible de lancer XCI Explorer pour extraire la partition "update" d'un fichier XCI. Notez que si vous choisissez de le lancer, le script ne pourra continuer qu'après la fermeture de XCI Explorer.
-set /p launch_xci_explorer=Souhaitez-vous lancer XCI Explorer? (O/n): 
+set launch_xci_explorer=
+call "%associed_language_script%" "launch_xci_explorer_choice"
 IF NOT "%launch_xci_explorer%"=="" set launch_xci_explorer=%launch_xci_explorer:~0,1%
 IF /i "%launch_xci_explorer%"=="o" XCI-Explorer.exe
 :update_package_select
 echo.
-echo Quel est le type de package de mise à jour:
-echo 1: Répertoire?
-echo 2: Fichier?
-echo.
-set /p update_type=Sélectionner le type de package de mise à jour: 
+set update_type=
+call "%associed_language_script%" "package_type_choice"
 IF "%update_type%"=="" (
-	echo Vous devez sélectionner un type de package.
-	set update_type=
+	call "%associed_language_script%" "no_package_type_selected_error"
 	goto:update_package_select
 ) else (
 	set update_type=%update_type:~0,1%
 )
 IF "%update_type%"=="1" (
-	%windir%\system32\wscript.exe //Nologo "%calling_script_dir%\TOOLS\Storage\functions\select_dir.vbs" "%calling_script_dir%\templogs\tempvar.txt"
+	call "%associed_language_script%" "package_folder_select"
 	set /p update_file_path=<"%calling_script_dir%\templogs\tempvar.txt"
 ) else IF "%update_type%"=="2" (
-	%windir%\system32\wscript.exe //Nologo "%calling_script_dir%\TOOLS\Storage\functions\open_file.vbs" "" "Fichier de partition Switch(*.hfs0)|*.hfs0|" "Sélection du fichier de mise à jour firmware Switch" "%calling_script_dir%\templogs\tempvar.txt"
+	call "%associed_language_script%" "package_file_select"
 	set /p update_file_path=<"%calling_script_dir%\templogs\tempvar.txt"
 ) else (
-	echo Ce choix n'est pas supporté.
+	call "%associed_language_script%" "bad_choice_error"
 	echo.
-	set update_type=
 	goto:update_package_select
 )
 IF "%update_file_path%"=="" (
-	echo Aucun fichier ou répertoire de mise à jour  renseigné, le script va s'arrêter.
+	call "%associed_language_script%" "no_source_selected_error"
 	goto:endscript
 )
 set update_file_path=%update_file_path:\\=\%
@@ -96,13 +91,16 @@ set update_file_path=%update_file_path:\\=\%
 cd "%this_script_dir%"
 :define_fspatches
 set fspatches=--fspatches=nocmac
-set /p enable_sigpatches=Souhaitez-vous désactiver la vérification des signatures (nécessaire pour installer du contenu non signé)? (O/n): 
+set enable_sigpatches=
+call "%associed_language_script%" "sigpatches_param_choice"
 IF NOT "%enable_sigpatches%"=="" set enable_sigpatches=%enable_sigpatches:~0,1%
 IF /i "%enable_sigpatches%"=="o" set fspatches=%fspatches%,nosigchk
-set /p disable_gamecard=Souhaitez-vous désactiver le port cartouche pour éviter la mise à jour du firmware de celui-ci (à utiliser si la console n'est jamais passé au-dessus du firmware 4.0.0)? (O/n): 
+set disable_gamecard=
+call "%associed_language_script%" "nogc_param_choice"
 IF NOT "%disable_gamecard%"=="" set disable_gamecard=%disable_gamecard:~0,1%
 IF /i "%disable_gamecard%"=="o" set fspatches=%fspatches%,nogc
-set /p no_exfat=Souhaitez-vous désactiver le support pour le format EXFAT des cartes SD? (O/n): 
+set no_exfat=
+call "%associed_language_script%" "noexfat_param_choice"
 IF NOT "%no_exfat%"=="" set no_exfat=%no_exfat:~0,1%
 IF /i "%no_exfat%"=="o" set no_exfat_param=--noexfat
 :start_update_creation
@@ -116,12 +114,10 @@ del /q list_of_dirs.ini 2>nul
 dir /A:D >list_of_dirs.ini
 "%this_script_dir%\..\Hactool_based_programs\tools\ChoiDujour.exe" --keyset="%this_script_dir%\..\Hactool_based_programs\ChoiDuJour_keys.txt" %no_exfat_param% %fspatches% "%update_file_path%"
 IF %errorlevel% EQU 0 (
-	echo Firmware créé avec succès dans le répertoire "update_packages" du script.
+	call "%associed_language_script%" "package_creation_success"
 	goto:skip_verif_fw_dir
 ) else (
-	echo Un problème est survenu pendant la création du firmware.
-	echo Vérifiez que les fichiers "ChoiDujour.exe", "hactool.exe", "keys.txt", "libmbedcrypto.dll", "libmbedtls.dll", "libmbedx509.dll" et "update.hfs0" sont bien à côté de ce script.
-	echo Vérifiez également que vous avez bien toutes les clés requises dans le fichier "keys.txt".
+	call "%associed_language_script%" "package_creation_error"
 	goto:verif_fw_dir
 )
 :verif_fw_dir

@@ -1,49 +1,32 @@
 ::Script by Shadow256
-@echo off
-chcp 65001 >nul
-IF EXIST "tools\packs_version.txt" (
-	echo Il semble qu'une mise à jour des packs via le script ait échouée précédemment et n'ai pas été réussie depuis, par sécurité ce script va donc s'arrêter.
-	echo Si vous êtes certains d'avoir mis à jour correctement le dossier des packs (par exemple en retéléchargeant le script et en extrayant le dossier "tools\sd_switch" de l'archive dans le dossier "tools" du script, vous pouvez supprimer manuellement le fichier "tools\packs_version.txt" et relancer ce script et cette erreur n'apparaîtra plus. Notez que si ceci n'a pas été fait correctement, ce script pourrait avoir des comportements anormaux.
-	goto:endscript
-)
-IF EXIST "tools\cheats_version.txt" (
-	echo Il semble qu'une mise à jour des cheats via le script ait échouée précédemment et n'ai pas été réussie depuis, par sécurité ce script va donc s'arrêter.
-	echo Si vous êtes certains d'avoir mis à jour correctement le dossier des cheats (par exemple en retéléchargeant le script et en extrayant le dossier "tools\sd_switch\cheats" de l'archive dans le dossier "tools\sd_switch" du script, vous pouvez supprimer manuellement le fichier "tools\cheats_version.txt" et relancer ce script et cette erreur n'apparaîtra plus. Notez que si ceci n'a pas été fait correctement, ce script ne proposera pas la possibilité de copier les cheats sur la SD.
-	set cheats_update_error=Y
-)
+call tools\storage\functions\ini_scripts.bat
+set this_script_full_path2=%~0
+set associed_language_script2=%language_path%\!this_script_full_path2:%ushs_base_path%=!
+set associed_language_script2=%ushs_base_path%%associed_language_script2%
+call "%associed_language_script2%" "display_title"
 echo.
-echo Préparation des fichiers à copier sur la SD
-echo.
-set /p launch_manual=Souhaitez-vous lancer la page d'information sur se qui peut être copié (vivement conseillé)? (O/n):
+call "%associed_language_script2%" "launch_manual_choice"
 IF NOT "%launch_manual%"=="" set launch_manual=%launch_manual:~0,1%
 IF /i "%launch_manual%"=="o" (
-	start DOC\files\sd_prepare.html
+	start "%language_path%\doc\files\sd_prepare.html"
 )
 
 echo.
-set /p copy_atmosphere_pack=Souhaitez-vous copier le pack pour lancer Atmosphere via le payload Fusee-primary d'Atmosphere (CFW Atmosphere complet) ou via Hekate (pack Kosmos)? (O/n):
+call "%associed_language_script2%" "copy_atmosphere_pack_choice"
 IF NOT "%copy_atmosphere_pack%"=="" set copy_atmosphere_pack=%copy_atmosphere_pack:~0,1%
 IF /i NOT "%copy_atmosphere_pack%"=="o" goto:skip_ask_cheats_atmosphere
 	:ask_nogc_atmosphere
 	echo.
-	echo Souhaitez-vous activer le patch NOGC pour Atmosphere  (firmware 4.0.0 et supérieur^)?
-	echo Ce patch est utile pour ceux ayant mis à jour avec la méthode ChoiDuJour à partir du firmware 3.0.2 et inférieur et ne voulant pas que le firmware du port cartouche soit mis à jour, permettant ainsi le downgrade en-dessous de la version 4.0.0 sans perdre l'usage du port cartouche.
-	echo Attention,, si un firmware supérieur au 4.0.0 est chargé une seule fois par le bootloader de Nintendo (démarrage classique^) ou sans ce patche, le firmware du port cartouche sera mis à jour et donc l'activation de ce patch sera inutile.
-	set /p atmosphere_enable_nogc_patch=Souhaitez-vous activer le patch nogc? (O/n^):
+	call "%associed_language_script2%" "atmosphere_nogc_patch_choice"
 	IF NOT "%atmosphere_enable_nogc_patch%"=="" set atmosphere_enable_nogc_patch=%atmosphere_enable_nogc_patch:~0,1%
 :skip_ask_nogc_atmosphere
 :ask_prodinfo_config_atmosphere
 echo.
-echo Configuration des options pour la partition PRODINFO pour Atmosphere
-echo.
-echo Activer l'écriture sur la partition PRODINFO (utile si vous compter utiliser le homebrew Incognito pour supprimer les infos spécifique à la console de cette partition mais sinon il vaut mieux désactiver cette option)?
-echo Notez qu'en cas d'activation pour le homebrew Incognito, il est préférable de désactiver cette option une fois que le homebrew aura fait se qu'il avait à faire.
-echo.
-set /p atmosphere_enable_prodinfo_write=Activer l'écriture sur la partition PRODINFO? (O/n): 
+call "%associed_language_script2%" "atmosphere_prodinfo_write_choice"
 :skip_ask_prodinfo_config_atmosphere
 echo.
 set atmosphere_manual_config=
-set /p atmosphere_manual_config=Souhaitez-vous régler manuellement les options d'Atmosphere? (O/n): 
+call "%associed_language_script2%" "atmosphere_manual_config_choice"
 IF NOT "%atmosphere_manual_config%"=="" set atmosphere_manual_config=%atmosphere_manual_config:~0,1%
 IF /i "%atmosphere_manual_config%"=="o" call :set_atmosphere_configs
 call :emummc_profile_choice "atmosphere"
@@ -51,52 +34,46 @@ call :modules_profile_choice "atmosphere"
 IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_atmosphere
 :ask_cheats_atmosphere
 echo.
-set /p atmosphere_enable_cheats=Souhaitez-vous copier les cheats pour Atmosphere (utilisable avec le homebrew EdiZon)? (O/n): 
+call "%associed_language_script2%" "atmosphere_copy_cheats_choice"
 IF NOT "%atmosphere_enable_cheats%"=="" set atmosphere_enable_cheats=%atmosphere_enable_cheats:~0,1%
 :skip_ask_cheats_atmosphere
 
 echo.
 IF /i "%copy_atmosphere_pack%"=="o" (
-	echo copie du pack  ReiNX?
-	echo Attention: Vous avez choisi la copie du pack Atmosphere, si vous êtes en firmware 7.0.0 ou supérieur et si vous choisissez de copier aussi le pack ReiNX, Atmosphere ne sera plus lançable via son payload dédié "Fusee Primary", il faudra donc le lancer via Kosmos et les configurations de Hekate pour l'utiliser ou passer par le payload de Retro_Reloaded.
-	set /p copy_reinx_pack=Souhaitez-vous copier le pack pour lancer ReiNX? ^(O/n^):
-) else (
-	set /p copy_reinx_pack=Souhaitez-vous copier le pack pour lancer ReiNX? ^(O/n^):
+	call "%associed_language_script2%" "reinx_warning_if_atmosphere_chosen"
 )
+call "%associed_language_script2%" "copy_reinx_pack_choice"
 IF NOT "%copy_reinx_pack%"=="" set copy_reinx_pack=%copy_reinx_pack:~0,1%
 IF /i "%copy_reinx_pack%"=="o" (
 	echo.
-	echo Souhaitez-vous activer le patch NOGC pour ReiNX (firmware 4.0.0 et supérieur^)?
-	echo Ce patch est utile pour ceux ayant mis à jour avec la méthode ChoiDuJour à partir du firmware 3.0.2 et inférieur et ne voulant pas que le firmware du port cartouche soit mis à jour, permettant ainsi le downgrade en-dessous de la version 4.0.0 sans perdre l'usage du port cartouche.
-	echo Attention,, si un firmware supérieur au 4.0.0 est chargé une seule fois par le bootloader de Nintendo (démarrage classique^) ou sans ce patche, le firmware du port cartouche sera mis à jour et donc l'activation de ce patch sera inutile.
-	set /p reinx_enable_nogc_patch=Souhaitez-vous activer le patch nogc? (O/n^):
+	call "%associed_language_script2%" "reinx_nogc_patch_choice"
 	IF NOT "!reinx_enable_nogc_patch!"=="" set reinx_enable_nogc_patch=!reinx_enable_nogc_patch:~0,1!
 )
 IF /i "%copy_reinx_pack%"=="o" call :modules_profile_choice "reinx"
 
 echo.
-set /p copy_memloader=Souhaitez-vous copier les fichiers nécessaire à Memloader pour monter la SD, la partition EMMC, la partition Boot0 ou la partition Boot1 sur un PC en lançant simplement le payload de Memloader? (Si la copie de SXOS a été souhaité, le payload sera aussi copié à la racine de la SD pour pouvoir le lancer grâce au payload de SXOS) (O/n):
+call "%associed_language_script2%" "copy_memloader_pack_choice"
 IF NOT "%copy_memloader%"=="" set copy_memloader=%copy_memloader:~0,1%
 
 echo.
-set /p copy_sxos_pack=Souhaitez-vous copier le pack pour lancer SXOS? (O/n):
+call "%associed_language_script2%" "copy_sxos_pack_choice"
 IF NOT "%copy_sxos_pack%"=="" set copy_sxos_pack=%copy_sxos_pack:~0,1%
 IF /i NOT "%copy_sxos_pack%"=="o" goto:skip_ask_cheats_sxos
-set /p copy_payloads=Souhaitez-vous copier les fichiers de payloads des fonctions choisient précédemment à la racine de la SD pour être compatible avec le lancement de payloads du payload SX_Loader? (O/n):
+call "%associed_language_script2%" "sxos_copy_selected_payloads_sd_root_choice"
 IF NOT "!copy_payloads!"=="" set copy_payloads=!copy_payloads:~0,1!
 IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_sxos
 :ask_cheats_sxos
 echo.
-	set /p sxos_enable_cheats=Souhaitez-vous copier les cheats pour SX OS (utilisable avec le ROMMENU de SX OS)? (O/n): 
-	IF NOT "%sxos_enable_cheats%"=="" set sxos_enable_cheats=%sxos_enable_cheats:~0,1%
+call "%associed_language_script2%" "sxos_cheats_copy_choice"
+IF NOT "%sxos_enable_cheats%"=="" set sxos_enable_cheats=%sxos_enable_cheats:~0,1%
 :skip_ask_cheats_sxos
 
 echo.
-set /p copy_emu=Souhaitez-vous copier le pack d'émulateurs? (O/n):
+call "%associed_language_script2%" "copy_emulators_pack_choice"
 IF NOT "%copy_emu%"=="" set copy_emu=%copy_emu:~0,1%
 IF /i "%copy_emu%"=="o" (
 	IF /i NOT "%del_files_dest_copy%"=="o" (
-		set /p keep_emu_configs=Souhaitez-vous concerver vos anciens fichiers de configurations d'émulateurs? (O/n^):
+		call "%associed_language_script2%" "emulators_kip_configs_choice"
 		IF NOT "!keep_emu_configs!"=="" set keep_emu_configs=!keep_emu_configs:~0,1!
 	)
 ) else (
@@ -104,7 +81,9 @@ IF /i "%copy_emu%"=="o" (
 )
 :define_emu_select_profile
 echo.
-echo Sélection du profile pour la copie des émulateurs:
+set emu_profile_path=
+set emu_profile=
+call "%associed_language_script2%" "emulators_profile_select_begin"
 set /a temp_count=1
 copy nul templogs\profiles_list.txt >nul
 IF NOT EXIST "tools\sd_switch\emulators\profiles\*.ini" (
@@ -121,17 +100,12 @@ for %%p in (*.ini) do (
 cd ..\..\..\..
 :emu_no_profile_created
 IF EXIST "tools\default_configs\emu_profile_all.ini" (
-	echo %temp_count%: Tous les émulateurs.
+	call "%associed_language_script2%" "emulators_profile_all"
 ) else (
 	set /a temp_count-=1
 	set emu_no_default_config=Y
 )
-echo 0: Accéder à la gestion des profiles d'émulateurs.
-echo Tout autre choix: Ne copier aucun des émulateurs.
-echo.
-set emu_profile_path=
-set emu_profile=
-set /p emu_profile=Choisissez un profile d'émulateurs: 
+call "%associed_language_script2%" "emulators_profile_choice"
 IF "%emu_profile%"=="" (
 	set pass_copy_emu_pack=Y
 	goto:skip_verif_emu_profile
@@ -175,7 +149,9 @@ del /q templogs\profiles_list.txt >nul 2>&1
 
 :define_select_profile
 echo.
-echo Sélection du profile pour la copie des homebrews optionnels:
+set mixed_profile_path=
+set mixed_profile=
+call "%associed_language_script2%" "homebrews_profile_choice_begin"
 set /a temp_count=1
 copy nul templogs\profiles_list.txt >nul
 IF NOT EXIST "tools\sd_switch\mixed\profiles\*.ini" (
@@ -192,17 +168,12 @@ for %%p in (*.ini) do (
 cd ..\..\..\..
 :no_profile_created
 IF EXIST "tools\default_configs\mixed_profile_all.ini" (
-	echo %temp_count%: Tous les homebrews optionnels.
+	call "%associed_language_script2%" "homebrews_profile_all"
 ) else (
 	set /a temp_count-=1
 	set no_default_config=Y
 )
-echo 0: Accéder à la gestion des profiles de homebrews.
-echo Tout autre choix: Ne copier aucun des homebrews optionnels.
-echo.
-set mixed_profile_path=
-set mixed_profile=
-set /p mixed_profile=Choisissez un profile de homebrews: 
+call "%associed_language_script2%" "homebrews_profile_choice"
 IF "%mixed_profile%"=="" (
 	set pass_copy_mixed_pack=Y
 	goto:skip_verif_mixed_profile
@@ -253,7 +224,7 @@ IF /i "%atmosphere_enable_cheats%"=="o" set copy_cheats=Y
 IF /i "%sxos_enable_cheats%"=="o" set copy_cheats=Y
 IF NOT "%copy_cheats%"=="Y" goto:skip_verif_cheats_profile
 echo.
-echo Sélection du profile pour la copie des cheats:
+call "%associed_language_script2%" "cheats_profile_choice_begin"
 set /a temp_count=1
 IF NOT EXIST "tools\sd_switch\cheats\profiles\*.ini" (
 	goto:no_cheats_profile_created
@@ -268,10 +239,7 @@ for %%p in (*.ini) do (
 )
 cd ..\..\..\..
 :no_cheats_profile_created
-echo 0: Accéder à la gestion des profiles de cheats.
-echo Tout autre choix: Copier tous les cheats de la base de données.
-echo.
-set /p cheats_profile=Choisissez un profile de cheats: 
+call "%associed_language_script2%" "cheats_profile_choice"
 IF "%cheats_profile%"=="" (
 	set copy_all_cheats_pack=Y
 	goto:skip_verif_cheats_profile
@@ -312,43 +280,41 @@ del /q templogs\profiles_list.txt >nul
 set del_files_dest_copy=
 IF /i NOT "%format_choice%"=="o" (
 	echo.
-	echo Suppression de données de la SD:
-	echo 1: Remettre les données de tous les CFWs à zéro sur la SD ^(supprimera les thèmes, configurations personnels, mods de jeux car les dossiers "titles" seront remis à zéro... donc bien sauvegarder vos données personnelles si vous souhaitez les concerver^)?
-	echo 2: Supprimer toutes les données de la SD?
-	echo 0: Copier normalement les fichiers sans supprimer de données de la SD?
-	echo.
-	set /p del_files_dest_copy=Faites votre choix: 
+	call "%associed_language_script2%" "del_files_dest_copy_choice"
 ) else (
 	set del_files_dest_copy=0
 )
 IF "%del_files_dest_copy%"=="1" goto:confirm_settings
 IF "%del_files_dest_copy%"=="2" goto:confirm_settings
 IF "%del_files_dest_copy%"=="0" goto:confirm_settings
-echo Choix inexistant.
+call "%associed_language_script2%" "bad_choice"
 goto:define_del_files_dest_copy
 
 :confirm_settings
 call tools\Storage\prepare_sd_switch_infos.bat
 set confirm_copy=
-	set /p confirm_copy=Souhaitez-vous confirmer ceci? (O/n^): 
+call "%associed_language_script2%" "confirm_script_settings"
 IF NOT "%confirm_copy%"=="" set confirm_copy=%confirm_copy:~0,1%
 IF /i "%confirm_copy%"=="o" (
 	set errorlevel=200
 	goto:endscript
 	
 ) else IF /i "%confirm_copy%"=="n" (
-	echo Opération annulée.
+	call "%associed_language_script2%" "canceled"
 	set errorlevel=400
 	goto:endscript
 ) else (
-	echo Choix inexistant.
+	call "%associed_language_script2%" "bad_choice"
 	goto:confirm_settings
 )
 
 :modules_profile_choice
 :define_modules_select_profile
 echo.
-echo Sélection du profile pour la copie des modules optionnels du CFW %~1:
+set modules_profile_path=
+set modules_profile=
+set pass_copy_modules_pack=
+call "%associed_language_script2%" "modules_profile_choice_begin" "%~1"
 set /a temp_count=1
 copy nul templogs\profiles_list.txt >nul
 IF NOT EXIST "tools\sd_switch\modules\profiles\*.ini" (
@@ -365,19 +331,13 @@ for %%p in (*.ini) do (
 cd ..\..\..\..
 :modules_no_profile_created
 IF EXIST "tools\default_configs\modules_profile_all.ini" (
-	echo %temp_count%: Tous les modules.
+	call "%associed_language_script2%" "modules_profile_all"
 	set modules_no_default_config=N
 ) else (
 	set /a temp_count-=1
 	set modules_no_default_config=Y
 )
-echo 0: Accéder à la gestion des profiles de modules.
-echo Tout autre choix: Ne copier aucun des modules.
-echo.
-set modules_profile_path=
-set modules_profile=
-set pass_copy_modules_pack=
-set /p modules_profile=Choisissez un profile de modules: 
+call "%associed_language_script2%" "modules_profile_choice"
 IF "%modules_profile%"=="" (
 	set pass_copy_modules_pack=Y
 	goto:skip_verif_modules_profile
@@ -433,20 +393,20 @@ IF "%~1"=="sxos" (
 exit /b
 
 :set_atmosphere_configs
-echo Configuration manuelle d'Atmosphere:
+call "%associed_language_script2%" "atmosphere_manual_config_intro"
 echo.
 set atmo_upload_enabled=
-set /p atmo_upload_enabled=Activer l'upload d'infos vers les serveurs Nintendo (non recommandé): (O/n): 
+call "%associed_language_script2%" "atmosphere_manual_config_upload_param_choice"
 IF NOT "%atmo_upload_enabled%"=="" set atmo_upload_enabled=%atmo_upload_enabled:~0,1%
 set atmo_usb30_force_enabled=
-set /p atmo_usb30_force_enabled=Activer l'USB 3 pour les homebrews (peut causer des problèmes)? (O/n): 
+call "%associed_language_script2%" "atmosphere_manual_config_usb3_param_choice"
 IF NOT "%atmo_usb30_force_enabled%"=="" set atmo_usb30_force_enabled=%atmo_usb30_force_enabled:~0,1%
 set atmo_ease_nro_restriction=
-set /p atmo_ease_nro_restriction=Activer les restrictions NRO (non recommandé)? (O/n): 
+call "%associed_language_script2%" "atmosphere_manual_config_nro-restrict_param_choice"
 IF NOT "%atmo_ease_nro_restriction%"=="" set atmo_ease_nro_restriction=%atmo_ease_nro_restriction:~0,1%
 :define_atmo_fatal_auto_reboot_interval
 set atmo_fatal_auto_reboot_interval=
-set /p atmo_fatal_auto_reboot_interval=Temps à partir duquel la console redémarrera automatiquement en cas de crash (0 pour attendre indéfiniement jusqu'à l'appuie d'une touche par l'utilisateur) (temps en milisecondes): 
+call "%associed_language_script2%" "atmosphere_manual_config_fatal-reboot_interval_param_choice"
 IF "%atmo_fatal_auto_reboot_interval%"=="" set atmo_fatal_auto_reboot_interval=0
 call TOOLS\Storage\functions\strlen.bat nb "%atmo_fatal_auto_reboot_interval%"
 set i=0
@@ -461,65 +421,56 @@ IF %i% NEQ %nb% (
 		)
 	)
 	IF "!check_chars!"=="0" (
-		echo Valeur incorrecte.
+		call "%associed_language_script2%" "bad_value"
 		goto:define_atmo_fatal_auto_reboot_interval
 	)
 )
 	IF %atmo_fatal_auto_reboot_interval% EQU 0 goto:skip_define_atmo_fatal_auto_reboot_interval
 IF %atmo_fatal_auto_reboot_interval% LSS 10 (
-	echo Cette valeur ne peut être inférieure à 10.
+	call "%associed_language_script2%" "atmosphere_manual_config_fatal-reboot-interval_param_too_low_error"
 	goto:define_atmo_fatal_auto_reboot_interval
 )
 :skip_define_atmo_fatal_auto_reboot_interval
 :set_atmo_power_menu_reboot_function
-echo Comment doit redémarrer la console lorsque le bouton "Redémarrer" du menu de celle-ci est utilisé?
-echo 1: Redémarrer le payload "atmosphere/reboot_to_payload.bin" de la SD (recommandé).
-echo 2: Redémarrer en mode RCM.
-echo 3: Redémarrer normalement.
-echo.
 set atmo_power_menu_reboot_function=
-set /p atmo_power_menu_reboot_function=Faites votre choix: 
+call "%associed_language_script2%" "atmosphere_manual_config_reboot-method_param_choice"
 IF "%atmo_power_menu_reboot_function%"=="" (
-	echo Ce choix ne peut être vide.
+	call "%associed_language_script2%" "empty_value_error"
 	goto:set_atmo_power_menu_reboot_function
 )
 IF "%atmo_power_menu_reboot_function%"=="1" goto:skip_set_atmo_power_menu_reboot_function
 IF "%atmo_power_menu_reboot_function%"=="2" goto:skip_set_atmo_power_menu_reboot_function
 IF "%atmo_power_menu_reboot_function%"=="3" goto:skip_set_atmo_power_menu_reboot_function
-echo Choix inexistant.
+call "%associed_language_script2%" "bad_choice"
 goto:set_atmo_power_menu_reboot_function
 :skip_set_atmo_power_menu_reboot_function
 set atmo_dmnt_cheats_enabled_by_default=
-set /p atmo_dmnt_cheats_enabled_by_default=Etat des cheats activer par défaut (si désactivé, ils devront être activé manuellement via EdiZon par exemple)? (O/n): 
+call "%associed_language_script2%" "atmosphere_manual_config_cheats-default-state_param_choice"
 IF NOT "%atmo_dmnt_cheats_enabled_by_default%"=="" set atmo_dmnt_cheats_enabled_by_default=%atmo_dmnt_cheats_enabled_by_default:~0,1%
 set atmo_dmnt_always_save_cheat_toggles=
-set /p atmo_dmnt_always_save_cheat_toggles=Activer la sauvegarde automatique de l'état des cheats (si désactivé, l'état des cheats sera sauvegardé seulement si un fichier de sauvegarde de ces étas est présent)? (O/n): 
+call "%associed_language_script2%" "atmosphere_manual_config_cheats-save-state_param_choice"
 IF NOT "%atmo_dmnt_always_save_cheat_toggles%"=="" set atmo_dmnt_always_save_cheat_toggles=%atmo_dmnt_always_save_cheat_toggles:~0,1%
 set atmo_fsmitm_redirect_saves_to_sd=
-set /p atmo_fsmitm_redirect_saves_to_sd=Activer la redirrection des sauvegardes vers la SD (expérimental donc non recommandé)? (O/n): 
+call "%associed_language_script2%" "atmosphere_manual_config_gamesave-on-sd_param_choice"
 IF NOT "%atmo_fsmitm_redirect_saves_to_sd%"=="" set atmo_fsmitm_redirect_saves_to_sd=%atmo_fsmitm_redirect_saves_to_sd:~0,1%
 
 echo.
-echo Configuration des boutons à maintenir pour activer ou non certaines fonctionnalités au lancement d'un jeu:
-echo.
-echo Il faudra entrer le bouton pour activer la fonction ou ajouter un "!" devant le bouton pour que celui-ci la désactive.
-echo Voici la liste des boutons possibles:
-echo A, B, X, Y, L, R, ZL, ZR, LS, RS, SL, SR, +, -, DLEFT, DUP, DRIGHT, DDOWN
+call "%associed_language_script2%" "atmosphere_manual_config_buttons_functions_activation_infos"
 echo.
 
 :set_atmo_hbl_override_key
 set atmo_hbl_override_key=
-set /p "atmo_hbl_override_key=Bouton de contrôle du Homebrew Menu: "
+call "%associed_language_script2%" "atmosphere_manual_config_hbl_button_param_choice"
 Setlocal disabledelayedexpansion
 IF "%atmo_hbl_override_key%"=="" (
-	echo Cette valeur ne peut être vide.
+	call "%associed_language_script2%" "empty_value_error"
 	endlocal
 	goto:set_atmo_hbl_override_key
 )
 call TOOLS\Storage\functions\strlen.bat nb "%atmo_hbl_override_key%"
 IF "%atmo_hbl_override_key:~0,1%"=="!" (
 	IF %nb% EQU 1 (
-		echo Cette valeur ne peut être utilisée.
+		call "%associed_language_script2%" "value_not_accepted_error"
 		endlocal
 		goto:set_atmo_hbl_override_key
 	)
@@ -548,24 +499,24 @@ FOR %%z in (A B X Y L R ZL ZR LS RS SL SR + - DLEFT DUP DRIGHT DDOWN) do (
 	)
 )
 IF "%check_chars%"=="0" (
-	echo Valeur incorrecte.
+	call "%associed_language_script2%" "bad_value"
 	goto:set_atmo_hbl_override_key
 )
 :skip_check_atmo_hbl_override_key
 
 :set_atmo_cheats_override_key
 set atmo_cheats_override_key=
-set /p atmo_cheats_override_key=Bouton de contrôle des cheats: 
+call "%associed_language_script2%" "atmosphere_manual_config_cheats_button_param_choice"
 Setlocal disabledelayedexpansion
 IF "%atmo_cheats_override_key%"=="" (
-	echo Cette valeur ne peut être vide.
+	call "%associed_language_script2%" "empty_value_error"
 	endlocal
 	goto:set_atmo_cheats_override_key
 )
 call TOOLS\Storage\functions\strlen.bat nb "%atmo_cheats_override_key%"
 IF "%atmo_cheats_override_key:~0,1%"=="!" (
 	IF %nb% EQU 1 (
-		echo Cette valeur ne peut être utilisée.
+		call "%associed_language_script2%" "value_not_accepted_error"
 		endlocal
 		goto:set_atmo_cheats_override_key
 	)
@@ -594,24 +545,24 @@ FOR %%z in (A B X Y L R ZL ZR LS RS SL SR + - DLEFT DUP DRIGHT DDOWN) do (
 	)
 )
 IF "%check_chars%"=="0" (
-	echo Valeur incorrecte.
+	call "%associed_language_script2%" "bad_value"
 	goto:set_atmo_cheats_override_key
 )
 :skip_check_atmo_cheats_override_key
 
 :set_atmo_layeredfs_override_key
 set atmo_layeredfs_override_key=
-set /p atmo_layeredfs_override_key=Bouton de contrôle de Layeredfs (mods de jeux par exemple): 
+call "%associed_language_script2%" "atmosphere_manual_config_layeredfs_button_param_choice"
 Setlocal disabledelayedexpansion
 IF "%atmo_layeredfs_override_key%"=="" (
-	echo Cette valeur ne peut être vide.
+	call "%associed_language_script2%" "empty_value_error"
 	endlocal
 	goto:set_atmo_layeredfs_override_key
 )
 call TOOLS\Storage\functions\strlen.bat nb "%atmo_layeredfs_override_key%"
 IF "%atmo_layeredfs_override_key:~0,1%"=="!" (
 	IF %nb% EQU 1 (
-		echo Cette valeur ne peut être utilisée.
+		call "%associed_language_script2%" "value_not_accepted_error"
 		endlocal
 		goto:set_atmo_layeredfs_override_key
 	)
@@ -640,7 +591,7 @@ FOR %%z in (A B X Y L R ZL ZR LS RS SL SR + - DLEFT DUP DRIGHT DDOWN) do (
 	)
 )
 IF "%check_chars%"=="0" (
-	echo Valeur incorrecte.
+	call "%associed_language_script2%" "bad_value"
 	goto:set_atmo_layeredfs_override_key
 )
 :skip_check_atmo_layeredfs_override_key
@@ -648,7 +599,10 @@ IF "%check_chars%"=="0" (
 :emummc_profile_choice
 :define_emummc_select_profile
 echo.
-echo Sélection du profile pour la copie de la configuration de l'emummc  du CFW %~1:
+set emummc_profile_path=
+set emummc_profile=
+set pass_copy_emummc_pack=
+call "%associed_language_script2%" "emummc_profile_choice_begin" "%~1"
 set /a temp_count=1
 copy nul templogs\profiles_list.txt >nul
 IF NOT EXIST "tools\sd_switch\atmosphere_emummc_profiles\*.ini" (
@@ -665,19 +619,13 @@ for %%p in (*.ini) do (
 cd ..\..\..
 :emummc_no_profile_created
 IF EXIST "tools\default_configs\emummc_profile_sxos_partition_share.ini" (
-	echo %temp_count%: Emummc partagé avec l'emunand via partition de SXOS.
+	call "%associed_language_script2%" "emummc_profile_partition_sxos_and_atmosphere"
 	set emummc_no_default_config=N
 ) else (
 	set /a temp_count-=1
 	set emummc_no_default_config=Y
 )
-echo 0: Accéder à la gestion des profiles d'emummc.
-echo Tout autre choix: Ne pas copier de configuration d'emummc.
-echo.
-set emummc_profile_path=
-set emummc_profile=
-set pass_copy_emummc_pack=
-set /p emummc_profile=Choisissez un profile d'emummc: 
+call "%associed_language_script2%" "emummc_profile_choice"
 IF "%emummc_profile%"=="" (
 	set pass_copy_emummc_pack=Y
 	goto:skip_verif_emummc_profile

@@ -1,18 +1,15 @@
-chcp 65001 > nul
-@ECHO off
-setlocal
-
-:Header
-ECHO ////////////////////// hid_mitm (script de démarrage par Krank, modifié par Shadow256) //////////////////////
-ECHO.
-goto start
-
+call tools\storage\functions\ini_scripts.bat
+Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 :start
-ECHO.
-ECHO Répertoire de travail: %cd%
-ECHO.
+cls
 set IP_Adress=
-set /p IP_Adress="Entrez l'adresse IP de votre Switch ou laissez vide pour revenir au menu précédent: "
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "intro"
+ECHO.
+call "%associed_language_script%" "ip_choice"
 IF "%IP_Adress%"=="" goto:end_script
 tools\Hid-mitm_compagnon\input_pc_win.exe %IP_Adress%
 ECHO.

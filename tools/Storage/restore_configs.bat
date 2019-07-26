@@ -1,18 +1,22 @@
 ::Script by Shadow256
-setlocal
-chcp 65001 >nul
+call tools\storage\functions\ini_scripts.bat
+Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
 )
 mkdir templogs
-%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\open_file.vbs "" "Fichiers ushs (*.ushs)|*.ushs|" "Sélection du fichier de restauration" "templogs\tempvar.txt"
+call "%associed_language_script%" "display_title"
+call "%associed_language_script%" "restaure_file_select"
 set /p filepath=<templogs\tempvar.txt
 IF NOT "%filepath%"=="" (
 	TOOLS\7zip\7za.exe x -y -sccUTF-8 "%filepath%" -o"." -r
-	echo Restauration terminée.
+	call "%associed_language_script%" "restaure_success"
 ) else (
-	echo Restauration annulée.
+	call "%associed_language_script%" "restaure_cancel"
 )
 rmdir /s /q templogs
 pause 

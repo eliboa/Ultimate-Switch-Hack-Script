@@ -1,7 +1,11 @@
 ::Script by Shadow256
-@echo off
-chcp 65001 >nul
+call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
+set this_script_full_path=%~0
+set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
+set associed_language_script=%ushs_base_path%%associed_language_script%
+echo %associed_language_script%
+call "%associed_language_script%" "display_title"
 cd >temp.txt
 set /p calling_script_dir=<temp.txt
 del /q temp.txt
@@ -22,7 +26,7 @@ IF NOT EXIST "..\NSC_Builder\keys.txt" (
 		copy keys.txt ..\NSC_Builder\keys.txt
 		goto:skip_keys_file_creation
 	) else (
-		echo Fichiers clés non trouvé, veuillez suivre les instructions.
+		call "%associed_language_script%" "keys_file_not_finded"
 		goto:keys_file_creation
 	)
 ) else (
@@ -30,36 +34,49 @@ IF NOT EXIST "..\NSC_Builder\keys.txt" (
 )
 :keys_file_creation
 echo.
-echo Veuillez renseigner le fichier de clés dans la fenêtre suivante.
-pause
-%windir%\system32\wscript.exe //Nologo "%calling_script_dir%\TOOLS\Storage\functions\open_file.vbs" "" "Fichier de liste de clés Switch(*.*)|*.*|" "Sélection du fichier de clés pour Hactool" "%calling_script_dir%\templogs\tempvar.txt"
+call "%associed_language_script%" "keys_file_choice"
 set /p keys_file_path=<"%calling_script_dir%\templogs\tempvar.txt"
 IF "%keys_file_path%"=="" (
-	echo Aucun fichier clés renseigné, le script va s'arrêter.
+	call "%associed_language_script%" "no_keys_file_selected"
 	goto:endscript
 )
 copy "%keys_file_path%" ..\NSC_Builder\keys.txt
 :skip_keys_file_creation
 %calling_script_dir:~0,1%:
 cd "%calling_script_dir%"
-start tools\NSC_Builder\NSCB.bat
-::color
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
+IF NOT "language_custom"=="0" (
+	set nscb_language_choice=
+	call "%associed_language_script%" "choose_nscb_language"
+	IF "!nscb_language_choice!"=="1" (
+		set language_id=FR_fr
+	) else (
+		set language_id=
+	)
+)
+IF "%language_id%"=="FR_fr" (
+	start tools\NSC_Builder\NSCB_fr.bat
+) else (
+	start tools\NSC_Builder\NSCB.bat
+)
 echo.
-set /p open_output_dir=Souhaitez-vous ouvrir le répertoire contenant les fichiers convertis? (O/n): 
+call "%associed_language_script%" "open_output_dir_choice"
 IF NOT "%open_output_dir%"=="" set open_output_dir=%open_output_dir:~0,1%
 IF /I "%open_output_dir%"=="o" (
-	"TOOLS\NSC_Builder\ztools\listmanager\listmanager.exe" -rl "TOOLS\NSC_Builder\zconfig\NSCB_options.cmd" -ln "10" -nl "Output dir: " | TOOLS\gnuwin32\bin\cut.exe -d = -f 2 >templogs\tempvar.txt
+	IF "%language_id%"=="FR_fr" (
+		"TOOLS\NSC_Builder\ztools\listmanager\listmanager.exe" -rl "TOOLS\NSC_Builder\zconfig\NSCB_fr_options.cmd" -ln "10" -nl "Output dir: " | TOOLS\gnuwin32\bin\cut.exe -d = -f 2 >templogs\tempvar.txt
+	) else (
+		"TOOLS\NSC_Builder\ztools\listmanager\listmanager.exe" -rl "TOOLS\NSC_Builder\zconfig\NSCB_options.cmd" -ln "10" -nl "Output dir: " | TOOLS\gnuwin32\bin\cut.exe -d = -f 2 >templogs\tempvar.txt
+	)
 	set /p NSCB_output_dir=<templogs\tempvar.txt
 )
 set NSCB_output_dir=%NSCB_output_dir:"=%
 IF /I "%open_output_dir%"=="o" (
 	IF "%NSCB_output_dir:~1,1%"==":" (
 		IF NOT EXIST "%NSCB_output_dir%" (
-			echo Le répertoire n'existe pas, peut-être que NSC_Builder n'a pas été exécuté totalement, par exemple vous pourriez avoir quitté le script avant la fin de la configuration de celui-ci.
+			call "%associed_language_script%" "output_dir_not_exist_error"
 			goto:endscript
 		) else IF NOT EXIST "%~dp0..\NSC_Builder\%NSCB_output_dir%" (
-			echo Le répertoire n'existe pas, peut-être que NSC_Builder n'a pas été exécuté totalement, par exemple vous pourriez avoir quitté le script avant la fin de la configuration de celui-ci.
+			call "%associed_language_script%" "output_dir_not_exist_error"
 			goto:endscript
 		)
 	)
