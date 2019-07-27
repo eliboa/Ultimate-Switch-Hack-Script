@@ -93,5 +93,5 @@ IF NOT EXIST "failed_updates\*.failed" (
 call "%associed_language_script%" "update_success"
 pause
 endlocal
-start "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"Ultimate-Switch-Hack-Script.bat^""
+start /i "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"Ultimate-Switch-Hack-Script.bat^""
 exit

@@ -1471,10 +1471,7 @@ for /l %%i in (1,1,%count_script_version_verif_cols%) do (
 	IF !temp_script_version_verif! GTR !temp_script_version! (
 		set update_finded=Y
 		goto:end_compare_version
-	) else (
-		goto:end_compare_version
 	)
-)
 )
 :end_compare_version
 IF "%update_finded%"=="Y" (
@@ -1523,7 +1520,7 @@ IF NOT EXIST "failed_updates\*.failed" (
 	rmdir /s /q failed_updates
 )
 endlocal
-start "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"tools\Storage\update_manager_updater.bat^""
+start /i "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"tools\Storage\update_manager_updater.bat^""
 exit
 exit /b
 
