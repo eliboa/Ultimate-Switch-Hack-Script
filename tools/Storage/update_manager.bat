@@ -9,7 +9,24 @@ IF EXIST "templogs" (
 	rmdir /s /q "templogs" 2>nul
 )
 mkdir "templogs"
-IF  "%~2"=="language_init" (
+IF NOT EXIST "tools\gnuwin32\bin\wc.exe" (
+	ping /n 2 www.github.com >nul 2>&1
+	IF !errorlevel! NEQ 0 (
+		echo Dependancy error, you have to connect to internet, script will close.
+		exit
+	) else (
+		"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/tools\gnuwin32 tools\gnuwin32 --force >nul
+	)
+)
+IF "%language_path%"=="" (
+	IF "%temp_language_path%"=="" (
+		set temp_language_path=languages\FR_fr
+		rmdir /s /q "templogs" 2>nul
+		call :initialize_language
+		exit
+	)
+)
+IF "%~2"=="language_init" (
 	rmdir /s /q "templogs" 2>nul
 	call :initialize_language
 	exit
@@ -100,7 +117,7 @@ mkdir "failed_updates" >nul
 IF "%~1"=="update_all" goto:skip_new_script_install
 IF "%~1"=="general_content_update" goto:skip_new_script_install
 IF "%~2"=="force" (
-	ping /n 2 www.google.com >nul 2>&1
+	ping /n 2 www.github.com >nul 2>&1
 	IF !errorlevel! NEQ 0 (
 		call "%associed_language_script%" "no_internet_connection_error"
 		pause
@@ -136,7 +153,7 @@ IF "%~2"=="force" (
 	)
 )
 :skip_new_script_install
-ping /n 2 www.google.com >nul 2>&1
+ping /n 2 www.github.com >nul 2>&1
 IF %errorlevel% NEQ 0 (
 	call "%associed_language_script%" "no_internet_connection_error"
 	IF /i "%new_install_choice%"=="o" (
@@ -1525,11 +1542,14 @@ exit
 exit /b
 
 :initialize_language
-ping /n 2 www.google.com >nul 2>&1
+ping /n 2 www.github.com >nul 2>&1
 IF %errorlevel% NEQ 0 (
 	echo No internet connection and the language is not initialized, script will close.
 	pause
 	exit /b 500
+)
+IF NOT EXIST "tools\default_configs\Lists\languages.list" (
+	"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/tools\default_configs/Lists tools\default_configs\Lists --force >nul
 )
 "tools\gitget\SVN\svn.exe" export %folders_url_project_base%/%temp_language_path:\=/% %temp_language_path% --force >nul
 echo Language initialized, script will close so restart it manualy to use the language installed.

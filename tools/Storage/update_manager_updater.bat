@@ -34,7 +34,7 @@ set temp_file_slash_path=%temp_file_path:\=/%
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
 set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
 call "%associed_language_script%" "begin_update"
-ping /n 2 www.google.com >nul 2>&1
+ping /n 2 www.github.com >nul 2>&1
 IF %errorlevel% NEQ 0 (
 	call "%associed_language_script%" "no_internet_connection_error"
 	pause
