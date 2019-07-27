@@ -254,7 +254,7 @@ goto:select_install
 :launch_doc
 set install_choice=
 echo.
-start "%language_path%\doc\files\netplay.html"
+start "" "%language_path%\doc\files\netplay.html"
 goto:select_install
 :end_script
 pause

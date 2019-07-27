@@ -396,7 +396,7 @@ IF "%action_type%"=="3" (
 echo.
 call "%associed_language_script%" "choidujournx_doc_launch_choice"
 IF NOT "%launch_choidujournx_doc%"=="" set launch_choidujournx_doc=%launch_choidujournx_doc:~0,1%
-IF /I "%launch_choidujournx_doc%"=="o" start "%language_path%\doc\files\choidujournx.html"
+IF /I "%launch_choidujournx_doc%"=="o" start "" "%language_path%\doc\files\choidujournx.html"
 goto end_script
 
 :cdj_test_max_firmware

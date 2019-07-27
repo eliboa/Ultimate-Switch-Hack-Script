@@ -12,7 +12,7 @@ echo.
 echo 1: Créer un profile?
 echo 2: Modifier un profile?
 echo 3: Supprimer un profile?
-echo 0: Obtenir la liste des émulateurs d'un profile?
+echo 0: Obtenir la liste des homebrews d'un profile?
 echo N'importe quel autre choix: Revenir au menu précédent?
 echo.
 set /p action_choice=Faites votre choix: 
@@ -96,7 +96,7 @@ echo Sélection d'un homebrew à ajouter ou à supprimer pour le profile "%temp_
 goto:eof
 
 :add_remove_homebrews_info
-echo Les homebrews dont le nom est préfixé d'un "*" sont les émulateurs présent dans le profile.
+echo Les homebrews dont le nom est préfixé d'un "*" sont les homebrews présent dans le profile.
 goto:eof
 
 :change_page_info

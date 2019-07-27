@@ -12,7 +12,7 @@ echo.
 echo 1: Créer un profile?
 echo 2: Modifier un profile?
 echo 3: Supprimer un profile?
-echo 0: Obtenir la liste des émulateurs d'un profile?
+echo 0: Obtenir les infos sur la configuration effectuée  dans un profile?
 echo N'importe quel autre choix: Revenir au menu précédent?
 echo.
 set /p action_choice=Faites votre choix: 

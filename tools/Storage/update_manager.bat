@@ -303,7 +303,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\Ultimate-Switch-Hack-Script.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -324,7 +324,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\about.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -337,7 +337,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\android_installer.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -354,7 +354,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\biskey_dump.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -375,7 +375,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\cheats_profiles_management.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -392,7 +392,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\convert_BOTW.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -409,7 +409,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\convert_game_to_nsp.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -426,7 +426,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\create_update.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -447,7 +447,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\emulators_pack_profiles_management.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -474,7 +474,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\emummc_profiles_management.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -487,7 +487,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\emunand_partition_file_create.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -500,7 +500,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\extract_cert.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -525,7 +525,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\extract_nand_files_from_emunand_partition_file.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -538,7 +538,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\install_drivers.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -559,7 +559,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\install_nsp_network.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -576,7 +576,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\install_nsp_USB.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -593,7 +593,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\launch_hid-mitm_compagnon.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -610,7 +610,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\launch_linux.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -635,7 +635,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\launch_payload.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -656,7 +656,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\launch_switch_lan_play_server.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -673,7 +673,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\menu.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -686,7 +686,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\merge_games.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -699,7 +699,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\mixed_pack_profiles_management.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -730,7 +730,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\modules_profiles_management.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -757,7 +757,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\mount_discs.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -782,7 +782,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\nand_firmware_detect.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -799,7 +799,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\nand_joiner.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -812,7 +812,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\nand_spliter.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -825,7 +825,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\nand_toolbox.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -848,7 +848,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\netplay.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -865,7 +865,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\nsZip.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -882,7 +882,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\ocasional_functions_menu.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -895,7 +895,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\others_functions_menu.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -908,7 +908,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\pegaswitch.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -933,7 +933,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\preload_NSC_Builder.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -950,7 +950,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\prepare_sd_switch.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1001,7 +1001,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\prepare_sd_switch_files_questions.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1014,7 +1014,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\prepare_sd_switch_infos.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1027,7 +1027,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\prepare_sd_switch_profiles_management.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1042,7 +1042,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\prepare_update_on_sd.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1060,7 +1060,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\renxpack.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1077,7 +1077,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\restore_configs.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1090,7 +1090,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\restore_default.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1103,7 +1103,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\save_configs.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1116,7 +1116,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\serial_checker.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1133,7 +1133,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\settings_menu.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1146,7 +1146,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\split_games.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1167,7 +1167,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\test_keys.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1184,7 +1184,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\toolbox.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1225,7 +1225,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\update_shofel2.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1242,7 +1242,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\Storage\verify_nsp.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1259,7 +1259,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\NES_Injector\NES_Injector.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )
@@ -1272,7 +1272,7 @@ IF %errorlevel% EQU 1 (
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\tools\SNES_Injector\SNES_Injector.bat"
-	IF %errorlevel% EQU 1 (
+	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
 )

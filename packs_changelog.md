@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V222</h2>
+<ul>
+<li>Mise à jour de Atmosphere vers la version master du Github, compilé par moi-même.</li>
+</ul>
 <h2>V221</h2>
 <ul>
 <li>Mise à jour du module HID_mitm en version 0.1.2.</li>
@@ -30,7 +34,6 @@
 </ul>
 <h2>V215</h2>
 <ul>
-<li>Mise à jour du Homebrew Menu (hbmenu.nro) vers la version master du Github, compilé par moi-même.</li>
 <li>Mise à jour du Homebrew Menu (hbmenu.nro) vers la version master du Github, compilé par moi-même.</li>
 </ul>
 <h2>V214</h2>

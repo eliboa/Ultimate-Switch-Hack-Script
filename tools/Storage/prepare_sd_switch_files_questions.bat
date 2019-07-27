@@ -8,7 +8,7 @@ echo.
 call "%associed_language_script2%" "launch_manual_choice"
 IF NOT "%launch_manual%"=="" set launch_manual=%launch_manual:~0,1%
 IF /i "%launch_manual%"=="o" (
-	start "%language_path%\doc\files\sd_prepare.html"
+	start "" "%language_path%\doc\files\sd_prepare.html"
 )
 
 echo.

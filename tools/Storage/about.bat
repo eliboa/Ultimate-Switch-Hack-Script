@@ -34,7 +34,7 @@ IF %errorlevel% NEQ 0 (
 )
 tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\changelog.html" https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master/%language_path:\=/%/doc/files/changelog.html
 call "%associed_language_script%" "display_title"
-start explorer.exe templogs\changelog.html
+start "" "templogs\changelog.html"
 goto:define_action_choice
 :display_changelog_packs
 ping /n 2 www.google.com >nul 2>&1
@@ -44,7 +44,7 @@ IF %errorlevel% NEQ 0 (
 )
 tools\gnuwin32\bin\wget.exe --no-check-certificate --content-disposition -S -O "templogs\changelog.html" https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master/%language_path:\=/%/doc/files/packs_changelog.html
 call "%associed_language_script%" "display_title"
-start explorer.exe templogs\changelog.html
+start "" "templogs\changelog.html"
 goto:define_action_choice
 :check_update
 set action_choice=

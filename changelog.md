@@ -1,5 +1,14 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.99.84</h2>
+<ul>
+<li>Correction de bugs dans le gestionnaire de mises à jour; encore...</li>
+<li>Quelques corrections dans certains messages affichés, notamment dans la gestion des différents profiles.</li>
+<li>Corrections de bugs qui empêchaient le lancement de la documentation via le script.</li>
+<li>Mise à jour du payload de démarrage de Atmosphere Fusee-primary.</li>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 222.</li>
+<li>Mise à jour de la documentation.</li>
+</ul>
 <h2>V3.99.83</h2>
 <ul>
 <li>Encore une mise à jour du gestionnaire de mises à jour pour corriger des bugs.</li>

@@ -175,7 +175,7 @@ call tools\Storage\about.bat
 goto:define_action_choice
 :launch_doc
 echo.
-start "%language_path%\doc\index.html"
+start "" "%language_path%\doc\index.html"
 goto:define_action_choice
 :end_script
 endlocal
