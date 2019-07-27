@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.99.82</h2>
+<ul>
+<li>Encore pas mal de bugs corrigés dans le gestionnaire de mises à jour, maintenant il devrait être possible de mettre à jour à partir de la version 3.00.00 base.</li>
+</ul>
 <h2>V3.99.81</h2>
 <ul>
 <li>Correction de beaucoup de bugs dans le script de démarrage ainsi que dans le gestionnaire de mises à jour.</li>

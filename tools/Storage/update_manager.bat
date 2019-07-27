@@ -9,11 +9,6 @@ Setlocal enabledelayedexpansion
 set base_script_path="%~dp0\..\.."
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
 set files_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/raw/master
-IF EXIST "templogs" (
-	del /q "templogs" 2>nul
-	rmdir /s /q "templogs" 2>nul
-)
-mkdir "templogs"
 IF NOT EXIST "tools\gnuwin32\bin\wc.exe" (
 	ping /n 2 www.github.com >nul 2>&1
 	IF !errorlevel! NEQ 0 (
@@ -34,6 +29,11 @@ IF "%temp_language_path%"=="" (
 		exit
 	)
 )
+IF EXIST "templogs" (
+	del /q "templogs" 2>nul
+	rmdir /s /q "templogs" 2>nul
+)
+mkdir "templogs"
 IF "%~2"=="language_init" (
 	rmdir /s /q "templogs" 2>nul
 	call :initialize_language
@@ -41,8 +41,16 @@ IF "%~2"=="language_init" (
 )
 echo é >nul
 set this_script_full_path=%~0
+
+IF "%ushs_base_path%"=="" (
+	cd >templogs\tempvar.txt
+	set /p ushs_base_path=<templogs\tempvar.txt
+	set ushs_base_path=!ushs_base_path!\
+)
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
+echo %associed_language_script%
+pause
 call "%associed_language_script%" "display_title"
 IF  "%~2"=="force" (
 	set auto_update=O
