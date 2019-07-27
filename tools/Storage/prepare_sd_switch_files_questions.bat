@@ -20,10 +20,6 @@ IF /i NOT "%copy_atmosphere_pack%"=="o" goto:skip_ask_cheats_atmosphere
 	call "%associed_language_script2%" "atmosphere_nogc_patch_choice"
 	IF NOT "%atmosphere_enable_nogc_patch%"=="" set atmosphere_enable_nogc_patch=%atmosphere_enable_nogc_patch:~0,1%
 :skip_ask_nogc_atmosphere
-:ask_prodinfo_config_atmosphere
-echo.
-call "%associed_language_script2%" "atmosphere_prodinfo_write_choice"
-:skip_ask_prodinfo_config_atmosphere
 echo.
 set atmosphere_manual_config=
 call "%associed_language_script2%" "atmosphere_manual_config_choice"

@@ -376,13 +376,6 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 	del /Q /S "%volume_letter%:\atmosphere\.emptydir" >nul
 	del /Q /S "%volume_letter%:\bootloader\.emptydir" >nul
 	del /Q /S "%volume_letter%:\emummc\.emptydir" >nul
-	copy nul %volume_letter%:\atmosphere\prodinfo.ini >nul
-	echo [config]>>%volume_letter%:\atmosphere\prodinfo.ini
-	IF /i NOT "%atmosphere_enable_prodinfo_write%"=="o" (
-		echo allow_write=^0>>%volume_letter%:\atmosphere\prodinfo.ini
-	) else (
-		echo allow_write=^1>>%volume_letter%:\atmosphere\prodinfo.ini
-	)
 	IF /i "%atmosphere_manual_config%"=="o" (
 		call :copy_atmosphere_configuration
 	)

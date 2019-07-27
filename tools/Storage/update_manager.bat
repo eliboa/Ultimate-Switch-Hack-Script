@@ -26,7 +26,6 @@ IF "%temp_language_path%"=="" (
 		set temp_language_path=languages\FR_fr
 		rmdir /s /q "templogs" 2>nul
 		call :initialize_language
-		exit
 	)
 )
 IF EXIST "templogs" (
@@ -37,7 +36,6 @@ mkdir "templogs"
 IF "%~2"=="language_init" (
 	rmdir /s /q "templogs" 2>nul
 	call :initialize_language
-	exit
 )
 echo é >nul
 set this_script_full_path=%~0
@@ -1574,9 +1572,11 @@ IF NOT EXIST "tools\default_configs\Lists\languages.list" (
 	"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/tools/default_configs/Lists tools\default_configs\Lists --force >nul
 )
 "tools\gitget\SVN\svn.exe" export %folders_url_project_base%/%temp_language_path:\=/% %temp_language_path% --force >nul
-echo Language initialized, script will close so restart it manualy to use the language installed.
+echo Language initialized, script will restart.
 pause
-exit /b 200
+start /i "" "%windir%\system32\cmd.exe" /c call "Ultimate-Switch-Hack-Script.bat"
+exit
+exit /b
 
 :del_old_or_unused_files
 call "%associed_language_script%" "del_hold_files_begin"

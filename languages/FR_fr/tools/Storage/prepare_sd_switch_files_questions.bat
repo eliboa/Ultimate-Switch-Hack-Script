@@ -21,15 +21,6 @@ echo Attention,, si un firmware supérieur au 4.0.0 est chargé une seule fois p
 set /p atmosphere_enable_nogc_patch=Souhaitez-vous activer le patch nogc? ^(O/n^): 
 goto:eof
 
-:atmosphere_prodinfo_write_choice
-echo Configuration des options pour la partition PRODINFO pour Atmosphere
-echo.
-echo Activer l'écriture sur la partition PRODINFO ^(utile si vous compter utiliser le homebrew Incognito pour supprimer les infos spécifique à la console de cette partition mais sinon il vaut mieux désactiver cette option^)?
-echo Notez qu'en cas d'activation pour le homebrew Incognito, il est préférable de désactiver cette option une fois que le homebrew aura fait se qu'il avait à faire.
-echo.
-set /p atmosphere_enable_prodinfo_write=Activer l'écriture sur la partition PRODINFO? ^(O/n^): 
-goto:eof
-
 :atmosphere_manual_config_choice
 set /p atmosphere_manual_config=Souhaitez-vous régler manuellement les options d'Atmosphere? ^(O/n^): 
 goto:eof

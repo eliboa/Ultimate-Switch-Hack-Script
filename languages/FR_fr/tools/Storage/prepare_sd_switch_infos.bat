@@ -14,17 +14,9 @@ echo.
 echo CFWs et packs:
 IF /i "%copy_atmosphere_pack%"=="o" (
 	IF /i "%atmosphere_enable_nogc_patch%"=="o" (
-		IF /i NOT "%atmosphere_enable_prodinfo_write%"=="o" (
-			echo Pack Atmosphere et Kosmos avec le patche NOGC, écriture sur PRODINFO désactivée
-		) else (
-			echo Pack Atmosphere et Kosmos avec le patche NOGC, écriture sur PRODINFO activée
-		)
+		echo Pack Atmosphere et Kosmos avec le patche NOGC.
 	) else (
-		IF /i NOT "%atmosphere_enable_prodinfo_write%"=="o" (
-			echo Pack Atmosphere et Kosmos, écriture sur PRODINFO désactivée
-		) else (
-			echo Pack Atmosphere et Kosmos, écriture sur PRODINFO activée
-		)
+			echo Pack Atmosphere et Kosmos
 	)
 	IF NOT "%atmosphere_pass_copy_modules_pack%"=="Y" (
 		Echo Modules optionnels pour Atmosphere:

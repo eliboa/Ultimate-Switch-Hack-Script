@@ -1,6 +1,5 @@
 set "copy_atmosphere_pack=o"
 set "atmosphere_enable_nogc_patch=n"
-set "atmosphere_enable_prodinfo_write=o"
 set "atmosphere_manual_config=n"
 set "atmo_upload_enabled="
 set "atmo_usb30_force_enabled="

@@ -145,7 +145,6 @@ IF %errorlevel% NEQ 200 exit /b
 set profile_path=tools\sd_switch\profiles\%profile_selected%
 echo set "copy_atmosphere_pack=%copy_atmosphere_pack%">"%profile_path%"
 echo set "atmosphere_enable_nogc_patch=%atmosphere_enable_nogc_patch%">>"%profile_path%"
-echo set "atmosphere_enable_prodinfo_write=%atmosphere_enable_prodinfo_write%">>"%profile_path%"
 echo set "atmosphere_manual_config=%atmosphere_manual_config%">>"%profile_path%"
 echo set "atmo_upload_enabled=%atmo_upload_enabled%">>"%profile_path%"
 echo set "atmo_usb30_force_enabled=%atmo_usb30_force_enabled%">>"%profile_path%"

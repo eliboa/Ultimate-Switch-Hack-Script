@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.99.85</h2>
+<ul>
+<li>Suppression du choix permettant d'écrire sur la partition PRODINFO pour Atmosphere, la méthode implémentée ne fonctionne plus. De fait, les profiles généraux ont été modifiés pour intégrer ceci.</li>
+<li>Petite amélioration dans le gestionnaire de mises à jour qui n'oblige plus l'utilisateur à redémarrer manuellement lors de l'initialisation d'une langue, le script redémarre de lui-même.</li>
+</ul>
 <h2>V3.99.84</h2>
 <ul>
 <li>Correction de bugs dans le gestionnaire de mises à jour; encore...</li>
