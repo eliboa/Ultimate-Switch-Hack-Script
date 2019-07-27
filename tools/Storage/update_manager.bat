@@ -1,5 +1,10 @@
 ::Script by Shadow256
-call tools\storage\functions\ini_scripts.bat
+IF EXIST "tools\storage\functions\ini_scripts.bat" (
+	call tools\storage\functions\ini_scripts.bat
+) else (
+	@echo off
+	chcp 65001 >nul
+)
 Setlocal enabledelayedexpansion
 set base_script_path="%~dp0\..\.."
 set folders_url_project_base=https://github.com/shadow2560/Ultimate-Switch-Hack-Script/trunk
