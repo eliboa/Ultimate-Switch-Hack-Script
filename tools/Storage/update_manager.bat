@@ -20,7 +20,7 @@ IF NOT EXIST "tools\gnuwin32\bin\wc.exe" (
 		echo Dependancy error, you have to connect to internet, script will close.
 		exit
 	) else (
-		"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/tools\gnuwin32 tools\gnuwin32 --force >nul
+		"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/tools/gnuwin32 tools\gnuwin32 --force >nul
 	)
 )
 IF "%language_path%"=="" (
@@ -1554,7 +1554,7 @@ IF %errorlevel% NEQ 0 (
 	exit /b 500
 )
 IF NOT EXIST "tools\default_configs\Lists\languages.list" (
-	"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/tools\default_configs/Lists tools\default_configs\Lists --force >nul
+	"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/tools/default_configs/Lists tools\default_configs\Lists --force >nul
 )
 "tools\gitget\SVN\svn.exe" export %folders_url_project_base%/%temp_language_path:\=/% %temp_language_path% --force >nul
 echo Language initialized, script will close so restart it manualy to use the language installed.
