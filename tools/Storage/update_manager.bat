@@ -41,7 +41,6 @@ IF "%~2"=="language_init" (
 )
 echo é >nul
 set this_script_full_path=%~0
-
 IF "%ushs_base_path%"=="" (
 	cd >templogs\tempvar.txt
 	set /p ushs_base_path=<templogs\tempvar.txt
@@ -49,8 +48,6 @@ IF "%ushs_base_path%"=="" (
 )
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
-echo %associed_language_script%
-pause
 call "%associed_language_script%" "display_title"
 IF  "%~2"=="force" (
 	set auto_update=O
