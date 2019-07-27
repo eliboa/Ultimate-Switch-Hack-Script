@@ -1520,7 +1520,7 @@ IF NOT EXIST "failed_updates\*.failed" (
 	rmdir /s /q failed_updates
 )
 endlocal
-start /i "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"tools\Storage\update_manager_updater.bat^""
+start /i "" "%windir%\system32\cmd.exe" /c call "tools\Storage\update_manager_updater.bat"
 exit
 exit /b
 

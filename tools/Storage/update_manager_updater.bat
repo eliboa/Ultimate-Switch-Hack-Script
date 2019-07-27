@@ -23,6 +23,7 @@ call "%language_path%\language_general_config.bat"
 set this_script_full_path=%~0
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
+echo %this_script_full_path%
 call "%associed_language_script%" "display_title"
 IF NOT EXIST "failed_updates\*.failed" (
 	rmdir /s /q "failed_updates" 2>nul
@@ -93,5 +94,5 @@ IF NOT EXIST "failed_updates\*.failed" (
 call "%associed_language_script%" "update_success"
 pause
 endlocal
-start /i "" "%windir%\system32\cmd.exe" "/c start ^"^" ^"Ultimate-Switch-Hack-Script.bat^""
+start /i "" "%windir%\system32\cmd.exe" /c call "Ultimate-Switch-Hack-Script.bat"
 exit
