@@ -20,11 +20,14 @@ IF NOT EXIST "tools\gnuwin32\bin\wc.exe" (
 		echo Dependancy error, you have to connect to internet, script will close.
 		exit
 	) else (
+		echo Updating dependancies...
 		"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/tools/gnuwin32 tools\gnuwin32 --force >nul
 	)
 )
-IF "%language_path%"=="" (
-	IF "%temp_language_path%"=="" (
+IF "%temp_language_path%"=="" (
+	IF EXIST "languages\FR_fr\language_general_config.bat" call "languages\FR_fr\language_general_config.bat"
+	IF "!language_path!"=="" (
+		echo Initializing first language...
 		set temp_language_path=languages\FR_fr
 		rmdir /s /q "templogs" 2>nul
 		call :initialize_language
