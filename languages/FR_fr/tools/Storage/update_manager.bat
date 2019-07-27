@@ -79,6 +79,11 @@ goto:eof
 echo Mise à jour intégrale du script terminée.
 goto:eof
 
+:launch_script_update_need_restart
+echo Le script de lancement a été mis à jour.
+echo Pour éviter des bugs gênants, le script va redémarrer.
+goto:eof
+
 :update_basic_elements_begin
 echo Vérification et mise à jour des éléments généraux du script
 goto:eof

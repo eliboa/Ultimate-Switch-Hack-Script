@@ -299,12 +299,21 @@ exit /b
 call :verif_file_version "Ultimate-Switch-Hack-Script.bat"
 IF %errorlevel% EQU 1 (
 	call :update_file
+	set need_restart=Y
 )
 IF "%language_custom%"=="0" (
 	call :verif_file_version "%language_path%\Ultimate-Switch-Hack-Script.bat"
 	IF %errorlevel% EQU 1 (
 		call :update_file
 	)
+)
+IF "%need_restart%"=="Y" (
+	call "%associed_language_script%" "launch_script_update_need_restart"
+	pause
+	endlocal
+	start /i "" "%windir%\system32\cmd.exe" /c call "Ultimate-Switch-Hack-Script.bat"
+	exit
+	exit /b
 )
 exit /b
 
