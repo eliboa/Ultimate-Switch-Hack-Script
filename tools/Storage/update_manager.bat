@@ -223,13 +223,18 @@ IF "%~1"=="" (
 		goto:end_script
 	) else (
 	call "%associed_language_script%" "begin_update"
-	call :verif_file_version "tools\general_update_version.txt"
-	IF !errorlevel! EQU 1 (
-		call :general_content_update
-	)
 	call :verif_file_version "tools\version.txt"
 	IF !errorlevel! EQU 1 (
 		call :update_file
+		IF "%ushs_version%"=="1.00.00" (
+			call "%associed_language_script%" "script_version_not_initialized_info"
+			pause
+			start /i "" "%windir%\system32\cmd.exe" /c call "Ultimate-Switch-Hack-Script.bat"
+		)
+	)
+	call :verif_file_version "tools\general_update_version.txt"
+	IF !errorlevel! EQU 1 (
+		call :general_content_update
 	)
 	IF "%language_custom%"=="0" (
 		call :verif_folder_version "%language_path%\doc"

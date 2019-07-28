@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.99.89</h2>
+<ul>
+<li>Encore des corrections sur le gestionnaire de mises à jour et sur le script le mettant à jour.</li>
+</ul>
 <h2>V3.99.88</h2>
 <ul>
 <li>Correction de bug dans le script permettant de mettre à jour le gestionnaire de mises à jour, normalement il ne devrait plus afficher d'erreurs si la mise à jour se fait via une version du script comprise entre 3.00.00 et 3.99.88. Certains messages ont également été changés pour l'ocasion.</li>

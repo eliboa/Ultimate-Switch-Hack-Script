@@ -60,6 +60,10 @@ goto:eof
 echo Vérifications et mises à jour en cours...
 goto:eof
 
+:script_version_not_initialized_info
+echo La version du script ne semble pas avoir été initialisée, le script va redémarrer pour prendre en compte cette modification.
+goto:eof
+
 :end_update
 echo Vérifications et mises à jour terminées.
 goto:eof
