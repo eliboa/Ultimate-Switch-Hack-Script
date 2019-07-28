@@ -69,7 +69,7 @@ ECHO ***********************************************
 echo Input "0" to return to the MODE SELECTION MENU
 ECHO ***********************************************
 echo.
-%pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%advlist.txt" -uin "%uinput%" -ff "uinput"
+%pycommand% "%nut%" -t nsp xci nsx -tfile "%prog_dir%advlist.txt" -uin "%uinput%" -ff "uinput"
 set /p eval=<"%uinput%"
 set eval=%eval:"=%
 setlocal enabledelayedexpansion
@@ -170,7 +170,10 @@ echo ............
 echo *******************************************************
 echo CHOOSE HOW TO PROCESS THE FILES
 echo *******************************************************
-echo Input "1" to extract nca files
+echo Input "1" to extract all files from nsp\xci
+echo Input "2" for raw extraction (Use in case a nca gives magic error)
+echo Input "3" to extract all nca files as plaintext
+echo Input "4" to extract nca contents from nsp\xci
 echo.
 ECHO ******************************************
 echo Or Input "b" to return to the list options
@@ -181,6 +184,9 @@ set bs=%bs:"=%
 set vrepack=none
 if /i "%bs%"=="b" goto checkagain
 if /i "%bs%"=="1" goto extract
+if /i "%bs%"=="2" goto raw_extract
+if /i "%bs%"=="3" goto ext_plaintext
+if /i "%bs%"=="4" goto ext_fromnca
 if %vrepack%=="none" goto s_cl_wrongchoice
 
 
@@ -190,7 +196,58 @@ call :program_logo
 CD /d "%prog_dir%"
 for /f "tokens=*" %%f in (advlist.txt) do (
 
-%pycommand% "%nut%" %buffer% -o "%prog_dir%extract" -tfile "%prog_dir%advlist.txt" -x ""
+%pycommand% "%nut%" %buffer% -o "%prog_dir%NSCB_extracted" -tfile "%prog_dir%advlist.txt" -x ""
+
+more +1 "advlist.txt">"advlist.txt.new"
+move /y "advlist.txt.new" "advlist.txt" >nul
+call :contador_NF
+)
+ECHO ---------------------------------------------------
+ECHO *********** ALL FILES WERE PROCESSED! *************
+ECHO ---------------------------------------------------
+goto s_exit_choice
+
+:raw_extract
+cls
+call :program_logo
+CD /d "%prog_dir%"
+for /f "tokens=*" %%f in (advlist.txt) do (
+
+%pycommand% "%nut%" %buffer% -o "%prog_dir%NSCB_extracted" -tfile "%prog_dir%advlist.txt" -raw_x ""
+
+more +1 "advlist.txt">"advlist.txt.new"
+move /y "advlist.txt.new" "advlist.txt" >nul
+call :contador_NF
+)
+ECHO ---------------------------------------------------
+ECHO *********** ALL FILES WERE PROCESSED! *************
+ECHO ---------------------------------------------------
+goto s_exit_choice
+
+:ext_plaintext
+cls
+call :program_logo
+CD /d "%prog_dir%"
+for /f "tokens=*" %%f in (advlist.txt) do (
+
+%pycommand% "%nut%" %buffer% -o "%prog_dir%NSCB_extracted" -tfile "%prog_dir%advlist.txt" -plx ""
+
+more +1 "advlist.txt">"advlist.txt.new"
+move /y "advlist.txt.new" "advlist.txt" >nul
+call :contador_NF
+)
+ECHO ---------------------------------------------------
+ECHO *********** ALL FILES WERE PROCESSED! *************
+ECHO ---------------------------------------------------
+goto s_exit_choice
+
+:ext_fromnca
+cls
+call :program_logo
+CD /d "%prog_dir%"
+for /f "tokens=*" %%f in (advlist.txt) do (
+
+%pycommand% "%nut%" %buffer% -o "%prog_dir%NSCB_extracted" -tfile "%prog_dir%advlist.txt" -nfx ""
 
 more +1 "advlist.txt">"advlist.txt.new"
 move /y "advlist.txt.new" "advlist.txt" >nul
@@ -264,7 +321,7 @@ ECHO =============================     BY JULESONTHEROAD     ===================
 ECHO -------------------------------------------------------------------------------------
 ECHO "                                POWERED BY SQUIRREL                                "
 ECHO "                    BASED IN THE WORK OF BLAWAR AND LUCA FRAGA                     "
-ECHO                                     VERSION 0.87
+ECHO                                     VERSION 0.88
 ECHO -------------------------------------------------------------------------------------                   
 ECHO Program's github: https://github.com/julesontheroad/NSC_BUILDER
 ECHO Blawar's github:  https://github.com/blawar

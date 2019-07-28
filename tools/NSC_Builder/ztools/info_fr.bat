@@ -30,8 +30,9 @@ echo Tapez "2" pour obtenir la liste de contenu du xci \ nsp
 echo Tapez "3" pour voir les infos de NUT sur le xci/nsp
 echo Tapez "4" pour voir les informations sur le jeu et le FIRMWARE requis du xci/nsp
 echo Tapez "5" pour lire le CNMT du xci/nsp
-echo Input "6" Pour lire le NACP du xci\nsp
-echo Tapez "7" pour vérifier le fichier (xci \ nsp \ nsx \ nca)
+echo Tapez "6" Pour lire le NACP du xci\nsp
+echo Tapez "7" pour lire le fichier main.NPDM à partir du xci\nsp
+echo Tapez "8" pour vérifier le fichier (xci \ nsp \ nsx \ nca)
 echo.
 echo Tapez "b" pour revenir à la sélection du fichier
 echo Tapez "0" pour revenir au menu principal du script --
@@ -54,7 +55,8 @@ if /i "%bs%"=="3" goto n_info
 if /i "%bs%"=="4" goto f_info
 if /i "%bs%"=="5" goto r_cnmt
 if /i "%bs%"=="6" goto r_nacp
-if /i "%bs%"=="7" goto verify
+if /i "%bs%"=="7" goto r_npdm
+if /i "%bs%"=="8" goto verify
 
 if /i "%bs%"=="b" goto sc1
 if /i "%bs%"=="0" goto salida
@@ -145,23 +147,35 @@ echo Mise en oeuve de la bibliotheque 0LIAM'S NACP
 %pycommand% "%nut%" -o "%info_dir%" --Read_nacp "%targt%"
 goto sc2
 
+:r_npdm
+cls
+call :logo
+echo ********************************************************
+echo Afficher les données du MAIN.NPDM du fichier NCA du NSP\XCI
+echo ********************************************************
+%pycommand% "%nut%" -o "%info_dir%" --Read_npdm "%targt%"
+goto sc2
+
+
 :verify
 cls
 call :logo
 echo ********************************************************
 echo Vérification  NSP\XCI\NCA
 echo ********************************************************
-%pycommand% "%nut%" -b %buffer% -o "%info_dir%" -v "%targt%" 
+%pycommand% "%nut%" %buffer% -o "%info_dir%" -v "%targt%" 
+
 goto sc2
 
 :sc3
 cls
 call :logo
 echo .......................................................
-echo Tapez "1" pour obtenir les infos NUT du fichier xci\nsp
-echo Tapez "2" pour lire le CNMT du fichier xci\nsp
-echo Tapez "3" pour lire le NACP du fichier xci\nsp
-echo Tapez "4" pour vérifier le fichier (xci\nsp\nsx\nca)
+echo Tapez "1" pour obtenir les infos NUT du fichier NCA
+echo Tapez "2" pour lire le CNMT d'une méta NCA
+echo Tapez "3" pour lire le NACP d'un NCA de contrôle
+echo Tapez "4" pour lire le NPDM d'une fichier NCA
+echo Tapez "5" pour vérifier le NCA
 echo.
 echo Tapez "b" pour revenir au chargement de fichiers
 echo Tapez "0" pour revenir au programme principal
@@ -181,7 +195,8 @@ if "%Extension%" EQU ".xci" ( goto snfi )
 if /i "%bs%"=="1" goto n_info_nca
 if /i "%bs%"=="2" goto r_cnmt_nca
 if /i "%bs%"=="3" goto r_nacp_nca
-if /i "%bs%"=="4" goto verify_nca
+if /i "%bs%"=="4" goto r_npdm_nca
+if /i "%bs%"=="5" goto verify_nca
 
 if /i "%bs%"=="b" goto sc1
 if /i "%bs%"=="0" goto salida
@@ -245,13 +260,22 @@ echo Mise en oeuve de la bibliotheque 0LIAM'S NACP
 %pycommand% "%nut%" -o "%info_dir%" --Read_nacp "%targt%"
 goto sc3
 
+:r_npdm_nca
+cls
+call :logo
+echo ********************************************************
+echo Afficher les données du MAIN.NPDM du fichier NCA dans NSP\XCI
+echo ********************************************************
+%pycommand% "%nut%" -o "%info_dir%" --Read_npdm "%targt%"
+goto sc3
+
 :verify_nca
 cls
 call :logo
 echo ********************************************************
 echo Vérifier un  NSP \ XCI \ NCA
 echo ********************************************************
-%pycommand% "%nut%" -b %buffer% -o "%info_dir%" -v "%targt%" 
+%pycommand% "%nut%" %buffer% -o "%info_dir%" -v "%targt%" 
 goto sc3
 
 

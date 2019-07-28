@@ -1,6 +1,6 @@
 @ECHO OFF
 chcp 65001 >nul
-set "program_version=0.87C"
+set "program_version=0.88"
 
 :TOP_INIT
 CD /d "%prog_dir%"
@@ -284,13 +284,13 @@ call :program_logo
 ECHO .......................................................
 echo Tapez "1" pour traiter les fichiers INDIVIDUELLEMENT (ancienne méthode)
 echo Tapez "2" pour entrer en mode MULTI-réempaquetage  (ancienne méthode)
-echo Tapez "3" pour découper en multi contenue (ancienne méthode)
+echo Tapez "3" to pour découper en multi contenue (ancienne méthode)
 echo Tapez "4" pour entrer en mode mise à jour (ancienne méthode)
 echo Tapez "5" pour voir les informations  du fichier XCI ou NSP
 echo Tapez "6" pour entrer en mode construction de base de donnée
 echo Tapez "0" pour configurer le script
 echo.
-echo Tapez "N" pour utiliser le nouveau mode
+echo Tapez "N" pour aller au nouveau mode
 echo .......................................................
 echo.
 set /p bs="Faites votre choix: "
@@ -343,7 +343,7 @@ echo avant de commencer le traitement des fichiers et
 echo vous pourrez ajouter et supprimer des éléments de la liste
 echo.
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 set /p bs="faites votre choix: "
@@ -368,7 +368,7 @@ echo ..................................
 :manual_INIT
 endlocal
 ECHO ***********************************************
-echo Tappez "0" pour revenir à la sélection du mode.
+echo Tapez "0" pour revenir à la sélection du mode.
 ECHO ***********************************************
 echo.
 set /p bs="Faites glisser un fichier ou choisissez une option et appuyez sur Entrer: "
@@ -750,7 +750,7 @@ echo .......................................................
 echo NOTE: En tapant 3 vous verrez la liste précédente que vous pourrez modifier avant de lancer son traitement.
 echo.
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 set /p bs="Faites votre choix: "
@@ -775,7 +775,7 @@ echo ..................................
 :multi_manual_INIT
 endlocal
 ECHO ***********************************************
-echo Tappez "0" pour revenir à la sélection du mode.
+echo Tapez "0" pour revenir à la sélection du mode.
 ECHO ***********************************************
 echo.
 set /p bs="Faites glisser un fichier ou choisissez une option et appuyez sur Entrer: "
@@ -815,7 +815,7 @@ echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
 echo Tapez "z" pour supprimer toute la liste.
 echo ......................................................................
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 set /p bs="Glissez un fichier ou choisissez une option: "
@@ -954,9 +954,9 @@ echo Tapez "7" pour changer la keygeneration à 7 (FW 6.2.0)
 echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-8.0.1)
 echo Tapez "9" pour changer la keygeneration à 9 (FW 8.1.0)
 echo.
-ECHO ******************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
+ECHO **************************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -1032,9 +1032,9 @@ move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%gefolder%\%filename%.nsp" )
 endlocal
 RD /S /Q "%w_folder%" >NUL 2>&1
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tout les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 :m_exit_choice
 if exist mlist.txt del mlist.txt
 if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
@@ -1072,9 +1072,9 @@ MD "%w_folder%\secure" >NUL 2>&1
 MD "%w_folder%\normal" >NUL 2>&1
 MD "%w_folder%\update" >NUL 2>&1
 call :getname
-echo ------------------------------------
+echo -------------------------------------------
 echo Extraction de la partition secure du xci...
-echo ------------------------------------
+echo -------------------------------------------
 %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%orinput%"
 echo Terminé.
 call :thumbup
@@ -1099,16 +1099,16 @@ exit /B
 :multi_set_clogo
 cls
 call :program_logo
-echo ------------------------------------------
+echo ------------------------------------------------------
 echo Définissez un logo personnalisé ou un jeu prédominant.
-echo ------------------------------------------
+echo ------------------------------------------------------
 echo Plus approprié pour les fichiers XCI. 
 echo Actuellement, les logos personnalisé et les noms sont définis en glissant un nsp ou un control nca.
 echo En faisant ainsi, le script va copier le control nca dans la partition Normal.
 echo Si vous n'ajoutez pas un logo personnalisé, celui-ci sera ajouté via un des fichiers ajoutés pour le réempactage.
-echo ..........................................
+echo .....................................................
 echo Tapez "b" pour revenir à la construction de la liste.
-echo ..........................................
+echo .....................................................
 set /p bs="Ou glissez un fichier NSP ou NCA sur la fenêtre et appuyez sur entrer: "
 set bs=%bs:"=%
 if /i "%bs%"=="b" ( goto multi_checkagain )
@@ -1194,10 +1194,10 @@ set /a conta=!conta! + 1
 if !conta! LEQ 0 ( del splist.txt )
 endlocal
 if not exist "splist.txt" goto sp_manual_INIT
-ECHO .......................................................
+ECHO .............................................................
 ECHO Une précédente liste a été trouvée. Que souhaitez-vous faire?
 :sp_prevlist0
-ECHO .......................................................
+ECHO .............................................................
 echo Tapez "1" pour lancer le traitement à partir de la liste.
 echo Tapez "2" pour supprimer la liste et en faire une nouvelle.
 echo Tapez "3" pour continuer à constuire la liste.
@@ -1205,7 +1205,7 @@ echo .......................................................
 echo NOTE: En tapant 3 vous verrez la liste précédente que vous pourrez modifier avant de lancer son traitement.
 echo.
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 set /p bs="Faites votre choix: "
@@ -1224,13 +1224,13 @@ call :program_logo
 echo -----------------------------------------------
 echo Mode split activé.
 echo -----------------------------------------------
-echo ..................................
+echo .................................................
 echo Vous avez décidé de commencer une nouvelle liste.
-echo ..................................
+echo .................................................
 :sp_manual_INIT
 endlocal
 ECHO ***********************************************
-echo Tappez "0" pour revenir à la sélection du mode.
+echo Tapez "0" pour revenir à la sélection du mode.
 ECHO ***********************************************
 echo.
 set /p bs="Faites glisser un fichier ou choisissez une option et appuyez sur Entrer: "
@@ -1269,7 +1269,7 @@ echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
 echo Tapez "z" pour supprimer toute la liste.
 echo ......................................................................
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 set /p bs="Glissez un fichier ou choisissez une option: "
@@ -1664,16 +1664,16 @@ goto upd_checkagain
 echo Choix inexistant.
 echo ............
 :upd_starts
-echo *******************************************************
+echo ********************************************************
 echo Comment souhaitez-vous procéder avec le fichier de base?
-echo *******************************************************
+echo ********************************************************
 echo Tapez "1" pour supprimer les mises à jour précédentes.
 echo Tapez "2" pour supprimer les anciens DLCs.
 echo Tapez "3" pour supprimer les précédentes mises à jour et DLCs.
 echo.
-ECHO ******************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
+ECHO **************************************************
 echo.
 set /p bs="faites votre choix: "
 set bs=%bs:"=%
@@ -1695,9 +1695,9 @@ echo Tapez "1" pour réempacter le contenu en NSP.
 echo Tapez "2" pour réempacter le contenu en XCI.
 echo Tapez "3" pour réempacter le contenu  dans les deux formats.
 echo.
-ECHO ******************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
+ECHO **************************************************
 echo.
 set /p bs="Faites votre choix: "
 set vrepack=none
@@ -1716,9 +1716,9 @@ echo.
 echo Tapez "0" pour ne pas "patcher" la version requise du système.
 echo Tapez "1" pour "patcher" la version requise du système.
 echo.
-ECHO ******************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
+ECHO **************************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -1749,9 +1749,9 @@ echo Tapez "7" pour changer la keygeneration à 7 (FW 6.2.0)
 echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-8.0.1)
 echo Tapez "9" pour changer la keygeneration à 9 (FW 8.1.0)
 echo.
-ECHO ******************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
+ECHO **************************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -1824,9 +1824,9 @@ move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -ifo "%w_folder%\archfolder" -archive "%gefolder%\%filename%.nsp" )
 endlocal
 RD /S /Q "%w_folder%" >NUL 2>&1
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tout les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 :UPD_exit_choice
 if exist UPDlist.txt del UPDlist.txt
 if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
@@ -1921,9 +1921,9 @@ echo NOTE: En appuyant sur 3, vous verrez la liste précédente
 echo avant de commencer le traitement des fichiers et vous 
 echo pourrez ajouter et supprimer des éléments de la liste
 echo.
-ECHO *************************************************
+ECHO ******************************************************
 echo Ou tapez "0" pour revenir au menu du mode de sélection
-ECHO *************************************************
+ECHO ******************************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -1941,14 +1941,14 @@ call :program_logo
 echo -----------------------------------------------
 echo Traitement individuel activé
 echo -----------------------------------------------
-echo ..................................
+echo ................................................
 echo Vous avez décidé de commencer une nouvelle liste
-echo ..................................
+echo ................................................
 :DBmanual_INIT
 endlocal
-ECHO ***********************************************
+ECHO ***************************************************
 echo Tapez "0" pour revenir au menu du mode de selection
-ECHO ***********************************************
+ECHO ***************************************************
 echo.
 set /p bs="Déposer un fichier ou un dossier sur la fenetre et appuyer sur entrée:"
 set bs=%bs:"=%

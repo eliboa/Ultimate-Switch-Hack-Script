@@ -2,6 +2,11 @@
 &nbsp;
 <h2>V222</h2>
 <ul>
+<li>Mise à jour de Sys-audioplayer en version 1.1.0.</li>
+<li>Ajout de Sys-audioplayer dans le fichier de configuration de la Kosmos Toolbox.</li>
+</ul>
+<h2>V222</h2>
+<ul>
 <li>Mise à jour de Atmosphere vers la version master du Github, compilé par moi-même.</li>
 </ul>
 <h2>V221</h2>

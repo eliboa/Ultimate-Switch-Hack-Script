@@ -127,7 +127,7 @@ echo **********************************************************************
 echo traitement de répertoire
 echo **********************************************************************
 echo Comment traiter un répertoire en mode automatique?
-echo ......................................................................
+echo ..................................................................................................
 echo Tapez "1" pour réempacter les fichiers du répertoire individuellement (un fichier pour un contenu)
 echo Tapez "2" pour réempacter les fichiers du répertoire ensemble (1 fichier incluant tout le contenu)
 echo Tapez "3" pour réempacter les fichiers du dossier par ID BASE
@@ -135,7 +135,7 @@ echo.
 echo Tapez "b" pour revenir au menu de configuration du mode automatique
 echo Tapez "0" pour revenir au menu de configuration
 echo Tapez "e" pour revenir au menu principal du script
-echo ......................................................................
+echo ..................................................................................................
 echo.
 set /p bs="Faites votre choix: "
 set "v_fold=none"
@@ -664,9 +664,9 @@ goto sc3
 :op_buffer
 cls
 call :logo
-echo ***************************************************************************
+echo ******************************************************************************************
 echo Régler le buffer pour la copie et l'ajout de fichier récupéré ou copier de/vers un NSP\XCI
-echo ***************************************************************************
+echo ******************************************************************************************
 echo Cette option affecte la vitesse de ces processus et dépend de votre système. Le buffer par défaut est réglé à 64kB.
 echo.
 echo Tapez "1" pour régler le buffer à 80kB
@@ -719,9 +719,9 @@ goto sc3
 :op_fat
 cls
 call :logo
-echo ***************************************************************************
+echo ***************************************************************************************************
 echo Régler l'option permettant de générer des fichiers utilisables sur des cartes SD formatées en FAT32
-echo ***************************************************************************
+echo ***************************************************************************************************
 echo Le Rommenu de SX OS  supporte les fichiers ns0, ns1,.. pour les fichiers nsp splittés et également les fichiers 00, 01 dans un répertoire noté comme archivé, c'est pour cela que les deux options sont proposées. Les autres installeurs ne supporte quand à eux que l'option des répertoires archivées.
 echo.
 echo Tapez "1" pour utiliser le format exfat (option par défaut)
@@ -979,7 +979,7 @@ set skipRSVprompt="%skipRSVprompt%"
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "108" -nl "La ligne de configuration a été modifiée en: "
 
 REM buffer
-set "v_buffer=buffer=-b 65536"
+set "v_buffer=-b 65536"
 set v_buffer="buffer=%v_buffer%"
 set v_buffer="%v_buffer%"
 %pycommand% "%listmanager%" -cl "%op_file%" -ln "32" -nl "set %v_buffer%" 

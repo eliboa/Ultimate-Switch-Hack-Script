@@ -69,7 +69,7 @@ ECHO ***********************************************
 echo Ou Tapez "0" pour revenir au menu du mode de sélection
 ECHO ***********************************************
 echo.
-%pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%advlist.txt" -uin "%uinput%" -ff "uinput"
+%pycommand% "%nut%" -t nsp xci nsx -tfile "%prog_dir%advlist.txt" -uin "%uinput%" -ff "uinput"
 set /p eval=<"%uinput%"
 set eval=%eval:"=%
 setlocal enabledelayedexpansion
@@ -171,6 +171,9 @@ echo *******************************************************
 echo CHOISISSEZ COMMENT TRAITER LES FICHIERS
 echo *******************************************************
 echo Tapez "1" pour extraire les fichiers nca
+echo Tapez "2" pour l'extraction brute (à utiliser si un nca donne une erreur)
+echo Tapez "3" pour extraire tous les fichiers nca en texte clair
+echo Tapez "4" pour extraire le contenu nca du nsp \ xci
 echo.
 ECHO ******************************************
 echo Ou tapez "b" pour revenir aux options de la liste
@@ -181,6 +184,9 @@ set bs=%bs:"=%
 set vrepack=none
 if /i "%bs%"=="b" goto checkagain
 if /i "%bs%"=="1" goto extract
+if /i "%bs%"=="2" goto raw_extract
+if /i "%bs%"=="3" goto ext_plaintext
+if /i "%bs%"=="4" goto ext_fromnca
 if %vrepack%=="none" goto s_cl_wrongchoice
 
 
@@ -190,14 +196,65 @@ call :program_logo
 CD /d "%prog_dir%"
 for /f "tokens=*" %%f in (advlist.txt) do (
 
-%pycommand% "%nut%" %buffer% -o "%prog_dir%extract" -tfile "%prog_dir%advlist.txt" -x ""
+%pycommand% "%nut%" %buffer% -o "%prog_dir%NSCB_extracted" -tfile "%prog_dir%advlist.txt" -x ""
 
 more +1 "advlist.txt">"advlist.txt.new"
 move /y "advlist.txt.new" "advlist.txt" >nul
 call :contador_NF
 )
 ECHO ---------------------------------------------------
-ECHO *********** Tous les fichiers ont été traités! *************
+ECHO *********** Tous les fichiers ont été traités!! *************
+ECHO ---------------------------------------------------
+goto s_exit_choice
+
+:raw_extract
+cls
+call :program_logo
+CD /d "%prog_dir%"
+for /f "tokens=*" %%f in (advlist.txt) do (
+
+%pycommand% "%nut%" %buffer% -o "%prog_dir%NSCB_extracted" -tfile "%prog_dir%advlist.txt" -raw_x ""
+
+more +1 "advlist.txt">"advlist.txt.new"
+move /y "advlist.txt.new" "advlist.txt" >nul
+call :contador_NF
+)
+ECHO ---------------------------------------------------
+ECHO *********** Tous les fichiers ont été traités!! *************
+ECHO ---------------------------------------------------
+goto s_exit_choice
+
+:ext_plaintext
+cls
+call :program_logo
+CD /d "%prog_dir%"
+for /f "tokens=*" %%f in (advlist.txt) do (
+
+%pycommand% "%nut%" %buffer% -o "%prog_dir%NSCB_extracted" -tfile "%prog_dir%advlist.txt" -plx ""
+
+more +1 "advlist.txt">"advlist.txt.new"
+move /y "advlist.txt.new" "advlist.txt" >nul
+call :contador_NF
+)
+ECHO ---------------------------------------------------
+ECHO *********** Tous les fichiers ont été traités!! *************
+ECHO ---------------------------------------------------
+goto s_exit_choice
+
+:ext_fromnca
+cls
+call :program_logo
+CD /d "%prog_dir%"
+for /f "tokens=*" %%f in (advlist.txt) do (
+
+%pycommand% "%nut%" %buffer% -o "%prog_dir%NSCB_extracted" -tfile "%prog_dir%advlist.txt" -nfx ""
+
+more +1 "advlist.txt">"advlist.txt.new"
+move /y "advlist.txt.new" "advlist.txt" >nul
+call :contador_NF
+)
+ECHO ---------------------------------------------------
+ECHO *********** Tous les fichiers ont été traités!! *************
 ECHO ---------------------------------------------------
 goto s_exit_choice
 

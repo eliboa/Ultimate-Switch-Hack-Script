@@ -17,7 +17,7 @@ tools\Node.js_programs\NodeJSPortable.exe
 call :write_begin_node.js_launch_file
 echo cd Switch_Lan_Play >>tools\Node.js_programs\App\Server.cmd
 echo npm.cmd start >>tools\Node.js_programs\App\Server.cmd
-start tools\Node.js_programs\NodeJSPortable.exe
+start "" "tools\Node.js_programs\NodeJSPortable.exe"
 call "%associed_language_script%" "end_launch"
 pause
 del /q tools\Node.js_programs\App\Server.cmd

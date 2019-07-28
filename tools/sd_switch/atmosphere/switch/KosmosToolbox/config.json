@@ -35,5 +35,10 @@
 			"tid"   : "0100000000000352",
 			"requires_reboot": true
 		}
+		{
+			"name"  : "sys-audioplayer",
+			"tid"   : "4200000000000000",
+			"requires_reboot": false
+		}
 	]
 }
