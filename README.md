@@ -7,6 +7,7 @@ La licence GPL V3 s'applique sur les scripts batch se trouvant à la racine de c
 ## Fonctionnalités
 
 * Mise à jour automatique du script et de ses fonctionnalités (si souhaitée).
+* Support du multi-langues.
 * Installation des drivers du mode RCM (driver "APX") et du mode libnx_USB_comms utilisé par Tinfoil (driver "libnx_USB_comms") de la Switch.
 * Lancement d'un payload via le mode RCM de la Switch. Vous pouvez placer les payloads dans un dossier "Payloads" situé à la racine de ce script ou choisir un fichier de payload via un explorateur. Notez que les drivers du mode RCM de la Switch doivent être installé pour que cela fonctionne.
 * Préparations pour pouvoir utiliser assez simplement l'exploit Nereba grâce à Pegaswitch.
