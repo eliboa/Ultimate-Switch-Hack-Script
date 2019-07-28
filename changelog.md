@@ -1,5 +1,13 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.99.87</h2>
+<ul>
+<li>Ajout d'une fonctionnalité permettant de changer de langue, fonction présente dans le menu principal.</li>
+<li>La langue sélectionnée est maintenant sauvegardée lors du script de sauvegarde des éléments importants.</li>
+<li>Lors de la restauration des valeurs par défaut du script, le choix de la langue est réinitialisé.</li>
+<li>Mise à jour du script de démarrage pour parrer à des bugs possibles. Un bug identifié a également été corrigé dans ce script.</li>
+<li>Mise à jour du gestionnaire de mises à jour pour ajouter la mise à jour du nouveau script de changement de langue.</li>
+</ul>
 <h2>V3.99.86</h2>
 <ul>
 <li>Mise à jour de NSC_Builder (version française et anglaise) en version 0.88.</li>

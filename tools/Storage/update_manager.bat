@@ -270,6 +270,7 @@ call :update_extract_cert.bat
 call :update_install_drivers.bat
 call :update_install_nsp_network.bat
 call :update_install_nsp_USB.bat
+call :update_language_selector.bat
 call :update_launch_linux.bat
 call :update_launch_payload.bat
 call :update_launch_switch_lan_play_server.bat
@@ -581,6 +582,19 @@ IF "%language_custom%"=="0" (
 call :verif_folder_version "tools\Goldtree"
 IF %errorlevel% EQU 1 (
 	call :update_folder
+)
+exit /b
+
+:update_language_selector.bat
+call :verif_file_version "tools\Storage\language_selector.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\language_selector.bat"
+	IF !errorlevel! EQU 1 (
+		call :update_file
+	)
 )
 exit /b
 
@@ -1280,6 +1294,7 @@ exit /b
 call "%associed_language_script%" "update_basic_elements_begin"
 call :update_starting_script
 call :update_about.bat
+call :update_language_selector.bat
 call :update_menu.bat
 call :update_ocasional_functions_menu.bat
 call :update_others_functions_menu.bat

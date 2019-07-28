@@ -38,6 +38,7 @@ IF NOT "%filepath%"=="" set filepath=%filepath%\
 IF NOT "%filepath%"=="" set filepath=%filepath:\\=\%
 call "%associed_language_script%" "save_begin"
 IF NOT EXIST KEY_SAVES mkdir KEY_SAVES
+IF EXIST "Ultimate-Switch-Hack-Script.bat.lng" copy /v "Ultimate-Switch-Hack-Script.bat.lng" "KEY_SAVES\Ultimate-Switch-Hack-Script.bat.lng"
 IF NOT EXIST KEY_SAVES\languages mkdir KEY_SAVES\languages
 cd languages
 for /f %%p in ("*") do (

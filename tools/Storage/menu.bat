@@ -26,8 +26,9 @@ IF "%action_choice%"=="9" goto:ocasional_functions
 IF "%action_choice%"=="10" goto:settings
 IF "%action_choice%"=="11" goto:client_netplay
 IF "%action_choice%"=="12" goto:server_netplay
-IF "%action_choice%"=="13" goto:about
-IF "%action_choice%"=="14" (
+IF "%action_choice%"=="13" goto:language_change
+IF "%action_choice%"=="14" goto:about
+IF "%action_choice%"=="15" (
 	start https://www.paypal.me/shadow256
 	goto:define_action_choice
 )
@@ -159,6 +160,18 @@ IF EXIST "tools\Storage\launch_switch_lan_play_server.bat" (
 	call tools\Storage\update_manager.bat "update_launch_switch_lan_play_server.bat" "force"
 )
 call tools\Storage\launch_switch_lan_play_server.bat
+@echo off
+goto:define_action_choice
+:language_change
+set action_choice=
+echo.
+cls
+IF EXIST "tools\Storage\language_selector.bat" (
+	call tools\Storage\update_manager.bat "update_language_selector.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_language_selector.bat" "force"
+)
+call tools\Storage\language_selector.bat
 @echo off
 goto:define_action_choice
 :about

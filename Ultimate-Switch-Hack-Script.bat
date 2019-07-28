@@ -18,6 +18,7 @@ IF NOT EXIST "%language_path%\*.*" (
 	del /q "Ultimate-Switch-Hack-Script.bat.lng"
 	goto:define_language_path
 )
+set temp_language_path=%language_path%
 ::call "%language_path%\script_general_config.bat"
 call "%language_path%\language_general_config.bat"
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
@@ -75,6 +76,7 @@ echo %temp_count%: %temp_language_name%
 set /a temp_count+=1
 goto:listing_languages
 :skip_listing_languages
+set /a temp_count-=1
 set temp_language_number=
 set /p temp_language_number=Enter language number: 
 IF "%temp_language_number%"=="" (

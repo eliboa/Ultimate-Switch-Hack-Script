@@ -36,9 +36,11 @@ echo 11: Lancer ou configurer le client pour pouvoir jouer en réseau ^(serveur 
 echo.
 echo 12: Lancer un serveur pour le jeu en réseau ^(serveur Switch-Lan-Play^)?
 echo.
-echo 13: A propos du script?
+echo 13: Changer de langue?
 echo.
-echo 14: Ouvrir la page permettant de me faire une donation?
+echo 14: A propos du script?
+echo.
+echo 15: Ouvrir la page permettant de me faire une donation?
 echo.
 echo 0: Lancer la documentation ^(recommandé^)?
 echo.

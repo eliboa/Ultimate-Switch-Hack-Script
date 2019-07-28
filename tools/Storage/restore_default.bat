@@ -8,6 +8,7 @@ call "%associed_language_script%" "display_title"
 IF EXIST templogs\*.* rmdir /s /q templogs
 IF EXIST downloads\*.* rmdir /s /q downloads
 IF EXIST update_packages\*.* rmdir /s /q update_packages
+IF EXIST "Ultimate-Switch-Hack-Script.bat.lng" del /q "Ultimate-Switch-Hack-Script.bat.lng"
 IF EXIST "%language_path%\script_general_config.bat" del /q "%language_path%\script_general_config.bat"
 IF EXIST TOOLS\Hactool_based_programs\keys.txt del /q TOOLS\Hactool_based_programs\keys.txt
 IF EXIST TOOLS\Hactool_based_programs\keys.dat del /q TOOLS\Hactool_based_programs\keys.dat
@@ -16,7 +17,6 @@ IF EXIST "TOOLS\Hactool_based_programs\tools\update_update" rmdir /q /s "TOOLS\H
 IF EXIST "TOOLS\Hactool_based_programs\4nxci_extracted_xci\*.*" rmdir /q /s "TOOLS\Hactool_based_programs\4nxci_extracted_xci"
 IF EXIST "tools\netplay\servers_list.txt" del /q "tools\netplay\servers_list.txt"
 IF EXIST "tools\NSC_Builder\keys.txt" del /q "tools\NSC_Builder\keys.txt"
-IF EXIST "tools\Storage\verif_update.ini" del /q "tools\Storage\verif_update.ini"
 del /q tools\sd_switch\atmosphere_emummc_profiles\*.ini 2>nul
 del /q tools\sd_switch\cheats\profiles\*.ini 2>nul
 del /q tools\sd_switch\emulators\profiles\*.ini 2>nul
