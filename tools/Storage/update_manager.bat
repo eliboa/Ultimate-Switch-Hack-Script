@@ -139,7 +139,6 @@ IF "%~2"=="force" (
 		pause
 		goto_end_script
 	)
-	copy nul "continue_update.txt" >nul
 	call :verif_file_version "tools\Storage\update_manager.bat"
 	IF !errorlevel! EQU 1 (
 		call :verif_file_version "tools\Storage\update_manager_updater.bat"
@@ -186,7 +185,6 @@ IF %errorlevel% NEQ 0 (
 	)
 	goto:end_script
 )
-copy nul "continue_update.txt" >nul
 :failed_updates_verification
 IF NOT EXIST "failed_updates\*.failed" goto:skip_failed_updates_verification
 IF EXIST "failed_updates\update_manager.bat.file.failed" (
@@ -230,6 +228,7 @@ IF "%~1"=="" (
 		IF EXIST "continue_update.txt" del /q "continue_update.txt"
 		goto:end_script
 	) else (
+	copy nul "continue_update.txt" >nul
 	call "%associed_language_script%" "begin_update"
 	call :verif_file_version "tools\version.txt"
 	IF !errorlevel! EQU 1 (
