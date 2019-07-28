@@ -1,18 +1,18 @@
 goto:%~1
 
 :display_title
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
+title Shadow256 Ultimate Switch Hack Script Update Manager Updater
 goto:eof
 
 :begin_update
 echo :::::::::::::::::::::::::::::::::::::
-echo ::Shadow256 Ultimate Switch Hack Script %ushs_version% Update Manager Updater::
+echo ::Shadow256 Ultimate Switch Hack Script Update Manager Updater::
 echo.
 echo Mise à jour du gestionnaire de mises à jour du script en cours...
 goto:eof
 
 :no_internet_connection_error
-echo Aucune connexion internet vérifiable, la mise à jour du fichier "%temp_file_path%" n'aura pas lieu.
+echo Aucune connexion internet vérifiable, mise à jour impossible et le script va se fermer.
 goto:eof
 
 :update_file_error

@@ -23,7 +23,11 @@ set temp_language_path=%language_path%
 call "%language_path%\language_general_config.bat"
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
-set /p ushs_version=<tools\version.txt
+IF EXIST tools\version.txt (
+	set /p ushs_version=<tools\version.txt
+) else (
+	set ushs_version=1.00.00
+)
 IF EXIST tools\sd_switch\version.txt (
 	set /p ushs_packs_version=<tools\sd_switch\version.txt
 ) else (
