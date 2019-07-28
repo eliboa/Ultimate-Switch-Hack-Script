@@ -21,11 +21,10 @@ IF NOT "%language_path%"=="" (
 		goto:define_language_path
 	)
 )
-call "%language_path%\language_general_config.bat"
+IF NOT "%language_path%"=="" call "%language_path%\language_general_config.bat"
 set this_script_full_path=%~0
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
-echo %this_script_full_path%
 IF NOT "%language_path%"=="" (
 	call "%associed_language_script%" "display_title"
 ) else (
