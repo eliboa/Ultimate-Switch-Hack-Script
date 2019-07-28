@@ -23,7 +23,6 @@ IF NOT EXIST "tools\gnuwin32\bin\wc.exe" (
 IF "%temp_language_path%"=="" (
 	IF EXIST "languages\FR_fr\language_general_config.bat" call "languages\FR_fr\language_general_config.bat"
 	IF "!language_path!"=="" (
-		copy nul "continue_update.txt" >nul
 		echo Initializing first language...
 		set temp_language_path=languages\FR_fr
 		rmdir /s /q "templogs" 2>nul
@@ -36,7 +35,6 @@ IF EXIST "templogs" (
 )
 mkdir "templogs"
 IF "%~2"=="language_init" (
-	copy nul "continue_update.txt" >nul
 	rmdir /s /q "templogs" 2>nul
 	call :initialize_language
 )
@@ -1599,6 +1597,7 @@ IF %errorlevel% NEQ 0 (
 	pause
 	exit /b 500
 )
+copy nul "continue_update.txt" >nul
 IF NOT EXIST "tools\default_configs\Lists\languages.list" (
 	"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/tools/default_configs/Lists tools\default_configs\Lists --force >nul
 )
