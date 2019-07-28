@@ -15,6 +15,7 @@ IF NOT EXIST "tools\gnuwin32\bin\wc.exe" (
 		echo Dependancy error, you have to connect to internet, script will close.
 		exit
 	) else (
+		copy nul "continue_update.txt" >nul
 		echo Updating dependancies...
 		"tools\gitget\SVN\svn.exe" export %folders_url_project_base%/tools/gnuwin32 tools\gnuwin32 --force >nul
 	)
@@ -22,6 +23,7 @@ IF NOT EXIST "tools\gnuwin32\bin\wc.exe" (
 IF "%temp_language_path%"=="" (
 	IF EXIST "languages\FR_fr\language_general_config.bat" call "languages\FR_fr\language_general_config.bat"
 	IF "!language_path!"=="" (
+		copy nul "continue_update.txt" >nul
 		echo Initializing first language...
 		set temp_language_path=languages\FR_fr
 		rmdir /s /q "templogs" 2>nul
@@ -34,6 +36,7 @@ IF EXIST "templogs" (
 )
 mkdir "templogs"
 IF "%~2"=="language_init" (
+	copy nul "continue_update.txt" >nul
 	rmdir /s /q "templogs" 2>nul
 	call :initialize_language
 )
@@ -47,6 +50,10 @@ IF "%ushs_base_path%"=="" (
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
 call "%associed_language_script%" "display_title"
+IF EXIST "continue_update.txt" (
+	set auto_update=O
+	goto:begin_update
+)
 IF  "%~2"=="force" (
 	set auto_update=O
 	goto:begin_update
@@ -134,6 +141,7 @@ IF "%~2"=="force" (
 		pause
 		goto_end_script
 	)
+	copy nul "continue_update.txt" >nul
 	call :verif_file_version "tools\Storage\update_manager.bat"
 	IF !errorlevel! EQU 1 (
 		call :verif_file_version "tools\Storage\update_manager_updater.bat"
@@ -180,6 +188,7 @@ IF %errorlevel% NEQ 0 (
 	)
 	goto:end_script
 )
+copy nul "continue_update.txt" >nul
 :failed_updates_verification
 IF NOT EXIST "failed_updates\*.failed" goto:skip_failed_updates_verification
 IF EXIST "failed_updates\update_manager.bat.file.failed" (
@@ -220,6 +229,7 @@ IF !errorlevel! EQU 1 (
 	call :update_manager_update_special_script
 )
 IF "%~1"=="" (
+		IF EXIST "continue_update.txt" del /q "continue_update.txt"
 		goto:end_script
 	) else (
 	call "%associed_language_script%" "begin_update"
@@ -250,6 +260,7 @@ IF "%~1"=="" (
 			call "%associed_language_script%" "display_title"
 		)
 	)
+	IF EXIST "continue_update.txt" del /q "continue_update.txt"
 	IF "%~1"=="general_content_update" goto:clean_files
 	call :%~1
 )

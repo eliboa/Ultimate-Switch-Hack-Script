@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.99.90</h2>
+<ul>
+<li>Maintenant, le gestionnaire de mises à jour continuera les traitements obligatoires tout seul sans rien demander à l'utilisateur si une mise à jour nécessite un ou plusieurs redémarrages ou si une erreur s'est produite durant la mise à jour d'un élément. Notez que ceci ne s'applique qu'aux éléments indispensables du script (éléments de la version "base" ou langue à initialiser), ce comportement s'arrête dès que ceux-ci sont à jour.</li>
+</ul>
 <h2>V3.99.89</h2>
 <ul>
 <li>Encore des corrections sur le gestionnaire de mises à jour et sur le script le mettant à jour.</li>
