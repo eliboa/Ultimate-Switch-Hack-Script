@@ -1,6 +1,11 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
-<h2>V222</h2>
+<h2>V224</h2>
+<ul>
+<li>Mise à jour de Lithium et de Tinfoil en version 2.0.1.</li>
+<li>Mise à jour du Homebrew Menu vers la version Master du Github, compilé par moi-même.</li>
+</ul>
+<h2>V223</h2>
 <ul>
 <li>Mise à jour de Sys-audioplayer en version 1.1.0.</li>
 <li>Ajout de Sys-audioplayer dans le fichier de configuration de la Kosmos Toolbox.</li>
