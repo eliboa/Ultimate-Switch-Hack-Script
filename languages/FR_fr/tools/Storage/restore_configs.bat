@@ -1,7 +1,7 @@
 goto:%~1
 
 :display_title
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
+title Restauration d'une configuration du script %this_script_version% - Shadow256 Ultimate Switch Hack Script %ushs_version%
 goto:eof
 
 :restaure_file_select

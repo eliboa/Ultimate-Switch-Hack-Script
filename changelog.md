@@ -2,6 +2,10 @@
 &nbsp;
 <h2>V3.99.92</h2>
 <ul>
+<li>Ajout d'un titre personnalisé dans la barre de titre pour chaque fonctionnalités ainsi que sa version.</li>
+</ul>
+<h2>V3.99.92</h2>
+<ul>
 <li>Mise à jour de NSC_Builder (version anglaise et française) en version 0.89.</li>
 </ul>
 <h2>V3.99.91</h2>

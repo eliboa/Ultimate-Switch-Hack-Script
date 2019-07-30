@@ -4,6 +4,11 @@ IF EXIST "tools\storage\functions\ini_scripts.bat" (
 ) else (
 	@echo off
 	chcp 65001 >nul
+	IF EXIST "%~0.version" (
+	set /p this_script_version=<"%~0.version"
+) else (
+	set this_script_version=1.00.00
+)
 )
 Setlocal enabledelayedexpansion
 set base_script_path="%~dp0\..\.."

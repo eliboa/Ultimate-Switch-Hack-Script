@@ -1,7 +1,7 @@
 goto:%~1
 
 :display_title
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
+title Sauvegarde des éléments importants du script %this_script_version% - Shadow256 Ultimate Switch Hack Script %ushs_version%
 goto:eof
 
 :filename_choice

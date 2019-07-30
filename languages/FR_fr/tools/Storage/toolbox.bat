@@ -1,7 +1,7 @@
 goto:%~1
 
 :display_title
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
+title Boîte à outils de logiciels %this_script_version% - Shadow256 Ultimate Switch Hack Script %ushs_version%
 goto:eof
 
 :intro

@@ -2,6 +2,11 @@
 @echo off
 Setlocal enabledelayedexpansion
 chcp 65001 >nul
+IF EXIST "%~0.version" (
+	set /p this_script_version=<"%~0.version"
+) else (
+	set this_script_version=1.00.00
+)
 cd /d "%~dp0\..\.."
 IF EXIST "templogs" (
 	del /q "templogs" 2>nul
@@ -28,7 +33,7 @@ set associed_language_script=%ushs_base_path%%associed_language_script%
 IF NOT "%language_path%"=="" (
 	call "%associed_language_script%" "display_title"
 ) else (
-	title Shadow256 Ultimate Switch Hack Script Update Manager Updater
+	title Shadow256 Ultimate Switch Hack Script Update Manager Updater %this_script_version%
 )
 IF NOT EXIST "failed_updates\*.failed" (
 	rmdir /s /q "failed_updates" 2>nul

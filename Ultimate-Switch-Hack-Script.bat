@@ -33,6 +33,11 @@ IF EXIST tools\sd_switch\version.txt (
 ) else (
 	set ushs_packs_version=0
 )
+IF EXIST "%~0.version" (
+	set /p this_script_version=<"%~0.version"
+) else (
+	set this_script_version=1.00.00
+)
 chcp 1252 >nul
 call "%associed_language_script%" "display_title"
 mkdir test

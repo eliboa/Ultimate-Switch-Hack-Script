@@ -4,6 +4,11 @@ Setlocal enabledelayedexpansion
 set this_script_full_path=%~0
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
+IF EXIST "%~0.version" (
+	set /p this_script_version=<"%~0.version"
+) else (
+	set this_script_version=1.00.00
+)
 call "%associed_language_script%" "display_title"
 IF EXIST templogs (
 	del /q templogs 2>nul
@@ -15,6 +20,7 @@ pause
 :define_action_choice
 cls
 set action_choice=
+call "%associed_language_script%" "display_title"
 call "%associed_language_script%" "first_action_choice"
 IF "%action_choice%"=="1" cls & goto:info_nand
 IF "%action_choice%"=="2" cls & goto:dump_nand

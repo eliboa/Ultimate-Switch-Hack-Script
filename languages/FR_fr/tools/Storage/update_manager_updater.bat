@@ -1,7 +1,7 @@
 goto:%~1
 
 :display_title
-title Shadow256 Ultimate Switch Hack Script Update Manager Updater
+title Shadow256 Ultimate Switch Hack Script Update Manager Updater%this_script_version% - 
 goto:eof
 
 :begin_update

@@ -1,7 +1,7 @@
 goto:%~1
 
 :display_title
-title Shadow256 Ultimate Switch Hack Script %ushs_version%
+title Questions pour la préparation d'une SD %this_script_version2% - Shadow256 Ultimate Switch Hack Script %ushs_version%
 goto:eof
 
 :launch_manual_choice

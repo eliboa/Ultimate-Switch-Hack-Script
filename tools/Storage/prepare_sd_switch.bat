@@ -4,6 +4,11 @@ Setlocal enabledelayedexpansion
 set this_script_full_path=%~0
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
+IF EXIST "%~0.version" (
+	set /p this_script_version=<"%~0.version"
+) else (
+	set this_script_version=1.00.00
+)
 IF EXIST templogs (
 	del /q templogs 2>nul
 	rmdir /s /q templogs 2>nul
@@ -222,6 +227,7 @@ IF %general_profile% GTR %count_default_profile% (
 )
 IF "%general_profile%"=="0" (
 	call tools\Storage\prepare_sd_switch_profiles_management.bat
+	call "%associed_language_script%" "display_title"
 	goto:define_general_select_profile
 )
 IF %general_profile% EQU %general_profile_number% (
@@ -253,6 +259,7 @@ set pass_prepare_packs=Y
 del /q templogs\profiles_list.txt >nul 2>&1
 IF NOT "%pass_prepare_packs%"=="Y" (
 	call tools\Storage\prepare_sd_switch_files_questions.bat
+	call "%associed_language_script%" "display_title"
 	goto:test_copy_launch
 ) else (
 	IF EXIST "%general_profile_path%" (
@@ -292,6 +299,7 @@ IF NOT "%pass_copy_mixed_pack%"=="Y" (
 )
 :confirm_settings
 call tools\Storage\prepare_sd_switch_infos.bat
+call "%associed_language_script%" "display_title"
 set confirm_copy=
 call "%associed_language_script%" "confirm_copy_choice"
 IF NOT "%confirm_copy%"=="" set confirm_copy=%confirm_copy:~0,1%
@@ -575,7 +583,10 @@ IF /i NOT "%copy_emu%"=="o" (
 				echo Vous pouvez configurer l'émulateur via les "autres fonctions" du script puis refaire la préparation de la SD ou choisir de le configurer immédiatement.
 				set /p config_nes_classic=Souhaitez-vous lancer le script de configuration de l'émulateur? ^(O/n^): 
 				IF NOT "!config_nes_classic!"=="" set config_nes_classic=!config_nes_classic:~0,1!
-				IF /i "!config_nes_classic!"=="o" call tools\NES_Injector\NES_Injector.bat
+				IF /i "!config_nes_classic!"=="o" (
+					call tools\NES_Injector\NES_Injector.bat
+					call "%associed_language_script%" "display_title"
+				)
 			)
 			IF NOT EXIST "tools\sd_switch\emulators\pack\Nes_Classic_Edition\switch\clover\user\data.json" (
 				echo Il semble que la configuration de l'émulateur ait échouée, il ne sera donc pas copié.
@@ -594,7 +605,10 @@ IF /i NOT "%copy_emu%"=="o" (
 				echo Vous pouvez configurer l'émulateur via les "autres fonctions" du script puis refaire la préparation de la SD ou choisir de le configurer immédiatement.
 				set /p config_snes_classic=Souhaitez-vous lancer le script de configuration de l'émulateur? ^(O/n^): 
 				IF NOT "!config_snes_classic!"=="" set config_snes_classic=!config_snes_classic:~0,1!
-				IF /i "!config_snes_classic!"=="o" call tools\SNES_Injector\SNES_Injector.bat
+				IF /i "!config_snes_classic!"=="o" (
+					call tools\SNES_Injector\SNES_Injector.bat
+					call "%associed_language_script%" "display_title"
+				)
 			)
 			IF NOT EXIST "tools\sd_switch\emulators\pack\Snes_Classic_Edition\switch\snes_classic\game\database.json" (
 				echo Il semble que la configuration de l'émulateur ait échouée, il ne sera donc pas copié.

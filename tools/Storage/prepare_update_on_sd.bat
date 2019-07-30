@@ -4,6 +4,11 @@ Setlocal enabledelayedexpansion
 set this_script_full_path=%~0
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
+IF EXIST "%~0.version" (
+	set /p this_script_version=<"%~0.version"
+) else (
+	set this_script_version=1.00.00
+)
 IF NOT EXIST templogs (
 	mkdir templogs
 ) else (
@@ -27,6 +32,7 @@ IF NOT "%action_type%"=="" set action_type=%action_type:~0,1%
 IF "%action_type%"=="4" (
 	cls
 	call tools\storage\prepare_sd_switch.bat
+	call "%associed_language_script%" "display_title"
 	@echo off
 	goto:define_action_type
 )
@@ -297,6 +303,7 @@ TOOLS\7zip\7za.exe x -y -sccUTF-8 "downloads\firmwares\%firmware_file_name%" -o"
 IF "%action_type%"=="1" goto:define_volume_letter
 IF "%action_type%"=="2" (
 	call tools\storage\create_update.bat "%~dp0..\..\firmware_temp"
+	call "%associed_language_script%" "display_title"
 	mkdir templogs
 	goto:define_action_type
 )
@@ -391,6 +398,7 @@ IF "%action_type%"=="3" (
 	echo.
 	pause
 	call tools\storage\create_update.bat "%~dp0..\..\firmware_temp"
+	call "%associed_language_script%" "display_title"
 	mkdir templogs
 )
 echo.

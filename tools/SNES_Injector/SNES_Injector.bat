@@ -4,6 +4,11 @@ Setlocal enabledelayedexpansion
 set this_script_full_path=%~0
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
+IF EXIST "%~dp0\folder_version.txt" (
+	set /p this_script_version=<"%~dp0\folder_version.txt"
+) else (
+	set this_script_version=1.00.00
+)
 call "%associed_language_script%" "display_title"
 call "%associed_language_script%" "intro"
 pause

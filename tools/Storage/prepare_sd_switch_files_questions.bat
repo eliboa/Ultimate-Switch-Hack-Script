@@ -3,6 +3,11 @@ call tools\storage\functions\ini_scripts.bat
 set this_script_full_path2=%~0
 set associed_language_script2=%language_path%\!this_script_full_path2:%ushs_base_path%=!
 set associed_language_script2=%ushs_base_path%%associed_language_script2%
+IF EXIST "%~0.version" (
+	set /p this_script_version2=<"%~0.version
+) else (
+	set this_script_version2=1.00.00
+)
 call "%associed_language_script2%" "display_title"
 echo.
 call "%associed_language_script2%" "launch_manual_choice"
@@ -129,6 +134,7 @@ IF %emu_profile% GTR %temp_count% (
 )
 IF "%emu_profile%"=="0" (
 	call tools\Storage\emulators_pack_profiles_management.bat
+	call "%associed_language_script2%" "display_title"
 	goto:define_emu_select_profile
 )
 IF %emu_profile% EQU %temp_count% (
@@ -197,6 +203,7 @@ IF %mixed_profile% GTR %temp_count% (
 )
 IF "%mixed_profile%"=="0" (
 	call tools\Storage\mixed_pack_profiles_management.bat
+	call "%associed_language_script2%" "display_title"
 	goto:define_select_profile
 )
 IF %mixed_profile% EQU %temp_count% (
@@ -263,6 +270,7 @@ IF %cheats_profile% GTR %temp_count% (
 )
 IF "%cheats_profile%"=="0" (
 	call tools\Storage\cheats_profiles_management.bat
+	call "%associed_language_script2%" "display_title"
 	goto:define_select_cheats_profile
 )
 TOOLS\gnuwin32\bin\sed.exe -n %cheats_profile%p <templogs\profiles_list.txt > templogs\tempvar.txt
@@ -288,6 +296,7 @@ goto:define_del_files_dest_copy
 
 :confirm_settings
 call tools\Storage\prepare_sd_switch_infos.bat
+call "%associed_language_script2%" "display_title"
 set confirm_copy=
 call "%associed_language_script2%" "confirm_script_settings"
 IF NOT "%confirm_copy%"=="" set confirm_copy=%confirm_copy:~0,1%
@@ -361,6 +370,7 @@ IF %modules_profile% GTR %temp_count% (
 )
 IF "%modules_profile%"=="0" (
 	call tools\Storage\modules_profiles_management.bat
+	call "%associed_language_script2%" "display_title"
 	goto:define_modules_select_profile
 )
 IF %modules_profile% EQU %temp_count% (
@@ -649,6 +659,7 @@ IF %emummc_profile% GTR %temp_count% (
 )
 IF "%emummc_profile%"=="0" (
 	call tools\Storage\emummc_profiles_management.bat
+	call "%associed_language_script2%" "display_title"
 	goto:define_emummc_select_profile
 )
 IF %emummc_profile% EQU %temp_count% (
