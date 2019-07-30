@@ -136,7 +136,7 @@ echo Sélection du profile pour la copie des modules optionnels du CFW %~2:
 goto:eof
 
 :modules_profile_all
-echo %temp_count%: Tous les modules.
+echo %temp_count%: Tous les modules ^(non recommandé^).
 goto:eof
 
 :modules_profile_choice
