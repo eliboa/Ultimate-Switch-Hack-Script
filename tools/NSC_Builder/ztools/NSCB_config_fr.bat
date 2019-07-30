@@ -555,8 +555,8 @@ echo ***************************************************************************
 echo Génère des fichiers ZIP contenant les KEYBLOCK et les informations du fichier
 echo ...........................................................................
 echo.
-echo Tapez "1" pour générer les fichiers zip (configuration par défaut)
-echo Tapez "2" pour ne pas générer de fichiers zip
+echo Tapez "1" pour générer les fichiers zip 
+echo Tapez "2" pour ne pas générer de fichiers zip (configuration par défaut)
 echo.
 echo Tapez "b" pour revenir au menu de configuration des paramètres globaux
 echo Tapez "0" pour revenir au menu de configuration

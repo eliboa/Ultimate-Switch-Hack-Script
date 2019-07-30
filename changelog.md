@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.99.92</h2>
+<ul>
+<li>Mise à jour de NSC_Builder (version anglaise et française) en version 0.89.</li>
+</ul>
 <h2>V3.99.91</h2>
 <ul>
 <li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 224.</li>

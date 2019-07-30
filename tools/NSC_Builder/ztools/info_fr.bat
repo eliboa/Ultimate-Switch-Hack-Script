@@ -181,7 +181,7 @@ echo Tapez "b" pour revenir au chargement de fichiers
 echo Tapez "0" pour revenir au programme principal
 echo.
 echo --- ou glisser un nouveau fichier pour changer la destination actuelle ---
-echo .......................................................
+echo ..........................................................................
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%

@@ -1,6 +1,6 @@
 @ECHO OFF
 chcp 65001 >nul
-set "program_version=0.88"
+set "program_version=0.89"
 
 :TOP_INIT
 CD /d "%prog_dir%"
@@ -399,7 +399,7 @@ goto checkagain
 echo.
 :checkagain
 echo Que souhaitez-vous faire?
-echo ......................................................................
+echo ................................................................................
 echo "Veuillez déposer un fichier ou un dossier sur la fenêtre et appuyer sur entrée"
 echo.
 echo Tapez "1" pour commencer le traitement.
@@ -407,7 +407,7 @@ echo Tapez "e" pour quitter.
 echo Tapez "i" pour voir la liste des fichiers à traiter.
 echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
 echo Tapez "z" pour supprimer toute la liste.
-echo ......................................................................
+echo ................................................................................
 ECHO *************************************************
 echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************

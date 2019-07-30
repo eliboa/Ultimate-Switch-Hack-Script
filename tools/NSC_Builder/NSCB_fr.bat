@@ -1,6 +1,6 @@
 @ECHO OFF
 chcp 65001 >nul
-set "program_version=0.88"
+set "program_version=0.89"
 
 :TOP_INIT
 set "prog_dir=%~dp0"
@@ -293,18 +293,18 @@ RD /S /Q "%w_folder%" >NUL 2>&1
 echo Terminé.
 call :thumbup
 )
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités! ************* 
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 goto aut_exit_choice
 
 ::AUTO MODE. MULTIREPACK PROCESSING OPTION.
 :folder_mult_mode
 rem if "%fatype%" EQU "-fat fat32" goto folder_mult_mode_fat32
 call :program_logo
-echo --------------------------------------
+echo -------------------------------------------
 echo Auto-Mode. Le Multi-réempactage est activé.
-echo --------------------------------------
+echo -------------------------------------------
 if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
 MD "%w_folder%"
 if exist "%prog_dir%mlist.txt" del "%prog_dir%mlist.txt" >NUL 2>&1
@@ -313,27 +313,27 @@ echo - Generating filelist
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%mlist.txt" -ff "%~1"
 echo   Terminé.
 
-if "%vrepack%" EQU "nsp" echo ......................................
+if "%vrepack%" EQU "nsp" echo ........................................
 if "%vrepack%" EQU "nsp" echo REPACKAGE DE CONTENU DE DOSSIERS SUR NSP
-if "%vrepack%" EQU "nsp" echo ......................................
+if "%vrepack%" EQU "nsp" echo ........................................
 if "%vrepack%" EQU "nsp" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -t cnsp -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -roma %romaji% -dmul "calculate" )
 if "%vrepack%" EQU "nsp" echo.
 
-if "%vrepack%" EQU "xci" echo ......................................
+if "%vrepack%" EQU "xci" echo ........................................
 if "%vrepack%" EQU "xci" echo REPACKAGE DE CONTENU DE DOSSIERS SUR XCI
-if "%vrepack%" EQU "xci" echo ......................................
+if "%vrepack%" EQU "xci" echo ........................................
 if "%vrepack%" EQU "xci" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -t xci -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -roma %romaji% -dmul "calculate" )
 if "%vrepack%" EQU "xci" echo.
 
-if "%vrepack%" EQU "both" echo ......................................
+if "%vrepack%" EQU "both" echo ........................................
 if "%vrepack%" EQU "both" echo REPACKAGE DE CONTENU DE DOSSIERS SUR NSP
-if "%vrepack%" EQU "both" echo ......................................
+if "%vrepack%" EQU "both" echo ........................................
 if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -t cnsp -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -roma %romaji% -dmul "calculate" )
 if "%vrepack%" EQU "both" echo.
 
-if "%vrepack%" EQU "both" echo ......................................
+if "%vrepack%" EQU "both" echo ........................................
 if "%vrepack%" EQU "both" echo REPACKAGE DE CONTENU DE DOSSIERS SUR XCI
-if "%vrepack%" EQU "both" echo ......................................
+if "%vrepack%" EQU "both" echo ........................................
 if "%vrepack%" EQU "both" ( %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% %fatype% %fexport% %skdelta% -t xci -o "%w_folder%" -tfile "%prog_dir%mlist.txt" -roma %romaji% -dmul "calculate" )
 if "%vrepack%" EQU "both" echo.
 
@@ -351,9 +351,9 @@ move "%w_folder%\*.zip" "%zip_fold%" >NUL 2>&1
 if exist "%w_folder%\archfolder" ( %pycommand% "%nut%" -tfile "%w_folder%\filename.txt" -ifo "%w_folder%\archfolder" -archive "%gefolder%" )
 endlocal
 RD /S /Q "%w_folder%" >NUL 2>&1
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités! ************* 
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 call :thumbup
 goto aut_exit_choice
 
@@ -459,7 +459,7 @@ if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
 MD "%w_folder%"
 if exist "%prog_dir%list.txt" del "%prog_dir%list.txt" >NUL 2>&1
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%list.txt" -ff "%~1"
-echo   Terminé
+echo   DONE
 goto s_KeyChange_skip
 
 :file
@@ -887,9 +887,9 @@ echo.
 echo Tapez "0" pour ne pas "patcher" la version requise du système.
 echo Tapez "1" pour "patcher" la version requise du système.
 echo.
-ECHO ******************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
+ECHO **************************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -920,9 +920,9 @@ echo Tapez "7" pour changer la keygeneration à 7 (FW 6.2.0)
 echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-8.0.1)
 echo Tapez "9" pour changer la keygeneration à 9 (FW 8.1.0)
 echo.
-ECHO ******************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
+ECHO **************************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -1439,7 +1439,7 @@ echo Tapez "r" pour supprimer des fichiers (en partant du bas)
 echo Tapez "z" pour enlever toute la liste
 echo ......................................................................
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%mlist.txt" -uin "%uinput%" -ff "uinput"
@@ -1843,7 +1843,7 @@ echo *******************************************************
 exit /B
 
 :m_normal_merge
-if "%fatype%" EQU "-fat fat32" goto m_KeyChange_skip_fat32
+rem if "%fatype%" EQU "-fat fat32" goto m_KeyChange_skip_fat32
 REM Pour la version bêta actuelle, les noms de fichiers sont calculés. Ce code reste commenté pour une réintégration future
 rem echo *******************************************************
 rem echo ENTRER LE NOM DU FICHIER FINAL POUR LE FICHIER DE SORTIE
