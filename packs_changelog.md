@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V225</h2>
+<ul>
+<li>Suppression du module Sys-Netcheat de la liste des modules.</li>
+</ul>
 <h2>V224</h2>
 <ul>
 <li>Mise à jour de Lithium et de Tinfoil en version 2.0.1.</li>

@@ -1616,6 +1616,9 @@ exit /b
 call "%associed_language_script%" "del_hold_files_begin"
 IF EXIST "tools\Storage\verif_update.ini" del /q "tools\Storage\verif_update.ini"
 IF EXIST "DOC\*.*" rmdir /s /q "DOC"
+IF EXIST "tools\sd_switch\mixed\modular\DZ" rmdir /s /q "tools\sd_switch\mixed\modular\DZ"
+IF EXIST "tools\sd_switch\mixed\modular\Zerotwoxci" rmdir /s /q "tools\sd_switch\mixed\modular\Zerotwoxci"
+IF EXIST "tools\sd_switch\modules\pack\Sys-Netcheat" rmdir /s /q "tools\sd_switch\modules\pack\Sys-Netcheat"
 call "%associed_language_script%" "del_hold_files_end"
 exit /b
 
