@@ -39,6 +39,7 @@ for %%z in (*.apk) do (
 )
 cd ..\..
 :select_app
+set app_path=
 set app_choice=
 call "%associed_language_script%" "action_choice"
 IF "%app_choice%"=="" goto:finish_script
@@ -90,8 +91,8 @@ IF %errorlevel% GTR 0 (
 ) else (
 	call "%associed_language_script%" "adb_install_success"
 )
-tools\android_tools\adb.exe kill-server
-goto:end_script
+pause
+goto:select_app
 
 :install_folder_apps
 for %%f in ("%~1*.apk") do (
@@ -127,6 +128,7 @@ exit /b
 :end_script
 pause 
 :finish_script
+tools\android_tools\adb.exe kill-server
 IF EXIST templogs (
 	rmdir /s /q templogs
 )

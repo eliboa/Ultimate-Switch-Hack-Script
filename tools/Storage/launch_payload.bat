@@ -30,6 +30,7 @@ for %%z in (*.bin) do (
 cd ..
 :select_payload
 set payload_number=
+set payload_path=
 call "%associed_language_script%" "begin_payload_choice"
 echo.
 TOOLS\gnuwin32\bin\tail.exe -q -n+0 templogs\payloads_list.txt 
@@ -80,8 +81,9 @@ IF %errorlevel% GTR 0 (
 ) else (
 	call "%associed_language_script%" "launch_payload_success"
 )
+pause
+goto:select_payload
 :end_script
-pause 
 :finish_script
 IF EXIST templogs (
 	rmdir /s /q templogs

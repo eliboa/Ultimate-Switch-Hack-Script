@@ -12,7 +12,9 @@ IF EXIST "%~0.version" (
 call "%associed_language_script%" "display_title"
 call "%associed_language_script%" "intro"
 pause
+:define_disc_mounted
 echo.
+set ini_path=
 set disc_mounted=
 call "%associed_language_script%" "memory_choice"
 IF "%disc_mounted%"=="1" (
@@ -30,11 +32,13 @@ set ini_path=tools\memloader\mount_discs\ums_boot1.ini
 call "%associed_language_script%" "rcm_instructions"
 tools\TegraRcmSmash\TegraRcmSmash.exe -w tools\memloader\memloader_usb.bin --dataini="%ini_path%"
 echo.
+set launch_devices_manager=
 call "%associed_language_script%" "after_launch_first_choice"
 echo.
 IF NOT "%launch_devices_manager%"=="" set launch_devices_manager=%launch_devices_manager:~0,1%
 IF /i "%launch_devices_manager%"=="o" start devmgmt.msc
 IF %disc_mounted% EQU 1 (
+	set launch_hacdiskmount=
 	call "%associed_language_script%" "hacdiskmount_launch_choice"
 )
 	IF %disc_mounted% EQU 1 (
@@ -43,5 +47,6 @@ IF %disc_mounted% EQU 1 (
 IF %disc_mounted% EQU 1 (
 	IF /i "%launch_hacdiskmount%"=="o" start tools\HacDiskMount/HacDiskMount.exe
 )
+IF NOT "%~1"=="auto_close" goto:define_disc_mounted
 :end_script
 endlocal

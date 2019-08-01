@@ -78,7 +78,7 @@ IF "%action_choice%"=="9" (
 )
 IF "%action_choice%"=="0" (
 	cls
-	call tools\storage\mount_discs.bat
+	call tools\storage\mount_discs.bat "auto_close"
 	IF EXIST templogs (
 		del /q templogs 2>nul
 		rmdir /s /q templogs 2>nul

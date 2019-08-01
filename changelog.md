@@ -1,12 +1,16 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
-<h2>V3.99.92</h2>
+<h2>V3.99.95</h2>
+<ul>
+<li>Dans l'installation d'applications Android, lors du montage d'une partition via Memloader (si non utilisé dans la Nand Toolbox) et dans le lancement de payloads, le script ne se termine pas après l'action effectuée mais seulement si l'utilisateur le souhaite.</li>
+</ul>
+<h2>V3.99.94</h2>
 <ul>
 <li>Suppression du module Sys-Netcheat de la liste des modules.</li>
 <li>Le gestionnaire de mises à jour va nettoyer plus de dossiers inutilisés.</li>
 <li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 225.</li>
 </ul>
-<h2>V3.99.92</h2>
+<h2>V3.99.93</h2>
 <ul>
 <li>Ajout d'un titre personnalisé dans la barre de titre pour chaque fonctionnalités ainsi que sa version.</li>
 </ul>
