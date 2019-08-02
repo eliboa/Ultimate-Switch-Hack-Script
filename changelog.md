@@ -1,5 +1,10 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.99.97</h2>
+<ul>
+<li>Mise à jour de Goldtree en version 0.6.</li>
+<li>Mise à jour des packs de CFWs/modules/homebrews/payloads_utiles en version 227.</li>
+</ul>
 <h2>V3.99.96</h2>
 <ul>
 <li>Mise à jour de NSC_Builder en version 0.89B, version anglaise et version française.</li>

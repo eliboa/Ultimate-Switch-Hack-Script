@@ -1,5 +1,9 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V227</h2>
+<ul>
+<li>Mise à jour de Goldleaf en version 0.6.</li>
+</ul>
 <h2>V226</h2>
 <ul>
 <li>Ajout du homebrew KefirUpdater.</li>
