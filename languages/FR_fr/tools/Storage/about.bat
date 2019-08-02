@@ -17,6 +17,7 @@ echo Nom: %language_name%
 echo Auteur^(s^): %language_authors%
 echo.
 echo Note: Vous devrez  faire deux fois l'action de mise à jour souhaitée si une mise à jour du gestionnaire de mises à jour est trouvée durant la procédure.
+echo.
 echo Que souhaitez-vous faire?
 echo 1: Afficher le changelog du script le plus récent?
 echo 2: Afficher le changelog des packs le plus récent?
