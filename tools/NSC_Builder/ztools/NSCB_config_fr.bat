@@ -427,7 +427,7 @@ if /i "%bs%"=="e" goto salida
 setlocal enabledelayedexpansion
 set "v_col=!v_colB!!v_colF!"
 color !v_col!
-%pycommand% "%listmanager%" -cl "%op_file%" -ln "3" -nl "color !v_col!"
+%pycommand% "%listmanager%" -cl "%op_file%" -ln "3" -nl "couleur !v_col!"
 echo.
 %pycommand% "%listmanager%" -rl "%op_file%" -ln "3" -nl "La ligne de configuration a été modifiée en: "
 endlocal

@@ -24,7 +24,7 @@ goto sc1
 :sc2
 cls
 call :logo
-echo .......................................................
+echo .................................................................................
 echo Tapez "1" pour voir le contenu du xci/nsp
 echo Tapez "2" pour obtenir la liste de contenu du xci \ nsp
 echo Tapez "3" pour voir les infos de NUT sur le xci/nsp
@@ -38,7 +38,7 @@ echo Tapez "b" pour revenir à la sélection du fichier
 echo Tapez "0" pour revenir au menu principal du script --
 echo.
 echo Ou glissez un autre fichier pour changer de cible.
-echo .......................................................
+echo ................................................................................
 echo.
 set /p bs="faites votre choix: "
 set bs=%bs:"=%
@@ -97,9 +97,9 @@ echo NUT - INFO BY BLAWAR
 echo ********************************************************
 %pycommand% "%nut%" -i "%targt%"
 echo.
-ECHO ********************************************************
+ECHO *************************************************************
 echo Souhaitez-vous copier ces informations dans un fichier texte?
-ECHO ********************************************************
+ECHO *************************************************************
 :n_info_wrong
 echo Tapez "1" pour les copier dans un fichier texte
 echo Tapez "2" pour ne pas les copier dans un fichier texte
@@ -122,9 +122,9 @@ goto sc2
 :f_info
 cls
 call :logo
-echo ********************************************************
+echo ***********************************************************
 echo Afficher les Informations et données sur le firmware requis
-echo ********************************************************
+echo ***********************************************************
 %pycommand% "%nut%" -o "%info_dir%" --fw_req "%targt%"
 goto sc2
 
@@ -142,7 +142,7 @@ cls
 call :logo
 echo ********************************************************
 echo Afficher les données NACP du contrôle NCA dans NSP\XCI
-echo *******************************************************
+echo ********************************************************
 echo Mise en oeuve de la bibliotheque 0LIAM'S NACP
 %pycommand% "%nut%" -o "%info_dir%" --Read_nacp "%targt%"
 goto sc2
@@ -150,9 +150,9 @@ goto sc2
 :r_npdm
 cls
 call :logo
-echo ********************************************************
+echo ***********************************************************
 echo Afficher les données du MAIN.NPDM du fichier NCA du NSP\XCI
-echo ********************************************************
+echo ***********************************************************
 %pycommand% "%nut%" -o "%info_dir%" --Read_npdm "%targt%"
 goto sc2
 
@@ -219,9 +219,9 @@ echo NUT - information par BLAWAR
 echo ********************************************************
 %pycommand% "%nut%" -i "%targt%"
 echo.
-ECHO ********************************************************
+ECHO *************************************************************
 echo Souhaitez-vous copier ces informations dans un fichier texte?
-ECHO ********************************************************
+ECHO *************************************************************
 :n_info_wrong_nca
 echo Tapez "1" pour les copier dans un fichier texte
 echo Tapez "2" pour ne pas les copier dans un fichier texte

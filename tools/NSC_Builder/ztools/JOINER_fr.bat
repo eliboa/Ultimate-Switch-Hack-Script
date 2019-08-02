@@ -27,14 +27,14 @@ set /a conta=!conta! + 1
 if !conta! LEQ 0 ( del joinlist.txt )
 endlocal
 if not exist "joinlist.txt" goto manual_INIT
-ECHO .......................................................
+ECHO ............................................................................
 ECHO Une liste précédente a été trouvée. Qu'est-ce que tu veux faire?
 :prevlist0
-ECHO .......................................................
+ECHO ............................................................................
 echo Tapez "1" pour démarrer automatiquement le traitement de la liste précédente
 echo Tapez "2" pour effacer la liste et en créer une nouvelle.
 echo Tapez "3" pour continuer à construire la liste précédente
-echo .......................................................
+echo ............................................................................
 echo NOTE: En appuyant sur 3, vous verrez la liste précédente 
 echo avant de commencer le traitement des fichiers et vous 
 echo pouvez ajouter et supprimer des éléments de la liste
@@ -80,7 +80,7 @@ goto checkagain
 echo.
 :checkagain
 echo Qu'est-ce que tu veux faire?
-echo ......................................................................
+echo .............................................................................................
 echo "Gliser un autre fichier ou dossier et appuyez sur enter pour ajouter des articles à la liste"
 echo.
 echo Tapez "1" pour commencer le traitement
@@ -88,7 +88,7 @@ echo Tapez "e" pour sortir
 echo Tapez "i" pour voir la liste des fichiers à traiter
 echo Tapez "r" pour supprimer des fichiers (en partant du bas)
 echo Tapez "z" pour enlever toute la liste
-echo ......................................................................
+echo .............................................................................................
 ECHO ******************************************************
 echo Ou tapez "0" pour revenir au menu du mode de sélection
 ECHO ******************************************************

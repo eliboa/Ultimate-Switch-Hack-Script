@@ -1,5 +1,12 @@
 <h1>Changelog des packs de l'Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V226</h2>
+<ul>
+<li>Ajout du homebrew KefirUpdater.</li>
+<li>Ajout du module OJDS-NX.</li>
+<li>Mise à jour du module Emuiibo en version 0.3.</li>
+<li>Petite mise à jour du pack Atmosphere pour intégrer la gestion du module OJDS-NX à la Kosmos Toolbox.</li>
+</ul>
 <h2>V225</h2>
 <ul>
 <li>Suppression du module Sys-Netcheat de la liste des modules.</li>

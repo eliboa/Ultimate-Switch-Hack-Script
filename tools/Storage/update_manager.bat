@@ -289,6 +289,8 @@ call :update_install_drivers.bat
 call :update_install_nsp_network.bat
 call :update_install_nsp_USB.bat
 call :update_language_selector.bat
+call :update_launch_emuGUIibo.bat
+call :update_launch_hid-mitm_compagnon.bat
 call :update_launch_linux.bat
 call :update_launch_payload.bat
 call :update_launch_switch_lan_play_server.bat
@@ -613,6 +615,23 @@ IF "%language_custom%"=="0" (
 	IF !errorlevel! EQU 1 (
 		call :update_file
 	)
+)
+exit /b
+
+:update_launch_emuGUIibo.bat
+call :verif_file_version "tools\Storage\launch_emuGUIibo.bat"
+IF %errorlevel% EQU 1 (
+	call :update_file
+)
+IF "%language_custom%"=="0" (
+	call :verif_file_version "%language_path%\tools\Storage\launch_emuGUIibo.bat"
+	IF !errorlevel! EQU 1 (
+		call :update_file
+	)
+)
+call :verif_folder_version "tools\emuGUIibo"
+IF %errorlevel% EQU 1 (
+	call :update_folder
 )
 exit /b
 
@@ -1219,6 +1238,10 @@ IF "%language_custom%"=="0" (
 	)
 )
 call :verif_folder_version "tools\toolbox"
+IF %errorlevel% EQU 1 (
+	call :update_folder
+)
+call :verif_folder_version "tools\emuGUIibo"
 IF %errorlevel% EQU 1 (
 	call :update_folder
 )

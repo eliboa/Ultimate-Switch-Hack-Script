@@ -27,14 +27,14 @@ set /a conta=!conta! + 1
 if !conta! LEQ 0 ( del advlist.txt )
 endlocal
 if not exist "advlist.txt" goto manual_INIT
-ECHO .......................................................
+ECHO .............................................................................
 ECHO Une liste précédente à été trouvée. Que souhaitez-vous faire?
 :prevlist0
-ECHO .......................................................
+ECHO .............................................................................
 echo Tapez "1" pour démarrer automatiquement le traitement de la liste précédente
 echo Tapez "2" pour effacer la liste et en créer une nouvelle.
 echo Tapez "3" pour continuer à construire la liste précédente
-echo .......................................................
+echo .............................................................................
 echo NOTE: En appuyant sur 3, vous verrez la liste précédente 
 echo avant de commencer le traitement des fichiers et vous pourrez 
 echo ajouter et supprimer des éléments de la liste
@@ -65,9 +65,9 @@ echo ..................................
 
 :manual_INIT
 endlocal
-ECHO ***********************************************
+ECHO ******************************************************
 echo Ou Tapez "0" pour revenir au menu du mode de sélection
-ECHO ***********************************************
+ECHO ******************************************************
 echo.
 %pycommand% "%nut%" -t nsp xci nsx -tfile "%prog_dir%advlist.txt" -uin "%uinput%" -ff "uinput"
 set /p eval=<"%uinput%"
@@ -80,7 +80,7 @@ goto checkagain
 echo.
 :checkagain
 echo Que souhaitez-vous faire?
-echo ......................................................................
+echo ..............................................................................................
 echo "Déposez un autre fichier ou dossier et appuyez sur enter pour ajouter des fichiers à la liste"
 echo.
 echo Tapez "1" pour commencer le traitement
@@ -88,7 +88,7 @@ echo Tapez "e" Pour sortir
 echo Tapez "i" pour voir la liste des fichiers à traiter
 echo Tapez "r" pour supprimer des fichiers (en partant du bas)
 echo Tapez "z" pour effacer toute la liste
-echo ......................................................................
+echo ..............................................................................................
 ECHO *************************************************
 echo Ou Tapez "0" pour revenir au menu du mode de sélection
 ECHO *************************************************
@@ -207,9 +207,9 @@ more +1 "advlist.txt">"advlist.txt.new"
 move /y "advlist.txt.new" "advlist.txt" >nul
 call :contador_NF
 )
-ECHO ---------------------------------------------------
+ECHO -------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités!! *************
-ECHO ---------------------------------------------------
+ECHO -------------------------------------------------------------
 goto s_exit_choice
 
 :raw_extract
@@ -227,17 +227,17 @@ more +1 "advlist.txt">"advlist.txt.new"
 move /y "advlist.txt.new" "advlist.txt" >nul
 call :contador_NF
 )
-ECHO ---------------------------------------------------
+ECHO -------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités!! *************
-ECHO ---------------------------------------------------
+ECHO -------------------------------------------------------------
 goto s_exit_choice
 
 :ext_plaintext
 cls
 call :program_logo
-echo ********************************************************
+echo ************************************************************
 echo Etraire tous les fichiers d'un NSP/XCI dans un fichier texte 
-echo ********************************************************
+echo ************************************************************
 CD /d "%prog_dir%"
 for /f "tokens=*" %%f in (advlist.txt) do (
 
@@ -247,9 +247,9 @@ more +1 "advlist.txt">"advlist.txt.new"
 move /y "advlist.txt.new" "advlist.txt" >nul
 call :contador_NF
 )
-ECHO ---------------------------------------------------
+ECHO -------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités!! *************
-ECHO ---------------------------------------------------
+ECHO -------------------------------------------------------------
 goto s_exit_choice
 
 :ext_fromnca

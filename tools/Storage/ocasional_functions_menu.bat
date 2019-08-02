@@ -20,8 +20,9 @@ IF "%action_choice%"=="3" goto:create_update
 IF "%action_choice%"=="4" goto:verif_serials
 IF "%action_choice%"=="5" goto:test_keys
 IF "%action_choice%"=="6" goto:hid-mitm_compagnon
-IF "%action_choice%"=="7" goto:launch_linux
-IF "%action_choice%"=="8" goto:update_shofel2
+IF "%action_choice%"=="7" goto:emuguiibo
+IF "%action_choice%"=="8" goto:launch_linux
+IF "%action_choice%"=="9" goto:update_shofel2
 goto:end_script
 :biskey_dump
 set action_choice=
@@ -93,6 +94,18 @@ IF EXIST "tools\Storage\launch_hid-mitm_compagnon.bat" (
 	call tools\Storage\update_manager.bat "update_launch_hid-mitm_compagnon.bat" "force"
 )
 call tools\Storage\launch_hid-mitm_compagnon.bat
+@echo off
+goto:define_action_choice
+:emuguiibo
+set action_choice=
+echo.
+cls
+IF EXIST "tools\Storage\launch_emuGUIibo.bat" (
+	call tools\Storage\update_manager.bat "launch_emuGUIibo.bat"
+) else (
+	call tools\Storage\update_manager.bat "update_launch_emuGUIibo.bat" "force"
+)
+call tools\Storage\launch_emuGUIibo.bat
 @echo off
 goto:define_action_choice
 :launch_linux

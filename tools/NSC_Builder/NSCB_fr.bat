@@ -1,6 +1,6 @@
 @ECHO OFF
 chcp 65001 >nul
-set "program_version=0.89"
+set "program_version=0.89b"
 
 :TOP_INIT
 set "prog_dir=%~dp0"
@@ -123,9 +123,9 @@ goto folder_ind_mode
 :folder_ind_mode
 rem if "%fatype%" EQU "-fat fat32" goto folder_ind_mode_fat32
 call :program_logo
-echo --------------------------------------
+echo ---------------------------------------------------------
 echo Mode automatique. Le ré-empaquetage individuel est défini
-echo --------------------------------------
+echo ---------------------------------------------------------
 echo.
 ::*************
 ::pour fichier nsp
@@ -200,17 +200,17 @@ RD /S /Q "%w_folder%" >NUL 2>&1
 echo Terminé
 call :thumbup
 )
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités! ************* 
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 goto aut_exit_choice
 
 :folder_ind_mode_fat32
 CD /d "%prog_dir%"
 call :program_logo
-echo --------------------------------------
+echo ---------------------------------------------------------
 echo Mode automatique. Le ré-empaquetage individuel est défini
-echo --------------------------------------
+echo ---------------------------------------------------------
 echo.
 ::*************
 ::FOR NSP FILES
@@ -271,9 +271,9 @@ call :processing_message
 MD "%w_folder%"
 MD "%w_folder%\secure"
 call :getname
-echo -------------------------------------
+echo -------------------------------------------
 echo Extraction de la partition secure du xci...
-echo -------------------------------------
+echo -------------------------------------------
 %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%%f"
 echo Terminé.
 if "%vrename%" EQU "true" ( call :addtags_from_xci )
@@ -360,9 +360,9 @@ goto aut_exit_choice
 :folder_mult_mode_fat32
 CD /d "%prog_dir%"
 call :program_logo
-echo --------------------------------------
+echo -------------------------------------------------------
 echo Mode automatique. Le ré-empaquetage multiple est défini
-echo --------------------------------------
+echo -------------------------------------------------------
 echo.
 set "filename=%~n1"
 set "orinput=%~f1"
@@ -384,9 +384,9 @@ if "%zip_restore%" EQU "true" ( call :makezip )
 
 ::FOR XCI FILES
 for /r "%~1" %%f in (*.xci) do (
-echo ------------------------------------
+echo -------------------------------------------
 echo Extraction de la partition secure du xci...
-echo ------------------------------------
+echo -------------------------------------------
 %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%%f"
 echo Terminé.
 )
@@ -411,17 +411,17 @@ RD /S /Q "%w_folder%" >NUL 2>&1
 echo Terminé.
 call :thumbup
 )
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités! ************* 
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 goto aut_exit_choice
 
 :folder_packbyid
 rem if "%fatype%" EQU "-fat fat32" goto folder_mult_mode_fat32
 call :program_logo
-echo --------------------------------------
+echo --------------------------------------------------------------
 echo Mode automatique. le ré-empaquetage par identifiant est défini
-echo --------------------------------------
+echo --------------------------------------------------------------
 if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
 MD "%w_folder%"
 if exist "%prog_dir%mlist.txt" del "%prog_dir%mlist.txt" >NUL 2>&1
@@ -440,9 +440,9 @@ goto m_process_jobs2
 
 :aut_rebuild_nodeltas
 call :program_logo
-echo --------------------------------------
+echo ------------------------------------------
 echo Mode automatique. Reconstruire sans deltas
-echo --------------------------------------
+echo ------------------------------------------
 if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
 MD "%w_folder%"
 if exist "%prog_dir%list.txt" del "%prog_dir%list.txt" >NUL 2>&1
@@ -452,14 +452,14 @@ goto s_KeyChange_skip
 
 :aut_rebuild_nsp
 call :program_logo
-echo --------------------------------------
+echo ----------------------------------------------------
 echo Mode automatique. Reconstruire nsp par ordre de cnmt
-echo --------------------------------------
+echo ----------------------------------------------------
 if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
 MD "%w_folder%"
 if exist "%prog_dir%list.txt" del "%prog_dir%list.txt" >NUL 2>&1
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%list.txt" -ff "%~1"
-echo   DONE
+echo   Terminé
 goto s_KeyChange_skip
 
 :file
@@ -588,9 +588,9 @@ if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
 MD "%w_folder%"
 MD "%w_folder%\secure"
 call :getname
-echo ------------------------------------
+echo -------------------------------------------
 echo Extraction de la partition secure du xci...
-echo ------------------------------------
+echo -------------------------------------------
 %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%~1"
 echo Terminé.
 if "%vrename%" EQU "true" call :addtags_from_xci
@@ -714,7 +714,7 @@ echo .......................................................
 echo NOTE: En tapant 3 vous verrez la liste précédente que vous pourrez modifier avant de lancer son traitement.
 echo.
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 set /p bs="Faites votre choix: "
@@ -733,13 +733,13 @@ call :program_logo
 echo -----------------------------------------------
 echo Traitement individuel activé.
 echo -----------------------------------------------
-echo ..................................
+echo .................................................
 echo Vous avez décidé de commencer une nouvelle liste.
-echo ..................................
+echo .................................................
 :manual_INIT
 endlocal
 ECHO ***********************************************
-echo Tappez "0" pour revenir à la sélection du mode.
+echo Tapez "0" pour revenir à la sélection du mode.
 ECHO ***********************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%list.txt" -uin "%uinput%" -ff "uinput"
@@ -763,7 +763,7 @@ echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
 echo Tapez "z" pour supprimer toute la liste.
 echo ......................................................................
 ECHO *************************************************
-echo Ou tappez "0" pour revenir à la sélection du mode.
+echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%list.txt" -uin "%uinput%" -ff "uinput"
@@ -854,9 +854,9 @@ echo Tapez "6" pour réduire le fichier XCI
 echo Tapez "7" pour reconstruire le nsp par ordre de cnmt
 echo Tapez "8" pour vérifier les fichiers
 echo.
-ECHO ******************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
+ECHO **************************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -1002,9 +1002,9 @@ more +1 "list.txt">"list.txt.new"
 move /y "list.txt.new" "list.txt" >nul
 call :contador_NF
 )
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 goto s_exit_choice
 
 :rename
@@ -1031,9 +1031,9 @@ echo Tapez "10" pour RETIRER les balises [] et () du nom du fichier
 echo Tapez "11" pour supprimer le titre du premier [
 echo Tapez "12" pour supprimer le titre du premier (
 echo.
-ECHO ******************************************
+ECHO ************************************************
 echo Ou tapez "0" pour revenir à la liste des options
-ECHO ******************************************
+ECHO ************************************************
 echo.
 set /p bs="faites votre choix: "
 set bs=%bs:"=%
@@ -1155,9 +1155,9 @@ more +1 "list.txt">"list.txt.new"
 move /y "list.txt.new" "list.txt" >nul
 call :contador_NF
 )
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 goto s_exit_choice
 
 :sanitize
@@ -1169,9 +1169,9 @@ more +1 "list.txt">"list.txt.new"
 move /y "list.txt.new" "list.txt" >nul
 call :contador_NF
 )
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 goto s_exit_choice
 
 :romaji
@@ -1183,9 +1183,9 @@ more +1 "list.txt">"list.txt.new"
 move /y "list.txt.new" "list.txt" >nul
 call :contador_NF
 )
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 goto s_exit_choice
 
 
@@ -1198,9 +1198,9 @@ more +1 "list.txt">"list.txt.new"
 move /y "list.txt.new" "list.txt" >nul
 call :contador_NF
 )
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 goto s_exit_choice
 
 :s_exit_choice
@@ -1342,9 +1342,9 @@ if exist "%w_folder%" rmdir /s /q "%w_folder%" >NUL 2>&1
 MD "%w_folder%"
 MD "%w_folder%\secure"
 call :getname
-echo ------------------------------------
+echo -------------------------------------------
 echo Extraction de la partition secure du xci...
-echo ------------------------------------
+echo -------------------------------------------
 %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%orinput%"
 echo Terminé.
 if "%vrename%" EQU "true" call :addtags_from_xci
@@ -1406,10 +1406,10 @@ set "mlistfol=%list_folder%\m_multi"
 echo Faites glisser des fichiers ou des dossiers pour créer une liste
 echo Remarque: n'oubliez pas d'appuyer sur Entrée après chaque dossier déplacé
 echo.
-ECHO ***********************************************
+ECHO ***********************************************************
 echo Tapez "1" pour traiter les tâches précédemment sauvegardées
 echo Tapez "0" pour revenir au MENU DE SELECTION
-ECHO ***********************************************
+ECHO ***********************************************************
 echo.
 %pycommand% "%nut%" -t nsp xci -tfile "%prog_dir%mlist.txt" -uin "%uinput%" -ff "uinput"
 set /p eval=<"%uinput%"
@@ -1425,7 +1425,7 @@ echo.
 :multi_checkagain
 set "mlistfol=%list_folder%\a_multi"
 echo QU'EST-CE QUE TU VEUX FAIRE?
-echo ......................................................................
+echo ...............................................................................................
 echo "Déposer un autre fichier ou dossier et appuyez sur ENTER pour ajouter des articles à la liste."
 echo.
 echo Tapez "1" pour lancer le traitement à partir de la liste.
@@ -1437,7 +1437,7 @@ echo Tapez "e" pour quitter
 echo Tapez "i" pour voir la liste des fichiers à traiter
 echo Tapez "r" pour supprimer des fichiers (en partant du bas)
 echo Tapez "z" pour enlever toute la liste
-echo ......................................................................
+echo ...............................................................................................
 ECHO *************************************************
 echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
@@ -1468,14 +1468,14 @@ goto multi_checkagain
 if not exist "%list_folder%" MD "%list_folder%" >NUL 2>&1
 if not exist "%mlistfol%" MD "%mlistfol%" >NUL 2>&1
 echo SAUVEGARDER LA LISTE DE TRAVAIL POUR PLUS TARD
-echo ......................................................................
+echo ................................................................................................................
 echo Tapez "1" pour SAUVEGARDER la liste en tant que tâche de travail en une seule fois (liste unique multi-fichiers)
 echo Tapez "2" pour SAUVEGARDER la liste sous forme de plusieurs travaux en fonction de la base de fichiers.
 echo.
-ECHO *******************************************
+ECHO **********************************************
 echo Tapez "b" pour continuer à construire la liste
 echo Tapez "0" pour revenir au menu de sélection
-ECHO *******************************************
+ECHO **********************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -1490,7 +1490,7 @@ echo Choix inexistant!!
 goto multi_saved_for_later
 :multi_saved_for_later1
 echo.
-echo CHOISISSEZ LE NOM DU FICIER DE TRAVAIL
+echo CHOISISSEZ LE NOM DU FICHIER DE TRAVAIL
 echo ......................................................................
 echo La liste sera sauvegardée sous le nom de votre choix.
 echo (le chemin est "dossier du programme \ list \ m_multi")
@@ -1614,9 +1614,9 @@ echo.
 echo Tapez "0" pour ne pas "patcher" la version requise du système.
 echo Tapez "1" pour "patcher" la version requise du système.
 echo.
-ECHO *****************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO *****************************************
+ECHO **************************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -1648,9 +1648,9 @@ echo Tapez "7" pour changer la keygeneration à 7 (FW 6.2.0)
 echo Tapez "8" pour changer la keygeneration à 8 (FW 7.0.0-8.0.1)
 echo Tapez "9" pour changer la keygeneration à 9 (FW 8.1.0)
 echo.
-ECHO ******************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO ******************************************
+ECHO **************************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -1694,9 +1694,9 @@ echo.
 echo Tapez "1" pour fusionner tous les fichiers en un seul fichier
 echo Tapez "2" pour séparer en multifichiers par baseid
 echo.
-ECHO *****************************************
+ECHO **************************************************
 echo Ou tapez "b" pour revenir aux options de la liste.
-ECHO *****************************************
+ECHO **************************************************
 echo.
 set /p bs="Faites votre choix: "
 set bs=%bs:"=%
@@ -1893,9 +1893,9 @@ goto m_exit_choice
 
 :m_KeyChange_skip_fat32
 CD /d "%prog_dir%"
-echo *******************************************************
+echo ********************************************************
 echo ENTRER LE NOM DU FICHIER FINAL POUR LE FICHIER DE SORTIE
-echo *******************************************************
+echo ********************************************************
 echo.
 echo Ou Tapez "b" pour revenir à la liste des options
 echo.
@@ -1941,9 +1941,9 @@ RD /S /Q "%w_folder%" >NUL 2>&1
 goto m_exit_choice
 
 :m_exit_choice
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tout les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 if exist mlist.txt del mlist.txt
 if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
 if /i "%va_exit%"=="true" ( PING -n 2 127.0.0.1 >NUL 2>&1 )
@@ -1978,9 +1978,9 @@ MD "%w_folder%\secure" >NUL 2>&1
 MD "%w_folder%\normal" >NUL 2>&1
 MD "%w_folder%\update" >NUL 2>&1
 call :getname
-echo ------------------------------------
+echo -------------------------------------------
 echo Extraction de la partition secure du xci...
-echo ------------------------------------
+echo -------------------------------------------
 %pycommand% "%nut%" %buffer% %patchRSV% %vkey% %capRSV% -o "%w_folder%\secure" %nf_cleaner% "%orinput%"
 echo Terminé.
 call :thumbup
@@ -2131,9 +2131,9 @@ call :program_logo
 echo -----------------------------------------------
 echo Mode split activé.
 echo -----------------------------------------------
-echo ..................................
+echo .................................................
 echo Vous avez décidé de commencer une nouvelle liste.
-echo ..................................
+echo .................................................
 :sp_manual_INIT
 endlocal
 ECHO ***********************************************
@@ -2152,7 +2152,7 @@ if /i "%eval%"=="0" goto manual_Reentry
 echo.
 :sp_checkagain
 echo Que souhaitez-vous faire?
-echo ......................................................................
+echo ...........................................................................
 echo "Glissez un autre fichier et appuyer sur entrer pour l'ajouter à la liste."
 echo.
 echo Tapez "1" pour commencer le traitement.
@@ -2160,7 +2160,7 @@ echo Tapez "e" pour quitter.
 echo Tapez "i" pour voir la liste des fichiers à traiter.
 echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
 echo Tapez "z" pour supprimer toute la liste.
-echo ......................................................................
+echo ...........................................................................
 ECHO *************************************************
 echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
@@ -2398,14 +2398,14 @@ set /a conta=!conta! + 1
 if !conta! LEQ 0 ( del DBL.txt )
 endlocal
 if not exist "DBL.txt" goto DBmanual_INIT
-ECHO .......................................................
+ECHO .........................................................................................
 ECHO Une précédente liste de fichiers à mettre à jour a été trouvée. Que souhaitez-vous faire?
 :DBprevlist0
 ECHO .......................................................
 echo Tapez "1" pour commencer à mettre à jour le contenu de base.
 echo Tapez "2" pour supprimer la liste et en faire une nouvelle.
 echo Tapez "3" pour continuer à constuire la liste.
-echo ..................................................................
+echo .........................................................................................
 echo NOTE: En appuyant sur 3 vous verrez la liste précédente que vous pourrez modifier avant de lancer son traitement.
 echo.
 ECHO *************************************************
@@ -2454,7 +2454,7 @@ goto DBcheckagain
 echo.
 :DBcheckagain
 echo QU'EST-CE QUE TU VEUX FAIRE?
-echo ......................................................................
+echo ...........................................................................
 echo "Glissez un autre fichier et appuyer sur entrer pour l'ajouter à la liste."
 echo.
 echo Tapez "1" pour commencer le traitement.
@@ -2462,7 +2462,7 @@ echo Tapez "e" pour quitter
 echo Tapez "i" pour voir la liste des fichiers à traiter
 echo Tapez "r" pour supprimer certains fichiers de la liste (en partant du bas).
 echo Tapez "z" pour supprimer toute la liste.
-echo ......................................................................
+echo ...........................................................................
 ECHO *************************************************
 echo Ou tapez "0" pour revenir à la sélection du mode.
 ECHO *************************************************
@@ -2591,9 +2591,9 @@ more +1 "DBL.txt">"DBL.txt.new"
 move /y "DBL.txt.new" "DBL.txt" >nul
 call :DBcontador_NF
 )
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tout les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 :DBs_exit_choice
 if exist DBL.txt del DBL.txt
 if /i "%va_exit%"=="true" echo PROGRAM WILL CLOSE NOW
@@ -2647,9 +2647,9 @@ more +1 "DBL.txt">"DBL.txt.new"
 move /y "DBL.txt.new" "DBL.txt" >nul
 call :DBcontador_NF
 )
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 ECHO *********** Tous les fichiers ont été traités! *************
-ECHO ---------------------------------------------------
+ECHO ------------------------------------------------------------
 goto DBs_exit_choice
 
 :DBGeneration

@@ -1,6 +1,6 @@
 @ECHO OFF
 chcp 65001 >nul
-set "program_version=0.89"
+set "program_version=0.89b"
 
 :TOP_INIT
 CD /d "%prog_dir%"
@@ -21,9 +21,9 @@ goto folder_ind_mode
 ::AUTO MODE. INDIVIDUAL REPACK PROCESSING OPTION.
 :folder_ind_mode
 call :program_logo
-echo --------------------------------------
+echo ------------------------------------------------
 echo Auto-Mode. Le réempactage individuel est activé.
-echo --------------------------------------
+echo ------------------------------------------------
 echo.
 ::*************
 ::FOR NSP FILES
@@ -330,14 +330,14 @@ set /a conta=!conta! + 1
 if !conta! LEQ 0 ( del list.txt )
 endlocal
 if not exist "list.txt" goto manual_INIT
-ECHO .......................................................
+ECHO ............................................................................
 ECHO Une précédente liste a été trouvée. Que souhaitez-vous faire?
 :prevlist0
 ECHO .......................................................
 echo Tapez "1" pour démarrer automatiquement le traitement de la liste précédente
 echo Tapez "2" pour effacer la liste et en créer une nouvelle.
 echo Tapez "3" pour continuer à construire la liste précédente
-echo .......................................................
+echo ............................................................................
 echo NOTE: En appuyant sur 3, vous verrez la liste précédente 
 echo avant de commencer le traitement des fichiers et 
 echo vous pourrez ajouter et supprimer des éléments de la liste

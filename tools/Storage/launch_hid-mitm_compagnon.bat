@@ -1,3 +1,4 @@
+::script by shadow256
 call tools\storage\functions\ini_scripts.bat
 Setlocal enabledelayedexpansion
 set this_script_full_path=%~0
