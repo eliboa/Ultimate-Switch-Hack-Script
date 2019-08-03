@@ -11,7 +11,7 @@ echo La sauvegarde convertie se trouvera dans le dossier "BOTW_save" à la racin
 goto:eof
 
 :select_save_folder
-%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\select_dir.vbs "templogs\tempvar.txt"  "Sélection du dossier"
+%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\select_dir.vbs "templogs\tempvar.txt"  "Sélection du dossier de la sauvegarde de BOTW"
 goto:eof
 
 :no_folder_selected_error
