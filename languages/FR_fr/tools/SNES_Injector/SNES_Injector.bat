@@ -26,7 +26,7 @@ goto:eof
 echo Vous allez devoir sélectionner le répertoire contenant les images correspondant à vos jeux. Attention, le nom des images doit correspondre au nom du jeu auquel il est associé.
 echo Si la source est laissée vide, l'image par défaut sera utilisée pour tous les jeux.
 pause
-%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\select_dir.vbs "templogs\tempvar.txt"
+%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\select_dir.vbs "templogs\tempvar.txt" "Sélection du dossier des images"
 goto:eof
 
 :no_images_folder_defined_warning
@@ -36,7 +36,7 @@ goto:eof
 :roms_folder_choice
 echo Vous allez devoir sélectionner le répertoire contenant vos jeux.
 pause
-%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\select_dir.vbs "templogs\tempvar.txt"
+%windir%\system32\wscript.exe //Nologo TOOLS\Storage\functions\select_dir.vbs "templogs\tempvar.txt" "Sélection du dossier de jeux"
 goto:eof
 
 :no_roms_folder_defined_error
