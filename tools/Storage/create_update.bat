@@ -82,7 +82,6 @@ IF "%temp_count%"=="1" (
 	goto:skip_choidujour_keys_file_create
 )
 :skip_choidujour_keys_file_create
-echo %create_choidujour_keys_file_state%
 call "%associed_language_script%" "choidujour_keys_file_creation"
 IF NOT EXIST ChoiDuJour_keys.txt (
 	call "%associed_language_script%" "choidujour_keys_file_create_error"
