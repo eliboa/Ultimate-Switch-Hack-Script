@@ -139,19 +139,19 @@ def test_keys_file(keys_file):
 	elif (len(keys_not_verified) == 1):
 		print ('clé inconnue ou unique à la console trouvée: ' + keys_not_verified[0])
 	else:
-		print (str(len(keys_not_verified)) + 'Clés inconnues ou uniques à la console trouvées: ' + ', '.join(keys_not_verified))
+		print (str(len(keys_not_verified)) + ' clés inconnues ou uniques à la console trouvées: ' + ', '.join(keys_not_verified))
 	if (len(keys_not_present) == 0):
 		print ('Aucune clé manquante vérifiable trouvée.')
 	elif (len(keys_not_present) == 1):
 		print ('Clés manquante vérifiable trouvée: ' + keys_not_present[0])
 	else:
-		print (str(len(keys_not_present)) + 'Clés manquantes vérifiables trouvées: ' + ', '.join(keys_not_present))
+		print (str(len(keys_not_present)) + ' clés manquantes vérifiables trouvées: ' + ', '.join(keys_not_present))
 	if (len(keys_incorrect) == 0):
 		print ('Aucune clé incorrecte trouvée.')
 	elif (len(keys_incorrect) == 1):
 		print ('Clé incorrecte trouvée: ' + keys_incorrect[0])
 	else:
-		print (str(len(keys_incorrect)) + 'Clés incorrectes trouvées: ' + ', '.join(keys_incorrect))
+		print (str(len(keys_incorrect)) + ' clés incorrectes trouvées: ' + ', '.join(keys_incorrect))
 	return(keys_source_list, keys_not_verified, keys_not_present, keys_incorrect)
 
 def create_choidujour_keys_file(keys_file):

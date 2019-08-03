@@ -26,6 +26,16 @@ goto:eof
 echo Aucun fichier clés renseigné, le script va s'arrêter.
 goto:eof
 
+:choidujour_keys_file_creation
+IF "%create_choidujour_keys_file_state%"=="0" (
+	echo Création du fichier "ChoiDuJour_keys.txt" effectuée avec succès.
+) else IF "%create_choidujour_keys_file_state%"=="1" (
+	echo La clé "%key_missing%" obligatoire ne se trouve pas dans le fichier de clé, le script ne peux pas continuer.
+) else IF "%create_choidujour_keys_file_state%"=="2" (
+	echo La dernière clé facultative trouvée est la clé "%key_missing%", vous ne pourrez générer que des packages de mise à jour jusqu'au firmware n'utilisant que les clés jusqu'à celle-ci.
+)
+goto:eof
+
 :choidujour_keys_file_create_error
 echo Il semble que le fichier de clés nécessaire à ChoiDuJour n'ait pu être créé, veuillez vérifier votre fichier de clés et relancer le script.
 echo Pour vous aider, regarder les clés incorrectes qui se sont affichées juste avant.

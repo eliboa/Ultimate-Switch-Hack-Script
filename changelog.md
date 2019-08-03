@@ -1,5 +1,9 @@
 <h1>Changelog Ultimate Switch Hack Script</h1>
 &nbsp;
+<h2>V3.99.98</h2>
+<ul>
+<li>Le script de vérification de clés a été rendu totalement compatible avec le multi-langues ainsi que le script de création d'un package de firmware via ChoiDuJour. Cependant, le script python utilisé lui reste en français mais ceci n'est pas visible dans les scripts batch associés.</li>
+</ul>
 <h2>V3.99.97</h2>
 <ul>
 <li>Mise à jour de Goldtree en version 0.6.</li>

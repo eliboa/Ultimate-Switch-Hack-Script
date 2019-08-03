@@ -56,7 +56,34 @@ call "%associed_language_script%" "keys_file_selection"
 	
 :skip_keys_file_creation
 IF EXIST ChoiDuJour_keys.txt del /q ChoiDuJour_keys.txt
-..\python3_scripts\Keys_management\keys_management.exe create_choidujour_keys_file keys.txt
+..\python3_scripts\Keys_management\keys_management.exe create_choidujour_keys_file keys.txt >..\..\templogs\result_choidujour_keys_file_creation_file.txt
+..\gnuwin32\bin\tail.exe -n1 <"..\..\templogs\result_choidujour_keys_file_creation_file.txt" >..\..\templogs\tempvar.txt
+set /p create_choidujour_keys_file=<..\..\templogs\tempvar.txt
+echo %create_choidujour_keys_file% | ..\gnuwin32\bin\grep.exe -c "ChoiDuJour_keys.txt" >..\..\templogs\tempvar.txt
+set /p temp_count=<..\..\templogs\tempvar.txt
+IF "%temp_count%"=="1" (
+	set create_choidujour_keys_file_state=0
+	goto:skip_choidujour_keys_file_create
+)
+echo %create_choidujour_keys_file% | ..\gnuwin32\bin\grep.exe -c " obligatoire " >..\..\templogs\tempvar.txt
+set /p temp_count=<..\..\templogs\tempvar.txt
+IF "%temp_count%"=="1" (
+	set create_choidujour_keys_file_state=1
+	echo %create_choidujour_keys_file% | ..\gnuwin32\bin\cut.exe -d \^" -f 2 >..\..\templogs\tempvar.txt
+	set /p key_missing=<..\..\templogs\tempvar.txt
+	goto:skip_choidujour_keys_file_create
+)
+echo %create_choidujour_keys_file% | ..\gnuwin32\bin\grep.exe -c " facultative " >..\..\templogs\tempvar.txt
+set /p temp_count=<..\..\templogs\tempvar.txt
+IF "%temp_count%"=="1" (
+	set create_choidujour_keys_file_state=2
+	echo %create_choidujour_keys_file% | ..\gnuwin32\bin\cut.exe -d \^" -f 2 >..\..\templogs\tempvar.txt
+	set /p key_missing=<..\..\templogs\tempvar.txt
+	goto:skip_choidujour_keys_file_create
+)
+:skip_choidujour_keys_file_create
+echo %create_choidujour_keys_file_state%
+call "%associed_language_script%" "choidujour_keys_file_creation"
 IF NOT EXIST ChoiDuJour_keys.txt (
 	call "%associed_language_script%" "choidujour_keys_file_create_error"
 	goto:endscript

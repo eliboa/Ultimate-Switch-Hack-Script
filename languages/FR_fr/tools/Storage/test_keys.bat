@@ -15,3 +15,37 @@ goto:eof
 :no_keys_file_selected_error
 echo Aucun fichier sélectionné, le script va s'arrêter.
 goto:eof
+
+:total_keys
+echo nombre de clés possibles à analyser: %possible_analysed_keys%
+goto:eof
+
+:unknown_keys
+IF "%unknown_keys_state%"=="0" (
+	echo Aucune clé inconnue ou unique à la console trouvée.
+) else IF "%unknown_keys_state%"=="1" (
+	echo clé inconnue ou unique à la console trouvée: %unknown_keys%
+) else IF "%unknown_keys_state%"=="2" (
+	echo %count_unknown_keys% clés inconnues ou uniques à la console trouvées: %unknown_keys%
+)
+goto:eof
+
+:possible_missing_keys
+IF "%possible_missing_keys_state%"=="0" (
+	echo Aucune clé manquante vérifiable trouvée.
+) else IF "%possible_missing_keys_state%"=="1" (
+	echo Clés manquante vérifiable trouvée: %possible_missing_keys%
+) else IF "%possible_missing_keys_state%"=="2" (
+	echo %count_possible_missing_keys% clés manquantes vérifiables trouvées: %possible_missing_keys%
+)
+goto:eof
+
+:missing_keys
+IF "%missing_keys_state%"=="0" (
+	echo Aucune clé incorrecte trouvée.
+) else IF "%missing_keys_state%"=="1" (
+	echo Clé incorrecte trouvée: %missing_keys%
+) else IF "%missing_keys_state%"=="2" (
+	echo %count_missing_keys% clés incorrectes trouvées: %missing_keys%
+)
+goto:eof
