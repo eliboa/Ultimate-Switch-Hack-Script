@@ -17,7 +17,7 @@ echo Un caractère non autorisé a été saisie dans le nom de la sauvegarde.
 goto:eof
 
 :output_folder_choice
-%windir%\system32\wscript.exe //Nologo tools\Storage\functions\select_dir.vbs "templogs\tempvar.txt" "Sélection du dossier"
+%windir%\system32\wscript.exe //Nologo tools\Storage\functions\select_dir.vbs "templogs\tempvar.txt" "Sélection du dossier de sortie de la sauvegarde"
 goto:eof
 
 :save_begin
