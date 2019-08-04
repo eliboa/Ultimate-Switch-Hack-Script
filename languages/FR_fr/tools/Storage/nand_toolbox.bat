@@ -65,7 +65,7 @@ echo Le répertoire pour extraire le dump ne peut être vide, la fonction va êt
 goto:eof
 
 :dump_erase_existing_file_choice
-set /p erase_output_file=Ce dossier contient déjà un fichier de ce type de dump, souhaitez-vous vraiment continuer en écrasant le fichier existant ^(si oui, le fichier sera supprimé juste après ce choix^)? ^(O/n^): 
+set /p erase_output_file=Ce dossier contient déjà un fichier de ce type de dump, souhaitez-vous vraiment continuer en écrasant le fichier existant ^(si oui, le fichier sera supprimé juste après ce choix^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :canceled
@@ -158,13 +158,13 @@ echo Choix inexistant.
 goto:eof
 
 :force_param_choice
-set /p force_option=Souhaitez-vous que le programme ne pose aucune question durant le traitement ^(mode FORCE^)? ^(O/n^): 
+set /p force_option=Souhaitez-vous que le programme ne pose aucune question durant le traitement ^(mode FORCE^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :skipmd5_param_choice
-set /p skip_md5=Souhaitez-vous passer la vérification MD5? ^(O/n^): 
+set /p skip_md5=Souhaitez-vous passer la vérification MD5? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :debug_param_choice
-set /p debug_option=Souhaitez-vous activer les informations de débogage? ^(O/n^): 
+set /p debug_option=Souhaitez-vous activer les informations de débogage? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof

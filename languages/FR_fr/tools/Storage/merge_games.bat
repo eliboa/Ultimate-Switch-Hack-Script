@@ -54,7 +54,7 @@ echo Un caractère non autorisé a été saisie dans le nom du jeu.
 goto:eof
 
 :output_file_exist_choice
-set /p erase_file=Le fichier existe déjà à l'emplacement indiqué, souhaitez-vous l'écraser? ^(O/n^): 
+set /p erase_file=Le fichier existe déjà à l'emplacement indiqué, souhaitez-vous l'écraser? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :canceled

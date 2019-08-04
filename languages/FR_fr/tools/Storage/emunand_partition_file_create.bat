@@ -54,11 +54,11 @@ goto:eof
 
 :add_sxos_1024_first_bytes_choice
 echo Il est possible d'ajouter le code spécifique à SX OS pour détecter la partition que vous créerez pour injecter le dump. Par contre, vous devrez mettre la partition contenant l'emunand au tout début du disque.
-set /p add_sxos_first_1024=Souhaitez-vous ajouter les 1024 premiers octets spécifiques à SX OS à votre dump? ^(O/n^): 
+set /p add_sxos_first_1024=Souhaitez-vous ajouter les 1024 premiers octets spécifiques à SX OS à votre dump? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :erase_emunand_file_exist_in_output_folder_choice
-set /p erase_existing_dump=Un fichier "emunand_partition.bin" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(O/n^): 
+set /p erase_existing_dump=Un fichier "emunand_partition.bin" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :canceled

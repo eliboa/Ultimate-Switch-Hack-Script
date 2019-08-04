@@ -57,7 +57,7 @@ echo Le nombre de parties ne peut être supérieur à 64.
 goto:eof
 
 :output_rename_choice
-set /p rename_files=Souhaitez-vous que les fichiers splittés soient renommés pour être compatible avec l'emunand de Atmosphere? ^(O/n^): 
+set /p rename_files=Souhaitez-vous que les fichiers splittés soient renommés pour être compatible avec l'emunand de Atmosphere? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :not_enough_disk_space_error

@@ -7,26 +7,26 @@ goto:eof
 :launch_manual_choice
 echo Préparation des fichiers à copier sur la SD
 echo.
-set /p launch_manual=Souhaitez-vous lancer la page d'information sur se qui peut être copié ^(vivement conseillé^)? ^(O/n^):
+set /p launch_manual=Souhaitez-vous lancer la page d'information sur se qui peut être copié ^(vivement conseillé^)? ^(%lng_yes_choice%/%lng_no_choice%^):
 goto:eof
 
 :copy_atmosphere_pack_choice
-set /p copy_atmosphere_pack=Souhaitez-vous copier le pack pour lancer Atmosphere via le payload Fusee-primary d'Atmosphere ^(CFW Atmosphere complet^) ou via Hekate ^(pack Kosmos^)? ^(O/n^): 
+set /p copy_atmosphere_pack=Souhaitez-vous copier le pack pour lancer Atmosphere via le payload Fusee-primary d'Atmosphere ^(CFW Atmosphere complet^) ou via Hekate ^(pack Kosmos^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :atmosphere_nogc_patch_choice
 echo Souhaitez-vous activer le patch NOGC pour Atmosphere  ^(firmware 4.0.0 et supérieur^)?
 echo Ce patch est utile pour ceux ayant mis à jour avec la méthode ChoiDuJour à partir du firmware 3.0.2 et inférieur et ne voulant pas que le firmware du port cartouche soit mis à jour, permettant ainsi le downgrade en-dessous de la version 4.0.0 sans perdre l'usage du port cartouche.
 echo Attention,, si un firmware supérieur au 4.0.0 est chargé une seule fois par le bootloader de Nintendo ^(démarrage classique^) ou sans ce patche, le firmware du port cartouche sera mis à jour et donc l'activation de ce patch sera inutile.
-set /p atmosphere_enable_nogc_patch=Souhaitez-vous activer le patch nogc? ^(O/n^): 
+set /p atmosphere_enable_nogc_patch=Souhaitez-vous activer le patch nogc? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :atmosphere_manual_config_choice
-set /p atmosphere_manual_config=Souhaitez-vous régler manuellement les options d'Atmosphere? ^(O/n^): 
+set /p atmosphere_manual_config=Souhaitez-vous régler manuellement les options d'Atmosphere? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :atmosphere_copy_cheats_choice
-set /p atmosphere_enable_cheats=Souhaitez-vous copier les cheats pour Atmosphere ^(utilisable avec le homebrew EdiZon^)? ^(O/n^): 
+set /p atmosphere_enable_cheats=Souhaitez-vous copier les cheats pour Atmosphere ^(utilisable avec le homebrew EdiZon^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :reinx_warning_if_atmosphere_chosen
@@ -35,38 +35,38 @@ echo Attention: Vous avez choisi la copie du pack Atmosphere, si vous êtes en f
 goto:eof
 
 :copy_reinx_pack_choice
-set /p copy_reinx_pack=Souhaitez-vous copier le pack pour lancer ReiNX? ^(O/n^): 
+set /p copy_reinx_pack=Souhaitez-vous copier le pack pour lancer ReiNX? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :reinx_nogc_patch_choice
 	echo Souhaitez-vous activer le patch NOGC pour ReiNX ^(firmware 4.0.0 et supérieur^)?
 	echo Ce patch est utile pour ceux ayant mis à jour avec la méthode ChoiDuJour à partir du firmware 3.0.2 et inférieur et ne voulant pas que le firmware du port cartouche soit mis à jour, permettant ainsi le downgrade en-dessous de la version 4.0.0 sans perdre l'usage du port cartouche.
 	echo Attention,, si un firmware supérieur au 4.0.0 est chargé une seule fois par le bootloader de Nintendo ^(démarrage classique^) ou sans ce patche, le firmware du port cartouche sera mis à jour et donc l'activation de ce patch sera inutile.
-	set /p reinx_enable_nogc_patch=Souhaitez-vous activer le patch nogc? ^(O/n^): 
+	set /p reinx_enable_nogc_patch=Souhaitez-vous activer le patch nogc? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :copy_memloader_pack_choice
-set /p copy_memloader=Souhaitez-vous copier les fichiers nécessaire à Memloader pour monter la SD, la partition EMMC, la partition Boot0 ou la partition Boot1 sur un PC en lançant simplement le payload de Memloader? ^(Si la copie de SXOS a été souhaité, le payload sera aussi copié à la racine de la SD pour pouvoir le lancer grâce au payload de SXOS^) ^(O/n^): 
+set /p copy_memloader=Souhaitez-vous copier les fichiers nécessaire à Memloader pour monter la SD, la partition EMMC, la partition Boot0 ou la partition Boot1 sur un PC en lançant simplement le payload de Memloader? ^(Si la copie de SXOS a été souhaité, le payload sera aussi copié à la racine de la SD pour pouvoir le lancer grâce au payload de SXOS^) ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :copy_sxos_pack_choice
-set /p copy_sxos_pack=Souhaitez-vous copier le pack pour lancer SXOS? ^(O/n^): 
+set /p copy_sxos_pack=Souhaitez-vous copier le pack pour lancer SXOS? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :sxos_copy_selected_payloads_sd_root_choice
-set /p copy_payloads=Souhaitez-vous copier les fichiers de payloads des fonctions choisient précédemment à la racine de la SD pour être compatible avec le lancement de payloads du payload SX_Loader? ^(O/n^): 
+set /p copy_payloads=Souhaitez-vous copier les fichiers de payloads des fonctions choisient précédemment à la racine de la SD pour être compatible avec le lancement de payloads du payload SX_Loader? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :sxos_cheats_copy_choice
-set /p sxos_enable_cheats=Souhaitez-vous copier les cheats pour SX OS ^(utilisable avec le ROMMENU de SX OS^)? ^(O/n^): 
+set /p sxos_enable_cheats=Souhaitez-vous copier les cheats pour SX OS ^(utilisable avec le ROMMENU de SX OS^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :copy_emulators_pack_choice
-set /p copy_emu=Souhaitez-vous copier le pack d'émulateurs? ^(O/n^): 
+set /p copy_emu=Souhaitez-vous copier le pack d'émulateurs? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :emulators_kip_configs_choice
-set /p keep_emu_configs=Souhaitez-vous concerver vos anciens fichiers de configurations d'émulateurs? ^(O/n^): 
+set /p keep_emu_configs=Souhaitez-vous concerver vos anciens fichiers de configurations d'émulateurs? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :emulators_profile_select_begin
@@ -128,7 +128,7 @@ echo Opération annulée.
 goto:eof
 
 :confirm_script_settings
-set /p confirm_copy=Souhaitez-vous confirmer ceci? ^(O/n^): 
+set /p confirm_copy=Souhaitez-vous confirmer ceci? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :modules_profile_choice_begin
@@ -151,15 +151,15 @@ echo Configuration manuelle d'Atmosphere:
 goto:eof
 
 :atmosphere_manual_config_upload_param_choice
-set /p atmo_upload_enabled=Activer l'upload d'infos vers les serveurs Nintendo ^(non recommandé^): ^(O/n^): 
+set /p atmo_upload_enabled=Activer l'upload d'infos vers les serveurs Nintendo ^(non recommandé^): ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :atmosphere_manual_config_usb3_param_choice
-set /p atmo_usb30_force_enabled=Activer l'USB 3 pour les homebrews ^(peut causer des problèmes^)? ^(O/n^): 
+set /p atmo_usb30_force_enabled=Activer l'USB 3 pour les homebrews ^(peut causer des problèmes^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :atmosphere_manual_config_nro-restrict_param_choice
-set /p atmo_ease_nro_restriction=Activer les restrictions NRO ^(non recommandé^)? ^(O/n^): 
+set /p atmo_ease_nro_restriction=Activer les restrictions NRO ^(non recommandé^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :atmosphere_manual_config_fatal-reboot_interval_param_choice
@@ -188,15 +188,15 @@ echo Cette valeur ne peut être vide.
 goto:eof
 
 :atmosphere_manual_config_cheats-default-state_param_choice
-set /p atmo_dmnt_cheats_enabled_by_default=Etat des cheats activer par défaut ^(si désactivé, ils devront être activé manuellement via EdiZon par exemple^)? ^(O/n^): 
+set /p atmo_dmnt_cheats_enabled_by_default=Etat des cheats activer par défaut ^(si désactivé, ils devront être activé manuellement via EdiZon par exemple^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :atmosphere_manual_config_cheats-save-state_param_choice
-set /p atmo_dmnt_always_save_cheat_toggles=Activer la sauvegarde automatique de l'état des cheats ^(si désactivé, l'état des cheats sera sauvegardé seulement si un fichier de sauvegarde de ces étas est présent^)? ^(O/n^): 
+set /p atmo_dmnt_always_save_cheat_toggles=Activer la sauvegarde automatique de l'état des cheats ^(si désactivé, l'état des cheats sera sauvegardé seulement si un fichier de sauvegarde de ces étas est présent^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :atmosphere_manual_config_gamesave-on-sd_param_choice
-set /p atmo_fsmitm_redirect_saves_to_sd=Activer la redirrection des sauvegardes vers la SD ^(expérimental donc non recommandé^)? ^(O/n^): 
+set /p atmo_fsmitm_redirect_saves_to_sd=Activer la redirrection des sauvegardes vers la SD ^(expérimental donc non recommandé^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :atmosphere_manual_config_buttons_functions_activation_infos

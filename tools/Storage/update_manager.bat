@@ -258,6 +258,9 @@ IF "%~1"=="" (
 			"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\language_general_config.bat" %files_url_project_base%/%language_path:\=/%/language_general_config.bat 2>nul
 			IF !errorlevel! EQU 0 (
 				move "templogs\language_general_config.bat" "%language_path%\language_general_config.bat" >nul
+				call "%associed_language_script%" "language_config_update_info"
+			pause
+				start /i "" "%windir%\system32\cmd.exe" /c call "Ultimate-Switch-Hack-Script.bat"
 			)
 			call "%associed_language_script%" "display_title"
 		)

@@ -37,9 +37,9 @@ echo Le disque devrait être monté sur votre système. Pour le démonter, éjec
 IF "%disc_mounted%"=="1" echo Pour explorer la mémoire interne de la Switch vous devez utiliser l'outil HacDiskMount lancé en tant qu'administrateur ^(nécessite d'avoir les biskey pour décrypter les données mais non nécessaire pour faire un dump de la nand^). Si vous souhaitez faire un dump de la nand via cette méthode, le dump peut prendre du temps ^(environ trois heures^).
 echo.
 echo Parfois, le disque n'est pas reconu automatiquement. Vous devez ouvrir le gestionnaire de périphérique, trouver le périphérique avec un point d'exclamation nommé "Périphérique d’entrée USB" ^(testé sous Windows 7^), faire un clique droit dessus, cliquer sur "Mettre à jour le pilote...", cliquer sur "Rechercher automatiquement un pilote mis à jour" puis cliquer sur "Fermer". Le périphérique devrait maintenant être utilisable.
-set /p launch_devices_manager=Souhaitez-vous lancer le gestionnaire de périphérique? ^(o/n^): 
+set /p launch_devices_manager=Souhaitez-vous lancer le gestionnaire de périphérique? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :hacdiskmount_launch_choice
-set /p launch_hacdiskmount=Souhaitez-vous lancer HacDiskMount? ^(o/n^): 
+set /p launch_hacdiskmount=Souhaitez-vous lancer HacDiskMount? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof

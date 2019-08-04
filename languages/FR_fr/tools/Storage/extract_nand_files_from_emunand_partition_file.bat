@@ -29,15 +29,15 @@ echo Aucun dossier sélectionné, le script va s'arrêter.
 goto:eof
 
 :erase_boot0_choice
-set /p erase_existing_dump_boot0=Un fichier "BOOT0" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(O/n^): 
+set /p erase_existing_dump_boot0=Un fichier "BOOT0" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :erase_boot1_choice
-set /p erase_existing_dump_boot1=Un fichier "BOOT1" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(O/n^): 
+set /p erase_existing_dump_boot1=Un fichier "BOOT1" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :erase_rawnand_choice
-set /p erase_existing_dump_rawnand=Un fichier "rawnand.bin" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(O/n^): 
+set /p erase_existing_dump_rawnand=Un fichier "rawnand.bin" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :canceled
@@ -75,7 +75,7 @@ echo Copie terminée.
 goto:eof
 
 :launch_hacdiskmount_choice
-set /p launch_hacdiskmount=Souhaitez-vous lancer HacDiskMount pour vérifier que le dump a bien été copié ^(rawnand.bin^) et qu'il fonctionne correctement ^(recommandé^)? ^(O/n^): 
+set /p launch_hacdiskmount=Souhaitez-vous lancer HacDiskMount pour vérifier que le dump a bien été copié ^(rawnand.bin^) et qu'il fonctionne correctement ^(recommandé^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :output_rawnand_size_error

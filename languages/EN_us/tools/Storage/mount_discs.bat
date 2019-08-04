@@ -37,9 +37,9 @@ echo The disk should be mounted in your operating system. To unmount it, eject i
 IF "%disc_mounted%"=="1" echo To explore the Rawnand of the Switch, you should use the software HacDiskMount launched as administrator ^(need the  biskey to decrypt the datas but not needed to dump/restaure the nand^). If you want to make a dump with this method, the dump could take some time ^(around three hours^).
 echo.
 echo Sometime, the disk is not reconized automaticaly. You should open the Devices Manager, find the device with an exclamation mark, right click on it, click on "Update drivers...", click on "Search automaticaly an updated driver" and click on "close" when installed. Now, the device should be usable.
-set /p launch_devices_manager=Do you want to launch the Devices Manager? ^(o/n^): 
+set /p launch_devices_manager=Do you want to launch the Devices Manager? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :hacdiskmount_launch_choice
-set /p launch_hacdiskmount=Do you want to launch HacDiskMount? ^(o/n^): 
+set /p launch_hacdiskmount=Do you want to launch HacDiskMount? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof

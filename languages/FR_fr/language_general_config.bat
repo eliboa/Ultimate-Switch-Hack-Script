@@ -3,6 +3,10 @@
 ::Configurations basiques
 set language_authors=shadow256 sur certains forums, shadow2560 sur Github.
 set language_name=Français France
+set lng_yes_choice=o
+set lng_no_choice=n
+set lng_always_choice=t
+set lng_never_choice=j
 
 ::Configurations à laissez par défaut en cas de doute
 set language_chcp=65001

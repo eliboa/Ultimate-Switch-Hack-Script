@@ -44,11 +44,11 @@ echo Aucun dossier sélectionné, la conversion est annulée.
 goto:eof
 
 :rename_param_choice
-set /p rename_target=Souhaitez-vous que le NSP généré soit renommé grâce au nom du jeu plutôt que grâce à l'ID de celui-ci? ^(O/n^): 
+set /p rename_target=Souhaitez-vous que le NSP généré soit renommé grâce au nom du jeu plutôt que grâce à l'ID de celui-ci? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :kipncaid_param_choice
-set /p keepncaid=Souhaitez-vous que l'ID des NCA du NSP soit gardés ^(ne pas activer cette option est recommandé^)? ^(O/n^): 
+set /p keepncaid=Souhaitez-vous que l'ID des NCA du NSP soit gardés ^(ne pas activer cette option est recommandé^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :converting_error

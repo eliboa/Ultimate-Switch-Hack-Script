@@ -43,7 +43,7 @@ echo Aucun dossier de sortie sélectionné, le script va s'arrêter.
 goto:eof
 
 :erase_existing_file_choice
-set /p erase_existing_dump=Un fichier "rawnand.bin" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(O/n^): 
+set /p erase_existing_dump=Un fichier "rawnand.bin" a été trouvé à l'emplacement de copie du nouveau dump, souhaitez-vous écraser le dump précédent ^(la suppression du dump sera faite tout de suite après ce choix donc soyez prudent^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :canceled
@@ -67,7 +67,7 @@ goto:eof
 :copying_end
 echo Copie terminée.
 echo.
-set /p launch_hacdiskmount=Souhaitez-vous lancer HacDiskMount pour vérifier que le dump a bien été copié et qu'il fonctionne correctement ^(recommandé^)? ^(O/n^): 
+set /p launch_hacdiskmount=Souhaitez-vous lancer HacDiskMount pour vérifier que le dump a bien été copié et qu'il fonctionne correctement ^(recommandé^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :output_size_error

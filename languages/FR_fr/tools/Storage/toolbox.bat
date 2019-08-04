@@ -85,7 +85,7 @@ echo Un caractère non autorisé a été saisie dans le nom du logiciel.
 goto:eof
 
 :software_copy_type_choice
-set /p software_copy=Souhaitez-vous copier le logiciel dans le répertoire de travail du script? ^(O/n^): 
+set /p software_copy=Souhaitez-vous copier le logiciel dans le répertoire de travail du script? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :software_already_exist_error

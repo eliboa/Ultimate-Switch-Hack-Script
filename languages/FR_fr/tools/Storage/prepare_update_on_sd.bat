@@ -101,7 +101,7 @@ goto:eof
 
 :disk_choice_not_fat32_formated_choice
 	echo Attention: Le support que vous avez choisi n'est pas formaté en FAT32. Si vous n'avez pas installé le driver EXFAT sur votre Switch, il est nécessaire de formater la carte SD en FAT32. 
-set /p cancel_script=Souhaitez-vous annuler les oppérations en cours pour formater la SD en FAT32 ^(le firmware ne sera pas à retélécharger^)? ^(O/n^): 
+set /p cancel_script=Souhaitez-vous annuler les oppérations en cours pour formater la SD en FAT32 ^(le firmware ne sera pas à retélécharger^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :copying_begin
@@ -117,7 +117,7 @@ echo Maintenant, la préparation du package de mise à jour avec ChoiDuJour va �
 goto:eof
 
 :choidujournx_doc_launch_choice
-set /p launch_choidujournx_doc=Souhaitez-vous consulter la documentation pour savoir comment utiliser ChoiDuJourNX ^(recommandé^)? ^(O/n^): 
+set /p launch_choidujournx_doc=Souhaitez-vous consulter la documentation pour savoir comment utiliser ChoiDuJourNX ^(recommandé^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :choidujour_max_firmware_error
@@ -127,5 +127,5 @@ goto:eof
 :choidujour_max_firmware_error_but_choidujournx_uste_choice
 echo Impossible d'utiliser ChoiDuJour pour ce firmware, le firmware maximum supporté est le firmware 6.1.0.
 echo Cependant, le firmware peut être téléchargé et utilisé avec ChoiDuJourNX.
-set /p cdjnx_use=Souhaitez-vous seulement télécharger le firmware pour l'utiliser avec ChoiDuJourNX? ^(O/n^): 
+set /p cdjnx_use=Souhaitez-vous seulement télécharger le firmware pour l'utiliser avec ChoiDuJourNX? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof

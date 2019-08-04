@@ -27,7 +27,7 @@ set /p nscb_language_choice=Faites votre choix:
 goto:eof
 
 :open_output_dir_choice
-set /p open_output_dir=Souhaitez-vous ouvrir le répertoire contenant les fichiers convertis? ^(O/n^): 
+set /p open_output_dir=Souhaitez-vous ouvrir le répertoire contenant les fichiers convertis? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :output_dir_not_exist_error

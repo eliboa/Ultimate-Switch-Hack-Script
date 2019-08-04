@@ -34,7 +34,7 @@ echo 4^) Une fois les mannipulations effectuées, appuyez sur une touche, accept
 goto:eof
 
 :test_payload_choice
-set /p test_payload=Souhaitez-vous lancer un payload? ^(O/n^): 
+set /p test_payload=Souhaitez-vous lancer un payload? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :zadig_launch_instructions

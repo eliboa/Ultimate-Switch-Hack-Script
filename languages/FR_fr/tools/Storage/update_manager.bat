@@ -15,12 +15,12 @@ echo Notez que vous pouvez toujours réinitialiser cette valeur en passant par l
 echo Notez également que même en cas de désactivation de la mise à jour automatique et si vous faites une mise à jour manuelle qui a échouée, celle-ci sera reprise automatiquement pour éviter des bugs dans le script.
 echo.
 echo Que souhaitez-vous faire?
-echo O: Vérifier les mises à jour cette fois-ci.
-echo N: Ne pas vérifier les mises à jour cette fois-ci.
-echo T: Toujours vérifier les mises à jour.
-echo J: Ne jamais vérifier les mises à jour.
+echo %lng_yes_choice%: Vérifier les mises à jour cette fois-ci.
+echo %lng_no_choice%: Ne pas vérifier les mises à jour cette fois-ci.
+echo %lng_always_choice%: Toujours vérifier les mises à jour.
+echo %lng_never_choice%: Ne jamais vérifier les mises à jour.
 echo.
-set /p auto_update=Souhaitez-vous activer la mise à jour automatique? ^(O/N/T/J^): 
+set /p auto_update=Souhaitez-vous activer la mise à jour automatique? ^(%lng_yes_choice%/%lng_no_choice%/%lng_always_choice%/%lng_never_choice%^): 
 goto:eof
 
 :autoupdate_bad_value_error
@@ -53,7 +53,7 @@ goto:eof
 echo Attention, il semble que vous souhaitiez utiliser une fonctionnalité non installée.
 echo De fait, l'installation de celle-ci va être forcée si vous choisissez d'accepter cette installation, une connexion internet est nécessaire.
 echo Si vous ne pouvez pas utiliser internet, la fonctionnalité ne se lancera pas après cette tentative d'installation et des bugs pourraienent se produire donc dans ce cas il est fortement conseillé de refuser le choix qui va suivre et le script se fermera pour plus de sécurité.
-set /p new_install_choice=Souhaitez-vous lancer l'installation? ^(O/n^): 
+set /p new_install_choice=Souhaitez-vous lancer l'installation? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :begin_update
@@ -62,6 +62,10 @@ goto:eof
 
 :script_version_not_initialized_info
 echo La version du script ne semble pas avoir été initialisée, le script va redémarrer pour prendre en compte cette modification.
+goto:eof
+
+:language_config_update_info
+echo Le fichier de configuration de la langue a été mise à jour, le script va redémarrer pour prendre en compte les changements.
 goto:eof
 
 :end_update

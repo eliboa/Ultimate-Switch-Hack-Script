@@ -36,7 +36,7 @@ echo 4^) When this is done, press a key to continue, accept the admin alert that
 goto:eof
 
 :test_payload_choice
-set /p test_payload=Do you wish to launch a payload? ^(O/n^): 
+set /p test_payload=Do you wish to launch a payload? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :zadig_launch_instructions

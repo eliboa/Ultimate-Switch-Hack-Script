@@ -69,7 +69,7 @@ echo Aucun payload sélectionné, retour à la sélection de payloads.
 goto:eof
 
 :payload_for_pegascape_official_choice
-set /p integrate_pegascape_official=Souhaitez-vous également pouvoir utiliser le payload avec la version officielle de PegaScape ^(remplacera le fichier "reboot_payload.bin" du dossier "atmosphere" de la SD par le payload choisi^)? ^(O/n^): 
+set /p integrate_pegascape_official=Souhaitez-vous également pouvoir utiliser le payload avec la version officielle de PegaScape ^(remplacera le fichier "reboot_payload.bin" du dossier "atmosphere" de la SD par le payload choisi^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :end_prepare_sd

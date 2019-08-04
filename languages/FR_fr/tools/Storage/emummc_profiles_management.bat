@@ -65,7 +65,7 @@ echo Ce profile est utilisé dans les profiles généraux suivant:
 goto:eof
 
 :delete_profile_finded_in_general_profile2
-set /p define_del_profile=Supprimer ce profile supprimera les profiles généraux auxquels il est lié, souhaitez-vous continuer? ^(O/n^): 
+set /p define_del_profile=Supprimer ce profile supprimera les profiles généraux auxquels il est lié, souhaitez-vous continuer? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :delete_profile_success
@@ -118,7 +118,7 @@ goto:eof
 :emummc_config_enable_choice
 echo Configuration de l'emunand
 echo.
-set /p "emunand_enable=Souhaitez-vous activer l'emunand? ^(O/n^): "
+set /p "emunand_enable=Souhaitez-vous activer l'emunand? ^(%lng_yes_choice%/%lng_no_choice%^): "
 goto:eof
 
 :canceled

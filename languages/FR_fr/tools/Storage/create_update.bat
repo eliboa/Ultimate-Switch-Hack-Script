@@ -43,7 +43,7 @@ goto:eof
 
 :launch_xci_explorer_choice
 echo Il est possible de lancer XCI Explorer pour extraire la partition "update" d'un fichier XCI. Notez que si vous choisissez de le lancer, le script ne pourra continuer qu'après la fermeture de XCI Explorer.
-set /p launch_xci_explorer=Souhaitez-vous lancer XCI Explorer? ^(O/n^): 
+set /p launch_xci_explorer=Souhaitez-vous lancer XCI Explorer? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :package_type_choice
@@ -75,15 +75,15 @@ echo Aucun fichier ou répertoire de mise à jour  renseigné, le script va s'ar
 goto:eof
 
 :sigpatches_param_choice
-set /p enable_sigpatches=Souhaitez-vous désactiver la vérification des signatures ^(nécessaire pour installer du contenu non signé^)? ^(O/n^): 
+set /p enable_sigpatches=Souhaitez-vous désactiver la vérification des signatures ^(nécessaire pour installer du contenu non signé^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :nogc_param_choice
-set /p disable_gamecard=Souhaitez-vous désactiver le port cartouche pour éviter la mise à jour du firmware de celui-ci ^(à utiliser si la console n'est jamais passé au-dessus du firmware 4.0.0^)? ^(O/n^): 
+set /p disable_gamecard=Souhaitez-vous désactiver le port cartouche pour éviter la mise à jour du firmware de celui-ci ^(à utiliser si la console n'est jamais passé au-dessus du firmware 4.0.0^)? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :noexfat_param_choice
-set /p no_exfat=Souhaitez-vous désactiver le support pour le format EXFAT des cartes SD? ^(O/n^): 
+set /p no_exfat=Souhaitez-vous désactiver le support pour le format EXFAT des cartes SD? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :package_creation_success

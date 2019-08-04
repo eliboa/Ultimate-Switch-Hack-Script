@@ -44,7 +44,7 @@ echo Cette lettre de volume n'est pas dans la liste. Recommencez.
 goto:eof
 
 :disk_format_choice
-set /p format_choice=Souhaitez-vous formaté la SD ^(volume "%volume_letter%"^)? ^(O/n^):
+set /p format_choice=Souhaitez-vous formaté la SD ^(volume "%volume_letter%"^)? ^(%lng_yes_choice%/%lng_no_choice%^):
 goto:eof
 
 :disk_format_type_choice
@@ -121,7 +121,7 @@ set /p general_profile=Choisissez un profile:
 goto:eof
 
 :confirm_copy_choice
-set /p confirm_copy=Souhaitez-vous confirmer ceci? ^(O/n^): 
+set /p confirm_copy=Souhaitez-vous confirmer ceci? ^(%lng_yes_choice%/%lng_no_choice%^): 
 goto:eof
 
 :canceled
