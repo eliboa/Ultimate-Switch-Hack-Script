@@ -25,10 +25,12 @@ pause
 set biskey=
 call "%associed_language_script%" "launch_biskeydump_choice"
 IF NOT "%biskey%"=="" set biskey=%biskey:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "biskey" "o/n_choice"
 IF /i "%biskey%"=="o" call TOOLS\Storage\biskey_dump.bat
 set mount_emmc=
 call "%associed_language_script%" "mount_emmc_choice"
 IF NOT "%mount_emmc%"=="" set mount_emmc=%mount_emmc:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "mount_emmc" "o/n_choice"
 IF /i "%mount_emmc%"=="o" (
 	call "%associed_language_script%" "rcm_instructions"
 	tools\TegraRcmSmash\TegraRcmSmash.exe -w tools\memloader\memloader.bin --dataini="tools\memloader\mount_discs\ums_emmc.ini"
@@ -37,10 +39,12 @@ IF /i "%mount_emmc%"=="o" (
 	call "%associed_language_script%" "after_rcm_instructions_choice"
 	echo.
 	IF NOT "!launch_devices_manager!"=="" set launch_devices_manager=!launch_devices_manager:~0,1!
+	call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "launch_devices_manager" "o/n_choice"
 	IF /i "!launch_devices_manager!"=="o" start devmgmt.msc
 )
 call "%associed_language_script%" "launch_hacdiskmount_choice"
 IF NOT "%launch_hacdiskmount%"=="" set launch_hacdiskmount=%launch_hacdiskmount:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "launch_hacdiskmount" "o/n_choice"
 IF /i "%launch_hacdiskmount%"=="o" start tools\HacDiskMount/HacDiskMount.exe
 echo.
 call "%associed_language_script%" "prodinfo_file_choice"

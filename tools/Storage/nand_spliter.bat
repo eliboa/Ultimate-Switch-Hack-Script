@@ -93,6 +93,7 @@ echo.
 set rename_files=
 call "%associed_language_script%" "output_rename_choice"
 IF NOT "%rename_files%"=="" set rename_files=%rename_files:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "rename_files" "o/n_choice"
 :verif_disk_free_space
 %windir%\system32\wscript.exe //Nologo "TOOLS\Storage\functions\get_free_space_for_path.vbs" "%dump_output%"
 set /p free_space=<templogs\volume_free_space.txt

@@ -69,6 +69,7 @@ IF "%game_type%"=="1" (
 		set erase_file=
 		call "%associed_language_script%" "output_file_exist_choice"
 		IF NOT "!erase_file!"=="" set erase_file=!erase_file:0,1!
+		call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "erase_file" "o/n_choice"
 		IF /i NOT "!erase_file!"=="o" (
 			call "%associed_language_script%" "canceled"
 			goto:end_script

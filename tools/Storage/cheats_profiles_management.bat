@@ -115,6 +115,7 @@ IF %errorlevel% EQU 0 (
 	set define_del_profile=
 	call "%associed_language_script%" "delete_profile_finded_in_general_profile2"
 	IF NOT "!define_del_profile!"=="" set define_del_profile=!define_del_profile:~0,1!
+	call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "define_del_profile" "o/n_choice"
 	IF /i "!define_del_profile!"=="o" (
 		for /l %%k in (1,1,!temp_count!) do (
 			del /q tools\sd_switch\profiles\!temp_used_profile_list_%%k!

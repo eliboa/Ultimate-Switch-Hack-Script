@@ -151,6 +151,7 @@ set payload_path=%payload_path:~1,-1%
 set integrate_pegascape_official=
 call "%associed_language_script%" "payload_for_pegascape_official_choice"
 IF NOT "%integrate_pegascape_official%"=="" set integrate_pegascape_official=%integrate_pegascape_official:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "integrate_pegascape_official" "o/n_choice"
 :copy_nereba
 "%windir%\system32\robocopy.exe" tools\sd_switch\pegaswitch %volume_letter%:\ /e >nul
 IF NOT EXIST "%volume_letter%:\nereba\*.*" mkdir "%volume_letter%:\nereba" >nul

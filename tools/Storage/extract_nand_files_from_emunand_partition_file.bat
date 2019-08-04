@@ -40,6 +40,7 @@ IF EXIST "%dump_output%\BOOT0" (
 	call "%associed_language_script%" "erase_boot0_choice"
 )
 IF NOT "%erase_existing_dump_boot0%"=="" set erase_existing_dump_boot0=%erase_existing_dump_boot0:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "erase_existing_dump_boot0" "o/n_choice"
 IF EXIST "%dump_output%\BOOT0" (
 	IF /i "%erase_existing_dump_boot0%"=="o" (
 		del /q "%dump_output%\BOOT0"
@@ -52,6 +53,7 @@ IF EXIST "%dump_output%\BOOT1" (
 	call "%associed_language_script%" "erase_boot1_choice"
 )
 IF NOT "%erase_existing_dump_boot1%"=="" set erase_existing_dump_boot1=%erase_existing_dump_boot1:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "erase_existing_dump_boot1" "o/n_choice"
 IF EXIST "%dump_output%\BOOT1" (
 	IF /i "%erase_existing_dump_boot1%"=="o" (
 		del /q "%dump_output%\BOOT1"
@@ -65,6 +67,7 @@ IF EXIST "%dump_output%\rawnand.bin" (
 	call "%associed_language_script%" "erase_rawnand_choice"
 )
 IF NOT "%erase_existing_dump_rawnand%"=="" set erase_existing_dump_rawnand=%erase_existing_dump_rawnand:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "erase_existing_dump_rawnand" "o/n_choice"
 IF EXIST "%dump_output%\rawnand.bin" (
 	IF /i "%erase_existing_dump_rawnand%"=="o" (
 		del /q "%dump_output%\rawnand.bin"
@@ -153,6 +156,7 @@ call "%associed_language_script%" "copying_success"
 echo.
 IF NOT "%copy_error_rawnand%"=="Y" call "%associed_language_script%" "launch_hacdiskmount_choice"
 IF NOT "%launch_hacdiskmount%"=="" set launch_hacdiskmount=%launch_hacdiskmount:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "launch_hacdiskmount" "o/n_choice"
 IF /i "%launch_hacdiskmount%"=="o" (
 	start tools\HacDiskMount\HacDiskMount.exe
 )

@@ -91,6 +91,7 @@ IF NOT "%update_file_path%"=="" goto:skip_hfs0_select
 set launch_xci_explorer=
 call "%associed_language_script%" "launch_xci_explorer_choice"
 IF NOT "%launch_xci_explorer%"=="" set launch_xci_explorer=%launch_xci_explorer:~0,1%
+call "%this_script_dir%\functions\modify_yes_no_always_never_vars.bat" "launch_xci_explorer" "o/n_choice"
 IF /i "%launch_xci_explorer%"=="o" XCI-Explorer.exe
 :update_package_select
 echo.
@@ -125,14 +126,17 @@ set fspatches=--fspatches=nocmac
 set enable_sigpatches=
 call "%associed_language_script%" "sigpatches_param_choice"
 IF NOT "%enable_sigpatches%"=="" set enable_sigpatches=%enable_sigpatches:~0,1%
+call "%this_script_dir%\functions\modify_yes_no_always_never_vars.bat" "enable_sigpatches" "o/n_choice"
 IF /i "%enable_sigpatches%"=="o" set fspatches=%fspatches%,nosigchk
 set disable_gamecard=
 call "%associed_language_script%" "nogc_param_choice"
 IF NOT "%disable_gamecard%"=="" set disable_gamecard=%disable_gamecard:~0,1%
+call "%this_script_dir%\functions\modify_yes_no_always_never_vars.bat" "disable_gamecard" "o/n_choice"
 IF /i "%disable_gamecard%"=="o" set fspatches=%fspatches%,nogc
 set no_exfat=
 call "%associed_language_script%" "noexfat_param_choice"
 IF NOT "%no_exfat%"=="" set no_exfat=%no_exfat:~0,1%
+call "%this_script_dir%\functions\modify_yes_no_always_never_vars.bat" "no_exfat" "o/n_choice"
 IF /i "%no_exfat%"=="o" set no_exfat_param=--noexfat
 :start_update_creation
 IF NOT EXIST "%calling_script_dir%\update_packages\*.*" (

@@ -12,6 +12,7 @@ call "%associed_language_script2%" "display_title"
 echo.
 call "%associed_language_script2%" "launch_manual_choice"
 IF NOT "%launch_manual%"=="" set launch_manual=%launch_manual:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "launch_manual" "o/n_choice"
 IF /i "%launch_manual%"=="o" (
 	start "" "%language_path%\doc\files\sd_prepare.html"
 )
@@ -19,16 +20,19 @@ IF /i "%launch_manual%"=="o" (
 echo.
 call "%associed_language_script2%" "copy_atmosphere_pack_choice"
 IF NOT "%copy_atmosphere_pack%"=="" set copy_atmosphere_pack=%copy_atmosphere_pack:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "copy_atmosphere_pack" "o/n_choice"
 IF /i NOT "%copy_atmosphere_pack%"=="o" goto:skip_ask_cheats_atmosphere
-	:ask_nogc_atmosphere
-	echo.
-	call "%associed_language_script2%" "atmosphere_nogc_patch_choice"
-	IF NOT "%atmosphere_enable_nogc_patch%"=="" set atmosphere_enable_nogc_patch=%atmosphere_enable_nogc_patch:~0,1%
+:ask_nogc_atmosphere
+echo.
+call "%associed_language_script2%" "atmosphere_nogc_patch_choice"
+IF NOT "%atmosphere_enable_nogc_patch%"=="" set atmosphere_enable_nogc_patch=%atmosphere_enable_nogc_patch:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "atmosphere_enable_nogc_patch" "o/n_choice"
 :skip_ask_nogc_atmosphere
 echo.
 set atmosphere_manual_config=
 call "%associed_language_script2%" "atmosphere_manual_config_choice"
 IF NOT "%atmosphere_manual_config%"=="" set atmosphere_manual_config=%atmosphere_manual_config:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "atmosphere_manual_config" "o/n_choice"
 IF /i "%atmosphere_manual_config%"=="o" call :set_atmosphere_configs
 call :emummc_profile_choice "atmosphere"
 call :modules_profile_choice "atmosphere"
@@ -37,6 +41,7 @@ IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_atmosphere
 echo.
 call "%associed_language_script2%" "atmosphere_copy_cheats_choice"
 IF NOT "%atmosphere_enable_cheats%"=="" set atmosphere_enable_cheats=%atmosphere_enable_cheats:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "atmosphere_enable_cheats" "o/n_choice"
 :skip_ask_cheats_atmosphere
 
 echo.
@@ -45,37 +50,45 @@ IF /i "%copy_atmosphere_pack%"=="o" (
 )
 call "%associed_language_script2%" "copy_reinx_pack_choice"
 IF NOT "%copy_reinx_pack%"=="" set copy_reinx_pack=%copy_reinx_pack:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "copy_reinx_pack" "o/n_choice"
 IF /i "%copy_reinx_pack%"=="o" (
 	echo.
 	call "%associed_language_script2%" "reinx_nogc_patch_choice"
 	IF NOT "!reinx_enable_nogc_patch!"=="" set reinx_enable_nogc_patch=!reinx_enable_nogc_patch:~0,1!
+	call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "reinx_enable_nogc_patch" "o/n_choice"
 )
 IF /i "%copy_reinx_pack%"=="o" call :modules_profile_choice "reinx"
 
 echo.
 call "%associed_language_script2%" "copy_memloader_pack_choice"
 IF NOT "%copy_memloader%"=="" set copy_memloader=%copy_memloader:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "copy_memloader" "o/n_choice"
 
 echo.
 call "%associed_language_script2%" "copy_sxos_pack_choice"
 IF NOT "%copy_sxos_pack%"=="" set copy_sxos_pack=%copy_sxos_pack:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "copy_sxos_pack" "o/n_choice"
 IF /i NOT "%copy_sxos_pack%"=="o" goto:skip_ask_cheats_sxos
 call "%associed_language_script2%" "sxos_copy_selected_payloads_sd_root_choice"
 IF NOT "!copy_payloads!"=="" set copy_payloads=!copy_payloads:~0,1!
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "copy_payloads" "o/n_choice"
 IF "%cheats_update_error%"=="Y" goto:skip_ask_cheats_sxos
 :ask_cheats_sxos
 echo.
 call "%associed_language_script2%" "sxos_cheats_copy_choice"
 IF NOT "%sxos_enable_cheats%"=="" set sxos_enable_cheats=%sxos_enable_cheats:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "sxos_enable_cheats" "o/n_choice"
 :skip_ask_cheats_sxos
 
 echo.
 call "%associed_language_script2%" "copy_emulators_pack_choice"
 IF NOT "%copy_emu%"=="" set copy_emu=%copy_emu:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "copy_emu" "o/n_choice"
 IF /i "%copy_emu%"=="o" (
 	IF /i NOT "%del_files_dest_copy%"=="o" (
 		call "%associed_language_script2%" "emulators_kip_configs_choice"
 		IF NOT "!keep_emu_configs!"=="" set keep_emu_configs=!keep_emu_configs:~0,1!
+		call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "keep_emu_configs" "o/n_choice"
 	)
 ) else (
 	goto:skip_verif_emu_profile
@@ -300,6 +313,7 @@ call "%associed_language_script2%" "display_title"
 set confirm_copy=
 call "%associed_language_script2%" "confirm_script_settings"
 IF NOT "%confirm_copy%"=="" set confirm_copy=%confirm_copy:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "confirm_copy" "o/n_choice"
 IF /i "%confirm_copy%"=="o" (
 	set errorlevel=200
 	goto:endscript
@@ -404,12 +418,15 @@ echo.
 set atmo_upload_enabled=
 call "%associed_language_script2%" "atmosphere_manual_config_upload_param_choice"
 IF NOT "%atmo_upload_enabled%"=="" set atmo_upload_enabled=%atmo_upload_enabled:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "atmo_upload_enabled" "o/n_choice"
 set atmo_usb30_force_enabled=
 call "%associed_language_script2%" "atmosphere_manual_config_usb3_param_choice"
 IF NOT "%atmo_usb30_force_enabled%"=="" set atmo_usb30_force_enabled=%atmo_usb30_force_enabled:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "atmo_usb30_force_enabled" "o/n_choice"
 set atmo_ease_nro_restriction=
 call "%associed_language_script2%" "atmosphere_manual_config_nro-restrict_param_choice"
 IF NOT "%atmo_ease_nro_restriction%"=="" set atmo_ease_nro_restriction=%atmo_ease_nro_restriction:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "atmo_ease_nro_restriction" "o/n_choice"
 :define_atmo_fatal_auto_reboot_interval
 set atmo_fatal_auto_reboot_interval=
 call "%associed_language_script2%" "atmosphere_manual_config_fatal-reboot_interval_param_choice"
@@ -453,12 +470,15 @@ goto:set_atmo_power_menu_reboot_function
 set atmo_dmnt_cheats_enabled_by_default=
 call "%associed_language_script2%" "atmosphere_manual_config_cheats-default-state_param_choice"
 IF NOT "%atmo_dmnt_cheats_enabled_by_default%"=="" set atmo_dmnt_cheats_enabled_by_default=%atmo_dmnt_cheats_enabled_by_default:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "atmo_dmnt_cheats_enabled_by_default" "o/n_choice"
 set atmo_dmnt_always_save_cheat_toggles=
 call "%associed_language_script2%" "atmosphere_manual_config_cheats-save-state_param_choice"
 IF NOT "%atmo_dmnt_always_save_cheat_toggles%"=="" set atmo_dmnt_always_save_cheat_toggles=%atmo_dmnt_always_save_cheat_toggles:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "atmo_dmnt_always_save_cheat_toggles" "o/n_choice"
 set atmo_fsmitm_redirect_saves_to_sd=
 call "%associed_language_script2%" "atmosphere_manual_config_gamesave-on-sd_param_choice"
 IF NOT "%atmo_fsmitm_redirect_saves_to_sd%"=="" set atmo_fsmitm_redirect_saves_to_sd=%atmo_fsmitm_redirect_saves_to_sd:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "atmo_fsmitm_redirect_saves_to_sd" "o/n_choice"
 
 echo.
 call "%associed_language_script2%" "atmosphere_manual_config_buttons_functions_activation_infos"

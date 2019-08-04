@@ -136,11 +136,13 @@ echo.
 set add_sxos_first_1024=
 call "%associed_language_script%" "add_sxos_1024_first_bytes_choice"
 IF NOT "%add_sxos_first_1024%"=="" set add_sxos_first_1024=%add_sxos_first_1024:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "add_sxos_first_1024" "o/n_choice"
 :verif_existing_file
 IF EXIST "%dump_output%\emunand_partition.bin" (
 	call "%associed_language_script%" "erase_emunand_file_exist_in_output_folder_choice"
 )
 IF NOT "%erase_existing_dump%"=="" set erase_existing_dump=%erase_existing_dump:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "erase_existing_dump" "o/n_choice"
 IF EXIST "%dump_output%\emunand_partition.bin" (
 	IF /i "%erase_existing_dump%"=="o" (
 		del /q "%dump_output%\emunand_partition.bin"

@@ -369,6 +369,7 @@ IF NOT "%temp_volume_format%"=="FAT32" (
 	call "%associed_language_script%" "disk_choice_not_fat32_formated_choice"
 )
 IF NOT "%cancel_script%"=="" set cancel_script=%cancel_script:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "cancel_script" "o/n_choice"
 IF /i "%cancel_script%"=="o" goto:end_script
 IF "%action_type%"=="1" (
 	call "%associed_language_script%" "copying_begin"
@@ -404,6 +405,7 @@ IF "%action_type%"=="3" (
 echo.
 call "%associed_language_script%" "choidujournx_doc_launch_choice"
 IF NOT "%launch_choidujournx_doc%"=="" set launch_choidujournx_doc=%launch_choidujournx_doc:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "launch_choidujournx_doc" "o/n_choice"
 IF /I "%launch_choidujournx_doc%"=="o" start "" "%language_path%\doc\files\choidujournx.html"
 goto end_script
 
@@ -416,6 +418,7 @@ IF %action_type% EQU 3 (
 	set cdjnx_use=
 	call "%associed_language_script%" "choidujour_max_firmware_error"
 	IF NOT "!cdjnx_use!"=="" set cdjnx_use=!cdjnx_use:~0,1!
+	call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "cdjnx_use" "o/n_choice"
 	IF /i NOT "!cdjnx_use!"=="o" (
 		exit /b 1
 	) else (

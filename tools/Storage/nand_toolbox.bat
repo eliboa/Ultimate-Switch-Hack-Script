@@ -169,6 +169,7 @@ IF EXIST "%output_path%" (
 	call "%associed_language_script%" "dump_erase_existing_file_choice"
 )
 IF NOT "%erase_output_file%"=="" set erase_output_file=%erase_output_file:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "erase_output_file" "o/n_choice"
 IF EXIST "%output_path%" (
 	IF /i NOT "%erase_output_file%"=="o" (
 		call "%associed_language_script%" "canceled"
@@ -430,16 +431,19 @@ set lflags=
 IF NOT "%partition%"=="" set params=-part=%partition% 
 call "%associed_language_script%" "force_param_choice"
 IF NOT "%force_option%"=="" set force_option=%force_option:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "force_option" "o/n_choice"
 IF /i "%force_option%"=="o" (
 	set lflags=%lflags%FORCE 
 )
 call "%associed_language_script%" "skipmd5_param_choice"
 IF NOT "%skip_md5%"=="" set skip_md5=%skip_md5:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "skip_md5" "o/n_choice"
 IF /i "%skip_md5%"=="o" (
 	set lflags=%lflags%BYPASS_MD5SUM 
 )
 call "%associed_language_script%" "debug_param_choice"
 IF NOT "%debug_option%"=="" set debug_option=%debug_option:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "debug_option" "o/n_choice"
 IF /i "%debug_option%"=="o" (
 	set lflags=%lflags%DEBUG_MODE 
 )

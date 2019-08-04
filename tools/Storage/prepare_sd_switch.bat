@@ -76,6 +76,7 @@ IF NOT "%volume_letter%"=="%temp_volume_letter%" (
 set format_choice=
 call "%associed_language_script%" "disk_format_choice"
 IF NOT "%format_choice%"=="" set format_choice=%format_choice:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "format_choice" "o/n_choice"
 IF /i "%format_choice%"=="o" (
 	echo.
 	set format_type=
@@ -303,6 +304,7 @@ call "%associed_language_script%" "display_title"
 set confirm_copy=
 call "%associed_language_script%" "confirm_copy_choice"
 IF NOT "%confirm_copy%"=="" set confirm_copy=%confirm_copy:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "confirm_copy" "o/n_choice"
 IF /i "%confirm_copy%"=="o" (
 	set errorlevel=200
 	goto:test_copy_launch

@@ -59,10 +59,12 @@ IF "%output_path%"=="" (
 set rename_target=
 call "%associed_language_script%" "rename_param_choice"
 IF NOT "%rename_target%"=="" set rename_target=%rename_target:~0,1%
+call "..\Storage\functions\modify_yes_no_always_never_vars.bat" "rename_target" "o/n_choice"
 IF /i NOT "%rename_target%"=="o" set params=-r 
 set keepncaid=
 call "%associed_language_script%" "kipncaid_param_choice"
 IF NOT "%keepncaid%"=="" set keepncaid=%keepncaid:~0,1%
+call "..\Storage\functions\modify_yes_no_always_never_vars.bat" "keepncaid" "o/n_choice"
 IF /i NOT "%keepncaid%"=="o" set params=--keepncaid
 "4nxci.exe" %params% -o "%output_path%" -t "..\..\templogs" "%game_path%"
 IF %errorlevel% NEQ 0 (

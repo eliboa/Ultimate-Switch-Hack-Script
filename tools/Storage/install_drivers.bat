@@ -31,9 +31,10 @@ cd ..\..\..
 set test_payload=
 call "%associed_language_script%" "test_payload_choice"
 IF NOT "%test_payload%"=="" set test_payload=%test_payload:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "test_payload" "o/n_choice"
 IF /i "%test_payload%"=="o" (
 	set test_payload=
-	call tools\Storage\launch_payload.bat > log.txt 2>&1
+	call tools\Storage\launch_payload.bat
 	@echo off
 )
 echo.

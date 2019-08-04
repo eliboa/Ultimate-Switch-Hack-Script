@@ -129,6 +129,7 @@ IF EXIST "%dump_output%\rawnand.bin" (
 	call "%associed_language_script%" "erase_existing_file_choice"
 )
 IF NOT "%erase_existing_dump%"=="" set erase_existing_dump=%erase_existing_dump:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "erase_existing_dump" "o/n_choice"
 IF EXIST "%dump_output%\rawnand.bin" (
 	IF /i "%erase_existing_dump%"=="o" (
 		del /q "%dump_output%\rawnand.bin"
@@ -173,6 +174,7 @@ cd /D "%this_script_dir%\..\.."
 IF "%copy_error%"=="Y" goto:end_script
 call "%associed_language_script%" "copying_end"
 IF NOT "%launch_hacdiskmount%"=="" set launch_hacdiskmount=%launch_hacdiskmount:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "launch_hacdiskmount" "o/n_choice"
 IF /i "%launch_hacdiskmount%"=="o" (
 	start tools\HacDiskMount\HacDiskMount.exe
 )

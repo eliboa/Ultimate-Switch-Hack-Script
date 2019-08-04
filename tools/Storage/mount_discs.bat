@@ -36,16 +36,14 @@ set launch_devices_manager=
 call "%associed_language_script%" "after_launch_first_choice"
 echo.
 IF NOT "%launch_devices_manager%"=="" set launch_devices_manager=%launch_devices_manager:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "launch_devices_manager" "o/n_choice"
 IF /i "%launch_devices_manager%"=="o" start devmgmt.msc
 IF %disc_mounted% EQU 1 (
 	set launch_hacdiskmount=
 	call "%associed_language_script%" "hacdiskmount_launch_choice"
-)
-	IF %disc_mounted% EQU 1 (
-	IF NOT "%launch_hacdiskmount%"=="" set launch_hacdiskmount=%launch_hacdiskmount:~0,1%
-)
-IF %disc_mounted% EQU 1 (
-	IF /i "%launch_hacdiskmount%"=="o" start tools\HacDiskMount/HacDiskMount.exe
+	IF NOT "!launch_hacdiskmount!"=="" set launch_hacdiskmount=!launch_hacdiskmount:~0,1!
+	call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "launch_hacdiskmount" "o/n_choice"
+	IF /i "!launch_hacdiskmount!"=="o" start tools\HacDiskMount/HacDiskMount.exe
 )
 IF NOT "%~1"=="auto_close" goto:define_disc_mounted
 :end_script

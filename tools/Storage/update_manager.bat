@@ -53,6 +53,29 @@ IF "%ushs_base_path%"=="" (
 set associed_language_script=%language_path%\!this_script_full_path:%ushs_base_path%=!
 set associed_language_script=%ushs_base_path%%associed_language_script%
 call "%associed_language_script%" "display_title"
+IF "%lng_yes_choice%"=="" (
+	IF "%language_custom%"=="0" (
+		ping /n 2 www.github.com >nul 2>&1
+		IF !errorlevel! EQU 0 (
+			call :verif_file_version "%language_path%\language_general_config.bat"
+			IF !errorlevel! EQU 1 (
+				copy nul "continue_update.txt" >nul
+				"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\language_general_config.bat" %files_url_project_base%/%language_path:\=/%/language_general_config.bat 2>nul
+				IF !errorlevel! EQU 0 (
+					call "%associed_language_script%" "display_title"
+					move "templogs\language_general_config.bat" "%language_path%\language_general_config.bat" >nul
+					call "%associed_language_script%" "language_config_update_info"
+					pause
+					start /i "" "%windir%\system32\cmd.exe" /c call "Ultimate-Switch-Hack-Script.bat"
+				)
+			)
+		) else (
+			call "%associed_language_script%" "no_internet_connection_error"
+			pause
+			goto:end_script
+		)
+	)
+)
 IF EXIST "continue_update.txt" (
 	set auto_update=O
 	goto:begin_update
@@ -100,6 +123,7 @@ IF NOT "%auto_update%"=="" (
 	call "%associed_language_script%" "autoupdate_empty_value_error"
 	goto:initialize_auto_update
 )
+call :o/n/t/j_choice "auto_update"
 IF /i "%auto_update%"=="J" (
 	IF NOT "%auto_update_file_param_line%"=="" (
 		"tools\gnuwin32\bin\sed.exe" '%auto_update_file_param_line% d' "%language_path%\script_general_config.bat">"%language_path%\script_general_config2.bat"
@@ -138,12 +162,17 @@ mkdir "failed_updates" >nul
 IF "%~1"=="update_all" goto:skip_new_script_install
 IF "%~1"=="general_content_update" goto:skip_new_script_install
 IF "%~2"=="force" (
-	ping /n 2 www.github.com >nul 2>&1
+	IF NOT "%verified_internet_connexion%"=="Y" (
+		ping /n 2 www.github.com >nul 2>&1
+	) else (
+		set errorlevel=0
+	)
 	IF !errorlevel! NEQ 0 (
 		call "%associed_language_script%" "no_internet_connection_error"
 		pause
 		goto_end_script
 	)
+	set verified_internet_connexion=Y
 	call :verif_file_version "tools\Storage\update_manager.bat"
 	IF !errorlevel! EQU 1 (
 		call :verif_file_version "tools\Storage\update_manager_updater.bat"
@@ -163,6 +192,7 @@ IF "%~2"=="force" (
 	set new_install_choice=
 	call "%associed_language_script%" "new_installation_choice"
 	IF NOT "!new_install_choice!"=="" set new_install_choice=!new_install_choice:~0,1!
+	call :o/n_choice "new_install_choice"
 	IF /i NOT "!new_install_choice!"=="o" (
 		IF EXIST templogs (
 			rmdir /s /q templogs
@@ -174,7 +204,11 @@ IF "%~2"=="force" (
 	)
 )
 :skip_new_script_install
-ping /n 2 www.github.com >nul 2>&1
+IF NOT "%verified_internet_connexion%"=="Y" (
+	ping /n 2 www.github.com >nul 2>&1
+) else (
+	set errorlevel=0
+)
 IF %errorlevel% NEQ 0 (
 	call "%associed_language_script%" "no_internet_connection_error"
 	IF /i "%new_install_choice%"=="o" (
@@ -190,6 +224,7 @@ IF %errorlevel% NEQ 0 (
 	)
 	goto:end_script
 )
+set verified_internet_connexion=Y
 :failed_updates_verification
 IF NOT EXIST "failed_updates\*.failed" goto:skip_failed_updates_verification
 IF EXIST "failed_updates\update_manager.bat.file.failed" (
@@ -257,12 +292,12 @@ IF "%~1"=="" (
 		IF !errorlevel! EQU 1 (
 			"tools\gnuwin32\bin\wget.exe" --no-check-certificate --content-disposition -S -O "templogs\language_general_config.bat" %files_url_project_base%/%language_path:\=/%/language_general_config.bat 2>nul
 			IF !errorlevel! EQU 0 (
+				call "%associed_language_script%" "display_title"
 				move "templogs\language_general_config.bat" "%language_path%\language_general_config.bat" >nul
 				call "%associed_language_script%" "language_config_update_info"
-			pause
+				pause
 				start /i "" "%windir%\system32\cmd.exe" /c call "Ultimate-Switch-Hack-Script.bat"
 			)
-			call "%associed_language_script%" "display_title"
 		)
 	)
 	IF EXIST "continue_update.txt" del /q "continue_update.txt"
@@ -1646,6 +1681,26 @@ IF EXIST "tools\sd_switch\mixed\modular\DZ" rmdir /s /q "tools\sd_switch\mixed\m
 IF EXIST "tools\sd_switch\mixed\modular\Zerotwoxci" rmdir /s /q "tools\sd_switch\mixed\modular\Zerotwoxci"
 IF EXIST "tools\sd_switch\modules\pack\Sys-Netcheat" rmdir /s /q "tools\sd_switch\modules\pack\Sys-Netcheat"
 call "%associed_language_script%" "del_hold_files_end"
+exit /b
+
+:o/n_choice
+IF /i "!%~1!"=="%lng_yes_choice%" (
+	set %~1=o
+) else IF /i "!%~1!"=="%lng_no_choice%" (
+	set %~1=n
+)
+exit /b
+
+:o/n/t/j_choice
+IF /i "!%~1!"=="%lng_yes_choice%" (
+	set %~1=o
+) else IF /i "!%~1!"=="%lng_no_choice%" (
+	set %~1=n
+) else IF /i "!%~1!"=="%lng_always_choice%" (
+	set %~1=t
+) else IF /i "!%~1!"=="%lng_never_choice%" (
+	set %~1=j
+)
 exit /b
 
 :end_script

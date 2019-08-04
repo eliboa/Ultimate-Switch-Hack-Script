@@ -201,6 +201,7 @@ echo.
 set software_copy=
 call "%associed_language_script%" "software_copy_type_choice"
 IF NOT "%software_copy%"=="" set software_copy=%software_copy:~0,1%
+call "tools\Storage\functions\modify_yes_no_always_never_vars.bat" "software_copy" "o/n_choice"
 IF /i "%software_copy%"=="o" (
 	IF EXIST "tools\toolbox\%software_name%" (
 		call "%associed_language_script%" "software_already_exist_error"
